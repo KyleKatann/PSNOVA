@@ -464,31 +464,10 @@ img.fl {float: left;margin-right: 10px;margin-bottom: 10px;}
 0% {opacity: 0;}
 100% {opacity: 1;}
 }
-/*スマホ用メニューブロック*/
-#menubar-s {
-	display: block;overflow: hidden;
-        z-index: 10;
-	border-top: 1px solid #fff;		/*上の線の幅、線種、色*/
-	animation-name: menu1;		/*上のkeyframesの名前*/
-	animation-duration: 0.5S;	/*アニメーションの実行時間。0.5秒。*/
-	animation-fill-mode: both;	/*待機中は最初のキーフレームを、完了後は最後のキーフレームを維持*/
-	font-size: 16px;		/*文字サイズ*/
-}
-/*メニュー１個あたりの設定*/
-#menubar-s li a {
-	display: block;text-decoration: none;
-	padding: 5px 3%;	/*上下、左右へのメニュー内の余白*/
-	border-bottom: 1px solid #fff;	/*下の線の幅、線種、色*/
-	background: #000;	/*背景色*/
-	color: #fff;		/*文字色*/
-}
-/*日本語の飾り文字*/
-#menubar-s a span {
-	display: block;
-	font-size: 12px;	/*文字サイズ*/
-	color: #999;		/*文字色*/
-}
+
+
 /*PC用メニューを非表示にする*/
+#menubar-s {display: none;}
 #menubar {display: none;}
 
 /*３本バーアイコン設定
