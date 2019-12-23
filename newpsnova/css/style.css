@@ -242,7 +242,7 @@ footer {
 	text-align: center;
 	padding-top: 15px;
 	padding-bottom: 15px;
-	color: #FFF;	/*文字色*/
+	color: #000;	/*文字色*/
 }
 footer .pr {
 	display: block;
@@ -250,7 +250,7 @@ footer .pr {
 }
 footer a {
 	text-decoration: none;
-	color: #FFF;
+	color: #000;
 }
 
 /*トップページ内「更新情報・お知らせ」ブロック
