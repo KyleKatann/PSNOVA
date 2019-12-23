@@ -1,4 +1,5 @@
 function menu(){
+if(document.readyState!="complete"){
 var html =`
 
 
@@ -29,4 +30,10 @@ var html =`
 
 `;
 document.write(html);
+}else{
+    var span = document.createElement("span");
+    span.innerHTML = "hoge!!";
+    document.body.appendChild("span");
+    }
 }
+
