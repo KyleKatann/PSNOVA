@@ -1,0 +1,29 @@
+/////////////////////////////////////////////////
+// PukiWiki - Yet another WikiWikiWeb clone.
+//
+// $Id: assistant.js,v 0.1.2 2004/08/02 13:17:36 miko Exp $
+// Original is nao-pon
+
+pukiwiki_show_fontset_img();
+
+/*
+     FILE ARCHIVED ON 13:44:25 Mar 15, 2015 AND RETRIEVED FROM THE
+     INTERNET ARCHIVE ON 22:24:59 Dec 22, 2019.
+     JAVASCRIPT APPENDED BY WAYBACK MACHINE, COPYRIGHT INTERNET ARCHIVE.
+
+     ALL OTHER CONTENT MAY ALSO BE PROTECTED BY COPYRIGHT (17 U.S.C.
+     SECTION 108(a)(3)).
+*/
+/*
+playback timings (ms):
+  PetaboxLoader3.datanode: 81.564 (5)
+  esindex: 0.011
+  exclusion.robots.policy: 0.154
+  RedisCDXSource: 0.567
+  captures_list: 130.045
+  CDXLines.iter: 13.281 (3)
+  load_resource: 154.255
+  PetaboxLoader3.resolve: 145.762 (3)
+  exclusion.robots: 0.167
+  LoadShardBlock: 113.162 (3)
+*/

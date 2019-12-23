@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ja-JP">
+<head>
+<meta http-equiv="content-type" content="application/xhtml+xml; charset=UTF-8" />
+<meta http-equiv="Content-Style-Type" content="text/css" />
+<meta http-equiv="Content-Script-Type" content="text/javascript" />
+<meta name="robots" content="NOINDEX,NOFOLLOW" />
+<title>PSO2 Wiki - wiki/images/0/01/ギ・メギドアイコン.png の編集</title>
+<link rel="SHORTCUT ICON" href="http://pso2-wiki.net/image/favicon.ico" />
+<link rel="stylesheet" type="text/css" media="screen,print" href="http://pso2-wiki.net/skin/pukiwiki.css?13" />
+<script type="text/javascript" charset="utf-8" src="/skin/ajax/msxml.js"></script>
+<script type="text/javascript" charset="utf-8" src="/skin/ajax/realedit.js"></script>
+<script type="text/javascript" charset="utf-8" src="/skin/ajax/ctrl_unload.js"></script>
+<script type="text/javascript" src="http://pso2-wiki.net/skin/ajax/textloader.js"></script>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
+<script type="text/javascript" src="http://pso2-wiki.net/skin/jquery.tablesorter.min.js"></script>
+<script type="text/javascript">
+$(function(){
+	$('table.style_table').tablesorter();
+});
+</script>
+<script type="text/javascript" src="http://pso2-wiki.net/skin/ddaccordion.js">
+/***********************************************
+* Accordion Content script- (c) Dynamic Drive DHTML code library (www.dynamicdrive.com)
+* Visit http://www.dynamicDrive.com for hundreds of DHTML scripts
+* This notice must stay intact for legal use
+***********************************************/
+</script>
+<script type="text/javascript">
+ddaccordion.init({
+	headerclass: "submenuheader",
+	contentclass: "submenu",
+	revealtype: "click",
+	mouseoverdelay: 200,
+	collapseprev: false,
+	defaultexpanded: [],
+	onemustopen: false,
+	animatedefault: false,
+	persiststate: true,
+	toggleclass: ["", ""],
+	togglehtml: ["suffix", "<img src='http://pso2-wiki.net/image/plus.gif' class='statusicon' />", "<img src='http://pso2-wiki.net/image/minus.gif' class='statusicon' />"],
+	animatespeed: "fast",
+	oninit:function(headers, expandedindices){
+	},
+	onopenclose:function(header, index, state, isuseractivated){
+	}
+})
+</script>
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-52813711-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+</head>
+<body>
+<div id="header">
+ <a href="http://pso2-wiki.net/"><img id="logo" src="http://pso2-wiki.net/image/wiki.png" width="110" height="80" alt="PSO2 Wiki" title="PSO2 Wiki" /></a>
+ <h1 class="title"><a href="http://pso2-wiki.net/wiki/images/0/01/%E3%82%AE%E3%83%BB%E3%83%A1%E3%82%AE%E3%83%89%E3%82%A2%E3%82%A4%E3%82%B3%E3%83%B3.png">wiki/images/0/01/ギ・メギドアイコン.png の編集</a></h1>
+ <span class="small"><a href="http://pso2-wiki.net/">http://pso2-wiki.net</a>/<span id ="topicpath"><a href="/wiki">wiki</a>/<a href="/wiki/images">images</a>/<a href="/wiki/images/0">0</a>/<a href="/wiki/images/0/01">01</a>/ギ・メギドアイコン.png</span></span>
+</div>
+<div id="navigator">
+[ <a href="http://pso2-wiki.net/?cmd=newpage#refer=wiki%2Fimages%2F0%2F01%2F%E3%82%AE%E3%83%BB%E3%83%A1%E3%82%AE%E3%83%89%E3%82%A2%E3%82%A4%E3%82%B3%E3%83%B3.png">新規</a>   ]
+
+[  <a href="/%E6%9C%80%E8%BF%91%E6%9B%B4%E6%96%B0%E3%81%95%E3%82%8C%E3%81%9F%E3%83%9A%E3%83%BC%E3%82%B8">最終更新</a>  | <a href="/?cmd=backup&amp;page=wiki%2Fimages%2F0%2F01%2F%E3%82%AE%E3%83%BB%E3%83%A1%E3%82%AE%E3%83%89%E3%82%A2%E3%82%A4%E3%82%B3%E3%83%B3.png">バックアップ</a>   ]
+
+&nbsp;HTML convert time to <span style="color:blue">0.028</span> sec.
+</div>
+<hr class="full_hr" />
+<div id="cmd">
+<div id="realview_outer"><div id="realview" style="margin-left:198px"></div></div>
+<form action="http://pso2-wiki.net/" method="post" id="form">
+<div><input type="hidden" name="encode_hint" value="ぷ" /></div>
+ <div class="edit_form" onmouseup="pukiwiki_pos()" onkeyup="pukiwiki_pos()">
+  <select name="template_page">
+   <option value="">-- 雛形とするページ --</option>
+   <option value="!★1～3ソード用テンプレート">!★1～3ソード用テンプレート</option>
+   <option value="!アップデート情報用テンプレート">!アップデート情報用テンプレート</option>
+   <option value="!エネミー弱点表テンプレート">!エネミー弱点表テンプレート</option>
+   <option value="!エネミー用テンプレート">!エネミー用テンプレート</option>
+   <option value="!クエスト用テンプレート">!クエスト用テンプレート</option>
+   <option value="!ビンゴ">!ビンゴ</option>
+   <option value="!ビンゴマス埋めオススメクエストテンプレ">!ビンゴマス埋めオススメクエストテンプレ</option>
+   <option value="!ビンゴマス埋めオススメクエストテンプレ/コメント">!ビンゴマス埋めオススメクエストテンプレ/コメント</option>
+   <option value="!ファッション詳細用基本テンプレート">!ファッション詳細用基本テンプレート</option>
+   <option value="!マターボードページ用テンプレート">!マターボードページ用テンプレート</option>
+   <option value="!武器詳細ソード用テンプレート">!武器詳細ソード用テンプレート</option>
+   <option value="!武器詳細ページ用テンプレート">!武器詳細ページ用テンプレート</option>
+   <option value="!武器迷彩用テンプレート">!武器迷彩用テンプレート</option>
+   <option value="!消耗品詳細ページ用テンプレート">!消耗品詳細ページ用テンプレート</option>
+   <option value="!潜在能力">!潜在能力</option>
+   <option value="!潜在能力効果表">!潜在能力効果表</option>
+   <option value="!防具詳細ページ用テンプレート">!防具詳細ページ用テンプレート</option>
+  </select>
+  <input type="submit" name="template" value="読込" accesskey="r" />
+  <br />
+  
+  <input type="hidden" name="cmd"    value="edit" />
+  <input type="hidden" name="page"   value="wiki/images/0/01/ギ・メギドアイコン.png" />
+  <input type="hidden" name="digest" value="d41d8cd98f00b204e9800998ecf8427e" />
+  <input type="hidden" name="ticket" value="868d873b24dda20050d1b30214cb5987" />
+  <input type="hidden" name="id"     value="" />
+  <textarea id="msg" name="msg" rows="40" cols="140" style="margin-top:.5em;margin-bottom:.5em" onselect="pukiwiki_apv(this.form.page.value,this)" onfocus="pukiwiki_apv(this.form.page.value,this)" onkeyup="pukiwiki_apv(this.form.page.value,this)" onmouseup="pukiwiki_apv(this.form.page.value,this)"></textarea>
+  <br />
+  <input type="submit" name="write" value="ページの更新" accesskey="s" />
+  
+  <input type="button" name="add_ajax" value="プレビュー" accesskey="p" onclick="pukiwiki_apx(this.form.page.value)" />
+  
+  <input type="submit" id="cancel" name="cancel" value="キャンセル" accesskey="c" /> <span style="color:red">※</span>荒らし行為を行った場合は、プロバイダーに通報します。
+  <textarea id="original" name="original" rows="1" cols="1" style="display:none"></textarea>
+ </div>
+</form> <div style="margin-top:.5em">
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- Rectangle -->
+<ins class="adsbygoogle"
+     style="display:inline-block;width:336px;height:280px"
+     data-ad-client="ca-pub-7495201961417132"
+     data-ad-slot="7264843606"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- Square -->
+<ins class="adsbygoogle"
+     style="display:inline-block;width:336px;height:280px"
+     data-ad-client="ca-pub-7495201961417132"
+     data-ad-slot="8741576803"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+ </div>
+</div>
+<hr class="full_hr" />
+<div id="footer">
+Powered by PukiWiki Plus!. Provided by <a href="http://pso2wiki.net/">pso2wiki.net</a>.
+</div>
+</body>
+</html>
+
