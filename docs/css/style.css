@@ -65,7 +65,7 @@ nav#menubar ul {
 /*メニュー１個ごとの設定*/
 nav#menubar ul li {
 	float: left;
-/*	width: 15.6%;	メニュー幅のパーセンテージ 100/個数:/
+	width: 33.3%;	/*メニュー幅のパーセンテージ 100/個数 */
 	border-right: 1px dotted rgba(0,0,0,0.3);	/*メニューの右側の線の幅、線種、色（左３つの数字で色を指定、最後の小数点で透明度を指定）*/
 	line-height: 1.6;
 	text-align: center;
