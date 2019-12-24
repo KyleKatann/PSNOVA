@@ -226,8 +226,6 @@ nav#menubar ul li a span {
 }
 /*メニュー内aの１個ごとの設定*/
 #sub .submenu a {
-	background: #000000;
-	color: #CCC;
 	text-decoration: none;display: block;
 	border-right: 1px solid #CCC;	/*右側の線の幅、線種、色*/
 	border-bottom: 1px solid #CCC;	/*下側の線の幅、線種、色*/
@@ -236,6 +234,8 @@ nav#menubar ul li a span {
 }
 /*メニュー内pの１個ごとの設定*/
 #sub .submenu p {
+	background: #000000;
+	color: #CCC;
 	text-decoration: none;display: block;
 	border-right: 1px solid #CCC;	/*右側の線の幅、線種、色*/
 	border-bottom: 1px solid #CCC;	/*下側の線の幅、線種、色*/
