@@ -18,7 +18,7 @@ var html =`
 <li><a href="https://kylekatann.github.io/PSNOVA/pages/species.html">種族</a></li>
 <li><a href="https://kylekatann.github.io/PSNOVA/pages/appearance.html">ヘアスタイル・コスチューム・アクセサリー</a></li>
 <li><a href="https://kylekatann.github.io/PSNOVA/pages/class.html">クラス</a></li>
-<li><a href="https://kylekatann.github.io/PSNOVA/pages/item.html">スキル一覧</a></li>
+<!--  <li><a href="https://kylekatann.github.io/PSNOVA/pages/skill.html">スキル一覧</a></li>  -->
 </ul>
 </nav>
 
