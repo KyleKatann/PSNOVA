@@ -1,0 +1,273 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ja-JP" lang="ja-JP">
+<head>
+ <meta http-equiv="content-type" content="application/xhtml+xml; charset=UTF-8" />
+ <meta http-equiv="content-style-type" content="text/css" />
+ <meta name="robots" content="NOINDEX,NOFOLLOW" />
+ <title>skin/pukiwiki.print.css の編集 - PSO2es 攻略Wiki</title>
+
+ <link rel="SHORTCUT ICON" href="image/favicon.ico" />
+ <link rel="stylesheet" type="text/css" media="screen,print" href="http://pso2wiki.net/skin/pukiwiki.css?1158" />
+ <link rel="stylesheet" type="text/css" media="print" href="http://pso2es.net/skin/pukiwiki.print.css?303" />
+ <script type="text/javascript" src="http://pso2wiki.net/skin/ajax/textloader.js"></script>
+ <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
+ <script type="text/javascript" src="http://pso2wiki.net/skin/jquery.tablesorter.min.js"></script>
+ <script type="text/javascript" src="http://pso2wiki.net/skin/ddaccordion.js">
+ /***********************************************
+ * Accordion Content script- (c) Dynamic Drive DHTML code library (www.dynamicdrive.com)
+ * Visit http://www.dynamicDrive.com for hundreds of DHTML scripts
+ * This notice must stay intact for legal use
+ ***********************************************/
+ </script>
+ <script type="text/javascript" src="http://pso2wiki.net/skin/ddaccordionconf.js"></script>
+ <script>
+$(function(){
+	$('table.style_table').tablesorter();
+});
+ </script>
+
+ <script type="text/javascript" charset="utf-8" src="/skin/ajax/msxml.js"></script>
+ <script type="text/javascript" charset="utf-8" src="/skin/ajax/realedit.js"></script>
+ <script type="text/javascript" charset="utf-8" src="/skin/ajax/ctrl_unload.js"></script>
+</head>
+<body>
+
+<div id="header">
+ <a href="http://pso2es.net/"><img id="logo" src="http://pso2wiki.net/image/pso2es.png" width="80" height="80" alt="PSO2 Wiki" title="PSO2 Wiki" /></a>
+
+  <h1 class="title">skin/pukiwiki.print.css の編集 - PSO2es 攻略Wiki</h1>
+ 
+   <span class="small"><a href="http://pso2es.net/">http://pso2es.net</a>/<span id ="topicpath"><a href="/skin">skin</a>/pukiwiki.print.css</span></span>
+ 
+</div>
+
+<div id="navigator">
+[ <a href="http://pso2es.net/?cmd=newpage#refer=skin%2Fpukiwiki.print.css">新規</a>    ]
+
+[  <a href="/%E6%9C%80%E8%BF%91%E6%9B%B4%E6%96%B0%E3%81%95%E3%82%8C%E3%81%9F%E3%83%9A%E3%83%BC%E3%82%B8">最終更新</a>  | <a href="/?cmd=backup&amp;page=skin%2Fpukiwiki.print.css">バックアップ</a>   ]
+
+&nbsp;HTML convert time to <span style="color:blue;">0.288</span> sec.
+</div><hr class="full_hr" />
+
+
+<table border="0" style="width:100%">
+ <tr>
+  <td class="menubar">
+   <div id="menubar">
+    <h2>検索</h2>
+    <div style="margin-left:1.25em">
+<form class="psearch" method="get" action="http://pso2es.net/">
+<div><input type="hidden" name="encode_hint" value="ぷ" /></div>
+<div><input type="hidden" name="encode_hint" value="ぷ" /></div>
+<div><input type="hidden" name="cmd" value="search" />
+<input style="width:144px;" type="text" name="word" value="" /><br />
+<input type="radio" name="type" id="_p_search_AND" value="AND"  checked="checked" />
+<label for="_p_search_AND">AND</label>
+<input type="radio" name="type" id="_p_search_OR" value="OR"   />
+<label for="_p_search_OR">OR</label>
+<input type="submit" value="検索" /></div></form>
+<form class="sitesearch" method="get" action="http://www.google.co.jp/search">
+<div><input type="hidden" name="encode_hint" value="ぷ" /></div>
+<div><input type="hidden" name="encode_hint" value="ぷ" /></div>
+<input type="hidden" name="as_sitesearch" value="pso2es.net">
+<input type="hidden" name="hl" value="ja">
+<input type="hidden" name="ie" value="utf-8">
+<input type="hidden" name="oe" value="utf-8">
+<input style="width:144px;" type="text" name="q" maxlength="255" value=""><br />
+<INPUT type="radio" value="hidden" checked>メイン
+<input type="submit" name="btnG" value="Google 検索"></form>
+    </div>
+
+    <div style="margin:1em 0 1em .65em">
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- Menubar -->
+<ins class="adsbygoogle"
+     style="display:inline-block;width:160px;height:600px"
+     data-ad-client="ca-pub-7495201961417132"
+     data-ad-slot="5570135200"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+    </div>
+<h5>最新の50件</h5><div><ul class="recent_list">
+ <li><a href="/%E3%83%95%E3%83%A6%E3%82%B8%E3%82%AA%E3%83%B3" title="フユジオン">フユジオン</a> <span style="color:red; font-size: 0.8em;">New!</span></li>
+ <li><a href="/%E3%82%B9%E3%83%91%E3%83%AB%E3%83%9E%E3%82%B7%E3%83%B3%E3%82%AC%E3%83%B3" title="スパルマシンガン">スパルマシンガン</a> <span style="color:red; font-size: 0.8em;">New!</span></li>
+ <li><a href="/%E3%83%A9%E3%83%A0%E3%83%80%E3%82%B5%E3%83%BC%E3%82%AF%E3%82%A6%E3%82%A7%E3%82%A4%E3%83%89" title="ラムダサークウェイド">ラムダサークウェイド</a> <span style="color:red; font-size: 0.8em;">New!</span></li>
+ <li><a href="/T%E3%83%A4%E3%82%B9%E3%83%9F%E3%83%8E%E3%82%B3%E3%83%952000H" title="Tヤスミノコフ2000H">Tヤスミノコフ2000H</a> <span style="color:red; font-size: 0.8em;">New!</span></li>
+ <li><a href="/%E3%82%A2%E3%83%B3%E3%82%B1%E3%83%BC%E3%83%88/%E3%81%8A%E6%B0%97%E3%81%AB%E5%85%A5%E3%82%8A%E3%81%AENPC%E3%81%AF%EF%BC%9F" title="アンケート/お気に入りのNPCは？">アンケート/お気に入りのNPCは？</a> <span style="color:red; font-size: 0.8em;">New!</span></li>
+ <li><a href="/%E3%83%88%E3%83%83%E3%83%97%E3%83%9A%E3%83%BC%E3%82%B8/%E3%82%B3%E3%83%A1%E3%83%B3%E3%83%88" title="トップページ/コメント">トップページ/コメント</a> <span style="color:red; font-size: 0.8em;">New!</span></li>
+ <li><a href="/%E3%82%A2%E3%83%B3%E3%82%B1%E3%83%BC%E3%83%88/%E3%82%88%E3%81%8F%E4%BD%BF%E3%81%86%E3%82%B5%E3%83%96%E3%82%AF%E3%83%A9%E3%82%B9%E3%81%AF%EF%BC%9F" title="アンケート/よく使うサブクラスは？">アンケート/よく使うサブクラスは？</a> <span style="color:red; font-size: 0.8em;">New!</span></li>
+ <li><a href="/%E5%BC%B7%E5%BC%93" title="強弓">強弓</a> <span style="color:red; font-size: 0.8em;">New!</span></li>
+ <li><a href="/PSO2es/%E3%83%81%E3%83%83%E3%83%97%E7%A0%94%E7%A9%B6%E5%AE%A4" title="PSO2es/チップ研究室">PSO2es/チップ研究室</a> <span style="color:red; font-size: 0.8em;">New!</span></li>
+ <li><a href="/%E9%9D%92%E3%81%AE%E3%83%9E%E3%82%B7%E3%83%B3%E3%82%AC%E3%83%B3" title="青のマシンガン">青のマシンガン</a> <span style="color:red; font-size: 0.8em;">New!</span></li>
+ <li><a href="/%E8%B5%A4%E3%81%AE%E3%83%9E%E3%82%B7%E3%83%B3%E3%82%AC%E3%83%B3" title="赤のマシンガン">赤のマシンガン</a> <span style="color:red; font-size: 0.8em;">New!</span></li>
+ <li><a href="/%E3%82%B7%E3%83%A3%E3%83%9C%E3%83%B3%E3%83%A9%E3%83%83%E3%83%94%E3%83%BC%E3%82%AC%E3%83%B3" title="シャボンラッピーガン">シャボンラッピーガン</a> <span style="color:red; font-size: 0.8em;">New!</span></li>
+ <li><a href="/%E3%83%A9%E3%83%A0%E3%83%80%E3%82%A2%E3%83%AC%E3%82%B9%E3%83%B4%E3%82%A3%E3%82%B9" title="ラムダアレスヴィス">ラムダアレスヴィス</a> <span style="color:red; font-size: 0.8em;">New!</span></li>
+ <li><a href="/%E3%82%A8%E3%83%83%E3%82%B0%E3%83%96%E3%83%A9%E3%82%B9%E3%82%BF%E3%83%BC" title="エッグブラスター">エッグブラスター</a> <span style="color:red; font-size: 0.8em;">New!</span></li>
+ <li><a href="/%E6%B7%B7%E6%B2%8C%E3%81%AB%E6%83%91%E3%81%86%E7%99%BD%E3%81%8D%E9%83%BD" title="混沌に惑う白き都">混沌に惑う白き都</a> <span style="color:red; font-size: 0.8em;">New!</span></li>
+ <li><a href="/%E3%82%AC%E3%83%BC%E3%83%B3%E3%83%87%E3%83%BC%E3%83%B4%E3%82%A1" title="ガーンデーヴァ">ガーンデーヴァ</a> <span style="color:red; font-size: 0.8em;">New!</span></li>
+ <li><a href="/%E3%82%AC%E3%83%BC%E3%83%B3%E3%83%87%E3%83%BC%E3%83%B4%E3%82%A1/%E3%82%B3%E3%83%A1%E3%83%B3%E3%83%88" title="ガーンデーヴァ/コメント">ガーンデーヴァ/コメント</a> <span style="color:red; font-size: 0.8em;">New!</span></li>
+ <li><a href="/%E3%82%A2%E3%83%B3%E3%82%B1%E3%83%BC%E3%83%88/%E3%82%88%E3%81%8F%E4%BD%BF%E3%81%86%E6%AD%A6%E5%99%A8%E3%81%AF%EF%BC%9F" title="アンケート/よく使う武器は？">アンケート/よく使う武器は？</a> <span style="color:red; font-size: 0.8em;">New!</span></li>
+ <li><a href="/%E6%8E%A1%E6%8E%98%E5%9F%BA%E5%9C%B0%E9%98%B2%E8%A1%9B%E6%88%A6%EF%BC%9A%E4%BE%B5%E5%85%A5" title="採掘基地防衛戦：侵入">採掘基地防衛戦：侵入</a> <span style="color:red; font-size: 0.8em;">New!</span></li>
+ <li><a href="/%E3%83%88%E3%83%83%E3%83%97%E3%83%9A%E3%83%BC%E3%82%B8/%E3%83%96%E3%83%BC%E3%82%B9%E3%83%88%E3%82%A4%E3%83%99%E3%83%B3%E3%83%88%E6%83%85%E5%A0%B1" title="トップページ/ブーストイベント情報">トップページ/ブーストイベント情報</a> <span style="color:red; font-size: 0.8em;">New!</span></li>
+</ul>
+<ul class="recent_list">
+ <li><a href="/%E3%82%A2%E3%83%B3%E3%82%B1%E3%83%BC%E3%83%88/%E3%82%88%E3%81%8F%E8%A1%8C%E3%81%8F%E3%82%AF%E3%82%A8%E3%82%B9%E3%83%88%E3%81%AF%EF%BC%9F" title="アンケート/よく行くクエストは？">アンケート/よく行くクエストは？</a> <span style="color:red; font-size: 0.8em;">New!</span></li>
+ <li><a href="/%E3%82%A2%E3%83%B3%E3%82%B1%E3%83%BC%E3%83%88/%E3%81%84%E3%81%A4%E3%82%82%E4%BD%95%E3%81%A7PSO2%E3%82%92%E3%82%84%E3%81%A3%E3%81%A6%E3%82%8B%EF%BC%9F" title="アンケート/いつも何でPSO2をやってる？">アンケート/いつも何でPSO2をやってる？</a> <span style="color:red; font-size: 0.8em;">New!</span></li>
+ <li><a href="/%E3%82%A2%E3%83%B3%E3%82%B1%E3%83%BC%E3%83%88/PSO2%E3%82%92%E5%A7%8B%E3%82%81%E3%81%9F%E6%99%82%E6%9C%9F%E3%81%AF%EF%BC%9F" title="アンケート/PSO2を始めた時期は？">アンケート/PSO2を始めた時期は？</a> <span style="color:red; font-size: 0.8em;">New!</span></li>
+ <li><a href="/%E3%82%A2%E3%83%B3%E3%82%B1%E3%83%BC%E3%83%88/%E5%A5%BD%E3%81%8D%E3%81%AA%E3%82%B7%E3%83%83%E3%83%97%E3%81%AF%EF%BC%9F" title="アンケート/好きなシップは？">アンケート/好きなシップは？</a> <span style="color:red; font-size: 0.8em;">New!</span></li>
+ <li><a href="/H%EF%BC%86S25%E3%82%B8%E3%83%A3%E3%82%B9%E3%83%86%E3%82%A3%E3%82%B9" title="H＆S25ジャスティス">H＆S25ジャスティス</a> <span style="color:red; font-size: 0.8em;">New!</span></li>
+ <li><a href="/%E3%83%90%E3%83%96%E3%83%A9%E3%83%83%E3%83%94%E3%83%BC%E3%82%AC%E3%83%B3" title="バブラッピーガン">バブラッピーガン</a> <span style="color:red; font-size: 0.8em;">New!</span></li>
+ <li><a href="/%E3%82%A2%E3%83%AC%E3%82%B9%E3%83%B4%E3%82%A3%E3%82%B9" title="アレスヴィス">アレスヴィス</a> <span style="color:red; font-size: 0.8em;">New!</span></li>
+ <li><a href="/H10%E3%83%9F%E3%82%BA%E3%83%BC%E3%83%AAT%EF%BC%8F%E3%83%8A%E3%83%8F%E3%83%88" title="H10ミズーリT／ナハト">H10ミズーリT／ナハト</a> <span style="color:red; font-size: 0.8em;">New!</span></li>
+ <li><a href="/L%EF%BC%86K%E3%82%B3%E3%83%B3%E3%83%90%E3%83%83%E3%83%88%EF%BC%8F%E3%83%AA%E3%83%92%E3%83%88" title="L＆Kコンバット／リヒト">L＆Kコンバット／リヒト</a> <span style="color:red; font-size: 0.8em;">New!</span></li>
+ <li><a href="/M%EF%BC%86A%E3%83%B4%E3%82%A1%E3%82%A4%E3%82%B9%EF%BC%8F%E3%83%AA%E3%83%92%E3%83%88" title="M＆Aヴァイス／リヒト">M＆Aヴァイス／リヒト</a> <span style="color:red; font-size: 0.8em;">New!</span></li>
+ <li><a href="/PSO2es/%E3%83%88%E3%83%83%E3%83%97%E3%83%9A%E3%83%BC%E3%82%B8/%E3%82%B3%E3%83%A1%E3%83%B3%E3%83%88" title="PSO2es/トップページ/コメント">PSO2es/トップページ/コメント</a> <span style="color:red; font-size: 0.8em;">New!</span></li>
+ <li><a href="/PSO2es/%E5%8E%9F%E7%94%9F%E7%A8%AE%E3%81%AE%E3%81%99%E3%81%BF%E3%81%8B" title="PSO2es/原生種のすみか">PSO2es/原生種のすみか</a> <span style="color:red; font-size: 0.8em;">New!</span></li>
+ <li><a href="/PSO2es/%E3%83%88%E3%83%83%E3%83%97%E3%83%9A%E3%83%BC%E3%82%B8/%E6%96%B0%E7%9D%80%E6%83%85%E5%A0%B1" title="PSO2es/トップページ/新着情報">PSO2es/トップページ/新着情報</a> <span style="color:red; font-size: 0.8em;">New!</span></li>
+ <li><a href="/%E3%83%B4%E3%82%A3%E3%82%BFT%E3%83%90%E3%83%AB%E3%82%AB%E3%83%B3" title="ヴィタTバルカン">ヴィタTバルカン</a> <span style="color:red; font-size: 0.8em;">New!</span></li>
+ <li><a href="/%E3%83%B4%E3%82%A3%E3%82%BFT%E3%82%AC%E3%83%88%E3%83%AA%E3%83%B3%E3%82%B0" title="ヴィタTガトリング">ヴィタTガトリング</a> <span style="color:red; font-size: 0.8em;">New!</span></li>
+ <li><a href="/%E3%82%A2%E3%83%AB%E3%83%90T%E3%83%90%E3%83%AB%E3%82%AB%E3%83%B3" title="アルバTバルカン">アルバTバルカン</a> <span style="color:red; font-size: 0.8em;">New!</span></li>
+ <li><a href="/%E3%82%A2%E3%83%AB%E3%83%90T%E3%82%AC%E3%83%88%E3%83%AA%E3%83%B3%E3%82%B0" title="アルバTガトリング">アルバTガトリング</a> <span style="color:red; font-size: 0.8em;">New!</span></li>
+ <li><a href="/%E3%83%84%E3%82%A4%E3%83%B3%E3%83%90%E3%83%AB%E3%82%AB%E3%83%B3" title="ツインバルカン">ツインバルカン</a> <span style="color:red; font-size: 0.8em;">New!</span></li>
+ <li><a href="/%E3%83%84%E3%82%A4%E3%83%B3%E3%82%AC%E3%83%88%E3%83%AA%E3%83%B3%E3%82%B0" title="ツインガトリング">ツインガトリング</a> <span style="color:red; font-size: 0.8em;">New!</span></li>
+ <li><a href="/%E3%83%95%E3%82%A9%E3%83%88%E3%83%B3%E3%82%A2%E3%83%BC%E3%83%84%E3%83%BB%E3%83%86%E3%82%AF%E3%83%8B%E3%83%83%E3%82%AF/%E3%82%B8%E3%82%A7%E3%83%83%E3%83%88%E3%83%96%E3%83%BC%E3%83%84" title="フォトンアーツ・テクニック/ジェットブーツ">フォトンアーツ・テクニック/ジェットブーツ</a> <span style="color:red; font-size: 0.8em;">New!</span></li>
+ <li><a href="/%E3%83%B4%E3%82%A3%E3%82%BFT%E3%83%AA%E3%83%94%E3%83%BC%E3%82%BF%E3%83%BC" title="ヴィタTリピーター">ヴィタTリピーター</a> <span style="color:red; font-size: 0.8em;">New!</span></li>
+ <li><a href="/%E3%83%B4%E3%82%A3%E3%82%BFT%E3%82%A2%E3%82%B5%E3%83%AB%E3%83%88" title="ヴィタTアサルト">ヴィタTアサルト</a> <span style="color:red; font-size: 0.8em;">New!</span></li>
+ <li><a href="/%E3%83%B4%E3%82%A3%E3%82%BFT%E3%83%9E%E3%82%B7%E3%83%B3%E3%82%AC%E3%83%B3" title="ヴィタTマシンガン">ヴィタTマシンガン</a> <span style="color:red; font-size: 0.8em;">New!</span></li>
+ <li><a href="/%E3%82%A2%E3%83%AB%E3%83%90T%E3%83%AA%E3%83%94%E3%83%BC%E3%82%BF%E3%83%BC" title="アルバTリピーター">アルバTリピーター</a> <span style="color:red; font-size: 0.8em;">New!</span></li>
+ <li><a href="/%E3%82%A2%E3%83%AB%E3%83%90T%E3%82%A2%E3%82%B5%E3%83%AB%E3%83%88" title="アルバTアサルト">アルバTアサルト</a> <span style="color:red; font-size: 0.8em;">New!</span></li>
+ <li><a href="/%E3%82%A2%E3%83%AB%E3%83%90T%E3%83%9E%E3%82%B7%E3%83%B3%E3%82%AC%E3%83%B3" title="アルバTマシンガン">アルバTマシンガン</a> <span style="color:red; font-size: 0.8em;">New!</span></li>
+ <li><a href="/%E3%83%AC%E3%82%B9%E3%82%AD%E3%83%A5%E3%83%BC%E3%82%AC%E3%83%B3" title="レスキューガン">レスキューガン</a> <span style="color:red; font-size: 0.8em;">New!</span></li>
+ <li><a href="/%E3%83%84%E3%82%A4%E3%83%B3%E3%83%AA%E3%83%94%E3%83%BC%E3%82%BF%E3%83%BC" title="ツインリピーター">ツインリピーター</a> <span style="color:red; font-size: 0.8em;">New!</span></li>
+ <li><a href="/%E3%83%84%E3%82%A4%E3%83%B3%E3%82%A2%E3%82%B5%E3%83%AB%E3%83%88" title="ツインアサルト">ツインアサルト</a> <span style="color:red; font-size: 0.8em;">New!</span></li>
+ <li><a href="/%E3%83%84%E3%82%A4%E3%83%B3%E3%83%9E%E3%82%B7%E3%83%B3%E3%82%AC%E3%83%B3" title="ツインマシンガン">ツインマシンガン</a> <span style="color:red; font-size: 0.8em;">New!</span></li>
+</ul>
+</div><h5>アクセス数</h5>
+    <div style="text-align:right">
+     <span style="font-size:12px;display:inline-block;line-height:130%;text-indent:0px">T.<span style="color:blue;">112806</span> Y.<span style="color:blue;">358807</span></span><br />
+     <span style="font-size:12px;display:inline-block;line-height:130%;text-indent:0px"><span class="wikicolor" style="color:#663300">NOW.<span style="color:red;">1075</span></span></span>
+     <span style="font-size:12px;display:inline-block;line-height:130%;text-indent:0px">TOTAL.<span style="color:blue;">39297753</span></span>
+    </div>
+   </div>
+  </td>
+  <td valign="top">
+   <div id="body">
+    <h1>pukiwiki.print.css の編集</h1>
+ <div id="realview_outer"><div id="realview"></div></div>
+<span style="color:Red">※</span>荒らし行為を行った場合は、プロバイダーに通報します。
+<form action="http://pso2es.net/" method="post" id="form">
+<div><input type="hidden" name="encode_hint" value="ぷ" /></div>
+ <div class="edit_form" onmouseup="pukiwiki_pos()" onkeyup="pukiwiki_pos()">
+
+  
+  <input type="hidden" name="cmd"    value="edit" />
+  <input type="hidden" name="page"   value="skin/pukiwiki.print.css" />
+  <input type="hidden" name="digest" value="d41d8cd98f00b204e9800998ecf8427e" />
+  <input type="hidden" name="ticket" value="7fdd7d2d12381077a17384c339d070a7" />
+  <input type="hidden" name="id"     value="" />
+  <textarea id="msg" name="msg" rows="40" cols="120" onselect="pukiwiki_apv(this.form.page.value,this)" onfocus="pukiwiki_apv(this.form.page.value,this)" onkeyup="pukiwiki_apv(this.form.page.value,this)" onmouseup="pukiwiki_apv(this.form.page.value,this)"></textarea>
+  <br />
+  <map id="map_button" name="map_button">
+<area shape="rect" coords="0,0,22,16" title="URL" alt="URL" href="#" onclick="javascript:pukiwiki_linkPrompt('url'); return false;" />
+<area shape="rect" coords="24,0,40,16" title="B" alt="B" href="#" onclick="javascript:pukiwiki_tag('b'); return false;" />
+<area shape="rect" coords="43,0,59,16" title="I" alt="I" href="#" onclick="javascript:pukiwiki_tag('i'); return false;" />
+<area shape="rect" coords="62,0,79,16" title="U" alt="U" href="#" onclick="javascript:pukiwiki_tag('u'); return false;" />
+<area shape="rect" coords="81,0,103,16" title="SIZE" alt="SIZE" href="#" onclick="javascript:pukiwiki_tag('size'); return false;" />
+</map>
+<map id="map_color" name="map_color">
+<area shape="rect" coords="0,0,8,8" title="Black" alt="Black" href="#" onclick="javascript:pukiwiki_tag('Black'); return false;" />
+<area shape="rect" coords="8,0,16,8" title="Maroon" alt="Maroon" href="#" onclick="javascript:pukiwiki_tag('Maroon'); return false;" />
+<area shape="rect" coords="16,0,24,8" title="Green" alt="Green" href="#" onclick="javascript:pukiwiki_tag('Green'); return false;" />
+<area shape="rect" coords="24,0,32,8" title="Olive" alt="Olive" href="#" onclick="javascript:pukiwiki_tag('Olive'); return false;" />
+<area shape="rect" coords="32,0,40,8" title="Navy" alt="Navy" href="#" onclick="javascript:pukiwiki_tag('Navy'); return false;" />
+<area shape="rect" coords="40,0,48,8" title="Purple" alt="Purple" href="#" onclick="javascript:pukiwiki_tag('Purple'); return false;" />
+<area shape="rect" coords="48,0,55,8" title="Teal" alt="Teal" href="#" onclick="javascript:pukiwiki_tag('Teal'); return false;" />
+<area shape="rect" coords="56,0,64,8" title="Gray" alt="Gray" href="#" onclick="javascript:pukiwiki_tag('Gray'); return false;" />
+<area shape="rect" coords="0,8,8,16" title="Silver" alt="Silver" href="#" onclick="javascript:pukiwiki_tag('Silver'); return false;" />
+<area shape="rect" coords="8,8,16,16" title="Red" alt="Red" href="#" onclick="javascript:pukiwiki_tag('Red'); return false;" />
+<area shape="rect" coords="16,8,24,16" title="Lime" alt="Lime" href="#" onclick="javascript:pukiwiki_tag('Lime'); return false;" />
+<area shape="rect" coords="24,8,32,16" title="Yellow" alt="Yellow" href="#" onclick="javascript:pukiwiki_tag('Yellow'); return false;" />
+<area shape="rect" coords="32,8,40,16" title="Blue" alt="Blue" href="#" onclick="javascript:pukiwiki_tag('Blue'); return false;" />
+<area shape="rect" coords="40,8,48,16" title="Fuchsia" alt="Fuchsia" href="#" onclick="javascript:pukiwiki_tag('Fuchsia'); return false;" />
+<area shape="rect" coords="48,8,56,16" title="Aqua" alt="Aqua" href="#" onclick="javascript:pukiwiki_tag('Aqua'); return false;" />
+<area shape="rect" coords="56,8,64,16" title="White" alt="White" href="#" onclick="javascript:pukiwiki_tag('White'); return false;" />
+</map>
+<script type="text/javascript" src="/skin/assistant.js"></script>
+
+  <br />
+  <input type="submit" name="write"   value="ページの更新" accesskey="s" />
+  
+  <input type="button" name="add_ajax" value="プレビュー" accesskey="p" onclick="pukiwiki_apx(this.form.page.value)" />
+  
+  <input type="submit" id="cancel" name="cancel"  value="キャンセル" accesskey="c" />
+  <textarea id="original" name="original" rows="1" cols="1" style="display:none"></textarea>
+ </div>
+</form><script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-52813711-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+    <div style="margin-top:.5em">
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- Rectangle -->
+<ins class="adsbygoogle"
+     style="display:inline-block;width:336px;height:280px"
+     data-ad-client="ca-pub-7495201961417132"
+     data-ad-slot="7264843606"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- Square -->
+<ins class="adsbygoogle"
+     style="display:inline-block;width:336px;height:280px"
+     data-ad-client="ca-pub-7495201961417132"
+     data-ad-slot="8741576803"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+    </div>
+   </div>
+  </td>
+ </tr>
+</table>
+</div>
+  </td>
+ </tr>
+</table>
+
+    
+<hr class="full_hr" />
+<div id="footer">
+ <br />
+  Powered by PukiWiki Plus!. (C)SEGA.</div>
+</body>
+</html>
+<!--
+     FILE ARCHIVED ON 22:30:25 Jan 16, 2015 AND RETRIEVED FROM THE
+     INTERNET ARCHIVE ON 02:38:56 Dec 23, 2019.
+     JAVASCRIPT APPENDED BY WAYBACK MACHINE, COPYRIGHT INTERNET ARCHIVE.
+
+     ALL OTHER CONTENT MAY ALSO BE PROTECTED BY COPYRIGHT (17 U.S.C.
+     SECTION 108(a)(3)).
+-->
+<!--
+playback timings (ms):
+  captures_list: 553.906
+  exclusion.robots: 0.239
+  exclusion.robots.policy: 0.224
+  RedisCDXSource: 436.677
+  esindex: 0.011
+  PetaboxLoader3.resolve: 644.48
+  load_resource: 699.382
+  CDXLines.iter: 12.905 (3)
+  LoadShardBlock: 101.347 (3)
+  PetaboxLoader3.datanode: 116.293 (4)
+-->
