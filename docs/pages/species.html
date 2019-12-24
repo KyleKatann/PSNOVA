@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>PSNOVA 攻略サイト</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="PSNOVA(ファンタシースターノヴァ)の攻略サイトです。">
+    <meta name="keywords" content="PSNOVA,PS,NOVA,PSO,PSO2,ファンタシースターノヴァ,ファンタシースター,ノヴァ,vita,攻略">
+
+    <link rel="stylesheet" href="https://kylekatann.github.io/PSNOVA/css/style.css">
+
+    <script type="text/javascript" src="https://kylekatann.github.io/PSNOVA/js/openclose.js"></script>
+    <script type="text/javascript" src="https://kylekatann.github.io/PSNOVA/js/fixmenu_pagetop.js"></script>
+    <script type="text/javascript" src="https://kylekatann.github.io/PSNOVA/js/menubar.js"></script>
+    <script type="text/javascript" src="https://kylekatann.github.io/PSNOVA/js/sidebar.js"></script>
+    
+</head>
+
+<body>
+    <div id="container">
+        <header>
+            <h1 id="logo"><a href="https://kylekatann.github.io/PSNOVA/index.html"><img src="https://kylekatann.github.io/PSNOVA/img/logo.png" alt="PSNOVA 攻略サイト"></a></h1>
+        </header>
+        <!-- menubar共通部分の読み込み -->
+        <script type="text/javascript">menu();</script>
+
+
+        <!--カンペ h2黒背景白文字 h3白背景黒文字-->
+
+        <div id="contents">
+
+            <!-- sidebar共通部分の読み込み -->
+            <script type="text/javascript">side();</script>   
+
+            <div id="main">
+                <section>
+                    <h2>種族</h2>
+                    <p>
+                        psnovaではヒューマン、ニューマン、キャストの三種族が存在する。<br>
+                    </p>
+                    <h3>ヒューマン</h3>
+                    <p>
+                        ヒューマンは最も基本的な種族である。ステータス的にはキャストとニューマンの中間であるものの、総合値が最も高い種族。打撃、射撃、法撃どれも平均的に伸び、どのクラスにも適応できる。<br>
+                        迷ったらヒューマンにすればよい。<br>
+                    </p>
+                    <h3>ニューマン</h3>
+                    <p>
+                        フォトンの扱いに長けた種族である。法撃力にプラス補正が付きHPにマイナス補正が付く、フォースに向いている。<br>
+                    </p>
+                    <h3>キャスト</h3>
+                    <p>
+                        体が機械でできた種族である。射撃力とHPにプラス補正が付く、レンジャーに向いている。<br>
+                        コスチュームとして上２種族が１つに対してキャストは３つ必要なのに注意されたし。<br>
+                    </p>                                        
+                </section>
+
+
+            </div>
+            <!--/main-->
+
+        </div>
+        <!--/contents-->
+
+        <footer>
+            <small>Copyright&copy; <a href="https://kylekatann.github.io/PSNOVA/index.html">PSNOVA 攻略サイト</a> All Rights Reserved.</small>
+            <span class="pr"><a href="http://template-party.com/" target="_blank">Web Design:Template-Party</a></span>
+        </footer>
+    </div>
+    <!--/container-->
+
+    <p class="nav-fix-pos-pagetop"><a href="#">↑</a></p>
+
+    <!--メニュー開閉ボタン-->
+    <div id="menubar_hdr" class="close"></div>
+    <!--メニューの開閉処理条件設定　800px以下-->
+    <script type="text/javascript">
+        if (OCwindowWidth() <= 800) {
+            open_close("menubar_hdr", "menubar-s");
+        }
+    </script>
+
+</body>
+</html>
