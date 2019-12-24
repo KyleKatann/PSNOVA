@@ -12,8 +12,12 @@ var html =`
 <li><a href="https://kylekatann.github.io/PSNOVA/pages/armor.html">防具データ</a></li>
 <li><a href="https://kylekatann.github.io/PSNOVA/pages/material.html">素材</a></li>
 <li><a href="https://kylekatann.github.io/PSNOVA/pages/item.html">アイテム</a></li>
-<li><a href="link.html">リンク</a></li>
-<li><a href="contact.html">お問い合わせ</a></li>
+
+<li><p>キャラクター</p></li>
+<li><a href="https://kylekatann.github.io/PSNOVA/pages/species.html">種族</a></li>
+<li><a href="https://kylekatann.github.io/PSNOVA/pages/armor.html">防具データ</a></li>
+<li><a href="https://kylekatann.github.io/PSNOVA/pages/material.html">素材</a></li>
+<li><a href="https://kylekatann.github.io/PSNOVA/pages/item.html">アイテム</a></li>
 </ul>
 </nav>
 
