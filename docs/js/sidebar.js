@@ -7,7 +7,7 @@ var html =`
 <nav>
 <h2>Contents</h2>
 <ul class="submenu">
-<li><a href="company.html">会社概要</a></li>
+<li><a href="https://kylekatann.github.io/PSNOVA/pages/weapon.html">武器情報</a></li>
 <li><a href="service.html">サービス紹介</a></li>
 <li><a href="recruit.html">採用情報</a></li>
 <li><a href="faq.html">よく頂く質問</a></li>
