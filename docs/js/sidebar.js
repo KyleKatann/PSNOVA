@@ -11,6 +11,7 @@ var html =`
 <li><a href="https://kylekatann.github.io/PSNOVA/pages/weapon.html">武器データ</a></li>
 <li><a href="https://kylekatann.github.io/PSNOVA/pages/armor.html">防具データ</a></li>
 <li><a href="https://kylekatann.github.io/PSNOVA/pages/attachment.html">アタッチパーツ</a></li>
+<li><a href="https://kylekatann.github.io/PSNOVA/pages/specialability.html">特殊能力</a></li>
 <li><a href="https://kylekatann.github.io/PSNOVA/pages/material.html">素材</a></li>
 <li><a href="https://kylekatann.github.io/PSNOVA/pages/item.html">消費アイテム</a></li>
 
