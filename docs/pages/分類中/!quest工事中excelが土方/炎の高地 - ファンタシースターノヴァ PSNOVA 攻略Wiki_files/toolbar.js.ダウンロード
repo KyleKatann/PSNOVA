@@ -73,6 +73,54 @@ if(typeof __wm==="undefined") __wm={};
       wmipp.style.display = "block";
     }
 
+    var modalIsOpen = false, bannerIsVisible = true;
+
+    function processMessage(ev) {
+      if (ev.origin.indexOf('archive.org') === -1)
+	return;
+      // donation banner sends msg as JSON string.
+      var msg = typeof ev.data == "string" ? _JSON.parse(ev.data) : ev.data;
+      console.log('got message %o', msg);
+      if (msg.event == 'set height') {
+	var iHeight = msg.value; // iframe height
+	var bHeight = msg.bannerHeight; // banner height
+	if (typeof iHeight !== "number" || iHeight <= 0) return;
+	if (!bannerIsVisible) return;
+	prevHeight = msg.value;
+	if (modalIsOpen) {
+	  return;
+	}
+	$donato.style.height = bHeight + 'px';
+	$donatoBase.style.height = iHeight + 'px';
+      } else if (msg.event == 'open modal') {
+	$donatoBase.style.height = '';
+	document.body.classList.add('wm-modal');
+	window.scrollTo(0, 0);
+	modalIsOpen = true;
+      } else if (msg.event == 'close modal') {
+	$donato.style.marginBottom = '0px';
+	document.body.classList.remove('wm-modal');
+	modalIsOpen = false;
+      } else if (msg.event == 'hide banner') {
+	$donato.style.height = 0;
+	var expires = new Date(Date.now() + msg.value*24*3600*1000);
+	document.cookie = 'donation=x; domain=archive.org; path=/; expires=' +
+	  expires.toUTCString();
+	bannerIsVisible = false;
+	modalIsOpen = false;
+	prevHeight = 0;
+      }
+    }
+
+    var $donato = document.getElementById('donato');
+    if ($donato) {
+      if (window.top != window.self) {
+	$donato.style.display = 'none';
+      } else {
+	var $donatoBase = document.getElementById('donato-base');
+	window.addEventListener('message', processMessage, false);
+      }
+    }
     var $spk=$('wm-ipp-sparkline')
     $expand=$('wm-expand');
     $capinfo=$('wm-capinfo');

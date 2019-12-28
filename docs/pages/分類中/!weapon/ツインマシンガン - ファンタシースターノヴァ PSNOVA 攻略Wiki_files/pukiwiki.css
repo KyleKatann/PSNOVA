@@ -38,12 +38,12 @@ a:hover {
 }
 
 a.external {
-	background: url(http://web.archive.org/web/20150314232253im_/http://psnova.net/image/externallink.png) center right no-repeat;
+	background: url(http://web.archive.org/web/20161106090937im_/http://pso2wiki.net/image/externallink.png) center right no-repeat;
 	padding-right: 13px;
 }
 
 a.externallink {
-	background: url(http://web.archive.org/web/20150314232253im_/http://psnova.net/image/externallink.png) center right no-repeat;
+	background: url(http://web.archive.org/web/20161106090937im_/http://pso2wiki.net/image/externallink.png) center right no-repeat;
 	padding-right: 13px;
 }
 
@@ -90,7 +90,6 @@ h1.title {
 	font-size: 30px;
 	font-weight:bold;
 	background-color:transparent;
-	color:#215dc6;
 	padding: 12px 0px 0px 0px;
 	border: 0px;
 	margin: 12px 0px 0px 0px;
@@ -171,8 +170,8 @@ ol.list3 { list-style-type:lower-alpha; }
 
 div.ie5 { text-align:center; }
 
-span.noexists {
-	color:inherit;
+span.noexists a {
+	color:red;
 	background-color:#FFFACC;
 }
 
@@ -187,7 +186,7 @@ span.noexists {
 }
 
 a.note_super {
-	color:#DD3333;
+	color:red;
 	background-color:inherit;
 	font-weight:bold;
 	font-size:60%;
@@ -620,83 +619,29 @@ td.vote_td2 {
 	background-color:#EEF5FF;
 }
 
+.pcommentform {
+	margin:0px 0px .5em 0px;
+}
+
 .pcommentform textarea {
 	margin: 0.5em 0;
 	height: 2.4em;
 	width: 600px;
 }
 
-/* jquery Accordion Menu */
-.glossymenu {
-	width: 100%; /*width of menu*/
-}
-.glossymenu p {
-	margin: 0;
-}
-.glossymenu p a {
-	position: relative; /*To help in the anchoring of the &quot;.statusicon&quot; icon image*/
-	text-decoration: underline;
-}
-
-.submenuheader p a {
-	position: relative; /*To help in the anchoring of the &quot;.statusicon&quot; icon image*/
-	text-decoration: none;
-}
-
-.glossymenu p a :visited, .glossymenu p a:active,
-.submenuheader p a:visited, .submenuheader p a:active {
-
-}
-.glossymenu p a:hover, .submenuheader p a:hover {
-
-}
-.submenuheader {
-	position: relative; /*To help in the anchoring of the &quot;.statusicon&quot; icon image*/
-	cursor: pointer;
-}
-.submenuheader .statusicon { /*CSS for icon image that gets dynamically added to headers*/
-	position: absolute;
-	top: 5px;
-	right: 7px;
-	border: none;
-}
-#menubar .submenu{ /*DIV that contains each sub menu*/ }
-
-#menubar .submenu ul.menu li {
-   margin-bottom: 2px;
-}
-
-#menubar .submenu ul.menu li a {
-
-}
-
-#menubar .submenu ul.menu li a:hover {
-
-}
-
-#menubar .submenu p {
-  margin:  0;
-  padding: 0;
-}
-
-#menubar .submenu ul.menu li span.noexists a {
-	margin-left: 1px;
-	padding: 0 1px;
-}
-
 /* tables */
 table.style_table thead tr .header {
-        background-image: url(http://web.archive.org/web/20150314232253im_/http://psnova.net/image/bg.gif?314);
+        background-image: url(http://web.archive.org/web/20161106090937im_/http://pso2wiki.net/image/bg.gif?314);
         background-repeat: no-repeat;
         background-position: center bottom 5px;
         cursor: pointer;
         padding-bottom: 25px;
 }
 table.style_table thead tr .headerSortUp {
-        background-image: url(http://web.archive.org/web/20150314232253im_/http://psnova.net/image/asc.gif?314);
+        background-image: url(http://web.archive.org/web/20161106090937im_/http://pso2wiki.net/image/asc.gif?314);
 }
 table.style_table thead tr .headerSortDown {
-        background-image: url(http://web.archive.org/web/20150314232253im_/http://psnova.net/image/desc.gif?314);
+        background-image: url(http://web.archive.org/web/20161106090937im_/http://pso2wiki.net/image/desc.gif?314);
 }
 table.style_table thead tr .headerSortDown, table.style_table thead tr .headerSortUp {
         background-color: #8dbdd8;
@@ -705,11 +650,11 @@ table.style_table thead tr .headerSortDown, table.style_table thead tr .headerSo
 /* fold plugin */
 .plugin_fold_title_plus {
 	margin: 0; padding: 0 0 0 17px;
-	background: transparent url(/web/20150314232253im_/http://psnova.net/image/plus.gif) no-repeat scroll left top;
+	background: transparent url(/web/20161106090937im_/http://psnova.net/image/plus.gif) no-repeat scroll left top;
 }
 .plugin_fold_title_minus {
 	margin: 0; padding: 0 0 0 17px;
-	background: transparent url(/web/20150314232253im_/http://psnova.net/image/minus.gif) no-repeat scroll left top;
+	background: transparent url(/web/20161106090937im_/http://psnova.net/image/minus.gif) no-repeat scroll left top;
 }
 .plugin_fold_title_minus p{margin-bottom :0; padding-bottom:0;}
 .plugin_fold_body p{margin-top :3px; padding-top:0px;}
@@ -743,9 +688,220 @@ table.style_table thead tr .headerSortDown, table.style_table thead tr .headerSo
 	display: none;
 }
 
+/* Preload images */
+body:after {
+  content: url(http://web.archive.org/web/20161106090937im_/http://pso2wiki.net/image/close.png) url(http://web.archive.org/web/20161106090937im_/http://pso2wiki.net/image/loading.gif) url(http://web.archive.org/web/20161106090937im_/http://pso2wiki.net/image/prev.png) url(http://web.archive.org/web/20161106090937im_/http://pso2wiki.net/image/next.png);
+  display: none;
+}
+
+.lightboxOverlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 9999;
+  background-color: black;
+  filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=80);
+  opacity: 0.8;
+  display: none;
+}
+
+.lightbox {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  z-index: 10000;
+  text-align: center;
+  line-height: 0;
+  font-weight: normal;
+}
+
+.lightbox .lb-image {
+  display: block;
+  height: auto;
+  max-width: inherit;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  -ms-border-radius: 3px;
+  -o-border-radius: 3px;
+  border-radius: 3px;
+}
+
+.lightbox a img {
+  border: none;
+}
+
+.lb-outerContainer {
+  position: relative;
+  background-color: white;
+  *zoom: 1;
+  width: 250px;
+  height: 250px;
+  margin: 0 auto;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  -ms-border-radius: 4px;
+  -o-border-radius: 4px;
+  border-radius: 4px;
+}
+
+.lb-outerContainer:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+.lb-container {
+  padding: 4px;
+}
+
+.lb-loader {
+  position: absolute;
+  top: 43%;
+  left: 0;
+  height: 25%;
+  width: 100%;
+  text-align: center;
+  line-height: 0;
+}
+
+.lb-cancel {
+  display: block;
+  width: 32px;
+  height: 32px;
+  margin: 0 auto;
+  background: url(http://web.archive.org/web/20161106090937im_/http://pso2wiki.net/image/loading.gif) no-repeat;
+}
+
+.lb-nav {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  z-index: 10;
+}
+
+.lb-container > .nav {
+  left: 0;
+}
+
+.lb-nav a {
+  outline: none;
+  background-image: url('data:image/gif;base64,R0lGODlhAQABAPAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==');
+}
+
+.lb-prev, .lb-next {
+  height: 100%;
+  cursor: pointer;
+  display: block;
+}
+
+.lb-nav a.lb-prev {
+  width: 34%;
+  left: 0;
+  float: left;
+  background: url(http://web.archive.org/web/20161106090937im_/http://pso2wiki.net/image/prev.png) left 48% no-repeat;
+  filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=0);
+  opacity: 0;
+  -webkit-transition: opacity 0.6s;
+  -moz-transition: opacity 0.6s;
+  -o-transition: opacity 0.6s;
+  transition: opacity 0.6s;
+}
+
+.lb-nav a.lb-prev:hover {
+  filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=100);
+  opacity: 1;
+}
+
+.lb-nav a.lb-next {
+  width: 64%;
+  right: 0;
+  float: right;
+  background: url(http://web.archive.org/web/20161106090937im_/http://pso2wiki.net/image/next.png) right 48% no-repeat;
+  filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=0);
+  opacity: 0;
+  -webkit-transition: opacity 0.6s;
+  -moz-transition: opacity 0.6s;
+  -o-transition: opacity 0.6s;
+  transition: opacity 0.6s;
+}
+
+.lb-nav a.lb-next:hover {
+  filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=100);
+  opacity: 1;
+}
+
+.lb-dataContainer {
+  margin: 0 auto;
+  padding-top: 5px;
+  *zoom: 1;
+  width: 100%;
+  -moz-border-radius-bottomleft: 4px;
+  -webkit-border-bottom-left-radius: 4px;
+  border-bottom-left-radius: 4px;
+  -moz-border-radius-bottomright: 4px;
+  -webkit-border-bottom-right-radius: 4px;
+  border-bottom-right-radius: 4px;
+}
+
+.lb-dataContainer:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+.lb-data {
+  padding: 0 4px;
+  color: #ccc;
+}
+
+.lb-data .lb-details {
+  width: 85%;
+  float: left;
+  text-align: left;
+  line-height: 1.1em;
+}
+
+.lb-data .lb-caption {
+  font-size: 13px;
+  font-weight: bold;
+  line-height: 1em;
+}
+
+.lb-data .lb-number {
+  display: block;
+  clear: left;
+  padding-bottom: 1em;
+  font-size: 12px;
+  color: #999999;
+}
+
+.lb-data .lb-close {
+  display: block;
+  float: right;
+  width: 30px;
+  height: 30px;
+  background: url(http://web.archive.org/web/20161106090937im_/http://pso2wiki.net/image/close.png) top right no-repeat;
+  text-align: right;
+  outline: none;
+  filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=70);
+  opacity: 0.7;
+  -webkit-transition: opacity 0.2s;
+  -moz-transition: opacity 0.2s;
+  -o-transition: opacity 0.2s;
+  transition: opacity 0.2s;
+}
+
+.lb-data .lb-close:hover {
+  cursor: pointer;
+  filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=100);
+  opacity: 1;
+}
+
 /*
-     FILE ARCHIVED ON 23:22:53 Mar 14, 2015 AND RETRIEVED FROM THE
-     INTERNET ARCHIVE ON 22:24:58 Dec 22, 2019.
+     FILE ARCHIVED ON 09:09:37 Nov 06, 2016 AND RETRIEVED FROM THE
+     INTERNET ARCHIVE ON 13:14:46 Dec 28, 2019.
      JAVASCRIPT APPENDED BY WAYBACK MACHINE, COPYRIGHT INTERNET ARCHIVE.
 
      ALL OTHER CONTENT MAY ALSO BE PROTECTED BY COPYRIGHT (17 U.S.C.
@@ -753,14 +909,14 @@ table.style_table thead tr .headerSortDown, table.style_table thead tr .headerSo
 */
 /*
 playback timings (ms):
-  exclusion.robots: 0.183
-  esindex: 0.013
-  LoadShardBlock: 259.682 (3)
-  load_resource: 118.921
-  exclusion.robots.policy: 0.17
-  RedisCDXSource: 6.571
-  PetaboxLoader3.resolve: 67.968
-  CDXLines.iter: 16.043 (3)
-  captures_list: 286.198
-  PetaboxLoader3.datanode: 132.233 (4)
+  RedisCDXSource: 13.832
+  esindex: 0.017
+  captures_list: 275.186
+  exclusion.robots: 0.131
+  PetaboxLoader3.resolve: 232.683
+  exclusion.robots.policy: 0.121
+  CDXLines.iter: 11.025 (3)
+  LoadShardBlock: 247.817 (3)
+  load_resource: 321.96
+  PetaboxLoader3.datanode: 258.204 (4)
 */

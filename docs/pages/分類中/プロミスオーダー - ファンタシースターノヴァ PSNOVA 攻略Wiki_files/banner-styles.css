@@ -399,3 +399,24 @@ html.wb-highlight {
 
   display: inline-block;
 }
+#donato #donato-base {
+    height: 100%;
+}
+body.wm-modal {
+    height: auto !important;
+    overflow: hidden !important;
+}
+#donato #donato-base {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    z-index: 2147483639;
+}
+body.wm-modal #donato #donato-base {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 2147483640;
+}
