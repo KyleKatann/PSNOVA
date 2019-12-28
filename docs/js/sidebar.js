@@ -25,6 +25,9 @@ var html =`
 </ul>
 </nav>
 
+<li><p>トロフィー</p></li>
+<li><a href="https://kylekatann.github.io/PSNOVA/pages/trophy.html">トロフィー</a></li>
+
 <aside>
 <!--
 <a href="recruit.html"><img src="images/banner1.jpg" alt="採用情報" class="pc"></a>
