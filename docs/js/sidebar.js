@@ -9,6 +9,7 @@ var html =`
 <ul class="submenu">
 
     <li><p>各種データ</p></li>
+    <li><a href="https://kylekatann.github.io/PSNOVA/pages/enemy.html">エネミー</a></li>
     <li><a href="https://kylekatann.github.io/PSNOVA/pages/weapon.html">武器データ</a></li>
     <li><a href="https://kylekatann.github.io/PSNOVA/pages/armor.html">防具データ</a></li>
     <li><a href="https://kylekatann.github.io/PSNOVA/pages/attachment.html">アタッチパーツ</a></li>
@@ -22,7 +23,9 @@ var html =`
     <li><p>キャラクター</p></li>
     <li><a href="https://kylekatann.github.io/PSNOVA/pages/species.html">種族</a></li>
     <li><a href="https://kylekatann.github.io/PSNOVA/pages/appearance.html">ヘアスタイル・コスチューム・アクセサリー</a></li>
-    <li><a href="https://kylekatann.github.io/PSNOVA/pages/class.html">クラス</a></li>
+
+    
+    <!-- <li><a href="https://kylekatann.github.io/PSNOVA/pages/class.html">クラス</a></li> -->
     <!--  <li><a href="https://kylekatann.github.io/PSNOVA/pages/skill.html">スキル一覧</a></li>  -->
 
     <li><p>トロフィー</p></li>
