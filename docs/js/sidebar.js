@@ -10,6 +10,7 @@ var html =`
 
     <li><p>各種データ</p></li>
     <li><a href="https://kylekatann.github.io/PSNOVA/pages/enemy.html">エネミー</a></li>
+    <li><a href="https://kylekatann.github.io/PSNOVA/pages/gigantes.html">ギガンテス</a></li>
     <li><a href="https://kylekatann.github.io/PSNOVA/pages/weapon.html">武器データ</a></li>
     <li><a href="https://kylekatann.github.io/PSNOVA/pages/armor.html">防具データ</a></li>
     <li><a href="https://kylekatann.github.io/PSNOVA/pages/attachment.html">アタッチパーツ</a></li>
@@ -34,13 +35,6 @@ var html =`
 </ul>
 </nav>
 
-
-<aside>
-<!--
-<a href="recruit.html"><img src="images/banner1.jpg" alt="採用情報" class="pc"></a>
-<a href="recruit.html"><img src="images/banner1_sh.jpg" alt="採用情報" class="sh"></a>  
--->
-</aside>
 </div>
 
 
