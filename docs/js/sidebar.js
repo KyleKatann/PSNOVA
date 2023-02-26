@@ -35,7 +35,7 @@ var html =`
 </ul>
 </nav>
 <!--広告-->
-<a href="https://hb.afl.rakuten.co.jp/hsc/301a8516.81f1c2e2.161c2dce.b25f77a4/?link_type=pict&ut=eyJwYWdlIjoic2hvcCIsInR5cGUiOiJwaWN0IiwiY29sIjoxLCJjYXQiOiI4MCIsImJhbiI6IjMxOTU4NCIsImFtcCI6ZmFsc2V9" target="_blank" rel="nofollow sponsored noopener" style="word-wrap:break-word;"  ><img src="https://hbb.afl.rakuten.co.jp/hsb/301a8516.81f1c2e2.161c2dce.b25f77a4/?me_id=1&me_adv_id=319584&t=pict" border="0" style="margin:2px" alt="" title="">aa</a>
+<a href="https://hb.afl.rakuten.co.jp/hsc/301b0604.e2433fa0.161c2dce.b25f77a4/?link_type=pict&ut=eyJwYWdlIjoic2hvcCIsInR5cGUiOiJwaWN0IiwiY29sIjoxLCJjYXQiOiI4MCIsImJhbiI6IjQ2MzYyIiwiYW1wIjpmYWxzZX0%3D" target="_blank" rel="nofollow sponsored noopener" style="word-wrap:break-word;"  ><img src="https://hbb.afl.rakuten.co.jp/hsb/301b0604.e2433fa0.161c2dce.b25f77a4/?me_id=1&me_adv_id=46362&t=pict" border="0" style="margin:2px" alt="" title=""></a>
 
 </div>
 
