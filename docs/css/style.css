@@ -6,46 +6,50 @@ img {max-width: 200%;
 /*全端末（PC・タブレット・スマホ）共通設定
 ------------------------------------------------------------------------------------------------------------------------------------------------------*/
 /* テーブル全体のデザイン */
+/* テーブル全体のデザイン */
 table {
 	width: 100%;
 	border-collapse: collapse;
-	background-color: #2d2d2d; /* テーブル背景色 */
-	color: #ffffff; /* 文字色 */
+	background-color: #ffffff; /* テーブル背景色 */
+	color: #333333; /* 文字色 */
 	font-family: Arial, sans-serif;
 	margin: 20px 0;
-	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* テーブル全体の影 */
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* テーブル全体の影 */
+	border-radius: 8px; /* 角を丸くする */
+	overflow: hidden;
   }
   
   /* テーブルヘッダーのデザイン */
   table th {
-	background-color: #4a4a4a; /* ヘッダー背景色 */
-	color: #ffcc00; /* ヘッダー文字色 */
+	background-color: #f8f8f8; /* ヘッダー背景色 */
+	color: #555555; /* ヘッダー文字色 */
 	font-weight: bold;
 	padding: 12px;
 	text-align: left;
 	text-transform: uppercase; /* 大文字にする */
+	border-bottom: 2px solid #e0e0e0; /* 下に境界線 */
   }
   
   /* テーブルボディ（各行）のデザイン */
   table td {
 	padding: 12px;
-	border-bottom: 1px solid #444444; /* 行間の境界線 */
+	border-bottom: 1px solid #e0e0e0; /* 行間の境界線 */
   }
   
   /* 奇数・偶数行で色を変える */
   table tr:nth-child(even) {
-	background-color: #3a3a3a;
+	background-color: #f9f9f9; /* 偶数行の背景色 */
   }
   
   /* 行にホバーしたときの効果 */
   table tr:hover {
-	background-color: #555555; /* ホバー時の背景色 */
+	background-color: #e6f7ff; /* ホバー時の背景色 */
 	transition: background-color 0.3s ease;
   }
   
-  /* テーブルの枠線 */
+  /* テーブルの枠線を目立たなくする */
   table, th, td {
-	border: 1px solid #555555;
+	border: none;
   }
   
   /* レスポンシブデザイン: スマートフォン画面でスクロール可能にする */
