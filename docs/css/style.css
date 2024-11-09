@@ -5,6 +5,59 @@ img {max-width: 200%;
 }
 /*全端末（PC・タブレット・スマホ）共通設定
 ------------------------------------------------------------------------------------------------------------------------------------------------------*/
+/* テーブル全体のデザイン */
+table {
+	width: 100%;
+	border-collapse: collapse;
+	background-color: #2d2d2d; /* テーブル背景色 */
+	color: #ffffff; /* 文字色 */
+	font-family: Arial, sans-serif;
+	margin: 20px 0;
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* テーブル全体の影 */
+  }
+  
+  /* テーブルヘッダーのデザイン */
+  table th {
+	background-color: #4a4a4a; /* ヘッダー背景色 */
+	color: #ffcc00; /* ヘッダー文字色 */
+	font-weight: bold;
+	padding: 12px;
+	text-align: left;
+	text-transform: uppercase; /* 大文字にする */
+  }
+  
+  /* テーブルボディ（各行）のデザイン */
+  table td {
+	padding: 12px;
+	border-bottom: 1px solid #444444; /* 行間の境界線 */
+  }
+  
+  /* 奇数・偶数行で色を変える */
+  table tr:nth-child(even) {
+	background-color: #3a3a3a;
+  }
+  
+  /* 行にホバーしたときの効果 */
+  table tr:hover {
+	background-color: #555555; /* ホバー時の背景色 */
+	transition: background-color 0.3s ease;
+  }
+  
+  /* テーブルの枠線 */
+  table, th, td {
+	border: 1px solid #555555;
+  }
+  
+  /* レスポンシブデザイン: スマートフォン画面でスクロール可能にする */
+  @media (max-width: 768px) {
+	table {
+	  display: block;
+	  overflow-x: auto;
+	  white-space: nowrap;
+	}
+  }
+
+
 body {
 	color: #666;	/*全体の文字色*/
 	margin: 0px;
