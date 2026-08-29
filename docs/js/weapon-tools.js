@@ -3,6 +3,20 @@
         return (value || "").normalize("NFKC").toLowerCase().trim();
     }
 
+    function numericValue(value) {
+        var match = String(value || "").replace(/,/g, "").match(/-?\d+(?:\.\d+)?/);
+        return match ? Number(match[0]) : null;
+    }
+
+    function maxNumeric(cells, indexes) {
+        var values = indexes.map(function (index) {
+            return cells[index] ? numericValue(cells[index].textContent) : null;
+        }).filter(function (value) {
+            return value !== null;
+        });
+        return values.length ? Math.max.apply(Math, values) : null;
+    }
+
     function uniqueInOrder(records, key, labelKey) {
         var seen = new Set();
         var values = [];
@@ -31,6 +45,19 @@
         });
     }
 
+    function compareNullableNumbers(left, right, direction) {
+        if (left === null && right === null) {
+            return 0;
+        }
+        if (left === null) {
+            return 1;
+        }
+        if (right === null) {
+            return -1;
+        }
+        return (left - right) * direction;
+    }
+
     function initWeaponTools() {
         var main = document.getElementById("main");
         if (!main || document.getElementById("weapon-search")) {
@@ -53,7 +80,7 @@
             var typeLabel = summary.textContent.trim();
             var type = normalizeText(typeLabel);
             var rows = Array.prototype.slice.call(table.querySelectorAll("tr"), 1);
-            rows.forEach(function (row) {
+            rows.forEach(function (row, index) {
                 var cells = row.cells;
                 if (!cells || !cells[0]) {
                     return;
@@ -63,14 +90,19 @@
                 var shopLabel = cells[5] ? cells[5].textContent.trim() : "";
                 records.push({
                     row: row,
+                    parent: row.parentNode,
                     details: details,
+                    originalIndex: index,
                     name: normalizeText(cells[0].textContent),
                     type: type,
                     typeLabel: typeLabel,
                     rarity: normalizeText(rarityLabel),
                     rarityLabel: rarityLabel,
+                    rarityNumber: numericValue(rarityLabel),
                     shopLevel: normalizeText(shopLabel),
-                    shopLabel: shopLabel
+                    shopLabel: shopLabel,
+                    shopNumber: numericValue(shopLabel),
+                    attackNumber: maxNumeric(cells, [2, 3, 4])
                 });
             });
         });
@@ -88,6 +120,15 @@
             '<div class="data-filter-field"><label for="weapon-type-filter">武器種</label><select id="weapon-type-filter"></select></div>',
             '<div class="data-filter-field"><label for="weapon-rarity-filter">レアリティ</label><select id="weapon-rarity-filter"></select></div>',
             '<div class="data-filter-field"><label for="weapon-shop-filter">Shop Lv</label><select id="weapon-shop-filter"></select></div>',
+            '<div class="data-filter-field"><label for="weapon-sort">並び順</label><select id="weapon-sort">',
+            '<option value="original">初期順序</option>',
+            '<option value="rarity-asc">レアリティ 昇順</option>',
+            '<option value="rarity-desc">レアリティ 降順</option>',
+            '<option value="attack-asc">最大攻撃力 昇順</option>',
+            '<option value="attack-desc">最大攻撃力 降順</option>',
+            '<option value="shop-asc">Shop Lv 昇順</option>',
+            '<option value="shop-desc">Shop Lv 降順</option>',
+            '</select></div>',
             '</div>'
         ].join("");
 
@@ -97,11 +138,45 @@
         var typeFilter = document.getElementById("weapon-type-filter");
         var rarityFilter = document.getElementById("weapon-rarity-filter");
         var shopFilter = document.getElementById("weapon-shop-filter");
+        var sortControl = document.getElementById("weapon-sort");
         var count = document.getElementById("weapon-search-count");
 
         populateSelect(typeFilter, uniqueInOrder(records, "type", "typeLabel"), "すべての武器種");
         populateSelect(rarityFilter, uniqueInOrder(records, "rarity", "rarityLabel"), "すべてのレアリティ");
         populateSelect(shopFilter, uniqueInOrder(records, "shopLevel", "shopLabel"), "すべてのShop Lv");
+
+        function applySort() {
+            var sortValue = sortControl.value;
+            var parts = sortValue.split("-");
+            var key = parts[0];
+            var direction = parts[1] === "desc" ? -1 : 1;
+
+            detailsSections.forEach(function (details) {
+                var sectionRecords = records.filter(function (record) {
+                    return record.details === details;
+                });
+
+                sectionRecords.sort(function (left, right) {
+                    if (key === "original") {
+                        return left.originalIndex - right.originalIndex;
+                    }
+                    if (key === "rarity") {
+                        return compareNullableNumbers(left.rarityNumber, right.rarityNumber, direction) || left.originalIndex - right.originalIndex;
+                    }
+                    if (key === "attack") {
+                        return compareNullableNumbers(left.attackNumber, right.attackNumber, direction) || left.originalIndex - right.originalIndex;
+                    }
+                    if (key === "shop") {
+                        return compareNullableNumbers(left.shopNumber, right.shopNumber, direction) || left.originalIndex - right.originalIndex;
+                    }
+                    return 0;
+                });
+
+                sectionRecords.forEach(function (record) {
+                    record.parent.appendChild(record.row);
+                });
+            });
+        }
 
         function applyFilters() {
             var query = normalizeText(input.value);
@@ -138,6 +213,11 @@
         typeFilter.addEventListener("change", applyFilters);
         rarityFilter.addEventListener("change", applyFilters);
         shopFilter.addEventListener("change", applyFilters);
+        sortControl.addEventListener("change", function () {
+            applySort();
+            applyFilters();
+        });
+        applySort();
         applyFilters();
     }
 
