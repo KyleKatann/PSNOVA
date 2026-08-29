@@ -2,6 +2,7 @@
     --page-bg: #f7f7f5;
     --surface: #ffffff;
     --surface-subtle: #f4f4f1;
+    --surface-muted: #f4f4f1;
     --surface-hover: #efefeb;
     --text: #171717;
     --text-muted: #6b6b67;
@@ -11,6 +12,8 @@
     --accent-hover: #24439f;
     --focus-ring: rgba(49, 87, 200, 0.22);
     --radius: 7px;
+    --radius-sm: 7px;
+    --radius-md: 9px;
 }
 
 *,
@@ -65,7 +68,6 @@ select:focus-visible {
     background: #dfe6ff;
 }
 
-/* Header */
 header {
     display: flex;
     align-items: center;
@@ -89,7 +91,6 @@ header #logo img {
     margin: 0;
 }
 
-/* Top navigation: no card wrapper */
 nav#menubar {
     margin: 0 0 22px;
     border-bottom: 1px solid var(--border);
@@ -163,7 +164,6 @@ nav#menubar ul li a span {
     display: none;
 }
 
-/* Main content frame */
 #contents {
     display: flex;
     align-items: flex-start;
@@ -191,7 +191,6 @@ nav#menubar ul li a span {
     color: var(--text);
 }
 
-/* Page headings */
 #main h2 {
     clear: both;
     margin: 0 0 12px;
@@ -240,7 +239,6 @@ nav#menubar ul li a span {
     border-radius: var(--radius);
 }
 
-/* Sidebar: quiet navigation rather than a boxed panel */
 #sub nav {
     position: sticky;
     top: 18px;
@@ -306,7 +304,6 @@ nav#menubar ul li a span {
     background: transparent;
 }
 
-/* Tables */
 table {
     width: 100%;
     margin: 14px 0 28px;
@@ -359,7 +356,6 @@ table tr:last-child > td {
     width: 150px;
 }
 
-/* Expandable datasets */
 details {
     margin: 0 0 8px;
     overflow: hidden;
