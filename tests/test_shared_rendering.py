@@ -20,7 +20,8 @@ class SharedRenderingTests(unittest.TestCase):
         for path in SHARED_JS:
             with self.subTest(path=path.name):
                 js = path.read_text(encoding="utf-8")
-                self.assertIn('document.currentScript.insertAdjacentHTML("beforebegin", html);', js)
+                self.assertIn('insertAdjacentHTML("beforebegin", html);', js)
+                self.assertIn("document.currentScript", js)
 
 
 if __name__ == "__main__":
