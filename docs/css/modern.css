@@ -236,6 +236,86 @@ nav#menubar ul li a span {
     background: var(--surface-muted);
 }
 
+/* Data tables */
+table {
+    width: 100%;
+    margin: 16px 0 24px;
+    color: var(--text);
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-collapse: separate;
+    border-spacing: 0;
+    border-radius: var(--radius-sm);
+    box-shadow: none;
+    overflow: hidden;
+    font-family: inherit;
+    font-size: 14px;
+}
+
+table th,
+table td,
+.ta1 th,
+.ta1 td {
+    padding: 10px 12px;
+    border: 0;
+    border-bottom: 1px solid var(--border);
+    vertical-align: top;
+}
+
+table th,
+.ta1 th,
+.ta1 th.tamidashi {
+    color: var(--text);
+    background: var(--surface-muted);
+    font-weight: 700;
+    text-align: left;
+    text-transform: none;
+}
+
+table tr:nth-child(even) {
+    background: #fbfcfe;
+}
+
+table tr:hover {
+    background: #f3f6fb;
+    transition: background-color 120ms ease;
+}
+
+table tr:last-child > th,
+table tr:last-child > td {
+    border-bottom: 0;
+}
+
+.ta1 th {
+    width: 160px;
+}
+
+details {
+    margin: 0 0 12px;
+    overflow: hidden;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+}
+
+details > summary {
+    cursor: pointer;
+    padding: 10px 14px;
+    color: var(--text);
+    background: var(--surface-muted);
+    font-weight: 700;
+}
+
+details[open] > summary {
+    border-bottom: 1px solid var(--border);
+}
+
+details > table {
+    margin: 0;
+    border: 0;
+    border-radius: 0;
+}
+
 @media screen and (max-width: 800px) {
     #container {
         padding-left: 12px;
@@ -266,6 +346,13 @@ nav#menubar ul li a span {
 
     #sub nav {
         position: static;
+    }
+
+    table {
+        display: block;
+        overflow-x: auto;
+        white-space: nowrap;
+        -webkit-overflow-scrolling: touch;
     }
 }
 
