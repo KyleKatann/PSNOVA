@@ -10,11 +10,11 @@ Modernization work must preserve existing data and URLs while improving usabilit
 1. Change one implementation item at a time.
 2. Before changing data-heavy pages, treat existing game data as the source of truth unless the task explicitly changes the data.
 3. Add or extend a test whenever the change can be checked automatically.
-4. Run the relevant tests before considering an item complete.
-5. Commit each completed implementation item separately with a descriptive commit message.
-6. Do not combine unrelated refactors with a functional change.
-7. Keep existing public URLs under `/PSNOVA/` stable unless a separate migration decision is made.
-8. If a change causes a regression, revert only that item rather than continuing on top of a broken state.
+4. Commit each completed implementation item separately with a descriptive commit message.
+5. Do not combine unrelated refactors with a functional change.
+6. Keep existing public URLs under `/PSNOVA/` stable unless a separate migration decision is made.
+7. If a change causes a regression found during final validation, fix or revert only that item rather than continuing on top of a broken state.
+8. During a multi-item implementation run, do not trigger or inspect GitHub Actions after every item. Complete the planned implementation items first, then run/check the full GitHub Actions test suite once at the end.
 
 ## Recovery point
 
@@ -65,7 +65,7 @@ Work through this list sequentially unless a dependency requires otherwise.
 13. Add in-page category navigation for large data pages. **Implemented**
 14. Normalize table semantics using `thead`, `tbody`, `th`, and `td` correctly. **Implemented**
 15. Move deprecated presentational HTML such as `bgcolor` and inline table styling into CSS. **Implemented**
-16. Remove duplicate/conflicting CSS rules while preserving behavior.
+16. Remove duplicate/conflicting CSS rules while preserving behavior. **Implemented**
 17. Reduce hard-coded absolute internal URLs where safe.
 18. Give every important page a unique descriptive `<title>`.
 19. Give every important page a unique meta description.
@@ -115,16 +115,18 @@ Examples:
 - Data tables retain expected row counts or known sentinel records when refactored.
 
 Tests belong under `tests/` and should use the Python standard library where possible so the repository has no unnecessary test dependency.
+Add tests alongside each implementation item, but run/check the complete GitHub Actions suite once after the planned implementation batch is finished.
 
 ## Definition of done for each item
 
-An item is complete only when:
+An implementation item is ready for final validation when:
 
 - The change is implemented.
 - Relevant automated tests are added or updated when feasible.
-- Tests pass.
 - The public-site behavior is not knowingly regressed on desktop or mobile.
 - The item has its own clear commit.
+
+The implementation batch is complete only after the final GitHub Actions run passes.
 
 ## Data safety
 
