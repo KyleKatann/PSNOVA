@@ -3,35 +3,49 @@
         "/PSNOVA/img/logo.png": { width: 660, height: 121 },
         "/PSNOVA/img/title.jpg": { width: 1000, height: 540 }
     };
+    var eagerPaths = {
+        "/PSNOVA/img/logo.png": true,
+        "/PSNOVA/img/title.jpg": true
+    };
 
-    function applyDimensions(image) {
+    function getPathname(image) {
+        var rawSrc = image && image.getAttribute ? image.getAttribute("src") : null;
+        if (!rawSrc) {
+            return null;
+        }
+        try {
+            return new URL(rawSrc, window.location.href).pathname;
+        } catch (error) {
+            return null;
+        }
+    }
+
+    function applyImageHints(image) {
         if (!image || !image.getAttribute) {
             return;
         }
-        var rawSrc = image.getAttribute("src");
-        if (!rawSrc) {
+        var pathname = getPathname(image);
+        if (!pathname) {
             return;
         }
-        var pathname;
-        try {
-            pathname = new URL(rawSrc, window.location.href).pathname;
-        } catch (error) {
-            return;
-        }
+
         var dimensions = knownDimensions[pathname];
-        if (!dimensions) {
-            return;
+        if (dimensions) {
+            if (!image.hasAttribute("width")) {
+                image.setAttribute("width", String(dimensions.width));
+            }
+            if (!image.hasAttribute("height")) {
+                image.setAttribute("height", String(dimensions.height));
+            }
         }
-        if (!image.hasAttribute("width")) {
-            image.setAttribute("width", String(dimensions.width));
-        }
-        if (!image.hasAttribute("height")) {
-            image.setAttribute("height", String(dimensions.height));
+
+        if (!eagerPaths[pathname] && !image.hasAttribute("loading")) {
+            image.setAttribute("loading", "lazy");
         }
     }
 
     function applyExistingImages() {
-        Array.prototype.slice.call(document.images || []).forEach(applyDimensions);
+        Array.prototype.slice.call(document.images || []).forEach(applyImageHints);
     }
 
     var observer = new MutationObserver(function (mutations) {
@@ -41,10 +55,10 @@
                     return;
                 }
                 if (node.tagName === "IMG") {
-                    applyDimensions(node);
+                    applyImageHints(node);
                 }
                 if (node.querySelectorAll) {
-                    Array.prototype.slice.call(node.querySelectorAll("img")).forEach(applyDimensions);
+                    Array.prototype.slice.call(node.querySelectorAll("img")).forEach(applyImageHints);
                 }
             });
         });
