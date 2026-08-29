@@ -173,6 +173,69 @@ nav#menubar ul li a span {
     text-transform: uppercase;
 }
 
+/* Secondary navigation */
+#sub {
+    width: 22%;
+    color: var(--text);
+}
+
+#sub nav {
+    position: sticky;
+    top: 16px;
+}
+
+#sub h2 {
+    margin: 0;
+    padding: 10px 12px;
+    color: var(--text);
+    background: var(--surface-muted);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm) var(--radius-sm) 0 0;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    text-align: left;
+}
+
+#sub .submenu {
+    margin: 0 0 20px;
+    overflow: hidden;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-top: 0;
+    border-radius: 0 0 var(--radius-sm) var(--radius-sm);
+}
+
+#sub .submenu p {
+    display: block;
+    padding: 8px 12px;
+    color: var(--text-muted);
+    background: var(--surface-muted);
+    border: 0;
+    border-top: 1px solid var(--border);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.03em;
+}
+
+#sub .submenu li:first-child p {
+    border-top: 0;
+}
+
+#sub .submenu a {
+    display: block;
+    padding: 9px 12px;
+    color: var(--text);
+    background: var(--surface);
+    border: 0;
+    text-decoration: none;
+}
+
+#sub .submenu a:hover {
+    color: var(--accent);
+    background: var(--surface-muted);
+}
+
 @media screen and (max-width: 800px) {
     #container {
         padding-left: 12px;
@@ -192,6 +255,17 @@ nav#menubar ul li a span {
     #menubar_hdr {
         top: 14px;
         right: 16px;
+    }
+
+    #sub {
+        width: auto;
+        margin-top: 24px;
+        padding-top: 20px;
+        border-top: 1px solid var(--border);
+    }
+
+    #sub nav {
+        position: static;
     }
 }
 
