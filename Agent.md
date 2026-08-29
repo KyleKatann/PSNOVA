@@ -66,7 +66,7 @@ Work through this list sequentially unless a dependency requires otherwise.
 14. Normalize table semantics using `thead`, `tbody`, `th`, and `td` correctly. **Implemented**
 15. Move deprecated presentational HTML such as `bgcolor` and inline table styling into CSS. **Implemented**
 16. Remove duplicate/conflicting CSS rules while preserving behavior. **Implemented**
-17. Reduce hard-coded absolute internal URLs where safe.
+17. Reduce hard-coded absolute internal URLs where safe. **Implemented**
 18. Give every important page a unique descriptive `<title>`.
 19. Give every important page a unique meta description.
 20. Remove obsolete `meta keywords` tags.
