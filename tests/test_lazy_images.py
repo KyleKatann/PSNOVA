@@ -11,10 +11,10 @@ class LazyImageTests(unittest.TestCase):
         self.assertIn('image.setAttribute("loading", "lazy")', js)
         self.assertIn("!eagerPaths[pathname]", js)
 
-    def test_logo_and_hero_remain_eager(self):
+    def test_logo_and_shared_hero_remain_eager(self):
         js = IMAGE_LAYOUT.read_text(encoding="utf-8")
         self.assertIn('"/PSNOVA/img/logo.png": true', js)
-        self.assertIn('"/PSNOVA/img/title.jpg": true', js)
+        self.assertIn('"/PSNOVA/img/gigantes/gigantes.jpg": true', js)
 
 
 if __name__ == "__main__":

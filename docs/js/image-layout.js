@@ -1,11 +1,11 @@
 (function () {
     var knownDimensions = {
         "/PSNOVA/img/logo.png": { width: 660, height: 121 },
-        "/PSNOVA/img/title.jpg": { width: 1000, height: 540 }
+        "/PSNOVA/img/gigantes/gigantes.jpg": { width: 1000, height: 540 }
     };
     var eagerPaths = {
         "/PSNOVA/img/logo.png": true,
-        "/PSNOVA/img/title.jpg": true
+        "/PSNOVA/img/gigantes/gigantes.jpg": true
     };
 
     function getPathname(image) {
