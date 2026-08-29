@@ -58,6 +58,18 @@
         return (left - right) * direction;
     }
 
+    function decorateCompactCells(cells, rarityNumber, shopNumber) {
+        if (cells[1] && rarityNumber !== null) {
+            cells[1].classList.add("rarity-cell");
+            cells[1].setAttribute("data-rarity", String(rarityNumber));
+            cells[1].setAttribute("aria-label", "レアリティ " + rarityNumber);
+        }
+        if (cells[5] && shopNumber !== null) {
+            cells[5].classList.add("shop-level-cell");
+            cells[5].setAttribute("data-shop-level", String(shopNumber));
+        }
+    }
+
     function initWeaponTools() {
         var main = document.getElementById("main");
         if (!main || document.getElementById("weapon-search")) {
@@ -88,6 +100,9 @@
 
                 var rarityLabel = cells[1] ? cells[1].textContent.trim() : "";
                 var shopLabel = cells[5] ? cells[5].textContent.trim() : "";
+                var rarityNumber = numericValue(rarityLabel);
+                var shopNumber = numericValue(shopLabel);
+                decorateCompactCells(cells, rarityNumber, shopNumber);
                 records.push({
                     row: row,
                     parent: row.parentNode,
@@ -98,10 +113,10 @@
                     typeLabel: typeLabel,
                     rarity: normalizeText(rarityLabel),
                     rarityLabel: rarityLabel,
-                    rarityNumber: numericValue(rarityLabel),
+                    rarityNumber: rarityNumber,
                     shopLevel: normalizeText(shopLabel),
                     shopLabel: shopLabel,
-                    shopNumber: numericValue(shopLabel),
+                    shopNumber: shopNumber,
                     attackNumber: maxNumeric(cells, [2, 3, 4])
                 });
             });

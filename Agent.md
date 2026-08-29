@@ -14,7 +14,7 @@ Modernization work must preserve existing data and URLs while improving usabilit
 5. Do not combine unrelated refactors with a functional change.
 6. Keep existing public URLs under `/PSNOVA/` stable unless a separate migration decision is made.
 7. If a change causes a regression found during final validation, fix or revert only that item rather than continuing on top of a broken state.
-8. During a multi-item implementation run, do not trigger or inspect GitHub Actions after every item. Complete the planned implementation items first, then run/check the full GitHub Actions test suite once at the end.
+8. During a multi-item implementation run, do not inspect GitHub Actions after every item. Complete the planned implementation items first, then check the full GitHub Actions test suite once at the end.
 
 ## Recovery point
 
@@ -79,16 +79,16 @@ Work through this list sequentially unless a dependency requires otherwise.
 ### Priority B
 
 26. Lazy-load below-the-fold images where appropriate. **Implemented**
-27. Remove duplicate image assets.
-28. Optimize large images while preserving acceptable quality.
-29. Move generation notebooks/tools out of the public `docs/` tree.
-30. Remove `.ipynb_checkpoints` from version control and ignore them.
-31. Separate `data/`, `tools/`, and `docs/` concerns.
-32. Move authoritative game data toward CSV/JSON rather than generated HTML.
-33. Generate data-heavy HTML from authoritative structured data.
-34. Add restrained hover/transition behavior.
-35. Add sticky filter/table headers where useful.
-36. Improve compact rarity/status presentation without decorative excess.
+27. Remove duplicate image assets. **Implemented**
+28. Optimize large images while preserving acceptable quality. **Deferred: requires a binary image-processing pass that can verify output quality and size.**
+29. Move generation notebooks/tools out of the public `docs/` tree. **Implemented**
+30. Remove `.ipynb_checkpoints` from version control and ignore them. **Implemented**
+31. Separate `data/`, `tools/`, and `docs/` concerns. **Implemented**
+32. Move authoritative game data toward CSV/JSON rather than generated HTML. **Deferred: migrate one verified dataset at a time without changing gameplay values.**
+33. Generate data-heavy HTML from authoritative structured data. **Deferred until item 32 has a verified source dataset.**
+34. Add restrained hover/transition behavior. **Implemented**
+35. Add sticky filter/table headers where useful. **Implemented**
+36. Improve compact rarity/status presentation without decorative excess. **Implemented**
 
 ### Monetization backlog
 
@@ -96,9 +96,9 @@ Google display ads are deferred for now.
 Prefer unobtrusive link-based affiliate placements.
 
 37. Replace the current Rakuten banner with contextual text/product links where practical.
-38. Evaluate Surugaya affiliate text links for used PS Vita software, hardware, and guidebooks.
-39. Evaluate Amazon Associates text links for related products.
-40. Evaluate ValueCommerce LinkSwitch for supported merchant links.
+38. Evaluate Surugaya affiliate text links for used PS Vita software, hardware, and guidebooks. **Pending account/affiliate link registration.**
+39. Evaluate Amazon Associates text links for related products. **Pending account/affiliate link registration.**
+40. Evaluate ValueCommerce LinkSwitch for supported merchant links. **Pending account/affiliate link registration.**
 41. Add consistent and clearly visible PR/affiliate disclosure styling.
 
 ## Testing policy
@@ -115,7 +115,7 @@ Examples:
 - Data tables retain expected row counts or known sentinel records when refactored.
 
 Tests belong under `tests/` and should use the Python standard library where possible so the repository has no unnecessary test dependency.
-Add tests alongside each implementation item, but run/check the complete GitHub Actions suite once after the planned implementation batch is finished.
+Add tests alongside each implementation item, but check the complete GitHub Actions suite once after the planned implementation batch is finished.
 
 ## Definition of done for each item
 

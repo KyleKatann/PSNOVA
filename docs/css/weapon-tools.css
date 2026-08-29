@@ -60,6 +60,24 @@
     width: 100%;
 }
 
+.rarity-cell,
+.shop-level-cell {
+    white-space: nowrap;
+    font-variant-numeric: tabular-nums;
+}
+
+.rarity-cell {
+    font-weight: 700;
+}
+
+.rarity-cell::before {
+    content: "★";
+    margin-right: 4px;
+    color: #a16207;
+    font-size: 0.82em;
+    vertical-align: 0.04em;
+}
+
 tr[hidden] {
     display: none !important;
 }
