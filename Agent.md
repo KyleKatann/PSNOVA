@@ -14,7 +14,7 @@ Modernization work must preserve existing data and URLs while improving usabilit
 5. Do not combine unrelated refactors with a functional change.
 6. Keep existing public URLs under `/PSNOVA/` stable unless a separate migration decision is made.
 7. If a change causes a regression found during final validation, fix or revert only that item rather than continuing on top of a broken state.
-8. During a multi-item implementation run, do not inspect GitHub Actions after every item. Complete the planned implementation items first, then check the full GitHub Actions test suite once at the end.
+8. GitHub Actions tests are manual-only. Do not run them after each commit. Complete the planned implementation batch first, then trigger the `tests` workflow once with `workflow_dispatch` for final validation.
 
 ## Recovery point
 
@@ -115,7 +115,7 @@ Examples:
 - Data tables retain expected row counts or known sentinel records when refactored.
 
 Tests belong under `tests/` and should use the Python standard library where possible so the repository has no unnecessary test dependency.
-Add tests alongside each implementation item, but check the complete GitHub Actions suite once after the planned implementation batch is finished.
+Add tests alongside each implementation item. The GitHub Actions `tests` workflow must not run on `push` or `pull_request`; trigger it manually once with `workflow_dispatch` after the planned implementation batch is complete.
 
 ## Definition of done for each item
 
@@ -126,7 +126,7 @@ An implementation item is ready for final validation when:
 - The public-site behavior is not knowingly regressed on desktop or mobile.
 - The item has its own clear commit.
 
-The implementation batch is complete only after the final GitHub Actions run passes.
+The implementation batch is complete only after the manually triggered final GitHub Actions run passes.
 
 ## Data safety
 
