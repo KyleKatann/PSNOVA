@@ -18,9 +18,9 @@ class WeaponSearchTests(unittest.TestCase):
         js = WEAPON_TOOLS_JS.read_text(encoding="utf-8")
         self.assertIn('id="weapon-search"', js)
         self.assertIn('normalize("NFKC")', js)
-        self.assertIn("firstCell.textContent", js)
+        self.assertIn("cells[0].textContent", js)
         self.assertIn("record.row.hidden = !visible;", js)
-        self.assertIn('input.addEventListener("input", applySearch)', js)
+        self.assertIn('input.addEventListener("input", applyFilters)', js)
         self.assertIn("aria-live", js)
 
     def test_weapon_search_has_dedicated_lightweight_styles(self):
