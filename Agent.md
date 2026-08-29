@@ -48,7 +48,7 @@ Work through this list sequentially unless a dependency requires otherwise.
 ### Priority S
 
 1. Fix mobile hamburger menu rendering without a missing image dependency. **Implemented**
-2. Prevent the mobile sidebar from blocking access to the main content.
+2. Prevent the mobile sidebar from blocking access to the main content. **Implemented**
 3. Remove `document.write()` from shared navigation/sidebar rendering.
 4. Remove latent shared-JS errors such as invalid `appendChild("span")` usage.
 5. Establish the modern information-first visual foundation.

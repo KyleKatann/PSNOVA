@@ -48,3 +48,20 @@ document.write(html);
     document.body.appendChild("span");
     }
 }
+
+function prioritizeMainOnMobile(){
+    if (!window.matchMedia || !window.matchMedia("(max-width: 800px)").matches) {
+        return;
+    }
+
+    var contents = document.getElementById("contents");
+    var main = document.getElementById("main");
+    var sub = document.getElementById("sub");
+
+    if (contents && main && sub) {
+        contents.insertBefore(main, sub);
+    }
+}
+
+window.addEventListener("DOMContentLoaded", prioritizeMainOnMobile, false);
+window.addEventListener("resize", prioritizeMainOnMobile, false);
