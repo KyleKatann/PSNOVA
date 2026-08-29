@@ -22,7 +22,7 @@ var html =`
 </nav>
 
 `;
-document.write(html);
+document.currentScript.insertAdjacentHTML("beforebegin", html);
 }else{
     var span = document.createElement("span");
     span.innerHTML = "hoge!!";
