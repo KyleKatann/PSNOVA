@@ -21,6 +21,21 @@
         searchScript.setAttribute("data-psnova-site-search", "true");
         document.head.appendChild(searchScript);
     }
+
+    if (!document.querySelector('link[data-psnova-section-nav="true"]')) {
+        var sectionStyles = document.createElement("link");
+        sectionStyles.rel = "stylesheet";
+        sectionStyles.href = "https://kylekatann.github.io/PSNOVA/css/section-nav.css";
+        sectionStyles.setAttribute("data-psnova-section-nav", "true");
+        document.head.appendChild(sectionStyles);
+    }
+
+    if (!document.querySelector('script[data-psnova-section-nav="true"]')) {
+        var sectionScript = document.createElement("script");
+        sectionScript.src = "https://kylekatann.github.io/PSNOVA/js/section-nav.js";
+        sectionScript.setAttribute("data-psnova-section-nav", "true");
+        document.head.appendChild(sectionScript);
+    }
 })();
 
 (function loadPageTools(){
