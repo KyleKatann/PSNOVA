@@ -1,13 +1,26 @@
 (function loadModernStyles(){
-    if (document.querySelector('link[data-psnova-modern="true"]')) {
-        return;
+    if (!document.querySelector('link[data-psnova-modern="true"]')) {
+        var link = document.createElement("link");
+        link.rel = "stylesheet";
+        link.href = "https://kylekatann.github.io/PSNOVA/css/modern.css";
+        link.setAttribute("data-psnova-modern", "true");
+        document.head.appendChild(link);
     }
 
-    var link = document.createElement("link");
-    link.rel = "stylesheet";
-    link.href = "https://kylekatann.github.io/PSNOVA/css/modern.css";
-    link.setAttribute("data-psnova-modern", "true");
-    document.head.appendChild(link);
+    if (!document.querySelector('link[data-psnova-site-search="true"]')) {
+        var searchStyles = document.createElement("link");
+        searchStyles.rel = "stylesheet";
+        searchStyles.href = "https://kylekatann.github.io/PSNOVA/css/site-search.css";
+        searchStyles.setAttribute("data-psnova-site-search", "true");
+        document.head.appendChild(searchStyles);
+    }
+
+    if (!document.querySelector('script[data-psnova-site-search="true"]')) {
+        var searchScript = document.createElement("script");
+        searchScript.src = "https://kylekatann.github.io/PSNOVA/js/site-search.js";
+        searchScript.setAttribute("data-psnova-site-search", "true");
+        document.head.appendChild(searchScript);
+    }
 })();
 
 (function loadPageTools(){

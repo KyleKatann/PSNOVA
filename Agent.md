@@ -53,12 +53,12 @@ Work through this list sequentially unless a dependency requires otherwise.
 4. Remove latent shared-JS errors such as invalid `appendChild("span")` usage. **Implemented**
 5. Establish the modern information-first visual foundation. **Implemented**
 6. Simplify and modernize the header/navigation. **Implemented**
-7. Simplify and modernize the sidebar/navigation.
-8. Modernize tables as data-oriented UI.
-9. Add weapon-name search.
-10. Add weapon filters such as type, rarity, and shop level.
-11. Add numeric sorting for useful weapon columns.
-12. Add persistent search entry points to data pages and later the site home.
+7. Simplify and modernize the sidebar/navigation. **Implemented**
+8. Modernize tables as data-oriented UI. **Implemented**
+9. Add weapon-name search. **Implemented**
+10. Add weapon filters such as type, rarity, and shop level. **Implemented**
+11. Add numeric sorting for useful weapon columns. **Implemented**
+12. Add persistent search entry points to data pages and later the site home. **Implemented**
 
 ### Priority A
 
