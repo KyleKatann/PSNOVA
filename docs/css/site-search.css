@@ -1,14 +1,15 @@
 .site-search {
     position: relative;
-    margin: -4px 0 18px;
+    margin: 0 0 28px;
 }
 
 .site-search-label {
     display: block;
-    margin: 0 0 6px;
-    color: var(--text-muted);
-    font-size: 12px;
+    margin: 0 0 7px;
+    color: #8a8a84;
+    font-size: 11px;
     font-weight: 700;
+    letter-spacing: 0.04em;
 }
 
 .site-search-box {
@@ -17,17 +18,23 @@
 
 .site-search input[type="search"] {
     width: 100%;
-    height: 44px;
-    padding: 9px 12px;
+    height: 42px;
+    padding: 8px 0;
     color: var(--text);
-    background: var(--surface);
-    border: 1px solid #d0d5dd;
-    border-radius: var(--radius-sm);
+    background: transparent;
+    border: 0;
+    border-bottom: 1px solid var(--border-strong);
+    border-radius: 0;
     font: inherit;
+    font-size: 14px;
+}
+
+.site-search input[type="search"]:focus {
+    border-bottom-color: var(--accent);
 }
 
 .site-search input[type="search"]::placeholder {
-    color: #98a2b3;
+    color: #aaa9a2;
 }
 
 .site-search-results {
@@ -39,8 +46,8 @@
     overflow: hidden;
     background: var(--surface);
     border: 1px solid var(--border);
-    border-radius: var(--radius-sm);
-    box-shadow: 0 10px 30px rgba(16, 24, 40, 0.12);
+    border-radius: var(--radius);
+    box-shadow: 0 10px 28px rgba(20, 20, 20, 0.10);
 }
 
 .site-search-results a {
@@ -55,8 +62,8 @@
 }
 
 .site-search-results a:hover {
-    color: var(--accent);
-    background: var(--surface-muted);
+    color: var(--text);
+    background: var(--surface-subtle);
 }
 
 .site-search-empty {
