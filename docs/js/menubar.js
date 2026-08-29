@@ -10,6 +10,27 @@
     document.head.appendChild(link);
 })();
 
+(function loadPageTools(){
+    if (!/\/pages\/weapon\.html$/.test(window.location.pathname)) {
+        return;
+    }
+
+    if (!document.querySelector('link[data-psnova-weapon-tools="true"]')) {
+        var toolStyles = document.createElement("link");
+        toolStyles.rel = "stylesheet";
+        toolStyles.href = "https://kylekatann.github.io/PSNOVA/css/weapon-tools.css";
+        toolStyles.setAttribute("data-psnova-weapon-tools", "true");
+        document.head.appendChild(toolStyles);
+    }
+
+    if (!document.querySelector('script[data-psnova-weapon-tools="true"]')) {
+        var script = document.createElement("script");
+        script.src = "https://kylekatann.github.io/PSNOVA/js/weapon-tools.js";
+        script.setAttribute("data-psnova-weapon-tools", "true");
+        document.head.appendChild(script);
+    }
+})();
+
 function menu(){
 var html =`
 
