@@ -20,9 +20,10 @@ class TablePresentationCleanupTests(unittest.TestCase):
 
     def test_legacy_inline_table_presentation_is_removed(self):
         js = TABLE_SEMANTICS_JS.read_text(encoding="utf-8")
-        self.assertIn('style.removeProperty("border-collapse")', js)
-        self.assertIn('style.removeProperty("background-color")', js)
-        self.assertIn('style.removeProperty("border")', js)
+        for property_name in ("border-collapse", "background-color", "border"):
+            with self.subTest(property_name=property_name):
+                self.assertIn('"' + property_name + '"', js)
+        self.assertIn("style.removeProperty(property)", js)
 
 
 if __name__ == "__main__":
