@@ -67,14 +67,14 @@ Work through this list sequentially unless a dependency requires otherwise.
 15. Move deprecated presentational HTML such as `bgcolor` and inline table styling into CSS. **Implemented**
 16. Remove duplicate/conflicting CSS rules while preserving behavior. **Implemented**
 17. Reduce hard-coded absolute internal URLs where safe. **Implemented**
-18. Give every important page a unique descriptive `<title>`. **Implemented**
-19. Give every important page a unique meta description. **Implemented**
-20. Remove obsolete `meta keywords` tags. **Implemented**
-21. Add canonical URLs. **Implemented**
+18. Give every important page a unique descriptive `<title>`. **Implemented via shared page metadata.**
+19. Give every important page a unique meta description. **Implemented via shared page metadata.**
+20. Remove obsolete `meta keywords` tags. **Implemented at runtime.**
+21. Add canonical URLs. **Implemented via shared page metadata.**
 22. Add `sitemap.xml`. **Implemented**
-23. Add or review `robots.txt`. **Implemented**
-24. Add Open Graph metadata where useful. **Implemented**
-25. Add explicit image width/height to reduce layout shift. **Implemented**
+23. Add or review `robots.txt`. **Implemented as a project-site policy file; note that host-root robots policy requires control of `kylekatann.github.io/`.**
+24. Add Open Graph metadata where useful. **Implemented for JS-aware clients; static head metadata remains preferable for non-JS social crawlers.**
+25. Add explicit image width/height to reduce layout shift. **Implemented for verified key assets.**
 
 ### Priority B
 
@@ -95,11 +95,11 @@ Work through this list sequentially unless a dependency requires otherwise.
 Google display ads are deferred for now.
 Prefer unobtrusive link-based affiliate placements.
 
-37. Replace the current Rakuten banner with contextual text/product links where practical.
+37. Replace the current Rakuten banner with contextual text/product links where practical. **Implemented**
 38. Evaluate Surugaya affiliate text links for used PS Vita software, hardware, and guidebooks. **Pending account/affiliate link registration.**
 39. Evaluate Amazon Associates text links for related products. **Pending account/affiliate link registration.**
 40. Evaluate ValueCommerce LinkSwitch for supported merchant links. **Pending account/affiliate link registration.**
-41. Add consistent and clearly visible PR/affiliate disclosure styling.
+41. Add consistent and clearly visible PR/affiliate disclosure styling. **Implemented**
 
 ## Testing policy
 

@@ -20,6 +20,7 @@
 
     addStylesheetOnce('link[data-psnova-modern="true"]', "/PSNOVA/css/modern.css", "data-psnova-modern");
     addStylesheetOnce('link[data-psnova-interaction="true"]', "/PSNOVA/css/interaction.css", "data-psnova-interaction");
+    addStylesheetOnce('link[data-psnova-affiliate="true"]', "/PSNOVA/css/affiliate.css", "data-psnova-affiliate");
     addScriptOnce('script[data-psnova-page-meta="true"]', "/PSNOVA/js/page-meta.js", "data-psnova-page-meta");
     addScriptOnce('script[data-psnova-image-layout="true"]', "/PSNOVA/js/image-layout.js", "data-psnova-image-layout");
     addStylesheetOnce('link[data-psnova-site-search="true"]', "/PSNOVA/css/site-search.css", "data-psnova-site-search");
