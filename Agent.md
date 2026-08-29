@@ -50,7 +50,7 @@ Work through this list sequentially unless a dependency requires otherwise.
 1. Fix mobile hamburger menu rendering without a missing image dependency. **Implemented**
 2. Prevent the mobile sidebar from blocking access to the main content. **Implemented**
 3. Remove `document.write()` from shared navigation/sidebar rendering. **Implemented**
-4. Remove latent shared-JS errors such as invalid `appendChild("span")` usage.
+4. Remove latent shared-JS errors such as invalid `appendChild("span")` usage. **Implemented**
 5. Establish the modern information-first visual foundation.
 6. Simplify and modernize the header/navigation.
 7. Simplify and modernize the sidebar/navigation.

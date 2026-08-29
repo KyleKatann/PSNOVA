@@ -1,5 +1,4 @@
 function side(){
-if(document.readyState!="complete"){
 var html =`
 
 
@@ -41,12 +40,16 @@ var html =`
 
 
 `;
-document.currentScript.insertAdjacentHTML("beforebegin", html);
-}else{
-    var span = document.createElement("span");
-    span.innerHTML = "hoge!!";
-    document.body.appendChild("span");
+
+var callSite = document.currentScript;
+if (callSite) {
+    callSite.insertAdjacentHTML("beforebegin", html);
+} else {
+    var contents = document.getElementById("contents");
+    if (contents) {
+        contents.insertAdjacentHTML("afterbegin", html);
     }
+}
 }
 
 function prioritizeMainOnMobile(){

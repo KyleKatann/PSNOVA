@@ -1,5 +1,4 @@
 function menu(){
-if(document.readyState!="complete"){
 var html =`
 
 
@@ -22,11 +21,15 @@ var html =`
 </nav>
 
 `;
-document.currentScript.insertAdjacentHTML("beforebegin", html);
-}else{
-    var span = document.createElement("span");
-    span.innerHTML = "hoge!!";
-    document.body.appendChild("span");
-    }
+
+var callSite = document.currentScript;
+if (callSite) {
+    callSite.insertAdjacentHTML("beforebegin", html);
+    return;
 }
 
+var header = document.querySelector("#container > header");
+if (header) {
+    header.insertAdjacentHTML("afterend", html);
+}
+}
