@@ -36,6 +36,16 @@
         });
     }
 
+    function setCanonical(pathname) {
+        var canonical = document.querySelector('link[rel="canonical"]');
+        if (!canonical) {
+            canonical = document.createElement("link");
+            canonical.setAttribute("rel", "canonical");
+            document.head.appendChild(canonical);
+        }
+        canonical.setAttribute("href", "https://kylekatann.github.io" + pathname);
+    }
+
     removeObsoleteMeta();
 
     var current = metadata[window.location.pathname];
@@ -46,6 +56,7 @@
         if (current.description) {
             setNamedMeta("description", current.description);
         }
+        setCanonical(window.location.pathname);
     }
 
     window.PSNOVAPageMetadata = metadata;
