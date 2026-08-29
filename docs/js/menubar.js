@@ -1,3 +1,15 @@
+(function loadModernStyles(){
+    if (document.querySelector('link[data-psnova-modern="true"]')) {
+        return;
+    }
+
+    var link = document.createElement("link");
+    link.rel = "stylesheet";
+    link.href = "https://kylekatann.github.io/PSNOVA/css/modern.css";
+    link.setAttribute("data-psnova-modern", "true");
+    document.head.appendChild(link);
+})();
+
 function menu(){
 var html =`
 
