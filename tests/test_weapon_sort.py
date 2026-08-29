@@ -4,6 +4,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 WEAPON_TOOLS_JS = ROOT / "docs" / "js" / "weapon-tools.js"
 
+
 class WeaponSortTests(unittest.TestCase):
     def test_numeric_sort_options_are_available(self):
         js = WEAPON_TOOLS_JS.read_text(encoding="utf-8")
@@ -18,8 +19,10 @@ class WeaponSortTests(unittest.TestCase):
 
     def test_sort_values_are_derived_from_existing_numeric_cells(self):
         js = WEAPON_TOOLS_JS.read_text(encoding="utf-8")
-        self.assertIn("rarityNumber: numericValue(rarityLabel)", js)
-        self.assertIn("shopNumber: numericValue(shopLabel)", js)
+        self.assertIn("var rarityNumber = numericValue(rarityLabel)", js)
+        self.assertIn("var shopNumber = numericValue(shopLabel)", js)
+        self.assertIn("rarityNumber: rarityNumber", js)
+        self.assertIn("shopNumber: shopNumber", js)
         self.assertIn("attackNumber: maxNumeric(cells, [2, 3, 4])", js)
         self.assertIn("compareNullableNumbers", js)
 
@@ -28,6 +31,7 @@ class WeaponSortTests(unittest.TestCase):
         self.assertIn("originalIndex: index", js)
         self.assertIn("left.originalIndex - right.originalIndex", js)
         self.assertIn("record.parent.appendChild(record.row);", js)
+
 
 if __name__ == "__main__":
     unittest.main()
