@@ -1,4 +1,34 @@
 (function () {
+    function removeLegacyPresentation(element, attributes, styleProperties) {
+        attributes.forEach(function (attribute) {
+            element.removeAttribute(attribute);
+        });
+
+        styleProperties.forEach(function (property) {
+            element.style.removeProperty(property);
+        });
+
+        if (element.hasAttribute("style") && !element.getAttribute("style").trim()) {
+            element.removeAttribute("style");
+        }
+    }
+
+    function stripLegacyTablePresentation(table) {
+        removeLegacyPresentation(
+            table,
+            ["border", "cellpadding", "cellspacing", "bgcolor", "align", "valign"],
+            ["border-collapse", "background-color", "background", "border"]
+        );
+
+        Array.prototype.slice.call(table.querySelectorAll("th, td")).forEach(function (cell) {
+            removeLegacyPresentation(
+                cell,
+                ["bgcolor", "align", "valign"],
+                ["background-color", "background", "border", "text-align", "vertical-align"]
+            );
+        });
+    }
+
     function replaceElementTag(element, tagName) {
         if (!element || element.tagName.toLowerCase() === tagName.toLowerCase()) {
             return element;
@@ -19,6 +49,8 @@
         if (table.dataset.psnovaSemantic === "true") {
             return;
         }
+
+        stripLegacyTablePresentation(table);
 
         var rows = Array.prototype.slice.call(table.rows || []);
         if (rows.length < 2) {
