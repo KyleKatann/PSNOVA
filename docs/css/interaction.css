@@ -1,0 +1,27 @@
+:where(a, button, input, select, summary, .submenu a) {
+    transition-property: color, background-color, border-color, box-shadow, transform;
+    transition-duration: 120ms;
+    transition-timing-function: ease;
+}
+
+summary:hover,
+#sub .submenu a:hover,
+.site-search-results a:hover {
+    background-color: var(--surface-muted);
+}
+
+button:active,
+summary:active {
+    transform: translateY(1px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        scroll-behavior: auto !important;
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
