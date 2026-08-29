@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+Disallow: /PSNOVA/pages/tools/
+
+Sitemap: https://kylekatann.github.io/PSNOVA/sitemap.xml
