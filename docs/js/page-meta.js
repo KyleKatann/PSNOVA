@@ -30,6 +30,16 @@
         meta.setAttribute("content", content);
     }
 
+    function setPropertyMeta(property, content) {
+        var meta = document.querySelector('meta[property="' + property + '"]');
+        if (!meta) {
+            meta = document.createElement("meta");
+            meta.setAttribute("property", property);
+            document.head.appendChild(meta);
+        }
+        meta.setAttribute("content", content);
+    }
+
     function removeObsoleteMeta() {
         Array.prototype.slice.call(document.querySelectorAll('meta[name="keywords"]')).forEach(function (meta) {
             meta.parentNode.removeChild(meta);
@@ -46,6 +56,15 @@
         canonical.setAttribute("href", "https://kylekatann.github.io" + pathname);
     }
 
+    function setOpenGraph(current, pathname) {
+        var pageUrl = "https://kylekatann.github.io" + pathname;
+        setPropertyMeta("og:title", current.title);
+        setPropertyMeta("og:description", current.description);
+        setPropertyMeta("og:type", pathname === "/PSNOVA/" || pathname === "/PSNOVA/index.html" ? "website" : "article");
+        setPropertyMeta("og:url", pageUrl);
+        setPropertyMeta("og:site_name", "PSNOVA攻略");
+    }
+
     removeObsoleteMeta();
 
     var current = metadata[window.location.pathname];
@@ -57,6 +76,7 @@
             setNamedMeta("description", current.description);
         }
         setCanonical(window.location.pathname);
+        setOpenGraph(current, window.location.pathname);
     }
 
     window.PSNOVAPageMetadata = metadata;
