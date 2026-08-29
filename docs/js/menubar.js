@@ -36,6 +36,13 @@
         sectionScript.setAttribute("data-psnova-section-nav", "true");
         document.head.appendChild(sectionScript);
     }
+
+    if (!document.querySelector('script[data-psnova-table-semantics="true"]')) {
+        var tableSemanticsScript = document.createElement("script");
+        tableSemanticsScript.src = "https://kylekatann.github.io/PSNOVA/js/table-semantics.js";
+        tableSemanticsScript.setAttribute("data-psnova-table-semantics", "true");
+        document.head.appendChild(tableSemanticsScript);
+    }
 })();
 
 (function loadPageTools(){

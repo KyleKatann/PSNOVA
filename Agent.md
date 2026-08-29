@@ -62,8 +62,8 @@ Work through this list sequentially unless a dependency requires otherwise.
 
 ### Priority A
 
-13. Add in-page category navigation for large data pages.
-14. Normalize table semantics using `thead`, `tbody`, `th`, and `td` correctly.
+13. Add in-page category navigation for large data pages. **Implemented**
+14. Normalize table semantics using `thead`, `tbody`, `th`, and `td` correctly. **Implemented**
 15. Move deprecated presentational HTML such as `bgcolor` and inline table styling into CSS.
 16. Remove duplicate/conflicting CSS rules while preserving behavior.
 17. Reduce hard-coded absolute internal URLs where safe.
