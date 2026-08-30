@@ -47,12 +47,21 @@
         }
     }
 
+    function isInternalScreenshot(image, pathname) {
+        return isInternalPage() && pathname && /\.jpe?g$/i.test(pathname) && image.closest && image.closest("#main");
+    }
+
     function applyImageHints(image) {
         if (!image || !image.getAttribute) {
             return;
         }
         var pathname = getPathname(image);
         if (!pathname) {
+            return;
+        }
+
+        if (isInternalScreenshot(image, pathname)) {
+            image.remove();
             return;
         }
 
