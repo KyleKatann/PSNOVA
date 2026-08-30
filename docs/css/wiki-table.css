@@ -62,7 +62,17 @@
 #main table tbody th:not([bgcolor]) {
     color: #26384d;
     font-weight: 400;
-    text-align: left;
+}
+
+/* Table alignment policy:
+   - ordinary data, names, codes, numbers and material lists are centered;
+   - explanatory prose, notes, effects written as prose, acquisition methods,
+     locations and quest-name columns are left aligned.
+   This is CSS-only presentation over existing markup; JavaScript must not infer
+   or rewrite table semantics. */
+#main table tbody td,
+#main table tbody th:not([bgcolor]) {
+    text-align: center;
 }
 
 #main table thead th,
@@ -85,6 +95,49 @@
     min-width: 142px;
     color: #183c61;
     font-weight: 700;
+    text-align: center;
+}
+
+/* Repeated tables inside details:
+   2 columns = appearance name / notes
+   5 columns = material name / rarity / reward quest / drop area / enemy
+   7 columns = enemy data, with location and notes at the end
+   8 columns = weapon data, with notes at the end */
+#main details table:has(tbody > tr > :nth-child(2):last-child) tbody > tr > :last-child,
+#main details table:has(tbody > tr > :nth-child(5):last-child) tbody > tr > :nth-child(3),
+#main details table:has(tbody > tr > :nth-child(7):last-child) tbody > tr > :nth-last-child(-n + 2),
+#main details table:has(tbody > tr > :nth-child(8):last-child) tbody > tr > :last-child {
+    text-align: left;
+}
+
+/* Direct data tables:
+   14 columns = armor notes
+   6 columns = attachment notes
+   5 columns = special-ability effect
+   4 columns with thead = class skill effect
+   4 legacy columns without thead = trophy text and acquisition method
+   7 columns with rowspan = Gigantes notes and quest list
+   7 columns without rowspan = consumable description, effect and notes */
+#main section > table:has(tbody > tr > :nth-child(14):last-child) tbody > tr > :last-child,
+#main section > .table-scroll > table:has(tbody > tr > :nth-child(14):last-child) tbody > tr > :last-child,
+#main section > table:has(tbody > tr > :nth-child(6):last-child) tbody > tr > :last-child,
+#main section > .table-scroll > table:has(tbody > tr > :nth-child(6):last-child) tbody > tr > :last-child,
+#main section > table:has(tbody > tr > :nth-child(5):last-child) tbody > tr > :nth-child(2),
+#main section > .table-scroll > table:has(tbody > tr > :nth-child(5):last-child) tbody > tr > :nth-child(2),
+#main section > table:has(> thead):has(tbody > tr > :nth-child(4):last-child) tbody > tr > :last-child,
+#main section > .table-scroll > table:has(> thead):has(tbody > tr > :nth-child(4):last-child) tbody > tr > :last-child,
+#main section > table:not(:has(> thead)):has(tbody > tr > :nth-child(4):last-child) tbody > tr > :nth-child(2),
+#main section > table:not(:has(> thead)):has(tbody > tr > :nth-child(4):last-child) tbody > tr > :nth-child(3),
+#main section > .table-scroll > table:not(:has(> thead)):has(tbody > tr > :nth-child(4):last-child) tbody > tr > :nth-child(2),
+#main section > .table-scroll > table:not(:has(> thead)):has(tbody > tr > :nth-child(4):last-child) tbody > tr > :nth-child(3),
+#main section > table:has([rowspan]):has(tbody > tr > :nth-child(7):last-child) tbody > tr > :nth-last-child(-n + 2),
+#main section > .table-scroll > table:has([rowspan]):has(tbody > tr > :nth-child(7):last-child) tbody > tr > :nth-last-child(-n + 2),
+#main section > table:not(:has([rowspan])):has(tbody > tr > :nth-child(7):last-child) tbody > tr > :nth-child(4),
+#main section > table:not(:has([rowspan])):has(tbody > tr > :nth-child(7):last-child) tbody > tr > :nth-child(5),
+#main section > table:not(:has([rowspan])):has(tbody > tr > :nth-child(7):last-child) tbody > tr > :last-child,
+#main section > .table-scroll > table:not(:has([rowspan])):has(tbody > tr > :nth-child(7):last-child) tbody > tr > :nth-child(4),
+#main section > .table-scroll > table:not(:has([rowspan])):has(tbody > tr > :nth-child(7):last-child) tbody > tr > :nth-child(5),
+#main section > .table-scroll > table:not(:has([rowspan])):has(tbody > tr > :nth-child(7):last-child) tbody > tr > :last-child {
     text-align: left;
 }
 
@@ -172,19 +225,6 @@
     background: snow;
     text-align: center;
     font-variant-numeric: tabular-nums;
-}
-
-#main table tbody td:nth-child(2),
-#main table tbody td:nth-child(3),
-#main table tbody td:nth-child(4),
-#main table tbody td:nth-child(5),
-#main table tbody td:nth-child(6),
-#main table tbody th:nth-child(2):not([bgcolor]),
-#main table tbody th:nth-child(3):not([bgcolor]),
-#main table tbody th:nth-child(4):not([bgcolor]),
-#main table tbody th:nth-child(5):not([bgcolor]),
-#main table tbody th:nth-child(6):not([bgcolor]) {
-    text-align: center;
 }
 
 #main table br {

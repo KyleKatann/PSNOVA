@@ -19,6 +19,7 @@ Modernization work must preserve existing data and URLs while improving usabilit
 10. Keep the repository-root `reference/` archive. It contains historical PSNOVA/wiki source material used for design and data verification and must not be deleted during legacy-code cleanup.
 11. Migrate historical reference pages one page at a time. Preserve gameplay facts and useful guide content, remove archived Wiki/Wayback chrome, analytics, ads, edit controls, and dead archive-only links, then register the new public page in sidebar, page metadata, site search, and sitemap in the same implementation item.
 12. **Runtime JavaScript must never repair, normalize, sanitize, or reinterpret source HTML or source game data.** Do not use JavaScript to create, move, replace, or convert semantic table structure (`thead`, `tbody`, `tr`, `th`, `td`), remove deprecated presentation attributes/styles, repair malformed markup, or clean source text/data. Fix the raw HTML or its generator instead. JavaScript may only enhance already-valid markup, for example search, filtering, sorting, navigation, state classes, visual category classes, and scroll wrappers.
+13. **Data-table alignment must follow content semantics, not arbitrary column position.** Names, codes, numbers, rarity, stats, materials, and other compact data are centered by default. Explanatory prose, notes, prose-style effects, acquisition methods, locations, and quest-name lists are left aligned. Implement this with source-aware shared CSS or explicit static markup; JavaScript must not infer or repair alignment semantics at runtime.
 
 ## Recovery point
 
@@ -131,6 +132,7 @@ Examples:
 - Public HTML must already be semantically valid before JavaScript executes. Tests should detect raw markup defects instead of relying on browser repair or runtime JavaScript normalization.
 - Public data-table cells must stay inside explicit `<tr>...</tr>` rows, and rows must close explicitly rather than relying on browser HTML repair.
 - Runtime JavaScript must not create/replace semantic table tags, convert `th`/`td`, remove legacy table attributes/styles, or clean malformed source text/data.
+- Data-table alignment keeps ordinary compact data centered while explanatory prose, notes, acquisition methods, locations, and quest-name lists remain left aligned without runtime JavaScript inference.
 - Migrated historical pages retain sentinel guide content while excluding archived Wiki/Wayback chrome, analytics, ad code, and edit controls.
 - Internal data pages do not display large illustrative JPEG screenshots; compact native PNG icons remain allowed.
 - Data-table styling keeps the compact wiki-derived grid and native weapon icon mapping while preserving semantic `thead/tbody/th/td` structure.
