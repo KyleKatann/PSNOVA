@@ -107,9 +107,6 @@
             var label = summary.textContent.trim();
             var icon = weaponIcons[label];
             if (icon) {
-                summary.classList.add("native-icon-heading");
-                summary.style.setProperty("--native-icon", 'url("' + icon + '")');
-
                 var details = summary.parentElement;
                 if (details) {
                     details.classList.add("native-icon-table");
