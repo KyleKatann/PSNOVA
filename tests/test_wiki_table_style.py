@@ -23,6 +23,13 @@ class WikiTableStyleTests(unittest.TestCase):
         self.assertIn('overscroll-behavior-inline: contain;', css)
         self.assertIn('touch-action: pan-x pan-y;', css)
 
+    def test_mobile_table_itself_is_not_a_nested_scroll_container(self):
+        css = TABLE_CSS.read_text(encoding="utf-8")
+        self.assertIn('#main .table-scroll > table', css)
+        self.assertIn('display: table;', css)
+        self.assertIn('overflow: visible;', css)
+        self.assertIn('white-space: normal;', css)
+
     def test_details_table_selectors_work_after_scroll_wrapper_is_inserted(self):
         css = TABLE_CSS.read_text(encoding="utf-8")
         self.assertIn('details > .table-scroll > table[data-psnova-semantic="true"]', css)
