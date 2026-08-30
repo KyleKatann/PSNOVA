@@ -14,6 +14,20 @@ class WikiTableStyleTests(unittest.TestCase):
         self.assertIn('/PSNOVA/css/wiki-table.css', js)
         self.assertIn('data-psnova-wiki-table', js)
 
+    def test_every_table_scroll_wrapper_supports_touch_horizontal_scrolling(self):
+        css = TABLE_CSS.read_text(encoding="utf-8")
+        self.assertIn('#main .table-scroll', css)
+        self.assertIn('max-width: 100%;', css)
+        self.assertIn('overflow-x: auto;', css)
+        self.assertIn('-webkit-overflow-scrolling: touch;', css)
+        self.assertIn('overscroll-behavior-inline: contain;', css)
+        self.assertIn('touch-action: pan-x pan-y;', css)
+
+    def test_details_table_selectors_work_after_scroll_wrapper_is_inserted(self):
+        css = TABLE_CSS.read_text(encoding="utf-8")
+        self.assertIn('details > .table-scroll > table[data-psnova-semantic="true"]', css)
+        self.assertIn('details.native-icon-table > .table-scroll > table[data-psnova-semantic="true"]', css)
+
     def test_archived_table_density_and_base_colors_are_preserved(self):
         css = TABLE_CSS.read_text(encoding="utf-8")
         self.assertIn('table[data-psnova-semantic="true"]', css)
