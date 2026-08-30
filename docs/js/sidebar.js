@@ -4,6 +4,8 @@ var html =`
 <nav aria-label="攻略メニュー">
 <h2>攻略メニュー</h2>
 <ul class="submenu">
+    <li><a href="/PSNOVA/">ゲーム紹介</a></li>
+
     <li><p>各種データ</p></li>
     <li><a href="/PSNOVA/pages/enemy.html">エネミー</a></li>
     <li><a href="/PSNOVA/pages/gigantes.html">ギガンテス</a></li>
