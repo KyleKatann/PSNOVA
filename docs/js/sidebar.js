@@ -38,6 +38,8 @@ var html =`
     <li><a href="/PSNOVA/pages/difficulty.html">難易度</a></li>
 
     <li><p>キャラクター</p></li>
+    <li><a href="/PSNOVA/pages/class.html">クラス</a></li>
+    <li><a href="/PSNOVA/pages/skill.html">スキル</a></li>
     <li><a href="/PSNOVA/pages/species.html">種族</a></li>
     <li><a href="/PSNOVA/pages/appearance.html">ヘアスタイル・コスチューム・アクセサリー</a></li>
 
