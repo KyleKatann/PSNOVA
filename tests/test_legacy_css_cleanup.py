@@ -6,22 +6,37 @@ STYLE_CSS = ROOT / "docs" / "css" / "style.css"
 
 
 class LegacyCssCleanupTests(unittest.TestCase):
-    def test_oversized_duplicate_image_rule_is_removed(self):
+    def test_style_css_is_only_the_modern_entrypoint(self):
         css = STYLE_CSS.read_text(encoding="utf-8")
-        self.assertNotIn("max-width: 200%", css)
-        self.assertNotIn("max-width:200%", css)
-        self.assertIn("max-width: 100%", css.replace("max-width:100%", "max-width: 100%"))
+        for path in (
+            "/PSNOVA/css/modern.css",
+            "/PSNOVA/css/wiki-table.css",
+            "/PSNOVA/css/interaction.css",
+            "/PSNOVA/css/affiliate.css",
+            "/PSNOVA/css/site-search.css",
+            "/PSNOVA/css/section-nav.css",
+            "/PSNOVA/css/weapon-tools.css",
+        ):
+            with self.subTest(path=path):
+                self.assertIn(path, css)
 
-    def test_duplicate_global_table_design_block_is_removed(self):
+    def test_legacy_template_rules_do_not_return(self):
         css = STYLE_CSS.read_text(encoding="utf-8")
-        self.assertNotIn("box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1)", css)
-        self.assertNotIn("font-family: Arial, sans-serif", css)
-        self.assertNotIn("background-color: #e6f7ff", css)
+        for legacy in (
+            "Template-Party",
+            "linear-gradient(#FFF, #e5e5e5)",
+            "font-family: Arial, sans-serif",
+            "box-shadow: 1px 2px 5px",
+            "max-width: 200%",
+        ):
+            with self.subTest(legacy=legacy):
+                self.assertNotIn(legacy, css)
 
-    def test_base_table_reset_remains(self):
+    def test_internal_legacy_jpegs_are_hidden_before_javascript_runs(self):
         css = STYLE_CSS.read_text(encoding="utf-8")
-        compact = "".join(css.split())
-        self.assertIn("table{border-collapse:collapse;font-size:100%;border-spacing:0;}", compact)
+        self.assertIn('#main img[src$=".jpg"]', css)
+        self.assertIn('/img/gigantes/gigantes.jpg', css)
+        self.assertIn('display: none !important;', css)
 
 
 if __name__ == "__main__":
