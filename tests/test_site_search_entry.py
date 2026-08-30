@@ -16,9 +16,19 @@ class SiteSearchEntryTests(unittest.TestCase):
         self.assertIn('@import url("/PSNOVA/css/site-search.css");', css)
         self.assertIn("data-psnova-site-search", js)
 
+    def test_site_search_mounts_without_removed_menubar(self):
+        js = SITE_SEARCH_JS.read_text(encoding="utf-8")
+        self.assertIn('document.getElementById("container")', js)
+        self.assertIn('container.querySelector(":scope > header")', js)
+        self.assertIn("container.insertBefore(wrapper, header.nextSibling)", js)
+        self.assertNotIn('document.getElementById("menubar")', js)
+        self.assertNotIn("primaryNav", js)
+
     def test_major_data_pages_are_searchable_as_entry_points(self):
         js = SITE_SEARCH_JS.read_text(encoding="utf-8")
         for path in (
+            "/PSNOVA/pages/class.html",
+            "/PSNOVA/pages/skill.html",
             "/PSNOVA/pages/weapon.html",
             "/PSNOVA/pages/armor.html",
             "/PSNOVA/pages/material.html",

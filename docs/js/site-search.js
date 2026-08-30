@@ -1,6 +1,8 @@
 (function () {
     var pages = [
         { title: "初心者Q&A", url: "/PSNOVA/pages/faq.html", keywords: "FAQ 質問 初心者 体験版 システム 高難易度 PSO2" },
+        { title: "クラス", url: "/PSNOVA/pages/class.html", keywords: "クラス ハンター レンジャー フォース バスター class" },
+        { title: "スキル", url: "/PSNOVA/pages/skill.html", keywords: "スキル skill ハンター レンジャー フォース バスター" },
         { title: "武器データ", url: "/PSNOVA/pages/weapon.html", keywords: "武器 ウェポン 武器種" },
         { title: "ソード", url: "/PSNOVA/pages/weapon/sword.html", keywords: "武器 ソード sword" },
         { title: "パルチザン", url: "/PSNOVA/pages/weapon/partizan.html", keywords: "武器 パルチザン partizan" },
@@ -26,26 +28,64 @@
         { title: "トロフィー", url: "/PSNOVA/pages/trophy.html", keywords: "トロフィー trophy" }
     ];
 
-    function normalize(value) { return (value || "").normalize("NFKC").toLowerCase().trim(); }
+    function normalize(value) {
+        return (value || "").normalize("NFKC").toLowerCase().trim();
+    }
+
     function initSiteSearch() {
         if (document.getElementById("site-data-search")) return;
-        var primaryNav = document.getElementById("menubar");
-        if (!primaryNav || !primaryNav.parentNode) return;
+
+        var container = document.getElementById("container");
+        var header = container && container.querySelector(":scope > header");
+        if (!container || !header) return;
+
         var wrapper = document.createElement("div");
         wrapper.className = "site-search";
         wrapper.innerHTML = '<label class="site-search-label" for="site-data-search">攻略データを検索</label><div class="site-search-box"><input id="site-data-search" type="search" autocomplete="off" placeholder="武器、防具、素材、エネミー..." aria-controls="site-search-results" aria-expanded="false"><div id="site-search-results" class="site-search-results" role="listbox" hidden></div></div>';
-        primaryNav.parentNode.insertBefore(wrapper, primaryNav.nextSibling);
-        var input = document.getElementById("site-data-search"); var results = document.getElementById("site-search-results");
-        function closeResults() { results.hidden = true; results.innerHTML = ""; input.setAttribute("aria-expanded", "false"); }
-        function renderResults() {
-            var query = normalize(input.value); if (!query) { closeResults(); return; }
-            var matches = pages.filter(function (page) { return normalize(page.title + " " + page.keywords).indexOf(query) !== -1; }).slice(0, 8);
-            results.innerHTML = matches.length ? matches.map(function (page) { return '<a role="option" href="' + page.url + '">' + page.title + '</a>'; }).join("") : '<p class="site-search-empty">該当するデータカテゴリがありません</p>';
-            results.hidden = false; input.setAttribute("aria-expanded", "true");
+        container.insertBefore(wrapper, header.nextSibling);
+
+        var input = document.getElementById("site-data-search");
+        var results = document.getElementById("site-search-results");
+
+        function closeResults() {
+            results.hidden = true;
+            results.innerHTML = "";
+            input.setAttribute("aria-expanded", "false");
         }
+
+        function renderResults() {
+            var query = normalize(input.value);
+            if (!query) {
+                closeResults();
+                return;
+            }
+            var matches = pages.filter(function (page) {
+                return normalize(page.title + " " + page.keywords).indexOf(query) !== -1;
+            }).slice(0, 8);
+            results.innerHTML = matches.length
+                ? matches.map(function (page) {
+                    return '<a role="option" href="' + page.url + '">' + page.title + '</a>';
+                }).join("")
+                : '<p class="site-search-empty">該当するデータカテゴリがありません</p>';
+            results.hidden = false;
+            input.setAttribute("aria-expanded", "true");
+        }
+
         input.addEventListener("input", renderResults);
-        input.addEventListener("keydown", function (event) { if (event.key === "Escape") { input.value = ""; closeResults(); } });
-        document.addEventListener("click", function (event) { if (!wrapper.contains(event.target)) closeResults(); });
+        input.addEventListener("keydown", function (event) {
+            if (event.key === "Escape") {
+                input.value = "";
+                closeResults();
+            }
+        });
+        document.addEventListener("click", function (event) {
+            if (!wrapper.contains(event.target)) closeResults();
+        });
     }
-    if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", initSiteSearch, { once: true }); else initSiteSearch();
+
+    if (document.readyState === "loading") {
+        document.addEventListener("DOMContentLoaded", initSiteSearch, { once: true });
+    } else {
+        initSiteSearch();
+    }
 })();
