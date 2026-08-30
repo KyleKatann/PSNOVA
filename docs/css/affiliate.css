@@ -1,35 +1,56 @@
-.affiliate-links {
-    margin-top: 18px;
-    padding: 12px 2px 0;
-    border-top: 1px solid var(--border);
-    color: var(--text-muted);
-    font-size: 12px;
-    line-height: 1.6;
+.affiliate-banner {
+    margin: 18px 0 24px;
+    padding: 10px 12px 12px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    background: var(--surface-muted);
+    text-align: center;
+    overflow: hidden;
 }
 
-.affiliate-links a {
-    display: inline;
-    color: var(--text-muted);
-    text-decoration: underline;
-    text-decoration-color: #cbd5e1;
-    text-underline-offset: 0.18em;
+.affiliate-banner-body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 64px;
 }
 
-.affiliate-links a:hover {
-    color: var(--accent);
-    text-decoration-color: currentColor;
+.affiliate-banner-body a {
+    display: inline-block;
+    max-width: 100%;
+    line-height: 0;
+}
+
+.affiliate-banner-body img {
+    display: block;
+    max-width: 100%;
+    height: auto;
+    margin: 2px auto !important;
 }
 
 .affiliate-disclosure {
-    display: inline-block;
-    margin-right: 6px;
+    display: block;
+    width: max-content;
+    margin: 0 0 7px;
     padding: 1px 5px;
     border: 1px solid var(--border);
     border-radius: 4px;
     color: var(--text-muted);
-    background: var(--surface-muted);
+    background: var(--surface);
     font-size: 10px;
     font-weight: 700;
+    line-height: 1.4;
     letter-spacing: 0.04em;
-    vertical-align: 0.08em;
+}
+
+@media (max-width: 800px) {
+    .affiliate-banner {
+        margin: 14px 0 20px;
+        padding: 8px 8px 10px;
+        border-radius: 6px;
+    }
+
+    .affiliate-banner-body {
+        min-height: 52px;
+    }
 }
