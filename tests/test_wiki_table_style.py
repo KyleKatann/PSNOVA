@@ -4,9 +4,8 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 MENUBAR = ROOT / "docs" / "js" / "menubar.js"
 IMAGE_LAYOUT = ROOT / "docs" / "js" / "image-layout.js"
-WEAPON_TABLE_STYLE = ROOT / "docs" / "js" / "weapon-table-style.js"
+TABLE_SEMANTICS = ROOT / "docs" / "js" / "table-semantics.js"
 TABLE_CSS = ROOT / "docs" / "css" / "wiki-table.css"
-WEAPON_CSS = ROOT / "docs" / "css" / "weapon-tools.css"
 
 
 class WikiTableStyleTests(unittest.TestCase):
@@ -24,7 +23,7 @@ class WikiTableStyleTests(unittest.TestCase):
         self.assertIn('background: #e0e8f0;', css)
         self.assertIn('background: #eef5ff;', css)
 
-    def test_archived_weapon_stat_cell_colors_are_preserved(self):
+    def test_archived_weapon_and_armor_stat_cell_colors_are_preserved(self):
         css = TABLE_CSS.read_text(encoding="utf-8")
         self.assertIn('.weapon-stat-melee.has-value', css)
         self.assertIn('background: #ffcccc;', css)
@@ -44,18 +43,16 @@ class WikiTableStyleTests(unittest.TestCase):
         self.assertIn('background-image: var(--native-table-icon);', css)
         self.assertIn('tbody td:first-child::before', css)
 
-    def test_weapon_semantic_styling_script_is_loaded(self):
-        menu_js = MENUBAR.read_text(encoding="utf-8")
-        style_js = WEAPON_TABLE_STYLE.read_text(encoding="utf-8")
-        self.assertIn('/PSNOVA/js/weapon-table-style.js', menu_js)
-        self.assertIn('data-psnova-weapon-table-style', menu_js)
-        self.assertIn('data-rarity-band', style_js)
-        self.assertIn('weapon-stat-melee', style_js)
-        self.assertIn('weapon-stat-ranged', style_js)
-        self.assertIn('weapon-stat-tech', style_js)
+    def test_shared_semantic_decorator_supplies_rarity_and_stat_classes(self):
+        js = TABLE_SEMANTICS.read_text(encoding="utf-8")
+        self.assertIn('data-rarity-band', js)
+        self.assertIn('weapon-stat-melee', js)
+        self.assertIn('weapon-stat-ranged', js)
+        self.assertIn('weapon-stat-tech', js)
+        self.assertIn('shop-level-cell', js)
 
     def test_archived_rarity_color_bands_are_present(self):
-        css = WEAPON_CSS.read_text(encoding="utf-8")
+        css = TABLE_CSS.read_text(encoding="utf-8")
         for band, color in (
             ('blue', 'deepskyblue'),
             ('green', 'limegreen'),
