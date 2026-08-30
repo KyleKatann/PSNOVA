@@ -21,12 +21,19 @@ Modernization work must preserve existing data and URLs while improving usabilit
 12. **Runtime JavaScript must never repair, normalize, sanitize, or reinterpret source HTML or source game data.** Do not use JavaScript to create, move, replace, or convert semantic table structure (`thead`, `tbody`, `tr`, `th`, `td`), remove deprecated presentation attributes/styles, repair malformed markup, or clean source text/data. Fix the raw HTML or its generator instead. JavaScript may only enhance already-valid markup, for example search, filtering, sorting, navigation, state classes, visual category classes, and scroll wrappers.
 13. **Data-table alignment must follow content semantics, not arbitrary column position.** Names, codes, numbers, rarity, stats, materials, and other compact data are centered by default. Explanatory prose, notes, prose-style effects, acquisition methods, locations, and quest-name lists are left aligned. Implement this with source-aware shared CSS or explicit static markup; JavaScript must not infer or repair alignment semantics at runtime.
 14. **Every user-reported regression that establishes a corrected specification must be recorded in this guide in the same implementation item.** Add a regression test where practical. Do not later reintroduce behavior that the user explicitly identified as wrong.
+15. **Public UI copy must use clear reader-facing Japanese rather than developer-facing field names, camelCase, internal identifiers, or unexplained mixed-language abbreviations.** Labels such as `Shop Lv`, `ShopLv`, `shopLv`, and `ショップLv` are prohibited in visible UI; use `ショップレベル`. Conventional game terms such as HP, GP, DLC, PSNOVA, and official names may remain when they are standard and immediately understandable in context.
+16. **All table column headers must be centered.** Body-cell alignment may remain semantic, including left-aligned prose, notes, locations, and quest lists, but those body rules must never override the visual centering of the actual header row.
+17. **Do not add automatic in-page section navigation bars.** The generated `ページ内` link strip was judged unnecessary and must remain removed. Use the page structure, headings, sidebar, search, and purpose-built navigation only where they add clear value.
+18. **Guide and data pages should begin with a concise reader-facing introduction, normally about three sentences.** Explain what the page covers, what can be compared or checked, and how the information is useful. Avoid placeholder-like one-line descriptions or copied wiki fragments.
 
 ## Correction-derived invariants
 
 These are specifications established by user review and must be treated as regression constraints:
 
 - Data tables retain the compact original-wiki treatment: pale blue data cells, gray headers, 1px-style separation, compact padding, and modern scrolling/search/sort behavior. Removing runtime HTML repair must not remove this visual treatment.
+- Table column headers are always centered, including legacy first-row headers. Semantic left alignment applies only to body content such as notes, explanations, locations, acquisition methods, and quest lists.
+- Public labels must be natural reader-facing Japanese. Developer-facing or unexplained labels such as `Shop Lv`, `shopLv`, and `ショップLv` must not appear; display `ショップレベル` instead.
+- Automatic in-page navigation strips such as the former `ページ内` bar are intentionally not used and must not be restored.
 - Weapon section headings show exactly one weapon icon. Do not combine a CSS background weapon icon with an injected `<img>` for the same heading. Row/category icons may remain where intentionally separate.
 - Individual weapon detail pages keep the weapon-type heading above the table permanently expanded and non-interactive. Clicking or using the keyboard on that heading must never collapse the weapon table; disclosure markers/collapse affordances must not be shown on those detail pages.
 - `class.html` is the four-class guide (Hunter, Ranger, Force, Buster), not weapon data. `skill.html` is skill data, not armor data. Do not overwrite these pages with copied content from another data page.
@@ -35,6 +42,7 @@ These are specifications established by user review and must be treated as regre
 - Affiliate/PR presentation on desktop uses two equal-width banner slots with equal visual height and fills the available content width cleanly. On mobile it collapses to one visible banner column. The PR disclosure remains clearly visible.
 - All public pages should use the available main-content width naturally. Ordinary body copy must not have a global readable-line-length cap such as `max-width: 82ch` that leaves a conspicuous unused right gutter. Intentional compact UI components may define their own widths, but ordinary `#main` paragraphs should fill the available column.
 - Public-facing site copy must not direct visitors to GitHub, GitHub Issues, Pull Requests, repository contribution channels, or similar GitHub-based reporting instructions. Hosting/infrastructure URLs under `kylekatann.github.io` may remain where technically required, but they must not be presented as a contribution or correction workflow.
+- Reader-facing guide/data pages use concise introductory copy, normally about three sentences, that states the page scope, the key comparison/check points, and the practical use of the information.
 
 ## Recovery point
 
@@ -90,7 +98,7 @@ Work through this list sequentially unless a dependency requires otherwise.
 
 ### Priority A
 
-13. Add in-page category navigation for large data pages. **Implemented**
+13. Add in-page category navigation for large data pages. **Removed by user review: automatic in-page navigation is intentionally not used.**
 14. Normalize table semantics statically in source HTML using `thead`, `tbody`, `th`, and `td` correctly. **In progress: runtime normalization is prohibited and removed; remaining legacy source pages must be migrated one page at a time.**
 15. Remove deprecated presentational HTML such as `bgcolor`, `border`, and inline table styling from source HTML and replace it with shared CSS. **In progress: runtime cleanup is prohibited; remaining legacy source pages must be migrated one page at a time.**
 16. Remove duplicate/conflicting CSS rules while preserving behavior. **Implemented**
@@ -148,6 +156,9 @@ Examples:
 - Public data-table cells must stay inside explicit `<tr>...</tr>` rows, and rows must close explicitly rather than relying on browser HTML repair.
 - Runtime JavaScript must not create/replace semantic table tags, convert `th`/`td`, remove legacy table attributes/styles, or clean malformed source text/data.
 - Data-table alignment keeps ordinary compact data centered while explanatory prose, notes, acquisition methods, locations, and quest-name lists remain left aligned without runtime JavaScript inference.
+- Actual table column headers remain centered even when semantic body-cell alignment rules are added later.
+- Public UI must not expose developer-facing labels or unexplained shop-level abbreviations such as `Shop Lv`, `shopLv`, or `ショップLv`; use `ショップレベル`.
+- Automatic in-page navigation assets/loaders must remain absent unless the user explicitly reverses this specification.
 - Migrated historical pages retain sentinel guide content while excluding archived Wiki/Wayback chrome, analytics, ad code, and edit controls.
 - Internal data pages do not display large illustrative JPEG screenshots; compact native PNG icons remain allowed.
 - Data-table styling keeps the compact wiki-derived grid and native weapon icon mapping while preserving semantic `thead/tbody/th/td` structure.
@@ -158,6 +169,7 @@ Examples:
 - Ordinary public-page body copy must not reintroduce a global fixed `max-width` that creates an unused right gutter inside `#main`.
 - Public-facing HTML must not reintroduce GitHub contribution/reporting copy such as GitHub Issues, Pull Requests, or `github.com` contribution links.
 - Individual weapon detail headings must remain permanently expanded and must not expose a clickable disclosure/collapse affordance.
+- Guide/data pages keep useful concise introductions instead of reverting to placeholder one-line wiki fragments.
 
 Tests belong under `tests/` and should use the Python standard library where possible so the repository has no unnecessary test dependency.
 Add tests alongside each implementation item. The GitHub Actions `tests` workflow must not run on `push` or `pull_request`; trigger it manually once with `workflow_dispatch` after the planned implementation batch is complete.
