@@ -167,6 +167,15 @@
         scrollbar-width: thin;
     }
 
+    /* modern.css used to make each table its own scroll container. Keep the
+       table as a table and let .table-scroll be the single touch scroller. */
+    #main .table-scroll > table {
+        display: table;
+        max-width: none;
+        overflow: visible;
+        white-space: normal;
+    }
+
     #main table[data-psnova-semantic="true"] {
         font-size: 12px;
     }
