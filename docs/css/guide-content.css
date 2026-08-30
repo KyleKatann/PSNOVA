@@ -1,0 +1,97 @@
+/* Readability layer for prose-heavy guide pages and short page introductions. */
+.page-lead {
+    margin: 0 0 26px !important;
+    padding: 14px 16px !important;
+    color: #303a49 !important;
+    background: var(--surface-subtle);
+    border: 1px solid var(--border);
+    border-left: 4px solid var(--accent);
+    border-radius: var(--radius-sm);
+    line-height: 1.85;
+}
+
+.guide-page #main h3 {
+    margin-top: 30px;
+    margin-bottom: 16px;
+}
+
+.guide-page #main h4 {
+    margin: 24px 0 8px;
+    padding: 9px 12px;
+    color: var(--text-strong);
+    background: #f8f9fc;
+    border-left: 3px solid #8d96d9;
+    border-bottom: 1px solid var(--border);
+    font-size: 15px;
+    font-weight: 800;
+    line-height: 1.55;
+}
+
+.guide-page #main h4 + p,
+.guide-page #main h4 + ul,
+.guide-page #main h4 + ol {
+    margin-top: 0;
+}
+
+.guide-page #main p,
+.guide-page #main li {
+    line-height: 1.85;
+}
+
+.guide-page #main ul,
+.guide-page #main ol {
+    margin: 8px 0 22px;
+    padding-left: 1.7em;
+}
+
+.guide-page #main li + li {
+    margin-top: 7px;
+}
+
+.faq-page #main h4 {
+    position: relative;
+    padding-left: 42px;
+    background: var(--accent-soft);
+    border-left-color: var(--accent);
+}
+
+.faq-page #main h4::before {
+    content: "Q";
+    position: absolute;
+    top: 8px;
+    left: 12px;
+    min-width: 21px;
+    color: var(--accent-strong);
+    font-weight: 900;
+    text-align: center;
+}
+
+.faq-page #main h4 + p {
+    position: relative;
+    padding-left: 42px;
+}
+
+.faq-page #main h4 + p::before {
+    content: "A";
+    position: absolute;
+    left: 12px;
+    color: var(--link);
+    font-weight: 900;
+}
+
+@media screen and (max-width: 800px) {
+    .page-lead {
+        padding: 12px 13px !important;
+        line-height: 1.8;
+    }
+
+    .faq-page #main h4,
+    .faq-page #main h4 + p {
+        padding-left: 38px;
+    }
+
+    .faq-page #main h4::before,
+    .faq-page #main h4 + p::before {
+        left: 10px;
+    }
+}
