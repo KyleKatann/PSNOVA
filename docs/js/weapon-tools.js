@@ -64,7 +64,7 @@
         }
         var intro = section.querySelector(":scope > p");
         if (intro) {
-            intro.textContent = "PSNOVA（ファンタシースターノヴァ）の" + current.label + "一覧。レアリティ、攻撃力、ショップLv、必要素材を確認できる。";
+            intro.textContent = "PSNOVA（ファンタシースターノヴァ）の" + current.label + "一覧。レアリティ、攻撃力、ショップレベル、必要素材を確認できる。";
         }
 
         var detailsSections = Array.prototype.slice.call(section.querySelectorAll(":scope > details"));
@@ -190,11 +190,11 @@
             '<div class="data-filter-grid' + (current ? ' is-single-type' : '') + '">',
             typeField,
             '<div class="data-filter-field"><label for="weapon-rarity-filter">レアリティ</label><select id="weapon-rarity-filter"></select></div>',
-            '<div class="data-filter-field"><label for="weapon-shop-filter">Shop Lv</label><select id="weapon-shop-filter"></select></div>',
+            '<div class="data-filter-field"><label for="weapon-shop-filter">ショップレベル</label><select id="weapon-shop-filter"></select></div>',
             '<div class="data-filter-field"><label for="weapon-sort">並び順</label><select id="weapon-sort">',
             '<option value="original">初期順序</option><option value="rarity-asc">レアリティ 昇順</option><option value="rarity-desc">レアリティ 降順</option>',
             '<option value="attack-asc">最大攻撃力 昇順</option><option value="attack-desc">最大攻撃力 降順</option>',
-            '<option value="shop-asc">Shop Lv 昇順</option><option value="shop-desc">Shop Lv 降順</option>',
+            '<option value="shop-asc">ショップレベル 昇順</option><option value="shop-desc">ショップレベル 降順</option>',
             '</select></div></div>'
         ].join("");
         detailsSections[0].parentNode.insertBefore(toolbar, detailsSections[0]);
@@ -208,7 +208,7 @@
 
         populateSelect(typeFilter, uniqueInOrder(records, "type", "typeLabel"), "すべての武器種");
         populateSelect(rarityFilter, uniqueInOrder(records, "rarity", "rarityLabel"), "すべてのレアリティ");
-        populateSelect(shopFilter, uniqueInOrder(records, "shopLevel", "shopLabel"), "すべてのShop Lv");
+        populateSelect(shopFilter, uniqueInOrder(records, "shopLevel", "shopLabel"), "すべてのショップレベル");
 
         function applySort() {
             var parts = sortControl.value.split("-");
