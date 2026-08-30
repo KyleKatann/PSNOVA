@@ -27,6 +27,7 @@ Modernization work must preserve existing data and URLs while improving usabilit
 18. **Guide and data pages should begin with a concise reader-facing introduction, normally about three sentences.** Explain what the page covers, what can be compared or checked, and how the information is useful. Avoid placeholder-like one-line descriptions or copied wiki fragments.
 19. **All pale-blue UI surfaces used by data tables must use the same existing UI token, `var(--accent-soft)`.** Do not introduce page-specific pale-blue hex colors for table headers or blue emphasis cells. Semantic non-blue status colors may remain distinct where they convey gameplay meaning.
 20. **Data tables must use restrained 1px grid lines based on the shared border token.** Grid lines should improve row/column tracking without becoming visually dominant; do not return to heavy dark borders or 1px colored gaps between every cell.
+21. **Public page titles follow one naming convention.** The homepage title is exactly `PSNOVA攻略サイト`. Every other public page title is `PSNOVA攻略サイト - XXXXX`, where `XXXXX` is the concise reader-facing page name such as `武器`, `防具`, `初心者Q&A`, or `ナックル`. The title suffix, main visible page heading, metadata mapping, and actual page purpose must not contradict one another. Do not use reversed forms such as `武器 | PSNOVA攻略`, verbose SEO keyword chains, or a generic `PSNOVA 攻略サイト` title on a specific content page. Prefer the same convention in raw HTML; runtime metadata must not be used to conceal a knowingly incorrect source title.
 
 ## Correction-derived invariants
 
@@ -47,6 +48,7 @@ These are specifications established by user review and must be treated as regre
 - All public pages should use the available main-content width naturally. Ordinary body copy must not have a global readable-line-length cap such as `max-width: 82ch` that leaves a conspicuous unused right gutter. Intentional compact UI components may define their own widths, but ordinary `#main` paragraphs should fill the available column.
 - Public-facing site copy must not direct visitors to GitHub, GitHub Issues, Pull Requests, repository contribution channels, or similar GitHub-based reporting instructions. Hosting/infrastructure URLs under `kylekatann.github.io` may remain where technically required, but they must not be presented as a contribution or correction workflow.
 - Reader-facing guide/data pages use concise introductory copy, normally about three sentences, that states the page scope, the key comparison/check points, and the practical use of the information.
+- Search/browser page titles use exactly `PSNOVA攻略サイト` for the homepage and `PSNOVA攻略サイト - XXXXX` for every other public page. `XXXXX` must identify the linked page itself; for example, the weapon landing page is `PSNOVA攻略サイト - 武器`, not a generic site title.
 
 ## Recovery point
 
@@ -107,10 +109,10 @@ Work through this list sequentially unless a dependency requires otherwise.
 15. Remove deprecated presentational HTML such as `bgcolor`, `border`, and inline table styling from source HTML and replace it with shared CSS. **In progress: runtime cleanup is prohibited; remaining legacy source pages must be migrated one page at a time.**
 16. Remove duplicate/conflicting CSS rules while preserving behavior. **Implemented**
 17. Reduce hard-coded absolute internal URLs where safe. **Implemented**
-18. Give every important page a unique descriptive `<title>`. **Implemented via shared page metadata.**
-19. Give every important page a unique meta description. **Implemented via shared page metadata.**
-20. Remove obsolete `meta keywords` tags. **Implemented at runtime.**
-21. Add canonical URLs. **Implemented via shared page metadata.**
+18. Give every important page a unique descriptive `<title>`. **In progress: the rendered title convention is standardized; legacy raw HTML titles must be migrated to the same convention as pages are statically cleaned.**
+19. Give every important page a unique meta description. **Implemented via shared page metadata; migrate legacy raw HTML metadata during static page cleanup.**
+20. Remove obsolete `meta keywords` tags. **In progress: remove them statically from remaining legacy pages rather than relying on runtime cleanup.**
+21. Add canonical URLs. **In progress: canonical values are mapped, but legacy pages should receive static canonical tags during source cleanup.**
 22. Add `sitemap.xml`. **Implemented**
 23. Add or review `robots.txt`. **Implemented as a project-site policy file; note that host-root robots policy requires control of `kylekatann.github.io/`.**
 24. Add Open Graph metadata where useful. **Implemented for JS-aware clients; static head metadata remains preferable for non-JS social crawlers.**
@@ -154,6 +156,7 @@ Examples:
 - No `document.write()` remains after that migration item is completed.
 - No invalid `appendChild` string calls remain.
 - Required pages keep valid titles and metadata.
+- Public title metadata follows `PSNOVA攻略サイト` on the homepage and `PSNOVA攻略サイト - XXXXX` on every other public page, with `XXXXX` matching the page purpose.
 - Internal links use expected paths and do not unintentionally change established public URLs.
 - Data tables retain expected row counts or known sentinel records when refactored.
 - Public HTML must already be semantically valid before JavaScript executes. Tests should detect raw markup defects instead of relying on browser repair or runtime JavaScript normalization.
