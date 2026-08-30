@@ -4,6 +4,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 MODERN_CSS = ROOT / "docs" / "css" / "modern.css"
+STYLE_ENTRY = ROOT / "docs" / "css" / "style.css"
 MENUBAR_JS = ROOT / "docs" / "js" / "menubar.js"
 
 
@@ -27,11 +28,12 @@ class ModernFoundationTests(unittest.TestCase):
         self.assertIn("@media screen and (max-width: 480px)", css)
         self.assertIn("font-size: 14px", css)
 
-    def test_modern_stylesheet_is_loaded_globally(self):
+    def test_modern_stylesheet_is_loaded_from_initial_css_entrypoint(self):
+        css = STYLE_ENTRY.read_text(encoding="utf-8")
         js = MENUBAR_JS.read_text(encoding="utf-8")
-        self.assertIn("/PSNOVA/css/modern.css", js)
-        self.assertIn('data-psnova-modern', js)
-        self.assertIn("document.head.appendChild(link);", js)
+        self.assertIn('@import url("/PSNOVA/css/modern.css");', css)
+        self.assertNotIn("addStylesheetOnce", js)
+        self.assertNotIn("document.head.appendChild(link);", js)
 
 
 if __name__ == "__main__":
