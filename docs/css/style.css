@@ -15,11 +15,18 @@
 @import url("/PSNOVA/css/weapon-tools.css");
 
 /* Legacy large screenshots remain in some historical HTML. Suppress them during
- * the initial CSS pass so every internal data page uses the same compact header
- * treatment before JavaScript removes those nodes. */
-#main img[src$=".jpg"],
-#main img[src$=".jpeg"],
-#main img[src$=".JPG"],
-#main img[src$=".JPEG"] {
+ * the initial CSS pass on internal pages so every data page uses the same compact
+ * header treatment before JavaScript removes those nodes. The homepage keeps its
+ * approved hero image. */
+body:not(.homepage) #main img[src$=".jpg"],
+body:not(.homepage) #main img[src$=".jpeg"],
+body:not(.homepage) #main img[src$=".JPG"],
+body:not(.homepage) #main img[src$=".JPEG"] {
     display: none !important;
+}
+
+/* The homepage is an overview rather than a long-form article. Let its content
+ * use the full main column instead of leaving the long-form 82ch gutter. */
+body.homepage #main p {
+    max-width: none;
 }

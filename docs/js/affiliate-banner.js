@@ -16,9 +16,22 @@
         return Math.abs(hash);
     }
 
-    function pickBanner() {
+    function pickBanners(count) {
         var day = Math.floor(Date.now() / 86400000);
-        return banners[(day + pathHash(window.location.pathname)) % banners.length];
+        var start = (day + pathHash(window.location.pathname)) % banners.length;
+        var selected = [];
+
+        for (var i = 0; i < count; i += 1) {
+            selected.push(banners[(start + i) % banners.length]);
+        }
+
+        return selected;
+    }
+
+    function renderBannerItems() {
+        return pickBanners(2).map(function (markup) {
+            return '<div class="affiliate-banner-item">' + markup + '</div>';
+        }).join("");
     }
 
     function insertBanner() {
@@ -32,7 +45,7 @@
         var banner = document.createElement("aside");
         banner.className = "affiliate-banner";
         banner.setAttribute("aria-label", "楽天市場のPR");
-        banner.innerHTML = '<span class="affiliate-disclosure">PR</span><div class="affiliate-banner-body">' + pickBanner() + "</div>";
+        banner.innerHTML = '<span class="affiliate-disclosure">PR</span><div class="affiliate-banner-body">' + renderBannerItems() + "</div>";
 
         var children = Array.prototype.slice.call(section.children || []);
         var firstParagraph = children.find(function (child) {
