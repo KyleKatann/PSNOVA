@@ -4,7 +4,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 MENUBAR = ROOT / "docs" / "js" / "menubar.js"
 IMAGE_LAYOUT = ROOT / "docs" / "js" / "image-layout.js"
-INTERACTION = ROOT / "docs" / "css" / "interaction.css"
+STYLE_ENTRY = ROOT / "docs" / "css" / "style.css"
 
 
 class ImageLayoutTests(unittest.TestCase):
@@ -13,10 +13,9 @@ class ImageLayoutTests(unittest.TestCase):
         self.assertIn("/PSNOVA/js/image-layout.js", js)
         self.assertIn("data-psnova-image-layout", js)
 
-    def test_known_large_images_have_explicit_dimensions(self):
+    def test_known_persistent_image_has_explicit_dimensions(self):
         js = IMAGE_LAYOUT.read_text(encoding="utf-8")
         self.assertIn('"/PSNOVA/img/logo.png": { width: 660, height: 121 }', js)
-        self.assertIn('"/PSNOVA/img/gigantes/gigantes.jpg": { width: 1000, height: 540 }', js)
         self.assertIn('image.setAttribute("width", String(dimensions.width))', js)
         self.assertIn('image.setAttribute("height", String(dimensions.height))', js)
 
@@ -24,13 +23,16 @@ class ImageLayoutTests(unittest.TestCase):
         js = IMAGE_LAYOUT.read_text(encoding="utf-8")
         self.assertIn("if (!pathname)", js)
 
-    def test_internal_pages_remove_jpeg_screenshots_but_keep_small_png_icons(self):
+    def test_all_internal_jpeg_screenshots_share_one_treatment(self):
         js = IMAGE_LAYOUT.read_text(encoding="utf-8")
-        css = INTERACTION.read_text(encoding="utf-8")
+        css = STYLE_ENTRY.read_text(encoding="utf-8")
         self.assertIn("function removeInternalScreenshots()", js)
         self.assertIn('/\\.jpe?g$/i.test(pathname)', js)
         self.assertIn("image.remove();", js)
-        self.assertIn("html.internal-page #main img[src$=\".jpg\"]", css)
+        self.assertIn('#main img[src$=".jpg"]', css)
+        self.assertIn('#main img[src$=".jpeg"]', css)
+        self.assertNotIn('img/gigantes/gigantes.jpg\"]):not', css)
+        self.assertNotIn('"/PSNOVA/img/gigantes/gigantes.jpg": { width:', js)
 
     def test_weapon_native_icons_are_mapped_and_present(self):
         js = IMAGE_LAYOUT.read_text(encoding="utf-8")
