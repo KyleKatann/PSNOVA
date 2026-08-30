@@ -30,7 +30,8 @@ class VisualSystemTests(unittest.TestCase):
     def test_sidebar_marks_current_page_semantically(self):
         js = SIDEBAR_JS.read_text(encoding="utf-8")
         self.assertIn("function markCurrentSidebarLink", js)
-        self.assertIn('classList.add("is-current")', js)
+        self.assertIn('classList.toggle("is-current", exactCurrent)', js)
+        self.assertIn('classList.toggle("is-parent-current", weaponParentCurrent)', js)
         self.assertIn('setAttribute("aria-current", "page")', js)
 
 
