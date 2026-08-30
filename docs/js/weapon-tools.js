@@ -33,53 +33,37 @@
 
     function childPage() {
         var match = window.location.pathname.match(/\/PSNOVA\/pages\/weapon\/([^/]+)\.html$/);
-        if (!match) {
-            return null;
-        }
+        if (!match) return null;
         return weaponPages.filter(function (item) { return item.slug === match[1]; })[0] || null;
     }
 
-    function prepareChildPage(main, current) {
-        if (!current) {
-            return;
-        }
+    /* Compatibility path for weapon child pages that have not yet been migrated.
+       Migrated pages must contain only their own static table and never depend on
+       this function to delete unrelated weapon sections. */
+    function prepareLegacyChildPage(main, current) {
+        if (!current) return;
 
         main.classList.add("weapon-detail-page");
         var section = main.querySelector("section");
-        if (!section) {
-            return;
-        }
+        if (!section) return;
 
         var heading = section.querySelector("h2");
-        if (heading) {
-            heading.textContent = current.label + " 武器データ";
-        }
+        if (heading) heading.textContent = current.label + " 武器データ";
         var oldSubheading = section.querySelector("h3");
-        if (oldSubheading) {
-            oldSubheading.remove();
-        }
+        if (oldSubheading) oldSubheading.remove();
         var oldImage = section.querySelector(":scope > img");
-        if (oldImage) {
-            oldImage.remove();
-        }
+        if (oldImage) oldImage.remove();
         var intro = section.querySelector(":scope > p");
-        if (intro) {
-            intro.textContent = "PSNOVA（ファンタシースターノヴァ）の" + current.label + "一覧。レアリティ、攻撃力、ショップレベル、必要素材を確認できる。";
-        }
+        if (intro) intro.textContent = "PSNOVA（ファンタシースターノヴァ）の" + current.label + "一覧。レアリティ、攻撃力、ショップレベル、必要素材を確認できる。";
 
         var detailsSections = Array.prototype.slice.call(section.querySelectorAll(":scope > details"));
         var selected = null;
         detailsSections.forEach(function (details) {
             var summary = details.querySelector("summary");
-            if (summary && summary.textContent.trim() === current.label) {
-                selected = details;
-            } else {
-                details.remove();
-            }
+            if (summary && summary.textContent.trim() === current.label) selected = details;
+            else details.remove();
         });
-        if (!selected) {
-            return;
-        }
+        if (!selected) return;
         selected.open = true;
 
         var index = weaponPages.indexOf(current);
@@ -94,14 +78,34 @@
         selected.parentNode.insertBefore(nav, selected);
     }
 
+    function sectionModels(main, current) {
+        if (current) {
+            var staticTable = main.querySelector('table.weapon-data-table[data-weapon-static="true"]');
+            if (staticTable) {
+                return [{
+                    table: staticTable,
+                    details: null,
+                    type: normalizeText(current.label),
+                    typeLabel: current.label
+                }];
+            }
+        }
+
+        return Array.prototype.slice.call(main.querySelectorAll("details")).map(function (details) {
+            var table = details.querySelector("table");
+            var summary = details.querySelector("summary");
+            if (!table || !summary) return null;
+            var label = summary.textContent.trim();
+            return { table: table, details: details, type: normalizeText(label), typeLabel: label };
+        }).filter(Boolean);
+    }
+
     function uniqueInOrder(records, key, labelKey) {
         var seen = new Set();
         var values = [];
         records.forEach(function (record) {
             var value = record[key];
-            if (!value || seen.has(value)) {
-                return;
-            }
+            if (!value || seen.has(value)) return;
             seen.add(value);
             values.push({ value: value, label: record[labelKey] });
         });
@@ -109,9 +113,7 @@
     }
 
     function populateSelect(select, values, allLabel) {
-        if (!select) {
-            return;
-        }
+        if (!select) return;
         var all = document.createElement("option");
         all.value = "";
         all.textContent = allLabel;
@@ -141,6 +143,17 @@
             cells[5].classList.add("shop-level-cell");
             cells[5].setAttribute("data-shop-level", String(shopNumber));
         }
+
+        [
+            { index: 2, className: "weapon-stat-melee" },
+            { index: 3, className: "weapon-stat-ranged" },
+            { index: 4, className: "weapon-stat-tech" }
+        ].forEach(function (stat) {
+            var cell = cells[stat.index];
+            if (!cell) return;
+            var hasValue = cell.textContent.trim() !== "";
+            cell.classList.add("weapon-stat-cell", stat.className, hasValue ? "has-value" : "is-empty");
+        });
     }
 
     function initWeaponTools() {
@@ -148,19 +161,18 @@
         if (!main || document.getElementById("weapon-search")) return;
 
         var current = childPage();
-        prepareChildPage(main, current);
+        var hasStaticChild = Boolean(current && main.querySelector('table.weapon-data-table[data-weapon-static="true"]'));
+        if (!hasStaticChild) prepareLegacyChildPage(main, current);
 
-        var detailsSections = Array.prototype.slice.call(main.querySelectorAll("details"));
-        if (!detailsSections.length) return;
+        var sections = sectionModels(main, current);
+        if (!sections.length) return;
 
         var records = [];
-        detailsSections.forEach(function (details) {
-            var table = details.querySelector("table");
-            var summary = details.querySelector("summary");
-            if (!table || !summary) return;
-            var typeLabel = summary.textContent.trim();
-            var type = normalizeText(typeLabel);
-            var rows = Array.prototype.slice.call(table.querySelectorAll("tr"), 1);
+        sections.forEach(function (section) {
+            var table = section.table;
+            var rows = table.tBodies.length
+                ? Array.prototype.slice.call(table.tBodies[0].rows)
+                : Array.prototype.slice.call(table.rows, 1);
             rows.forEach(function (row, index) {
                 var cells = row.cells;
                 if (!cells || !cells[0]) return;
@@ -169,11 +181,22 @@
                 var rarityNumber = numericValue(rarityLabel);
                 var shopNumber = numericValue(shopLabel);
                 decorateCompactCells(cells, rarityNumber, shopNumber);
-                records.push({ row: row, parent: row.parentNode, details: details, originalIndex: index,
-                    name: normalizeText(cells[0].textContent), type: type, typeLabel: typeLabel,
-                    rarity: normalizeText(rarityLabel), rarityLabel: rarityLabel, rarityNumber: rarityNumber,
-                    shopLevel: normalizeText(shopLabel), shopLabel: shopLabel, shopNumber: shopNumber,
-                    attackNumber: maxNumeric(cells, [2, 3, 4]) });
+                records.push({
+                    row: row,
+                    parent: row.parentNode,
+                    section: section,
+                    originalIndex: index,
+                    name: normalizeText(cells[0].textContent),
+                    type: section.type,
+                    typeLabel: section.typeLabel,
+                    rarity: normalizeText(rarityLabel),
+                    rarityLabel: rarityLabel,
+                    rarityNumber: rarityNumber,
+                    shopLevel: normalizeText(shopLabel),
+                    shopLabel: shopLabel,
+                    shopNumber: shopNumber,
+                    attackNumber: maxNumeric(cells, [2, 3, 4])
+                });
             });
         });
 
@@ -197,7 +220,10 @@
             '<option value="shop-asc">ショップレベル 昇順</option><option value="shop-desc">ショップレベル 降順</option>',
             '</select></div></div>'
         ].join("");
-        detailsSections[0].parentNode.insertBefore(toolbar, detailsSections[0]);
+
+        var firstTable = sections[0].table;
+        var insertionTarget = firstTable.closest(".table-scroll") || sections[0].details || firstTable;
+        insertionTarget.parentNode.insertBefore(toolbar, insertionTarget);
 
         var input = document.getElementById("weapon-search");
         var typeFilter = document.getElementById("weapon-type-filter");
@@ -214,8 +240,8 @@
             var parts = sortControl.value.split("-");
             var key = parts[0];
             var direction = parts[1] === "desc" ? -1 : 1;
-            detailsSections.forEach(function (details) {
-                var sectionRecords = records.filter(function (record) { return record.details === details; });
+            sections.forEach(function (section) {
+                var sectionRecords = records.filter(function (record) { return record.section === section; });
                 sectionRecords.sort(function (left, right) {
                     if (key === "original") return left.originalIndex - right.originalIndex;
                     if (key === "rarity") return compareNullableNumbers(left.rarityNumber, right.rarityNumber, direction) || left.originalIndex - right.originalIndex;
@@ -241,10 +267,14 @@
                 record.row.hidden = !visible;
                 if (visible) {
                     matches += 1;
-                    visibleBySection.set(record.details, (visibleBySection.get(record.details) || 0) + 1);
+                    visibleBySection.set(record.section, (visibleBySection.get(record.section) || 0) + 1);
                 }
             });
-            if (filtering) detailsSections.forEach(function (details) { details.open = Boolean(visibleBySection.get(details)); });
+            if (filtering) {
+                sections.forEach(function (section) {
+                    if (section.details) section.details.open = Boolean(visibleBySection.get(section));
+                });
+            }
             count.textContent = matches + " / " + records.length + " 件";
         }
 
