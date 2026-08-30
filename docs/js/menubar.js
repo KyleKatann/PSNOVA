@@ -32,6 +32,13 @@
         script.setAttribute("data-psnova-weapon-tools", "true");
         document.head.appendChild(script);
     }
+
+    if (!document.querySelector('script[data-psnova-weapon-icons="true"]')) {
+        var iconScript = document.createElement("script");
+        iconScript.src = "/PSNOVA/js/weapon-icons.js";
+        iconScript.setAttribute("data-psnova-weapon-icons", "true");
+        document.head.appendChild(iconScript);
+    }
 })();
 
 /* Legacy top navigation removed. Kept as a compatibility no-op because static pages still call menu(). */
