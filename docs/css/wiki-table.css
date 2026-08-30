@@ -19,6 +19,17 @@
     outline-offset: 2px;
 }
 
+/* Some archived tables, notably Gigantes, used colored td cells as their
+   header row. Match the shared header appearance immediately; JavaScript then
+   upgrades these cells to semantic th elements. */
+#main table tr:first-child > td[bgcolor] {
+    color: #1f3146;
+    background: #e0e8f0;
+    font-weight: 800;
+    text-align: center;
+    white-space: nowrap;
+}
+
 #main table[data-psnova-semantic="true"] {
     width: 100%;
     margin: 14px 0 28px;
