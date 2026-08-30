@@ -7,7 +7,7 @@ var html =`
     <li><a href="/PSNOVA/">ゲーム紹介</a></li>
 
     <li><p>攻略情報</p></li>
-    <li><a href="/PSNOVA/pages/faq.html">よくある質問</a></li>
+    <li><a href="/PSNOVA/pages/faq.html">初心者Q&amp;A</a></li>
 
     <li><p>各種データ</p></li>
     <li><a href="/PSNOVA/pages/enemy.html">エネミー</a></li>
