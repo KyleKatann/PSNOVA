@@ -9,7 +9,22 @@ var html =`
     <li><p>各種データ</p></li>
     <li><a href="/PSNOVA/pages/enemy.html">エネミー</a></li>
     <li><a href="/PSNOVA/pages/gigantes.html">ギガンテス</a></li>
-    <li><a href="/PSNOVA/pages/weapon.html">武器データ</a></li>
+    <li class="has-submenu weapon-data-item">
+        <a class="weapon-data-link" href="/PSNOVA/pages/weapon.html">武器データ</a>
+        <ul class="weapon-submenu" aria-label="武器種">
+            <li><a href="/PSNOVA/pages/weapon/sword.html">ソード</a></li>
+            <li><a href="/PSNOVA/pages/weapon/partizan.html">パルチザン</a></li>
+            <li><a href="/PSNOVA/pages/weapon/doublesaber.html">ダブルセイバー</a></li>
+            <li><a href="/PSNOVA/pages/weapon/knuckle.html">ナックル</a></li>
+            <li><a href="/PSNOVA/pages/weapon/rifle.html">アサルトライフル</a></li>
+            <li><a href="/PSNOVA/pages/weapon/tmachinegun.html">ツインマシンガン</a></li>
+            <li><a href="/PSNOVA/pages/weapon/rod.html">ロッド</a></li>
+            <li><a href="/PSNOVA/pages/weapon/talis.html">タリス</a></li>
+            <li><a href="/PSNOVA/pages/weapon/wand.html">ウォンド</a></li>
+            <li><a href="/PSNOVA/pages/weapon/halo.html">ヘイロウ</a></li>
+            <li><a href="/PSNOVA/pages/weapon/pile.html">パイル</a></li>
+        </ul>
+    </li>
     <li><a href="/PSNOVA/pages/armor.html">防具データ</a></li>
     <li><a href="/PSNOVA/pages/attachment.html">アタッチパーツ</a></li>
     <li><a href="/PSNOVA/pages/specialability.html">特殊能力</a></li>
@@ -55,12 +70,14 @@ function markCurrentSidebarLink(){
             return;
         }
 
-        var current = linkPath === currentPath || (weaponChild && linkPath === "/PSNOVA/pages/weapon.html");
-        if (current) {
-            link.classList.add("is-current");
+        var exactCurrent = linkPath === currentPath;
+        var weaponParentCurrent = weaponChild && linkPath === "/PSNOVA/pages/weapon.html";
+
+        link.classList.toggle("is-current", exactCurrent);
+        link.classList.toggle("is-parent-current", weaponParentCurrent);
+        if (exactCurrent) {
             link.setAttribute("aria-current", "page");
         } else {
-            link.classList.remove("is-current");
             link.removeAttribute("aria-current");
         }
     });
