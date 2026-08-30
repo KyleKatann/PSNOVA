@@ -25,12 +25,16 @@ Modernization work must preserve existing data and URLs while improving usabilit
 16. **All table column headers must be centered.** Body-cell alignment may remain semantic, including left-aligned prose, notes, locations, and quest lists, but those body rules must never override the visual centering of the actual header row.
 17. **Do not add automatic in-page section navigation bars.** The generated `ページ内` link strip was judged unnecessary and must remain removed. Use the page structure, headings, sidebar, search, and purpose-built navigation only where they add clear value.
 18. **Guide and data pages should begin with a concise reader-facing introduction, normally about three sentences.** Explain what the page covers, what can be compared or checked, and how the information is useful. Avoid placeholder-like one-line descriptions or copied wiki fragments.
+19. **All pale-blue UI surfaces used by data tables must use the same existing UI token, `var(--accent-soft)`.** Do not introduce page-specific pale-blue hex colors for table headers or blue emphasis cells. Semantic non-blue status colors may remain distinct where they convey gameplay meaning.
+20. **Data tables must use restrained 1px grid lines based on the shared border token.** Grid lines should improve row/column tracking without becoming visually dominant; do not return to heavy dark borders or 1px colored gaps between every cell.
 
 ## Correction-derived invariants
 
 These are specifications established by user review and must be treated as regression constraints:
 
-- Data tables retain the compact original-wiki treatment: pale blue data cells, gray headers, 1px-style separation, compact padding, and modern scrolling/search/sort behavior. Removing runtime HTML repair must not remove this visual treatment.
+- Data tables retain the compact original-wiki treatment: pale blue header/emphasis surfaces, compact padding, restrained 1px separation, and modern scrolling/search/sort behavior. Removing runtime HTML repair must not remove this visual treatment.
+- All table pale-blue UI surfaces use the same `var(--accent-soft)` color across every page. Table body cells use neutral surfaces unless a semantic status color is intentionally required.
+- Tables use subtle 1px grid lines in the shared border color so rows and columns remain easy to track without visually heavy borders.
 - Table column headers are always centered, including legacy first-row headers. Semantic left alignment applies only to body content such as notes, explanations, locations, acquisition methods, and quest lists.
 - Public labels must be natural reader-facing Japanese. Developer-facing or unexplained labels such as `Shop Lv`, `shopLv`, and `ショップLv` must not appear; display `ショップレベル` instead.
 - Automatic in-page navigation strips such as the former `ページ内` bar are intentionally not used and must not be restored.
@@ -70,7 +74,7 @@ Principles:
 - Current/selected navigation states must be immediately visible.
 - One-column mobile layout.
 - Tables prioritize readability and comparison.
-- For data tables, the original PSNOVA wiki/HTML is an approved internal reference: use compact cells, clear 1px-style grid separation, pale blue data surfaces, and existing native category icons where available.
+- For data tables, the original PSNOVA wiki/HTML is an approved internal reference: use compact cells, restrained 1px grid lines, the shared pale-blue UI token for header/emphasis surfaces, and existing native category icons where available.
 - Do not restore old wiki editor/action icons such as add/edit/paragraph-edit controls; only gameplay/category identification icons should return.
 - Avoid neon, scanlines, heavy animation, large decorative effects, or intrusive ads.
 - Dark mode may be added later, but it must remain visually restrained.
@@ -161,7 +165,8 @@ Examples:
 - Automatic in-page navigation assets/loaders must remain absent unless the user explicitly reverses this specification.
 - Migrated historical pages retain sentinel guide content while excluding archived Wiki/Wayback chrome, analytics, ad code, and edit controls.
 - Internal data pages do not display large illustrative JPEG screenshots; compact native PNG icons remain allowed.
-- Data-table styling keeps the compact wiki-derived grid and native weapon icon mapping while preserving semantic `thead/tbody/th/td` structure.
+- Data-table styling keeps compact density, `var(--accent-soft)` as the only pale-blue UI surface token, restrained 1px shared-border grid lines, and native weapon icon mapping while preserving semantic `thead/tbody/th/td` structure.
+- Table styling must not reintroduce old standalone pale-blue values such as `#e0e8f0`, `#eef5ff`, or blue-colored 1px gap backgrounds for ordinary cell separation.
 - The modern visual layer retains defined contrast tokens for cool navy navigation, white surfaces, PSNOVA indigo accents, and muted blue links.
 - The palette must not regress to copied Game8 yellow accent values.
 - Repository-root `reference/` remains present after cleanup work.
