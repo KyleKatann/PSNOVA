@@ -2,7 +2,7 @@ import unittest
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-MENUBAR = ROOT / "docs" / "js" / "menubar.js"
+STYLE_ENTRY = ROOT / "docs" / "css" / "style.css"
 IMAGE_LAYOUT = ROOT / "docs" / "js" / "image-layout.js"
 TABLE_SEMANTICS = ROOT / "docs" / "js" / "table-semantics.js"
 TABLE_CSS = ROOT / "docs" / "css" / "wiki-table.css"
@@ -10,9 +10,8 @@ TABLE_CSS = ROOT / "docs" / "css" / "wiki-table.css"
 
 class WikiTableStyleTests(unittest.TestCase):
     def test_compact_table_layer_is_loaded_globally(self):
-        js = MENUBAR.read_text(encoding="utf-8")
-        self.assertIn('/PSNOVA/css/wiki-table.css', js)
-        self.assertIn('data-psnova-wiki-table', js)
+        css = STYLE_ENTRY.read_text(encoding="utf-8")
+        self.assertIn('@import url("/PSNOVA/css/wiki-table.css");', css)
 
     def test_every_table_scroll_wrapper_supports_touch_horizontal_scrolling(self):
         css = TABLE_CSS.read_text(encoding="utf-8")
