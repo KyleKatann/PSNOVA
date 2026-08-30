@@ -16,15 +16,17 @@ Modernization work must preserve existing data and URLs while improving usabilit
 7. If a change causes a regression found during final validation, fix or revert only that item rather than continuing on top of a broken state.
 8. GitHub Actions tests are manual-only. Do not run them after each commit. Complete the planned implementation batch first, then trigger the `tests` workflow once with `workflow_dispatch` for final validation.
 9. Never use image-generation tools for this project. All visual changes must be implemented with repository HTML/CSS/JavaScript and existing approved assets only.
+10. Keep the repository-root `reference/` archive. It contains historical PSNOVA/wiki source material used for design and data verification and must not be deleted during legacy-code cleanup.
 
 ## Recovery point
 
-The pre-modernization site is preserved in:
+The pre-modernization site is preserved in Git history and in:
 
 - Branch: `backup/pre-modernization-20260830`
 - Source commit at backup creation: `cb3ac9bdc6b6551a18f2ced40e57d152f9e6b2a6`
+- Historical source/reference material: repository-root `reference/`
 
-Do not modify or repurpose that branch.
+Do not modify or repurpose the backup branch. `reference/` may be read for comparison, but keep the archive intact.
 
 ## Design direction
 
@@ -128,6 +130,7 @@ Examples:
 - Data-table styling keeps the compact wiki-derived grid and native weapon icon mapping while preserving semantic `thead/tbody/th/td` structure.
 - The modern visual layer retains defined contrast tokens for cool navy navigation, white surfaces, PSNOVA indigo accents, and muted blue links.
 - The palette must not regress to copied Game8 yellow accent values.
+- Repository-root `reference/` remains present after cleanup work.
 
 Tests belong under `tests/` and should use the Python standard library where possible so the repository has no unnecessary test dependency.
 Add tests alongside each implementation item. The GitHub Actions `tests` workflow must not run on `push` or `pull_request`; trigger it manually once with `workflow_dispatch` after the planned implementation batch is complete.
