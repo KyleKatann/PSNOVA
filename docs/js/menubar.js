@@ -13,6 +13,7 @@
     addScriptOnce('script[data-psnova-site-search="true"]', "/PSNOVA/js/site-search.js", "data-psnova-site-search");
     addScriptOnce('script[data-psnova-section-nav="true"]', "/PSNOVA/js/section-nav.js", "data-psnova-section-nav");
     addScriptOnce('script[data-psnova-table-semantics="true"]', "/PSNOVA/js/table-semantics.js", "data-psnova-table-semantics");
+    addScriptOnce('script[data-psnova-affiliate-banner="true"]', "/PSNOVA/js/affiliate-banner.js", "data-psnova-affiliate-banner");
 })();
 
 (function loadPageTools(){
