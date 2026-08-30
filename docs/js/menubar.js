@@ -1,14 +1,4 @@
-(function loadModernStyles(){
-    function addStylesheetOnce(selector, href, dataName) {
-        if (!document.querySelector(selector)) {
-            var link = document.createElement("link");
-            link.rel = "stylesheet";
-            link.href = href;
-            link.setAttribute(dataName, "true");
-            document.head.appendChild(link);
-        }
-    }
-
+(function loadModernScripts(){
     function addScriptOnce(selector, src, dataName) {
         if (!document.querySelector(selector)) {
             var script = document.createElement("script");
@@ -18,15 +8,9 @@
         }
     }
 
-    addStylesheetOnce('link[data-psnova-modern="true"]', "/PSNOVA/css/modern.css", "data-psnova-modern");
-    addStylesheetOnce('link[data-psnova-wiki-table="true"]', "/PSNOVA/css/wiki-table.css", "data-psnova-wiki-table");
-    addStylesheetOnce('link[data-psnova-interaction="true"]', "/PSNOVA/css/interaction.css", "data-psnova-interaction");
-    addStylesheetOnce('link[data-psnova-affiliate="true"]', "/PSNOVA/css/affiliate.css", "data-psnova-affiliate");
     addScriptOnce('script[data-psnova-page-meta="true"]', "/PSNOVA/js/page-meta.js", "data-psnova-page-meta");
     addScriptOnce('script[data-psnova-image-layout="true"]', "/PSNOVA/js/image-layout.js", "data-psnova-image-layout");
-    addStylesheetOnce('link[data-psnova-site-search="true"]', "/PSNOVA/css/site-search.css", "data-psnova-site-search");
     addScriptOnce('script[data-psnova-site-search="true"]', "/PSNOVA/js/site-search.js", "data-psnova-site-search");
-    addStylesheetOnce('link[data-psnova-section-nav="true"]', "/PSNOVA/css/section-nav.css", "data-psnova-section-nav");
     addScriptOnce('script[data-psnova-section-nav="true"]', "/PSNOVA/js/section-nav.js", "data-psnova-section-nav");
     addScriptOnce('script[data-psnova-table-semantics="true"]', "/PSNOVA/js/table-semantics.js", "data-psnova-table-semantics");
 })();
@@ -34,14 +18,6 @@
 (function loadPageTools(){
     if (!/\/pages\/weapon\.html$/.test(window.location.pathname)) {
         return;
-    }
-
-    if (!document.querySelector('link[data-psnova-weapon-tools="true"]')) {
-        var toolStyles = document.createElement("link");
-        toolStyles.rel = "stylesheet";
-        toolStyles.href = "/PSNOVA/css/weapon-tools.css";
-        toolStyles.setAttribute("data-psnova-weapon-tools", "true");
-        document.head.appendChild(toolStyles);
     }
 
     if (!document.querySelector('script[data-psnova-weapon-tools="true"]')) {
