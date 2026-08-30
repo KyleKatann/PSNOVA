@@ -26,6 +26,13 @@
         return;
     }
 
+    if (isWeaponChild && !document.querySelector('script[data-psnova-weapon-static-heading="true"]')) {
+        var headingScript = document.createElement("script");
+        headingScript.src = "/PSNOVA/js/weapon-static-heading.js";
+        headingScript.setAttribute("data-psnova-weapon-static-heading", "true");
+        document.head.appendChild(headingScript);
+    }
+
     if (!document.querySelector('script[data-psnova-weapon-tools="true"]')) {
         var script = document.createElement("script");
         script.src = "/PSNOVA/js/weapon-tools.js";
