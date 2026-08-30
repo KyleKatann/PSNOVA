@@ -10,7 +10,7 @@ SITE_PREFIX = "https://kylekatann.github.io/PSNOVA/"
 
 
 class PublicPageVisualAuditTests(unittest.TestCase):
-    def public_data_pages(self):
+    def sitemap_pages(self):
         root = ElementTree.parse(SITEMAP).getroot()
         namespace = {"sm": "http://www.sitemaps.org/schemas/sitemap/0.9"}
         pages = []
@@ -19,19 +19,22 @@ class PublicPageVisualAuditTests(unittest.TestCase):
             if not url.startswith(SITE_PREFIX):
                 continue
             relative = url[len(SITE_PREFIX):]
-            if relative.startswith("pages/") and relative.endswith(".html"):
-                pages.append(DOCS / relative)
+            relative = relative or "index.html"
+            pages.append(DOCS / relative)
         return pages
 
-    def test_all_sitemap_data_pages_exist(self):
-        for path in self.public_data_pages():
+    def published_html_pages(self):
+        return sorted(DOCS.rglob("*.html"))
+
+    def test_all_sitemap_pages_exist(self):
+        for path in self.sitemap_pages():
             with self.subTest(path=path):
                 self.assertTrue(path.exists())
 
-    def test_all_public_data_pages_use_the_shared_visual_shell(self):
-        for path in self.public_data_pages():
+    def test_every_published_html_page_uses_the_shared_visual_shell(self):
+        for path in self.published_html_pages():
             html = path.read_text(encoding="utf-8")
-            with self.subTest(path=path):
+            with self.subTest(path=path.relative_to(DOCS)):
                 self.assertEqual(html.count("<header>"), 1)
                 self.assertIn('id="logo"', html)
                 self.assertIn('/PSNOVA/css/style.css', html)
@@ -40,11 +43,11 @@ class PublicPageVisualAuditTests(unittest.TestCase):
                 self.assertIn('<div id="main">', html)
                 self.assertRegex(html, r"<h2>[^<]+</h2>")
 
-    def test_public_data_pages_do_not_define_page_specific_inline_stylesheets(self):
+    def test_published_pages_do_not_define_page_specific_inline_stylesheets(self):
         style_block = re.compile(r"<style\b", re.IGNORECASE)
-        for path in self.public_data_pages():
+        for path in self.published_html_pages():
             html = path.read_text(encoding="utf-8")
-            with self.subTest(path=path):
+            with self.subTest(path=path.relative_to(DOCS)):
                 self.assertIsNone(style_block.search(html))
 
 
