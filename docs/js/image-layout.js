@@ -1,11 +1,9 @@
 (function () {
     var knownDimensions = {
-        "/PSNOVA/img/logo.png": { width: 660, height: 121 },
-        "/PSNOVA/img/gigantes/gigantes.jpg": { width: 1000, height: 540 }
+        "/PSNOVA/img/logo.png": { width: 660, height: 121 }
     };
     var eagerPaths = {
-        "/PSNOVA/img/logo.png": true,
-        "/PSNOVA/img/gigantes/gigantes.jpg": true
+        "/PSNOVA/img/logo.png": true
     };
     var weaponIcons = {
         "ソード": "/PSNOVA/img/weapon/sword.png",
