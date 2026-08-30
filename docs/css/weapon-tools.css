@@ -105,7 +105,7 @@ tr[hidden] { display: none !important; }
 
 @media screen and (min-width: 801px) {
     .data-toolbar { position: sticky; top: 8px; z-index: 30; box-shadow: var(--shadow-sm); }
-    #main details table thead th { position: sticky; top: 76px; z-index: 10; box-shadow: 0 1px 0 var(--border); }
+    #main .data-toolbar ~ details table thead th { position: sticky; top: 76px; z-index: 10; box-shadow: 0 1px 0 var(--border); }
 }
 
 @media screen and (max-width: 800px) {
