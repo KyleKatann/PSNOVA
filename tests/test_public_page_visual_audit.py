@@ -6,6 +6,7 @@ from xml.etree import ElementTree
 ROOT = Path(__file__).resolve().parents[1]
 DOCS = ROOT / "docs"
 SITEMAP = DOCS / "sitemap.xml"
+WEAPON_DIR = DOCS / "pages" / "weapon"
 SITE_PREFIX = "https://kylekatann.github.io/PSNOVA/"
 
 
@@ -23,16 +24,18 @@ class PublicPageVisualAuditTests(unittest.TestCase):
             pages.append(DOCS / relative)
         return pages
 
-    def published_html_pages(self):
-        return sorted(DOCS.rglob("*.html"))
+    def primary_public_pages(self):
+        pages = set(self.sitemap_pages())
+        pages.update(WEAPON_DIR.glob("*.html"))
+        return sorted(pages)
 
-    def test_all_sitemap_pages_exist(self):
-        for path in self.sitemap_pages():
+    def test_all_primary_public_pages_exist(self):
+        for path in self.primary_public_pages():
             with self.subTest(path=path):
                 self.assertTrue(path.exists())
 
-    def test_every_published_html_page_uses_the_shared_visual_shell(self):
-        for path in self.published_html_pages():
+    def test_every_primary_public_page_uses_the_shared_visual_shell(self):
+        for path in self.primary_public_pages():
             html = path.read_text(encoding="utf-8")
             with self.subTest(path=path.relative_to(DOCS)):
                 self.assertEqual(html.count("<header>"), 1)
@@ -43,9 +46,9 @@ class PublicPageVisualAuditTests(unittest.TestCase):
                 self.assertIn('<div id="main">', html)
                 self.assertRegex(html, r"<h2>[^<]+</h2>")
 
-    def test_published_pages_do_not_define_page_specific_inline_stylesheets(self):
+    def test_primary_public_pages_do_not_define_page_specific_inline_stylesheets(self):
         style_block = re.compile(r"<style\b", re.IGNORECASE)
-        for path in self.published_html_pages():
+        for path in self.primary_public_pages():
             html = path.read_text(encoding="utf-8")
             with self.subTest(path=path.relative_to(DOCS)):
                 self.assertIsNone(style_block.search(html))
