@@ -2,15 +2,14 @@ import unittest
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-MENUBAR = ROOT / "docs" / "js" / "menubar.js"
+STYLE_ENTRY = ROOT / "docs" / "css" / "style.css"
 INTERACTION = ROOT / "docs" / "css" / "interaction.css"
 
 
 class InteractionStyleTests(unittest.TestCase):
     def test_interaction_styles_are_loaded_globally(self):
-        js = MENUBAR.read_text(encoding="utf-8")
-        self.assertIn("/PSNOVA/css/interaction.css", js)
-        self.assertIn("data-psnova-interaction", js)
+        css = STYLE_ENTRY.read_text(encoding="utf-8")
+        self.assertIn('@import url("/PSNOVA/css/interaction.css");', css)
 
     def test_transitions_are_short_and_restrained(self):
         css = INTERACTION.read_text(encoding="utf-8")
