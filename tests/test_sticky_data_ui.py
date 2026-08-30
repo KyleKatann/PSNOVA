@@ -13,9 +13,10 @@ class StickyDataUiTests(unittest.TestCase):
         self.assertIn("position: sticky", css)
         self.assertIn("top: 8px", css)
 
-    def test_table_header_is_sticky_on_weapon_page(self):
+    def test_table_header_is_sticky_only_after_weapon_toolbar(self):
         css = CSS.read_text(encoding="utf-8")
-        self.assertIn("#main details table thead th", css)
+        self.assertIn("#main .data-toolbar ~ details table thead th", css)
+        self.assertNotIn("#main details table thead th", css)
         self.assertIn("top: 76px", css)
 
     def test_mobile_layout_rules_remain(self):
