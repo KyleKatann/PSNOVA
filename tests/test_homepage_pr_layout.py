@@ -9,15 +9,16 @@ AFFILIATE_JS = ROOT / "docs" / "js" / "affiliate-banner.js"
 AGENT = ROOT / "Agent.md"
 
 
-def test_homepage_uses_full_main_column_without_internal_page_image_suppression():
+def test_all_public_pages_use_full_main_column_without_internal_page_image_suppression():
     html = INDEX.read_text(encoding="utf-8")
     css = STYLE.read_text(encoding="utf-8")
 
     assert '<body class="homepage">' in html
     assert 'alt="PSNOVAのギガンテス"' in html
-    assert "body.homepage #main p" in css
-    homepage_rule = css.split("body.homepage #main p", 1)[1].split("}", 1)[0]
-    assert "max-width: none;" in homepage_rule
+    assert "#main p {" in css
+    global_rule = css.rsplit("#main p {", 1)[1].split("}", 1)[0]
+    assert "max-width: none;" in global_rule
+    assert "body.homepage #main p" not in css
     assert 'body:not(.homepage) #main img[src$=".jpg"]' in css
 
 
@@ -53,4 +54,4 @@ def test_user_corrected_specs_are_recorded_as_invariants():
     assert "Weapon section headings show exactly one weapon icon" in agent
     assert "トアス種, ゴルドス種, and アフォル種" in agent
     assert "Affiliate/PR presentation on desktop uses two equal-width banner slots" in agent
-    assert "homepage should use the available main-content width naturally" in agent
+    assert "All public pages should use the available main-content width naturally" in agent
