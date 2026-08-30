@@ -44,6 +44,30 @@ if (callSite) {
         contents.insertAdjacentHTML("afterbegin", html);
     }
 }
+
+markCurrentSidebarLink();
+}
+
+function markCurrentSidebarLink(){
+    var currentPath = window.location.pathname.replace(/\/$/, "");
+    var links = document.querySelectorAll("#sub .submenu a[href]");
+
+    Array.prototype.slice.call(links).forEach(function(link){
+        var linkPath;
+        try {
+            linkPath = new URL(link.getAttribute("href"), window.location.href).pathname.replace(/\/$/, "");
+        } catch (error) {
+            return;
+        }
+
+        if (linkPath === currentPath) {
+            link.classList.add("is-current");
+            link.setAttribute("aria-current", "page");
+        } else {
+            link.classList.remove("is-current");
+            link.removeAttribute("aria-current");
+        }
+    });
 }
 
 function prioritizeMainOnMobile(){
@@ -60,5 +84,8 @@ function prioritizeMainOnMobile(){
     }
 }
 
-window.addEventListener("DOMContentLoaded", prioritizeMainOnMobile, false);
+window.addEventListener("DOMContentLoaded", function(){
+    markCurrentSidebarLink();
+    prioritizeMainOnMobile();
+}, false);
 window.addEventListener("resize", prioritizeMainOnMobile, false);
