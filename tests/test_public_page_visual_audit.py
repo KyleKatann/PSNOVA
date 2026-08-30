@@ -7,6 +7,8 @@ ROOT = Path(__file__).resolve().parents[1]
 DOCS = ROOT / "docs"
 SITEMAP = DOCS / "sitemap.xml"
 WEAPON_DIR = DOCS / "pages" / "weapon"
+MODERN_CSS = DOCS / "css" / "modern.css"
+INTERACTION_CSS = DOCS / "css" / "interaction.css"
 SITE_PREFIX = "https://kylekatann.github.io/PSNOVA/"
 
 
@@ -93,6 +95,17 @@ class PublicPageVisualAuditTests(unittest.TestCase):
                         cell_pattern.search(outside_rows),
                         "Table cells must be contained by an explicit <tr>...</tr> row.",
                     )
+
+    def test_weapon_submenu_styles_have_one_owner(self):
+        modern_css = MODERN_CSS.read_text(encoding="utf-8")
+        interaction_css = INTERACTION_CSS.read_text(encoding="utf-8")
+
+        self.assertIn(".weapon-submenu", modern_css)
+        self.assertNotIn(
+            ".weapon-submenu",
+            interaction_css,
+            "Weapon submenu layout belongs to modern.css; later stylesheets must not override it.",
+        )
 
 
 if __name__ == "__main__":
