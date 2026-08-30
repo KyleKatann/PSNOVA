@@ -70,6 +70,30 @@ class PublicPageVisualAuditTests(unittest.TestCase):
                         "Table headers must use th cells so every page receives the shared header design.",
                     )
 
+    def test_primary_public_table_cells_stay_inside_explicit_rows(self):
+        table_pattern = re.compile(r"<table\b[^>]*>(.*?)</table>", re.IGNORECASE | re.DOTALL)
+        row_pattern = re.compile(r"<tr\b[^>]*>.*?</tr>", re.IGNORECASE | re.DOTALL)
+        row_start_pattern = re.compile(r"<tr\b", re.IGNORECASE)
+        row_end_pattern = re.compile(r"</tr\s*>", re.IGNORECASE)
+        cell_pattern = re.compile(r"<(?:td|th)\b", re.IGNORECASE)
+
+        for path in self.primary_public_pages():
+            html = path.read_text(encoding="utf-8")
+            for table_index, table_match in enumerate(table_pattern.finditer(html), start=1):
+                table_html = table_match.group(1)
+                with self.subTest(path=path.relative_to(DOCS), table=table_index):
+                    self.assertEqual(
+                        len(row_start_pattern.findall(table_html)),
+                        len(row_end_pattern.findall(table_html)),
+                        "Every table row must have an explicit closing </tr>; do not rely on browser repair.",
+                    )
+
+                    outside_rows = row_pattern.sub("", table_html)
+                    self.assertIsNone(
+                        cell_pattern.search(outside_rows),
+                        "Table cells must be contained by an explicit <tr>...</tr> row.",
+                    )
+
 
 if __name__ == "__main__":
     unittest.main()
