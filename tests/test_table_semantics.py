@@ -18,7 +18,21 @@ class TableSemanticTests(unittest.TestCase):
         self.assertIn('table.closest("details")', js)
         self.assertIn('rows.length < 4', js)
         self.assertIn('main.querySelectorAll("table")', js)
-        self.assertIn('.filter(isLargeDataTable)', js)
+        self.assertIn('tables.filter(isLargeDataTable).forEach(normalizeDataTable)', js)
+
+    def test_every_main_table_gets_an_idempotent_scroll_wrapper(self):
+        js = TABLE_SEMANTICS_JS.read_text(encoding="utf-8")
+        self.assertIn('function ensureScrollableTable(table)', js)
+        self.assertIn('classList.contains("table-scroll")', js)
+        self.assertIn('wrapper.className = "table-scroll"', js)
+        self.assertIn('wrapper.appendChild(table)', js)
+        self.assertIn('tables.forEach(ensureScrollableTable)', js)
+
+    def test_scroll_wrapper_is_keyboard_accessible(self):
+        js = TABLE_SEMANTICS_JS.read_text(encoding="utf-8")
+        self.assertIn('wrapper.setAttribute("role", "region")', js)
+        self.assertIn('wrapper.setAttribute("tabindex", "0")', js)
+        self.assertIn('wrapper.setAttribute("aria-label", "表を横スクロール")', js)
 
     def test_header_and_body_semantics_are_created(self):
         js = TABLE_SEMANTICS_JS.read_text(encoding="utf-8")
