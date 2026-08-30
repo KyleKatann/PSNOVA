@@ -53,6 +53,7 @@ These are specifications established by user review and must be treated as regre
 - Search/browser page titles use exactly `PSNOVA攻略サイト` for the homepage and `PSNOVA攻略サイト - XXXXX` for every other public page. `XXXXX` must identify the linked page itself; for example, the weapon landing page is `PSNOVA攻略サイト - 武器`, not a generic site title.
 - Primary navigation text must remain immediately readable at normal desktop and mobile viewing sizes while preserving compact guide-site density. The current baseline is 16px for the top/mobile navigation, 14px for primary sidebar links, 13px for nested weapon links, and 12px for sidebar group labels; do not reduce these without an explicit design decision.
 - Public-site display assets must never be loaded from external websites. Store every image/font/CSS/JS asset in the repository and reference it locally; do not solve missing artwork with hotlinks or CDN URLs.
+- Homepage product visuals have fixed semantic placement: the `商品概要` right column contains only the PS Vita package image. The PSNOVA and PSO2 logo artwork belongs in the right column of `公式サイトへのリンク`, with the small `©SEGA` credit kept with those official-site visuals.
 
 ## Recovery point
 
@@ -184,6 +185,7 @@ Examples:
 - Guide/data pages keep useful concise introductions instead of reverting to placeholder one-line wiki fragments.
 - The weapon landing-page catalog keeps one static native PNG icon per weapon card and does not rely on runtime JavaScript to supply those icons.
 - Public-site display assets must not use external `http://` or `https://` sources; image/font/CSS/JS references must resolve to repository-local `/PSNOVA/...` assets.
+- Homepage `商品概要` must keep only the PS Vita package image in its right visual column, while the PSNOVA and PSO2 logo images plus `©SEGA` stay in the right visual column of `公式サイトへのリンク`.
 
 Tests belong under `tests/` and should use the Python standard library where possible so the repository has no unnecessary test dependency.
 Add tests alongside each implementation item. The GitHub Actions `tests` workflow must not run on `push` or `pull_request`; trigger it manually once with `workflow_dispatch` after the planned implementation batch is complete.
