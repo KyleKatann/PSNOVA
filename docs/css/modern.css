@@ -366,6 +366,60 @@ nav#menubar ul li a span {
     color: var(--accent);
 }
 
+#sub .submenu a.is-parent-current {
+    color: var(--accent-strong);
+    font-weight: 800;
+}
+
+#sub .weapon-data-item {
+    border-bottom: 1px solid #e7eaf0;
+}
+
+#sub .weapon-submenu {
+    margin: 0;
+    padding: 2px 0 5px;
+    list-style: none;
+    background: var(--surface-subtle);
+    border-top: 1px solid #edf0f5;
+}
+
+#sub .submenu .weapon-submenu li {
+    border-bottom: 0;
+}
+
+#sub .submenu .weapon-submenu a {
+    min-height: 0;
+    padding: 6px 24px 6px 29px;
+    color: var(--text-muted);
+    background: transparent;
+    border-left-width: 3px;
+    font-size: 11.5px;
+    font-weight: 600;
+    line-height: 1.35;
+}
+
+#sub .submenu .weapon-submenu a::before {
+    content: "";
+    position: absolute;
+    left: 17px;
+    top: 50%;
+    width: 5px;
+    height: 1px;
+    background: #a6afbd;
+    transform: translateY(-50%);
+}
+
+#sub .submenu .weapon-submenu a::after {
+    right: 10px;
+    font-size: 14px;
+}
+
+#sub .submenu .weapon-submenu a:hover,
+#sub .submenu .weapon-submenu a.is-current {
+    color: var(--accent-strong);
+    background: var(--accent-soft);
+}
+
 table {
     width: 100%;
     margin: 14px 0 28px;
