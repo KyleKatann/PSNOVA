@@ -12,10 +12,13 @@ class TableSemanticTests(unittest.TestCase):
         self.assertIn("/PSNOVA/js/table-semantics.js", js)
         self.assertIn("data-psnova-table-semantics", js)
 
-    def test_only_details_data_tables_are_normalized(self):
+    def test_large_data_tables_are_detected_without_touching_small_tables(self):
         js = TABLE_SEMANTICS_JS.read_text(encoding="utf-8")
-        self.assertIn('querySelectorAll("details table")', js)
-        self.assertNotIn('querySelectorAll("table")', js)
+        self.assertIn('function isLargeDataTable(table)', js)
+        self.assertIn('table.closest("details")', js)
+        self.assertIn('rows.length < 4', js)
+        self.assertIn('main.querySelectorAll("table")', js)
+        self.assertIn('.filter(isLargeDataTable)', js)
 
     def test_header_and_body_semantics_are_created(self):
         js = TABLE_SEMANTICS_JS.read_text(encoding="utf-8")
@@ -23,6 +26,18 @@ class TableSemanticTests(unittest.TestCase):
         self.assertIn('headerCell.setAttribute("scope", "col")', js)
         self.assertIn("table.createTHead()", js)
         self.assertIn('replaceElementTag(cell, "td")', js)
+
+    def test_archived_column_meanings_are_detected(self):
+        js = TABLE_SEMANTICS_JS.read_text(encoding="utf-8")
+        self.assertIn('label === "レアリティ"', js)
+        self.assertIn('label === "打撃" || label === "打撃力"', js)
+        self.assertIn('label === "射撃" || label === "射撃力"', js)
+        self.assertIn('label === "法撃" || label === "法撃力"', js)
+        self.assertIn('label === "ショップlv" || label === "shoplv"', js)
+        self.assertIn('data-rarity-band', js)
+        self.assertIn('weapon-stat-melee', js)
+        self.assertIn('weapon-stat-ranged', js)
+        self.assertIn('weapon-stat-tech', js)
 
     def test_normalization_is_idempotent(self):
         js = TABLE_SEMANTICS_JS.read_text(encoding="utf-8")
