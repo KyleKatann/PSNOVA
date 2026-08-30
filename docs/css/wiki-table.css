@@ -19,12 +19,12 @@
     outline-offset: 2px;
 }
 
-/* Legacy source pages still being migrated may carry bgcolor on their first
-   row. Keep the historical header appearance without JavaScript rewriting it. */
+/* Table blue is a single shared UI token. Do not introduce page-specific
+   pale-blue hex values for headers or other non-semantic blue surfaces. */
 #main table tr:first-child > th[bgcolor],
 #main table tr:first-child > td[bgcolor] {
     color: #1f3146;
-    background: #e0e8f0;
+    background: var(--accent-soft);
     font-weight: 800;
     text-align: center;
     white-space: nowrap;
@@ -34,11 +34,11 @@
     width: 100%;
     margin: 14px 0 28px;
     color: #26384d;
-    background: #ccd5dd;
-    border: 0;
+    background: var(--surface);
+    border: 1px solid var(--border);
     border-collapse: separate;
-    border-spacing: 1px;
-    border-radius: 0;
+    border-spacing: 0;
+    border-radius: 2px;
     overflow: visible;
     font-size: 12.5px;
     line-height: 1.4;
@@ -53,8 +53,21 @@
 #main table td {
     padding: 5px;
     border: 0;
-    background: #eef5ff;
+    border-right: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    background: var(--surface-subtle);
     vertical-align: middle;
+}
+
+#main table tr > :last-child {
+    border-right: 0;
+}
+
+#main table tbody > tr:last-child > td,
+#main table tbody > tr:last-child > th,
+#main table > tr:last-child > td,
+#main table > tr:last-child > th {
+    border-bottom: 0;
 }
 
 /* Old source tables used th for every data cell. Neutralize that presentation
@@ -76,10 +89,11 @@
 }
 
 #main table thead th,
+#main table thead td,
 #main table tr:first-child > th[bgcolor],
 #main table tr:first-child > td[bgcolor] {
     color: #1f3146;
-    background: #e0e8f0;
+    background: var(--accent-soft);
     font-weight: 800;
     text-align: center;
     white-space: nowrap;
@@ -87,7 +101,7 @@
 
 #main table tbody tr:hover > td,
 #main table tbody tr:hover > th:not([bgcolor]) {
-    box-shadow: inset 0 0 0 9999px rgba(70, 103, 150, 0.07);
+    box-shadow: inset 0 0 0 9999px rgba(86, 97, 201, 0.045);
 }
 
 #main table tbody td:first-child,
@@ -171,7 +185,7 @@
 }
 
 #main table .rarity-cell {
-    background: #e0e8f0;
+    background: var(--accent-soft);
     font-weight: 800;
     text-align: center;
 }
@@ -213,23 +227,23 @@
 }
 
 #main table .weapon-stat-cell.is-empty {
-    background: #e0e0e0;
+    background: #e7e9ee;
 }
 
 #main table .weapon-stat-melee.has-value {
-    background: #ffcccc;
+    background: #fff0f0;
 }
 
 #main table .weapon-stat-ranged.has-value {
-    background: #ccddff;
+    background: var(--accent-soft);
 }
 
 #main table .weapon-stat-tech.has-value {
-    background: #ffffcc;
+    background: #fffbe6;
 }
 
 #main table .shop-level-cell {
-    background: snow;
+    background: #fffdf8;
     text-align: center;
     font-variant-numeric: tabular-nums;
 }
@@ -246,6 +260,7 @@
 #main table > tbody:first-of-type > tr:first-child > th,
 #main table > tbody:first-of-type > tr:first-child > td[bgcolor] {
     text-align: center !important;
+    background: var(--accent-soft);
 }
 
 @media screen and (max-width: 800px) {
