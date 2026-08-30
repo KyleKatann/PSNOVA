@@ -3,7 +3,7 @@
         "/PSNOVA/": { title: "PSNOVA攻略 | ファンタシースター ノヴァ攻略データ", description: "PSNOVA(ファンタシースター ノヴァ)の武器、防具、素材、エネミー、特殊能力などを整理した攻略データサイトです。" },
         "/PSNOVA/index.html": { title: "PSNOVA攻略 | ファンタシースター ノヴァ攻略データ", description: "PSNOVA(ファンタシースター ノヴァ)の武器、防具、素材、エネミー、特殊能力などを整理した攻略データサイトです。" },
         "/PSNOVA/copyright.html": { title: "著作権・免責事項 | PSNOVA攻略", description: "PSNOVA攻略サイトの著作権表示、免責事項、掲載情報の取り扱いについて案内します。" },
-        "/PSNOVA/issue.html": { title: "修正・加筆要望 | PSNOVA攻略", description: "PSNOVA攻略サイトのデータ修正、加筆要望、不具合報告の方法を案内します。" },
+        "/PSNOVA/issue.html": { title: "修正・加筆について | PSNOVA攻略", description: "PSNOVA攻略サイトの掲載内容の修正・加筆方針について案内します。" },
         "/PSNOVA/pages/appearance.html": { title: "ヘアスタイル・コスチューム・アクセサリー一覧 | PSNOVA攻略", description: "PSNOVAのヘアスタイル、コスチューム、アクセサリーなど外見変更要素を一覧で確認できます。" },
         "/PSNOVA/pages/armor.html": { title: "防具一覧・性能 | PSNOVA攻略", description: "PSNOVAの防具データを一覧掲載。性能や必要情報を比較して確認できます。" },
         "/PSNOVA/pages/attachment.html": { title: "アタッチパーツ一覧 | PSNOVA攻略", description: "PSNOVAのアタッチパーツを一覧掲載。各パーツの情報をまとめて確認できます。" },

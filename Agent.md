@@ -33,6 +33,7 @@ These are specifications established by user review and must be treated as regre
 - Table alignment is semantic: explanatory text and quest-name lists are left aligned; compact labels, names, attributes, rarity, numbers, and status values are centered.
 - Affiliate/PR presentation on desktop uses two equal-width banner slots with equal visual height and fills the available content width cleanly. On mobile it collapses to one visible banner column. The PR disclosure remains clearly visible.
 - All public pages should use the available main-content width naturally. Ordinary body copy must not have a global readable-line-length cap such as `max-width: 82ch` that leaves a conspicuous unused right gutter. Intentional compact UI components may define their own widths, but ordinary `#main` paragraphs should fill the available column.
+- Public-facing site copy must not direct visitors to GitHub, GitHub Issues, Pull Requests, repository contribution channels, or similar GitHub-based reporting instructions. Hosting/infrastructure URLs under `kylekatann.github.io` may remain where technically required, but they must not be presented as a contribution or correction workflow.
 
 ## Recovery point
 
@@ -154,6 +155,7 @@ Examples:
 - Repository-root `reference/` remains present after cleanup work.
 - User-corrected specifications in `Correction-derived invariants` remain covered by static regression tests where feasible.
 - Ordinary public-page body copy must not reintroduce a global fixed `max-width` that creates an unused right gutter inside `#main`.
+- Public-facing HTML must not reintroduce GitHub contribution/reporting copy such as GitHub Issues, Pull Requests, or `github.com` contribution links.
 
 Tests belong under `tests/` and should use the Python standard library where possible so the repository has no unnecessary test dependency.
 Add tests alongside each implementation item. The GitHub Actions `tests` workflow must not run on `push` or `pull_request`; trigger it manually once with `workflow_dispatch` after the planned implementation batch is complete.
