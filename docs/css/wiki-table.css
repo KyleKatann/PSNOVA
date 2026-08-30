@@ -238,6 +238,16 @@
     line-height: 1.2;
 }
 
+/* User-corrected invariant: every actual column-header row is centered.
+   This final rule intentionally wins over content-semantic left alignment rules
+   used for body cells such as notes, effects, locations and quest lists. */
+#main table > thead th,
+#main table > thead td,
+#main table > tbody:first-of-type > tr:first-child > th[bgcolor],
+#main table > tbody:first-of-type > tr:first-child > td[bgcolor] {
+    text-align: center !important;
+}
+
 @media screen and (max-width: 800px) {
     #main .table-scroll {
         margin-right: 0;
