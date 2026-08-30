@@ -1,0 +1,36 @@
+/* Mobile data tables intentionally prioritize horizontal scanning over wrapping.
+   The scroll wrapper is supplied by table-enhancements.js; this file is visual
+   behavior only and must not alter table semantics or source data. */
+@media screen and (max-width: 800px) {
+    body:not(.homepage) #main .table-scroll > table {
+        width: max-content;
+        min-width: 100%;
+        max-width: none;
+        white-space: nowrap;
+    }
+
+    body:not(.homepage) #main .table-scroll > table th,
+    body:not(.homepage) #main .table-scroll > table td {
+        white-space: nowrap;
+    }
+
+    /* Keep only the identifying first column visible while horizontally
+       scrolling. This applies consistently to weapons, armor, materials,
+       enemies, items, abilities and other internal data tables. */
+    body:not(.homepage) #main .table-scroll > table th:first-child,
+    body:not(.homepage) #main .table-scroll > table td:first-child {
+        position: sticky;
+        left: 0;
+        z-index: 2;
+        background: var(--surface-subtle);
+        box-shadow: 1px 0 0 var(--border);
+    }
+
+    body:not(.homepage) #main .table-scroll > table > thead th:first-child,
+    body:not(.homepage) #main .table-scroll > table > thead td:first-child,
+    body:not(.homepage) #main .table-scroll > table > tbody:first-of-type > tr:first-child > th:first-child,
+    body:not(.homepage) #main .table-scroll > table > tbody:first-of-type > tr:first-child > td:first-child[bgcolor] {
+        z-index: 3;
+        background: var(--accent-soft);
+    }
+}

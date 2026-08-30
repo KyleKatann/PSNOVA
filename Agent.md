@@ -54,6 +54,7 @@ These are specifications established by user review and must be treated as regre
 - Primary navigation text must remain immediately readable at normal desktop and mobile viewing sizes while preserving compact guide-site density. The current baseline is 16px for the top/mobile navigation, 14px for primary sidebar links, 13px for nested weapon links, and 12px for sidebar group labels; do not reduce these without an explicit design decision.
 - Public-site display assets must never be loaded from external websites. Store every image/font/CSS/JS asset in the repository and reference it locally; do not solve missing artwork with hotlinks or CDN URLs.
 - Homepage product visuals are part of their information tables, not separate cards or adjacent blocks. In `商品概要`, the PS Vita package occupies a rightmost table cell spanning the product rows. In `公式サイトへのリンク`, each PSNOVA/PSO2 logo occupies the rightmost cell of its matching link row, and `©SEGA` stays inside that official-image cell.
+- On mobile, internal data-table cells do not auto-wrap because the tables are already horizontally scrollable. The identifying first column stays sticky at the left for every internal data table, not only weapon tables; do not freeze additional columns unless a separate specification explicitly requires it.
 
 ## Recovery point
 
@@ -186,6 +187,7 @@ Examples:
 - The weapon landing-page catalog keeps one static native PNG icon per weapon card and does not rely on runtime JavaScript to supply those icons.
 - Public-site display assets must not use external `http://` or `https://` sources; image/font/CSS/JS references must resolve to repository-local `/PSNOVA/...` assets.
 - Homepage product visuals must be table cells, not sibling cards: the Vita package uses the rightmost `商品概要` cell with `rowspan`, and the PSNOVA/PSO2 artwork sits in the rightmost cell of its corresponding official-link row with `©SEGA` kept inside an official-image cell.
+- On mobile, internal data tables keep cell text on one automatic line and rely on horizontal scrolling; the identifying first column is sticky for every internal data table, while later columns remain scrollable.
 
 Tests belong under `tests/` and should use the Python standard library where possible so the repository has no unnecessary test dependency.
 Add tests alongside each implementation item. The GitHub Actions `tests` workflow must not run on `push` or `pull_request`; trigger it manually once with `workflow_dispatch` after the planned implementation batch is complete.
