@@ -111,6 +111,12 @@
             if (icon) {
                 summary.classList.add("native-icon-heading");
                 summary.style.setProperty("--native-icon", 'url("' + icon + '")');
+
+                var details = summary.parentElement;
+                if (details) {
+                    details.classList.add("native-icon-table");
+                    details.style.setProperty("--native-table-icon", 'url("' + icon + '")');
+                }
             }
         });
 
