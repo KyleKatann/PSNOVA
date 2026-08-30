@@ -1,0 +1,94 @@
+/* Compact table treatment based on the original PSNOVA wiki data layout.
+   Keep the modern semantic table structure and tools, but restore the dense,
+   clearly gridded presentation that made the original tables easy to scan. */
+
+#main details > table[data-psnova-semantic="true"] {
+    width: 100%;
+    margin: 0;
+    color: #26384d;
+    background: #b9c9dc;
+    border: 1px solid #a8bbd0;
+    border-collapse: separate;
+    border-spacing: 1px;
+    border-radius: 0;
+    overflow: visible;
+    font-size: 12.5px;
+    line-height: 1.45;
+}
+
+#main details > table[data-psnova-semantic="true"] th,
+#main details > table[data-psnova-semantic="true"] td {
+    padding: 6px 7px;
+    border: 0;
+    background: #f2f7fc;
+    vertical-align: middle;
+}
+
+#main details > table[data-psnova-semantic="true"] thead th {
+    color: #17334f;
+    background: #c9e7f8;
+    border-bottom: 1px solid #9ebbd0;
+    font-weight: 800;
+    text-align: center;
+    white-space: nowrap;
+}
+
+#main details > table[data-psnova-semantic="true"] tbody tr:nth-child(even) td {
+    background: #eaf3fb;
+}
+
+#main details > table[data-psnova-semantic="true"] tbody tr:hover td {
+    background: #dcecf9;
+}
+
+#main details > table[data-psnova-semantic="true"] tbody td:first-child {
+    min-width: 142px;
+    color: #183c61;
+    font-weight: 700;
+    text-align: left;
+}
+
+#main details.native-icon-table > table[data-psnova-semantic="true"] tbody td:first-child {
+    position: relative;
+    padding-left: 29px;
+}
+
+#main details.native-icon-table > table[data-psnova-semantic="true"] tbody td:first-child::before {
+    content: "";
+    position: absolute;
+    left: 7px;
+    top: 50%;
+    width: 16px;
+    height: 16px;
+    background-image: var(--native-table-icon);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+    image-rendering: auto;
+    transform: translateY(-50%);
+    opacity: 0.94;
+}
+
+#main details > table[data-psnova-semantic="true"] tbody td:nth-child(2),
+#main details > table[data-psnova-semantic="true"] tbody td:nth-child(3),
+#main details > table[data-psnova-semantic="true"] tbody td:nth-child(4),
+#main details > table[data-psnova-semantic="true"] tbody td:nth-child(5),
+#main details > table[data-psnova-semantic="true"] tbody td:nth-child(6) {
+    text-align: center;
+    font-variant-numeric: tabular-nums;
+}
+
+#main details > table[data-psnova-semantic="true"] br {
+    line-height: 1.25;
+}
+
+@media screen and (max-width: 800px) {
+    #main details > table[data-psnova-semantic="true"] {
+        font-size: 12px;
+    }
+
+    #main details > table[data-psnova-semantic="true"] th,
+    #main details > table[data-psnova-semantic="true"] td {
+        padding: 6px;
+    }
+}
