@@ -11,7 +11,6 @@
     addScriptOnce('script[data-psnova-page-meta="true"]', "/PSNOVA/js/page-meta.js", "data-psnova-page-meta");
     addScriptOnce('script[data-psnova-image-layout="true"]', "/PSNOVA/js/image-layout.js", "data-psnova-image-layout");
     addScriptOnce('script[data-psnova-site-search="true"]', "/PSNOVA/js/site-search.js", "data-psnova-site-search");
-    addScriptOnce('script[data-psnova-section-nav="true"]', "/PSNOVA/js/section-nav.js", "data-psnova-section-nav");
     addScriptOnce('script[data-psnova-table-enhancements="true"]', "/PSNOVA/js/table-enhancements.js", "data-psnova-table-enhancements");
     addScriptOnce('script[data-psnova-affiliate-banner="true"]', "/PSNOVA/js/affiliate-banner.js", "data-psnova-affiliate-banner");
 })();
