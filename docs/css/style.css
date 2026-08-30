@@ -14,13 +14,12 @@
 @import url("/PSNOVA/css/section-nav.css");
 @import url("/PSNOVA/css/weapon-tools.css");
 
-/* Legacy internal-page screenshots are still present in some historical HTML.
- * Suppress them during the initial CSS pass, before any JavaScript executes.
- * The homepage hero is explicitly retained.
- */
-#main img[src$=".jpg"]:not([src$="/img/gigantes/gigantes.jpg"]),
-#main img[src$=".jpeg"]:not([src$="/img/gigantes/gigantes.jpeg"]),
-#main img[src$=".JPG"]:not([src$="/img/gigantes/gigantes.JPG"]),
-#main img[src$=".JPEG"]:not([src$="/img/gigantes/gigantes.JPEG"]) {
+/* Legacy large screenshots remain in some historical HTML. Suppress them during
+ * the initial CSS pass so every internal data page uses the same compact header
+ * treatment before JavaScript removes those nodes. */
+#main img[src$=".jpg"],
+#main img[src$=".jpeg"],
+#main img[src$=".JPG"],
+#main img[src$=".JPEG"] {
     display: none !important;
 }
