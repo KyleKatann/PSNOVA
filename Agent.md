@@ -28,18 +28,18 @@ Do not modify or repurpose that branch.
 
 ## Design direction
 
-Use an information-first Japanese game-guide design with strong readability. Game8 may be used as a visual reference for hierarchy, contrast, spacing, navigation, and accent-color treatment, but do not copy its branding, proprietary graphics, or exact composition.
+Use an information-first Japanese game-guide design with strong readability. Game8 may be used only as a reference for **color-placement pattern, hierarchy, contrast, spacing, navigation, and state treatment**. Do not copy its actual color palette, branding, proprietary graphics, or exact composition.
 
 Principles:
 
 - Clean and lightweight.
 - Data-first rather than decorative.
 - Strong visual hierarchy and contrast.
-- Light neutral page background with white content surfaces.
-- Dark charcoal navigation/header elements where they improve separation.
-- Warm yellow accent for active states, section rules, and high-priority actions.
-- Medium blue for ordinary links.
+- Use the pattern `dark navigation / light content surface / one clear accent / separate link color`, but use PSNOVA-specific colors.
+- Current PSNOVA palette: cool navy navigation, white surfaces, cool indigo accent, muted blue links, and pale blue-gray page background.
+- Do not use Game8-style yellow as the site accent color.
 - Search and filters should be prominent.
+- Current/selected navigation states must be immediately visible.
 - One-column mobile layout.
 - Tables prioritize readability and comparison.
 - Avoid neon, scanlines, heavy animation, large decorative effects, or intrusive ads.
@@ -96,7 +96,7 @@ Work through this list sequentially unless a dependency requires otherwise.
 35. Add sticky filter/table headers where useful. **Implemented**
 36. Improve compact rarity/status presentation without decorative excess. **Implemented**
 37. Remove internal-page illustrative screenshots and use compact native icons/markers instead. **Implemented**
-38. Rework the visual system toward a high-contrast Game8-inspired guide layout while preserving PSNOVA identity and code-only implementation. **In progress**
+38. Rework the visual system toward a high-contrast Japanese guide-site layout while preserving PSNOVA identity and using a distinct PSNOVA palette. **Implemented**
 
 ### Monetization backlog
 
@@ -122,7 +122,8 @@ Examples:
 - Internal links use expected paths and do not unintentionally change established public URLs.
 - Data tables retain expected row counts or known sentinel records when refactored.
 - Internal data pages do not display large illustrative JPEG screenshots; compact native PNG icons remain allowed.
-- The modern visual layer retains defined contrast tokens for charcoal navigation, white surfaces, yellow accents, and blue links.
+- The modern visual layer retains defined contrast tokens for cool navy navigation, white surfaces, PSNOVA indigo accents, and muted blue links.
+- The palette must not regress to copied Game8 yellow accent values.
 
 Tests belong under `tests/` and should use the Python standard library where possible so the repository has no unnecessary test dependency.
 Add tests alongside each implementation item. The GitHub Actions `tests` workflow must not run on `push` or `pull_request`; trigger it manually once with `workflow_dispatch` after the planned implementation batch is complete.
