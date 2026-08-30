@@ -23,7 +23,9 @@ def test_table_alignment_keeps_text_and_quest_columns_left_aligned():
 
     expected_selectors = (
         "details table:has(tbody > tr > :nth-child(2):last-child)",
-        "details table:has(tbody > tr > :nth-child(5):last-child)",
+        "details table:has(tbody > tr > :nth-child(4):last-child)",
+        "details table:has(> thead):has(tbody > tr > :nth-child(5):last-child)",
+        "details table:not(:has(> thead)):has(tbody > tr > :nth-child(5):last-child)",
         "details table:has(tbody > tr > :nth-child(7):last-child)",
         "details table:has(tbody > tr > :nth-child(8):last-child)",
         "table:has(tbody > tr > :nth-child(14):last-child)",
@@ -39,6 +41,19 @@ def test_table_alignment_keeps_text_and_quest_columns_left_aligned():
         assert selector in css
 
     assert "text-align: left;" in css
+
+
+def test_same_width_five_column_tables_are_disambiguated_by_source_semantics():
+    css = CSS.read_text(encoding="utf-8")
+
+    assert (
+        "details table:has(> thead):has(tbody > tr > :nth-child(5):last-child) "
+        "tbody > tr > :nth-child(3)"
+    ) in css
+    assert (
+        "details table:not(:has(> thead)):has(tbody > tr > :nth-child(5):last-child) "
+        "tbody > tr > :last-child"
+    ) in css
 
 
 def test_alignment_policy_is_css_only_not_runtime_repair():

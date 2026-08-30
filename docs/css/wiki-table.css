@@ -100,12 +100,16 @@
 
 /* Repeated tables inside details:
    2 columns = appearance name / notes
-   5 columns = material name / rarity / reward quest / drop area / enemy
+   4 columns = appearance name / compact data / notes
+   5 columns with thead = material name / rarity / reward quest / drop area / enemy
+   5 legacy columns without thead = appearance costume data / notes
    7 columns = enemy data, with location and notes at the end
    8 columns = weapon data, with notes at the end */
 #main details table:has(tbody > tr > :nth-child(2):last-child) tbody > tr > :last-child,
-#main details table:has(tbody > tr > :nth-child(5):last-child) tbody > tr > :nth-child(3),
-#main details table:has(tbody > tr > :nth-child(7):last-child) tbody > tr > :nth-last-child(-n + 2),
+#main details table:has(tbody > tr > :nth-child(4):last-child) tbody > tr > :last-child,
+#main details table:has(> thead):has(tbody > tr > :nth-child(5):last-child) tbody > tr > :nth-child(3),
+#main details table:not(:has(> thead)):has(tbody > tr > :nth-child(5):last-child) tbody > tr > :last-child,
+#main details table:has(tbody > tr > :nth-child(7):last-child) tbody > tr > :nth-last-child(-n+2),
 #main details table:has(tbody > tr > :nth-child(8):last-child) tbody > tr > :last-child {
     text-align: left;
 }
@@ -130,8 +134,8 @@
 #main section > table:not(:has(> thead)):has(tbody > tr > :nth-child(4):last-child) tbody > tr > :nth-child(3),
 #main section > .table-scroll > table:not(:has(> thead)):has(tbody > tr > :nth-child(4):last-child) tbody > tr > :nth-child(2),
 #main section > .table-scroll > table:not(:has(> thead)):has(tbody > tr > :nth-child(4):last-child) tbody > tr > :nth-child(3),
-#main section > table:has([rowspan]):has(tbody > tr > :nth-child(7):last-child) tbody > tr > :nth-last-child(-n + 2),
-#main section > .table-scroll > table:has([rowspan]):has(tbody > tr > :nth-child(7):last-child) tbody > tr > :nth-last-child(-n + 2),
+#main section > table:has([rowspan]):has(tbody > tr > :nth-child(7):last-child) tbody > tr > :nth-last-child(-n+2),
+#main section > .table-scroll > table:has([rowspan]):has(tbody > tr > :nth-child(7):last-child) tbody > tr > :nth-last-child(-n+2),
 #main section > table:not(:has([rowspan])):has(tbody > tr > :nth-child(7):last-child) tbody > tr > :nth-child(4),
 #main section > table:not(:has([rowspan])):has(tbody > tr > :nth-child(7):last-child) tbody > tr > :nth-child(5),
 #main section > table:not(:has([rowspan])):has(tbody > tr > :nth-child(7):last-child) tbody > tr > :last-child,
