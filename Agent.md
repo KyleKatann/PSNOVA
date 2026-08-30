@@ -42,6 +42,8 @@ Principles:
 - Current/selected navigation states must be immediately visible.
 - One-column mobile layout.
 - Tables prioritize readability and comparison.
+- For data tables, the original PSNOVA wiki/HTML is an approved internal reference: use compact cells, clear 1px-style grid separation, pale blue data surfaces, and existing native category icons where available.
+- Do not restore old wiki editor/action icons such as add/edit/paragraph-edit controls; only gameplay/category identification icons should return.
 - Avoid neon, scanlines, heavy animation, large decorative effects, or intrusive ads.
 - Dark mode may be added later, but it must remain visually restrained.
 - Keep the homepage hero/illustrative image, but do not use large screenshots or illustrative JPEGs on internal data pages.
@@ -97,17 +99,18 @@ Work through this list sequentially unless a dependency requires otherwise.
 36. Improve compact rarity/status presentation without decorative excess. **Implemented**
 37. Remove internal-page illustrative screenshots and use compact native icons/markers instead. **Implemented**
 38. Rework the visual system toward a high-contrast Japanese guide-site layout while preserving PSNOVA identity and using a distinct PSNOVA palette. **Implemented**
+39. Restore the original wiki-style compact table density and native weapon-category icons in data rows without restoring editor/action icons. **Implemented**
 
 ### Monetization backlog
 
 Google display ads are deferred for now.
 Prefer unobtrusive link-based affiliate placements.
 
-39. Replace the current Rakuten banner with contextual text/product links where practical. **Implemented**
-40. Evaluate Surugaya affiliate text links for used PS Vita software, hardware, and guidebooks. **Pending account/affiliate link registration.**
-41. Evaluate Amazon Associates text links for related products. **Pending account/affiliate link registration.**
-42. Evaluate ValueCommerce LinkSwitch for supported merchant links. **Pending account/affiliate link registration.**
-43. Add consistent and clearly visible PR/affiliate disclosure styling. **Implemented**
+40. Replace the current Rakuten banner with contextual text/product links where practical. **Implemented**
+41. Evaluate Surugaya affiliate text links for used PS Vita software, hardware, and guidebooks. **Pending account/affiliate link registration.**
+42. Evaluate Amazon Associates text links for related products. **Pending account/affiliate link registration.**
+43. Evaluate ValueCommerce LinkSwitch for supported merchant links. **Pending account/affiliate link registration.**
+44. Add consistent and clearly visible PR/affiliate disclosure styling. **Implemented**
 
 ## Testing policy
 
@@ -122,6 +125,7 @@ Examples:
 - Internal links use expected paths and do not unintentionally change established public URLs.
 - Data tables retain expected row counts or known sentinel records when refactored.
 - Internal data pages do not display large illustrative JPEG screenshots; compact native PNG icons remain allowed.
+- Data-table styling keeps the compact wiki-derived grid and native weapon icon mapping while preserving semantic `thead/tbody/th/td` structure.
 - The modern visual layer retains defined contrast tokens for cool navy navigation, white surfaces, PSNOVA indigo accents, and muted blue links.
 - The palette must not regress to copied Game8 yellow accent values.
 
