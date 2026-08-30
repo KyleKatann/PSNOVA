@@ -18,6 +18,7 @@ Modernization work must preserve existing data and URLs while improving usabilit
 9. Never use image-generation tools for this project. All visual changes must be implemented with repository HTML/CSS/JavaScript and existing approved assets only.
 10. Keep the repository-root `reference/` archive. It contains historical PSNOVA/wiki source material used for design and data verification and must not be deleted during legacy-code cleanup.
 11. Migrate historical reference pages one page at a time. Preserve gameplay facts and useful guide content, remove archived Wiki/Wayback chrome, analytics, ads, edit controls, and dead archive-only links, then register the new public page in sidebar, page metadata, site search, and sitemap in the same implementation item.
+12. **Runtime JavaScript must never repair, normalize, sanitize, or reinterpret source HTML or source game data.** Do not use JavaScript to create, move, replace, or convert semantic table structure (`thead`, `tbody`, `tr`, `th`, `td`), remove deprecated presentation attributes/styles, repair malformed markup, or clean source text/data. Fix the raw HTML or its generator instead. JavaScript may only enhance already-valid markup, for example search, filtering, sorting, navigation, state classes, visual category classes, and scroll wrappers.
 
 ## Recovery point
 
@@ -74,8 +75,8 @@ Work through this list sequentially unless a dependency requires otherwise.
 ### Priority A
 
 13. Add in-page category navigation for large data pages. **Implemented**
-14. Normalize table semantics using `thead`, `tbody`, `th`, and `td` correctly. **Implemented**
-15. Move deprecated presentational HTML such as `bgcolor` and inline table styling into CSS. **Implemented**
+14. Normalize table semantics statically in source HTML using `thead`, `tbody`, `th`, and `td` correctly. **In progress: runtime normalization is prohibited and removed; remaining legacy source pages must be migrated one page at a time.**
+15. Remove deprecated presentational HTML such as `bgcolor`, `border`, and inline table styling from source HTML and replace it with shared CSS. **In progress: runtime cleanup is prohibited; remaining legacy source pages must be migrated one page at a time.**
 16. Remove duplicate/conflicting CSS rules while preserving behavior. **Implemented**
 17. Reduce hard-coded absolute internal URLs where safe. **Implemented**
 18. Give every important page a unique descriptive `<title>`. **Implemented via shared page metadata.**
@@ -127,7 +128,9 @@ Examples:
 - Required pages keep valid titles and metadata.
 - Internal links use expected paths and do not unintentionally change established public URLs.
 - Data tables retain expected row counts or known sentinel records when refactored.
+- Public HTML must already be semantically valid before JavaScript executes. Tests should detect raw markup defects instead of relying on browser repair or runtime JavaScript normalization.
 - Public data-table cells must stay inside explicit `<tr>...</tr>` rows, and rows must close explicitly rather than relying on browser HTML repair.
+- Runtime JavaScript must not create/replace semantic table tags, convert `th`/`td`, remove legacy table attributes/styles, or clean malformed source text/data.
 - Migrated historical pages retain sentinel guide content while excluding archived Wiki/Wayback chrome, analytics, ad code, and edit controls.
 - Internal data pages do not display large illustrative JPEG screenshots; compact native PNG icons remain allowed.
 - Data-table styling keeps the compact wiki-derived grid and native weapon icon mapping while preserving semantic `thead/tbody/th/td` structure.
