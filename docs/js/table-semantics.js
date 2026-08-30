@@ -63,6 +63,21 @@
         return String(value || "").replace(/\s+/g, "").toLowerCase();
     }
 
+    function stripTrailingQuestionMark(cell) {
+        if (!cell) {
+            return;
+        }
+
+        var node = cell;
+        while (node && node.lastChild) {
+            node = node.lastChild;
+            if (node.nodeType === 3) {
+                node.nodeValue = node.nodeValue.replace(/[?？]+\s*$/, "");
+                return;
+            }
+        }
+    }
+
     function isLargeDataTable(table) {
         var rows = Array.prototype.slice.call(table.rows || []);
         if (rows.length < 2) {
@@ -103,6 +118,8 @@
         Array.prototype.slice.call(table.tBodies || []).forEach(function (tbody) {
             Array.prototype.slice.call(tbody.rows || []).forEach(function (row) {
                 var cells = row.cells || [];
+
+                stripTrailingQuestionMark(cells[0]);
 
                 if (indexes.rarity !== undefined && cells[indexes.rarity]) {
                     var rarity = numericValue(cells[indexes.rarity].textContent);
