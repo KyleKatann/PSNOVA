@@ -40,6 +40,7 @@ These are specifications established by user review and must be treated as regre
 - Public labels must be natural reader-facing Japanese. Developer-facing or unexplained labels such as `Shop Lv`, `shopLv`, and `ショップLv` must not appear; display `ショップレベル` instead.
 - Automatic in-page navigation strips such as the former `ページ内` bar are intentionally not used and must not be restored.
 - Weapon section headings show exactly one weapon icon. Do not combine a CSS background weapon icon with an injected `<img>` for the same heading. Row/category icons may remain where intentionally separate.
+- The weapon landing-page catalog shows one existing native weapon PNG beside each of the 11 weapon-type labels. These selector cards must not regress to text-only cards, and icon visibility must not depend on runtime JavaScript.
 - Individual weapon detail pages keep the weapon-type heading above the table permanently expanded and non-interactive. Clicking or using the keyboard on that heading must never collapse the weapon table; disclosure markers/collapse affordances must not be shown on those detail pages.
 - `class.html` is the four-class guide (Hunter, Ranger, Force, Buster), not weapon data. `skill.html` is skill data, not armor data. Do not overwrite these pages with copied content from another data page.
 - The Gigantes page includes the トアス種, ゴルドス種, and アフォル種 families in addition to the other Gigantes families. They must not be removed or reclassified as ordinary enemies without explicit evidence and approval.
@@ -179,6 +180,7 @@ Examples:
 - Public-facing HTML must not reintroduce GitHub contribution/reporting copy such as GitHub Issues, Pull Requests, or `github.com` contribution links.
 - Individual weapon detail headings must remain permanently expanded and must not expose a clickable disclosure/collapse affordance.
 - Guide/data pages keep useful concise introductions instead of reverting to placeholder one-line wiki fragments.
+- The weapon landing-page catalog keeps one static native PNG icon per weapon card and does not rely on runtime JavaScript to supply those icons.
 
 Tests belong under `tests/` and should use the Python standard library where possible so the repository has no unnecessary test dependency.
 Add tests alongside each implementation item. The GitHub Actions `tests` workflow must not run on `push` or `pull_request`; trigger it manually once with `workflow_dispatch` after the planned implementation batch is complete.

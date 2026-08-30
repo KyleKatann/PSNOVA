@@ -54,3 +54,11 @@ nav#menubar ul li a,
 #sub .submenu p {
     font-size: 12px;
 }
+
+/* Weapon catalog cards are an icon-led selector. Native PNG icons must remain
+ * visible even if broader internal-page image rules are tightened later. */
+#main .weapon-card img {
+    display: block !important;
+    visibility: visible;
+    opacity: 1;
+}
