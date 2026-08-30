@@ -117,7 +117,8 @@
 /* Direct data tables:
    14 columns = armor notes
    6 columns = attachment notes
-   5 columns = special-ability effect
+   5 columns without rowspan = special-ability effect
+   5 columns with rowspan = Gigantes notes and quest list
    4 columns with thead = class skill effect
    4 legacy columns without thead = trophy text and acquisition method
    7 columns with rowspan = Gigantes notes and quest list
@@ -126,8 +127,10 @@
 #main section > .table-scroll > table:has(tbody > tr > :nth-child(14):last-child) tbody > tr > :last-child,
 #main section > table:has(tbody > tr > :nth-child(6):last-child) tbody > tr > :last-child,
 #main section > .table-scroll > table:has(tbody > tr > :nth-child(6):last-child) tbody > tr > :last-child,
-#main section > table:has(tbody > tr > :nth-child(5):last-child) tbody > tr > :nth-child(2),
-#main section > .table-scroll > table:has(tbody > tr > :nth-child(5):last-child) tbody > tr > :nth-child(2),
+#main section > table:not(:has([rowspan])):has(tbody > tr > :nth-child(5):last-child) tbody > tr > :nth-child(2),
+#main section > .table-scroll > table:not(:has([rowspan])):has(tbody > tr > :nth-child(5):last-child) tbody > tr > :nth-child(2),
+#main section > table:has([rowspan]):has(tbody > tr > :nth-child(5):last-child) tbody > tr > :nth-last-child(-n+2),
+#main section > .table-scroll > table:has([rowspan]):has(tbody > tr > :nth-child(5):last-child) tbody > tr > :nth-last-child(-n+2),
 #main section > table:has(> thead):has(tbody > tr > :nth-child(4):last-child) tbody > tr > :last-child,
 #main section > .table-scroll > table:has(> thead):has(tbody > tr > :nth-child(4):last-child) tbody > tr > :last-child,
 #main section > table:not(:has(> thead)):has(tbody > tr > :nth-child(4):last-child) tbody > tr > :nth-child(2),

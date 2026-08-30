@@ -30,7 +30,8 @@ def test_table_alignment_keeps_text_and_quest_columns_left_aligned():
         "details table:has(tbody > tr > :nth-child(8):last-child)",
         "table:has(tbody > tr > :nth-child(14):last-child)",
         "table:has(tbody > tr > :nth-child(6):last-child)",
-        "table:has(tbody > tr > :nth-child(5):last-child) tbody > tr > :nth-child(2)",
+        "table:not(:has([rowspan])):has(tbody > tr > :nth-child(5):last-child) tbody > tr > :nth-child(2)",
+        "table:has([rowspan]):has(tbody > tr > :nth-child(5):last-child)",
         "table:has(> thead):has(tbody > tr > :nth-child(4):last-child)",
         "table:not(:has(> thead)):has(tbody > tr > :nth-child(4):last-child)",
         "table:has([rowspan]):has(tbody > tr > :nth-child(7):last-child)",
@@ -53,6 +54,14 @@ def test_same_width_five_column_tables_are_disambiguated_by_source_semantics():
     assert (
         "details table:not(:has(> thead)):has(tbody > tr > :nth-child(5):last-child) "
         "tbody > tr > :last-child"
+    ) in css
+    assert (
+        "table:not(:has([rowspan])):has(tbody > tr > :nth-child(5):last-child) "
+        "tbody > tr > :nth-child(2)"
+    ) in css
+    assert (
+        "table:has([rowspan]):has(tbody > tr > :nth-child(5):last-child) "
+        "tbody > tr > :nth-last-child(-n+2)"
     ) in css
 
 
