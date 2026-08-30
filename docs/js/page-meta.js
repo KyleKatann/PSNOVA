@@ -10,6 +10,7 @@
         "/PSNOVA/pages/class.html": { title: "クラス一覧・特徴 | PSNOVA攻略", description: "PSNOVAのクラス情報と特徴を一覧で確認できます。" },
         "/PSNOVA/pages/difficulty.html": { title: "難易度・クエスト情報 | PSNOVA攻略", description: "PSNOVAの難易度やクエストに関する攻略情報をまとめています。" },
         "/PSNOVA/pages/enemy.html": { title: "エネミー一覧・ドロップ | PSNOVA攻略", description: "PSNOVAに登場するエネミーのデータやドロップ情報を一覧で確認できます。" },
+        "/PSNOVA/pages/faq.html": { title: "よくある質問・FAQ | PSNOVA攻略", description: "PSNOVAの体験版、システム、高難易度、PSO2との違いに関するよくある質問と回答をまとめています。" },
         "/PSNOVA/pages/gigantes.html": { title: "ギガンテス攻略・データ | PSNOVA攻略", description: "PSNOVAのギガンテスに関する攻略情報とデータをまとめています。" },
         "/PSNOVA/pages/item.html": { title: "消費アイテム一覧 | PSNOVA攻略", description: "PSNOVAの消費アイテムと効果を一覧で確認できます。" },
         "/PSNOVA/pages/material.html": { title: "素材一覧・入手先 | PSNOVA攻略", description: "PSNOVAの素材データを一覧掲載。必要な素材や入手情報を探す際に利用できます。" },

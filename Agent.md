@@ -17,6 +17,7 @@ Modernization work must preserve existing data and URLs while improving usabilit
 8. GitHub Actions tests are manual-only. Do not run them after each commit. Complete the planned implementation batch first, then trigger the `tests` workflow once with `workflow_dispatch` for final validation.
 9. Never use image-generation tools for this project. All visual changes must be implemented with repository HTML/CSS/JavaScript and existing approved assets only.
 10. Keep the repository-root `reference/` archive. It contains historical PSNOVA/wiki source material used for design and data verification and must not be deleted during legacy-code cleanup.
+11. Migrate historical reference pages one page at a time. Preserve gameplay facts and useful guide content, remove archived Wiki/Wayback chrome, analytics, ads, edit controls, and dead archive-only links, then register the new public page in sidebar, page metadata, site search, and sitemap in the same implementation item.
 
 ## Recovery point
 
@@ -127,6 +128,7 @@ Examples:
 - Internal links use expected paths and do not unintentionally change established public URLs.
 - Data tables retain expected row counts or known sentinel records when refactored.
 - Public data-table cells must stay inside explicit `<tr>...</tr>` rows, and rows must close explicitly rather than relying on browser HTML repair.
+- Migrated historical pages retain sentinel guide content while excluding archived Wiki/Wayback chrome, analytics, ad code, and edit controls.
 - Internal data pages do not display large illustrative JPEG screenshots; compact native PNG icons remain allowed.
 - Data-table styling keeps the compact wiki-derived grid and native weapon icon mapping while preserving semantic `thead/tbody/th/td` structure.
 - The modern visual layer retains defined contrast tokens for cool navy navigation, white surfaces, PSNOVA indigo accents, and muted blue links.

@@ -1,5 +1,6 @@
 (function () {
     var pages = [
+        { title: "よくある質問", url: "/PSNOVA/pages/faq.html", keywords: "FAQ 質問 体験版 システム 高難易度 PSO2" },
         { title: "武器データ", url: "/PSNOVA/pages/weapon.html", keywords: "武器 ウェポン 武器種" },
         { title: "ソード", url: "/PSNOVA/pages/weapon/sword.html", keywords: "武器 ソード sword" },
         { title: "パルチザン", url: "/PSNOVA/pages/weapon/partizan.html", keywords: "武器 パルチザン partizan" },
