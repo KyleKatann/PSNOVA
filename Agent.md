@@ -20,6 +20,19 @@ Modernization work must preserve existing data and URLs while improving usabilit
 11. Migrate historical reference pages one page at a time. Preserve gameplay facts and useful guide content, remove archived Wiki/Wayback chrome, analytics, ads, edit controls, and dead archive-only links, then register the new public page in sidebar, page metadata, site search, and sitemap in the same implementation item.
 12. **Runtime JavaScript must never repair, normalize, sanitize, or reinterpret source HTML or source game data.** Do not use JavaScript to create, move, replace, or convert semantic table structure (`thead`, `tbody`, `tr`, `th`, `td`), remove deprecated presentation attributes/styles, repair malformed markup, or clean source text/data. Fix the raw HTML or its generator instead. JavaScript may only enhance already-valid markup, for example search, filtering, sorting, navigation, state classes, visual category classes, and scroll wrappers.
 13. **Data-table alignment must follow content semantics, not arbitrary column position.** Names, codes, numbers, rarity, stats, materials, and other compact data are centered by default. Explanatory prose, notes, prose-style effects, acquisition methods, locations, and quest-name lists are left aligned. Implement this with source-aware shared CSS or explicit static markup; JavaScript must not infer or repair alignment semantics at runtime.
+14. **Every user-reported regression that establishes a corrected specification must be recorded in this guide in the same implementation item.** Add a regression test where practical. Do not later reintroduce behavior that the user explicitly identified as wrong.
+
+## Correction-derived invariants
+
+These are specifications established by user review and must be treated as regression constraints:
+
+- Data tables retain the compact original-wiki treatment: pale blue data cells, gray headers, 1px-style separation, compact padding, and modern scrolling/search/sort behavior. Removing runtime HTML repair must not remove this visual treatment.
+- Weapon section headings show exactly one weapon icon. Do not combine a CSS background weapon icon with an injected `<img>` for the same heading. Row/category icons may remain where intentionally separate.
+- `class.html` is the four-class guide (Hunter, Ranger, Force, Buster), not weapon data. `skill.html` is skill data, not armor data. Do not overwrite these pages with copied content from another data page.
+- The Gigantes page includes the トアス種, ゴルドス種, and アフォル種 families in addition to the other Gigantes families. They must not be removed or reclassified as ordinary enemies without explicit evidence and approval.
+- Table alignment is semantic: explanatory text and quest-name lists are left aligned; compact labels, names, attributes, rarity, numbers, and status values are centered.
+- Affiliate/PR presentation on desktop uses two equal-width banner slots with equal visual height and fills the available content width cleanly. On mobile it collapses to one visible banner column. The PR disclosure remains clearly visible.
+- The homepage should use the available main-content width naturally and must not leave a conspicuous unused right gutter caused by the long-form paragraph width cap. Long-form internal pages may keep a readable line-length cap.
 
 ## Recovery point
 
@@ -139,6 +152,7 @@ Examples:
 - The modern visual layer retains defined contrast tokens for cool navy navigation, white surfaces, PSNOVA indigo accents, and muted blue links.
 - The palette must not regress to copied Game8 yellow accent values.
 - Repository-root `reference/` remains present after cleanup work.
+- User-corrected specifications in `Correction-derived invariants` remain covered by static regression tests where feasible.
 
 Tests belong under `tests/` and should use the Python standard library where possible so the repository has no unnecessary test dependency.
 Add tests alongside each implementation item. The GitHub Actions `tests` workflow must not run on `push` or `pull_request`; trigger it manually once with `workflow_dispatch` after the planned implementation batch is complete.
@@ -150,6 +164,7 @@ An implementation item is ready for final validation when:
 - The change is implemented.
 - Relevant automated tests are added or updated when feasible.
 - The public-site behavior is not knowingly regressed on desktop or mobile.
+- User-corrected specifications affected by the item are recorded or refreshed in `Correction-derived invariants`.
 - The item has its own clear commit.
 
 The implementation batch is complete only after the manually triggered final GitHub Actions run passes.
