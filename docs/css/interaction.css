@@ -15,6 +15,56 @@ summary:active {
     transform: translateY(1px);
 }
 
+html.internal-page #main > section > h2 {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+html.internal-page #main > section > h2::before {
+    content: "";
+    flex: 0 0 auto;
+    width: 9px;
+    height: 9px;
+    background: var(--accent);
+    border-radius: 2px;
+}
+
+html.internal-page #main img[src$=".jpg"],
+html.internal-page #main img[src$=".jpeg"],
+html.internal-page #main img[src$=".JPG"],
+html.internal-page #main img[src$=".JPEG"] {
+    display: none !important;
+}
+
+.native-icon-heading {
+    position: relative;
+    padding-left: 36px !important;
+}
+
+.native-icon-heading::before {
+    content: "";
+    position: absolute;
+    left: 12px;
+    top: 50%;
+    width: 16px;
+    height: 16px;
+    background-image: var(--native-icon);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+    transform: translateY(-50%);
+    image-rendering: auto;
+}
+
+h3.native-icon-heading {
+    padding-left: 26px !important;
+}
+
+h3.native-icon-heading::before {
+    left: 0;
+}
+
 @media (prefers-reduced-motion: reduce) {
     *,
     *::before,
