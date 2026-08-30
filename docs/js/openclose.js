@@ -6,7 +6,16 @@ function OCwindowWidth() {
 function open_close(buttonId, menuId) {
     var button = document.getElementById(buttonId);
     var menu = document.getElementById(menuId);
-    if (!button || !menu) return;
+
+    if (!menu) {
+        if (button) {
+            button.hidden = true;
+            button.setAttribute("aria-hidden", "true");
+        }
+        return;
+    }
+
+    if (!button) return;
 
     function setOpen(open) {
         button.classList.toggle("open", open);
