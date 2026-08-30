@@ -40,6 +40,8 @@ Principles:
 - Tables prioritize readability and comparison.
 - Avoid neon, scanlines, heavy animation, large decorative effects, or intrusive ads.
 - Dark mode may be added later, but it must remain visually restrained.
+- Keep the homepage hero/illustrative image, but do not use large screenshots or illustrative JPEGs on internal data pages.
+- Prefer the game's existing compact native PNG icons for weapon/class/category identification. If no suitable native icon exists, use a restrained CSS marker rather than adding decorative imagery.
 
 ## Implementation backlog
 
@@ -89,17 +91,18 @@ Work through this list sequentially unless a dependency requires otherwise.
 34. Add restrained hover/transition behavior. **Implemented**
 35. Add sticky filter/table headers where useful. **Implemented**
 36. Improve compact rarity/status presentation without decorative excess. **Implemented**
+37. Remove internal-page illustrative screenshots and use compact native icons/markers instead. **Implemented**
 
 ### Monetization backlog
 
 Google display ads are deferred for now.
 Prefer unobtrusive link-based affiliate placements.
 
-37. Replace the current Rakuten banner with contextual text/product links where practical. **Implemented**
-38. Evaluate Surugaya affiliate text links for used PS Vita software, hardware, and guidebooks. **Pending account/affiliate link registration.**
-39. Evaluate Amazon Associates text links for related products. **Pending account/affiliate link registration.**
-40. Evaluate ValueCommerce LinkSwitch for supported merchant links. **Pending account/affiliate link registration.**
-41. Add consistent and clearly visible PR/affiliate disclosure styling. **Implemented**
+38. Replace the current Rakuten banner with contextual text/product links where practical. **Implemented**
+39. Evaluate Surugaya affiliate text links for used PS Vita software, hardware, and guidebooks. **Pending account/affiliate link registration.**
+40. Evaluate Amazon Associates text links for related products. **Pending account/affiliate link registration.**
+41. Evaluate ValueCommerce LinkSwitch for supported merchant links. **Pending account/affiliate link registration.**
+42. Add consistent and clearly visible PR/affiliate disclosure styling. **Implemented**
 
 ## Testing policy
 
@@ -113,6 +116,7 @@ Examples:
 - Required pages keep valid titles and metadata.
 - Internal links use expected paths and do not unintentionally change established public URLs.
 - Data tables retain expected row counts or known sentinel records when refactored.
+- Internal data pages do not display large illustrative JPEG screenshots; compact native PNG icons remain allowed.
 
 Tests belong under `tests/` and should use the Python standard library where possible so the repository has no unnecessary test dependency.
 Add tests alongside each implementation item. The GitHub Actions `tests` workflow must not run on `push` or `pull_request`; trigger it manually once with `workflow_dispatch` after the planned implementation batch is complete.
