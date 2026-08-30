@@ -78,6 +78,18 @@
         }
     }
 
+    function hasLegacyHeaderStyling(cell) {
+        if (!cell) {
+            return false;
+        }
+
+        if (cell.hasAttribute("bgcolor")) {
+            return true;
+        }
+
+        return !!(cell.style && (cell.style.backgroundColor || cell.style.background));
+    }
+
     function isLargeDataTable(table) {
         var rows = Array.prototype.slice.call(table.rows || []);
         if (rows.length < 2) {
@@ -88,11 +100,18 @@
             return true;
         }
 
+        var headerCells = rows[0] ? Array.prototype.slice.call(rows[0].cells || []) : [];
+        if (headerCells.length >= 3) {
+            var legacyHeaderCount = headerCells.filter(hasLegacyHeaderStyling).length;
+            if (legacyHeaderCount >= Math.max(2, Math.ceil(headerCells.length / 2))) {
+                return true;
+            }
+        }
+
         if (rows.length < 4 || !rows[0] || rows[0].cells.length < 3) {
             return false;
         }
 
-        var headerCells = Array.prototype.slice.call(rows[0].cells || []);
         var headerCount = headerCells.filter(function (cell) {
             return cell.tagName && cell.tagName.toLowerCase() === "th";
         }).length;
