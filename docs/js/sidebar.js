@@ -1,8 +1,8 @@
 function side(){
 var html =`
 <div id="sub">
-<nav>
-<h2>Contents</h2>
+<nav aria-label="攻略メニュー">
+<h2>攻略メニュー</h2>
 <ul class="submenu">
     <li><p>各種データ</p></li>
     <li><a href="/PSNOVA/pages/enemy.html">エネミー</a></li>
@@ -24,7 +24,6 @@ var html =`
     <!-- <li><a href="/PSNOVA/pages/class.html">クラス</a></li> -->
     <!-- <li><a href="/PSNOVA/pages/skill.html">スキル一覧</a></li> -->
 
-    <li><p>トロフィー</p></li>
     <li><a href="/PSNOVA/pages/trophy.html">トロフィー</a></li>
 </ul>
 </nav>
@@ -66,22 +65,4 @@ function markCurrentSidebarLink(){
     });
 }
 
-function prioritizeMainOnMobile(){
-    if (!window.matchMedia || !window.matchMedia("(max-width: 800px)").matches) {
-        return;
-    }
-
-    var contents = document.getElementById("contents");
-    var main = document.getElementById("main");
-    var sub = document.getElementById("sub");
-
-    if (contents && main && sub) {
-        contents.insertBefore(main, sub);
-    }
-}
-
-window.addEventListener("DOMContentLoaded", function(){
-    markCurrentSidebarLink();
-    prioritizeMainOnMobile();
-}, false);
-window.addEventListener("resize", prioritizeMainOnMobile, false);
+window.addEventListener("DOMContentLoaded", markCurrentSidebarLink, false);
