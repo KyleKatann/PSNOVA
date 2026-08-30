@@ -17,67 +17,51 @@
         "/PSNOVA/pages/specialability.html": { title: "特殊能力一覧・効果 | PSNOVA攻略", description: "PSNOVAの特殊能力を一覧掲載。能力名と効果を比較して確認できます。" },
         "/PSNOVA/pages/species.html": { title: "種族一覧・特徴 | PSNOVA攻略", description: "PSNOVAの種族情報と特徴をまとめています。" },
         "/PSNOVA/pages/trophy.html": { title: "トロフィー一覧・獲得条件 | PSNOVA攻略", description: "PSNOVAのトロフィー一覧と獲得条件を確認できます。" },
-        "/PSNOVA/pages/weapon.html": { title: "武器一覧・性能・必要素材 | PSNOVA攻略", description: "PSNOVAの武器を武器種別に一覧掲載。レアリティ、攻撃力、ショップLv、必要素材を検索・比較できます。" }
+        "/PSNOVA/pages/weapon.html": { title: "武器一覧・武器種選択 | PSNOVA攻略", description: "PSNOVAの11種類の武器種から、個別の性能・必要素材ページを選べます。" },
+        "/PSNOVA/pages/weapon/sword.html": { title: "ソード一覧・性能・必要素材 | PSNOVA攻略", description: "PSNOVAのソード一覧。レアリティ、攻撃力、ショップLv、必要素材を確認できます。" },
+        "/PSNOVA/pages/weapon/partizan.html": { title: "パルチザン一覧・性能・必要素材 | PSNOVA攻略", description: "PSNOVAのパルチザン一覧。レアリティ、攻撃力、ショップLv、必要素材を確認できます。" },
+        "/PSNOVA/pages/weapon/doublesaber.html": { title: "ダブルセイバー一覧・性能・必要素材 | PSNOVA攻略", description: "PSNOVAのダブルセイバー一覧。レアリティ、攻撃力、ショップLv、必要素材を確認できます。" },
+        "/PSNOVA/pages/weapon/knuckle.html": { title: "ナックル一覧・性能・必要素材 | PSNOVA攻略", description: "PSNOVAのナックル一覧。レアリティ、攻撃力、ショップLv、必要素材を確認できます。" },
+        "/PSNOVA/pages/weapon/rifle.html": { title: "アサルトライフル一覧・性能・必要素材 | PSNOVA攻略", description: "PSNOVAのアサルトライフル一覧。レアリティ、攻撃力、ショップLv、必要素材を確認できます。" },
+        "/PSNOVA/pages/weapon/tmachinegun.html": { title: "ツインマシンガン一覧・性能・必要素材 | PSNOVA攻略", description: "PSNOVAのツインマシンガン一覧。レアリティ、攻撃力、ショップLv、必要素材を確認できます。" },
+        "/PSNOVA/pages/weapon/rod.html": { title: "ロッド一覧・性能・必要素材 | PSNOVA攻略", description: "PSNOVAのロッド一覧。レアリティ、攻撃力、ショップLv、必要素材を確認できます。" },
+        "/PSNOVA/pages/weapon/talis.html": { title: "タリス一覧・性能・必要素材 | PSNOVA攻略", description: "PSNOVAのタリス一覧。レアリティ、攻撃力、ショップLv、必要素材を確認できます。" },
+        "/PSNOVA/pages/weapon/wand.html": { title: "ウォンド一覧・性能・必要素材 | PSNOVA攻略", description: "PSNOVAのウォンド一覧。レアリティ、攻撃力、ショップLv、必要素材を確認できます。" },
+        "/PSNOVA/pages/weapon/halo.html": { title: "ヘイロウ一覧・性能・必要素材 | PSNOVA攻略", description: "PSNOVAのヘイロウ一覧。レアリティ、攻撃力、ショップLv、必要素材を確認できます。" },
+        "/PSNOVA/pages/weapon/pile.html": { title: "パイル一覧・性能・必要素材 | PSNOVA攻略", description: "PSNOVAのパイル一覧。レアリティ、攻撃力、ショップLv、必要素材を確認できます。" }
     };
 
     function setNamedMeta(name, content) {
         var meta = document.querySelector('meta[name="' + name + '"]');
-        if (!meta) {
-            meta = document.createElement("meta");
-            meta.setAttribute("name", name);
-            document.head.appendChild(meta);
-        }
+        if (!meta) { meta = document.createElement("meta"); meta.setAttribute("name", name); document.head.appendChild(meta); }
         meta.setAttribute("content", content);
     }
-
     function setPropertyMeta(property, content) {
         var meta = document.querySelector('meta[property="' + property + '"]');
-        if (!meta) {
-            meta = document.createElement("meta");
-            meta.setAttribute("property", property);
-            document.head.appendChild(meta);
-        }
+        if (!meta) { meta = document.createElement("meta"); meta.setAttribute("property", property); document.head.appendChild(meta); }
         meta.setAttribute("content", content);
     }
-
     function removeObsoleteMeta() {
-        Array.prototype.slice.call(document.querySelectorAll('meta[name="keywords"]')).forEach(function (meta) {
-            meta.parentNode.removeChild(meta);
-        });
+        Array.prototype.slice.call(document.querySelectorAll('meta[name="keywords"]')).forEach(function (meta) { meta.parentNode.removeChild(meta); });
     }
-
     function setCanonical(pathname) {
         var canonical = document.querySelector('link[rel="canonical"]');
-        if (!canonical) {
-            canonical = document.createElement("link");
-            canonical.setAttribute("rel", "canonical");
-            document.head.appendChild(canonical);
-        }
+        if (!canonical) { canonical = document.createElement("link"); canonical.setAttribute("rel", "canonical"); document.head.appendChild(canonical); }
         canonical.setAttribute("href", "https://kylekatann.github.io" + pathname);
     }
-
     function setOpenGraph(current, pathname) {
         var pageUrl = "https://kylekatann.github.io" + pathname;
-        setPropertyMeta("og:title", current.title);
-        setPropertyMeta("og:description", current.description);
+        setPropertyMeta("og:title", current.title); setPropertyMeta("og:description", current.description);
         setPropertyMeta("og:type", pathname === "/PSNOVA/" || pathname === "/PSNOVA/index.html" ? "website" : "article");
-        setPropertyMeta("og:url", pageUrl);
-        setPropertyMeta("og:site_name", "PSNOVA攻略");
+        setPropertyMeta("og:url", pageUrl); setPropertyMeta("og:site_name", "PSNOVA攻略");
     }
 
     removeObsoleteMeta();
-
     var current = metadata[window.location.pathname];
     if (current) {
-        if (current.title) {
-            document.title = current.title;
-        }
-        if (current.description) {
-            setNamedMeta("description", current.description);
-        }
-        setCanonical(window.location.pathname);
-        setOpenGraph(current, window.location.pathname);
+        if (current.title) document.title = current.title;
+        if (current.description) setNamedMeta("description", current.description);
+        setCanonical(window.location.pathname); setOpenGraph(current, window.location.pathname);
     }
-
     window.PSNOVAPageMetadata = metadata;
 })();

@@ -17,7 +17,7 @@
 })();
 
 (function loadPageTools(){
-    if (!/\/pages\/weapon\.html$/.test(window.location.pathname)) {
+    if (!/\/pages\/weapon(?:\.html|\/[^/]+\.html)$/.test(window.location.pathname)) {
         return;
     }
 

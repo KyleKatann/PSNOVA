@@ -23,9 +23,6 @@ var html =`
     <li><a href="/PSNOVA/pages/species.html">種族</a></li>
     <li><a href="/PSNOVA/pages/appearance.html">ヘアスタイル・コスチューム・アクセサリー</a></li>
 
-    <!-- <li><a href="/PSNOVA/pages/class.html">クラス</a></li> -->
-    <!-- <li><a href="/PSNOVA/pages/skill.html">スキル一覧</a></li> -->
-
     <li><a href="/PSNOVA/pages/trophy.html">トロフィー</a></li>
 </ul>
 </nav>
@@ -47,6 +44,7 @@ markCurrentSidebarLink();
 
 function markCurrentSidebarLink(){
     var currentPath = window.location.pathname.replace(/\/$/, "");
+    var weaponChild = /^\/PSNOVA\/pages\/weapon\/[^/]+\.html$/.test(currentPath);
     var links = document.querySelectorAll("#sub .submenu a[href]");
 
     Array.prototype.slice.call(links).forEach(function(link){
@@ -57,7 +55,8 @@ function markCurrentSidebarLink(){
             return;
         }
 
-        if (linkPath === currentPath) {
+        var current = linkPath === currentPath || (weaponChild && linkPath === "/PSNOVA/pages/weapon.html");
+        if (current) {
             link.classList.add("is-current");
             link.setAttribute("aria-current", "page");
         } else {

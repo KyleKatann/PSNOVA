@@ -28,7 +28,7 @@
     };
 
     function isInternalPage() {
-        return /\/PSNOVA\/pages\/[^/]+\.html$/.test(window.location.pathname);
+        return /\/PSNOVA\/pages\/.+\.html$/.test(window.location.pathname);
     }
 
     if (isInternalPage() && document.documentElement) {
