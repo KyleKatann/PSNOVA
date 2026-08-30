@@ -15,6 +15,7 @@ Modernization work must preserve existing data and URLs while improving usabilit
 6. Keep existing public URLs under `/PSNOVA/` stable unless a separate migration decision is made.
 7. If a change causes a regression found during final validation, fix or revert only that item rather than continuing on top of a broken state.
 8. GitHub Actions tests are manual-only. Do not run them after each commit. Complete the planned implementation batch first, then trigger the `tests` workflow once with `workflow_dispatch` for final validation.
+9. Never use image-generation tools for this project. All visual changes must be implemented with repository HTML/CSS/JavaScript and existing approved assets only.
 
 ## Recovery point
 
@@ -27,14 +28,17 @@ Do not modify or repurpose that branch.
 
 ## Design direction
 
-Use a SteamCozy-style information-first design rather than an SF/HUD theme.
+Use an information-first Japanese game-guide design with strong readability. Game8 may be used as a visual reference for hierarchy, contrast, spacing, navigation, and accent-color treatment, but do not copy its branding, proprietary graphics, or exact composition.
 
 Principles:
 
 - Clean and lightweight.
 - Data-first rather than decorative.
-- Light neutral surfaces with restrained accent colors.
-- High information density without visual clutter.
+- Strong visual hierarchy and contrast.
+- Light neutral page background with white content surfaces.
+- Dark charcoal navigation/header elements where they improve separation.
+- Warm yellow accent for active states, section rules, and high-priority actions.
+- Medium blue for ordinary links.
 - Search and filters should be prominent.
 - One-column mobile layout.
 - Tables prioritize readability and comparison.
@@ -92,17 +96,18 @@ Work through this list sequentially unless a dependency requires otherwise.
 35. Add sticky filter/table headers where useful. **Implemented**
 36. Improve compact rarity/status presentation without decorative excess. **Implemented**
 37. Remove internal-page illustrative screenshots and use compact native icons/markers instead. **Implemented**
+38. Rework the visual system toward a high-contrast Game8-inspired guide layout while preserving PSNOVA identity and code-only implementation. **In progress**
 
 ### Monetization backlog
 
 Google display ads are deferred for now.
 Prefer unobtrusive link-based affiliate placements.
 
-38. Replace the current Rakuten banner with contextual text/product links where practical. **Implemented**
-39. Evaluate Surugaya affiliate text links for used PS Vita software, hardware, and guidebooks. **Pending account/affiliate link registration.**
-40. Evaluate Amazon Associates text links for related products. **Pending account/affiliate link registration.**
-41. Evaluate ValueCommerce LinkSwitch for supported merchant links. **Pending account/affiliate link registration.**
-42. Add consistent and clearly visible PR/affiliate disclosure styling. **Implemented**
+39. Replace the current Rakuten banner with contextual text/product links where practical. **Implemented**
+40. Evaluate Surugaya affiliate text links for used PS Vita software, hardware, and guidebooks. **Pending account/affiliate link registration.**
+41. Evaluate Amazon Associates text links for related products. **Pending account/affiliate link registration.**
+42. Evaluate ValueCommerce LinkSwitch for supported merchant links. **Pending account/affiliate link registration.**
+43. Add consistent and clearly visible PR/affiliate disclosure styling. **Implemented**
 
 ## Testing policy
 
@@ -117,6 +122,7 @@ Examples:
 - Internal links use expected paths and do not unintentionally change established public URLs.
 - Data tables retain expected row counts or known sentinel records when refactored.
 - Internal data pages do not display large illustrative JPEG screenshots; compact native PNG icons remain allowed.
+- The modern visual layer retains defined contrast tokens for charcoal navigation, white surfaces, yellow accents, and blue links.
 
 Tests belong under `tests/` and should use the Python standard library where possible so the repository has no unnecessary test dependency.
 Add tests alongside each implementation item. The GitHub Actions `tests` workflow must not run on `push` or `pull_request`; trigger it manually once with `workflow_dispatch` after the planned implementation batch is complete.
