@@ -32,7 +32,7 @@ These are specifications established by user review and must be treated as regre
 - The Gigantes page includes the トアス種, ゴルドス種, and アフォル種 families in addition to the other Gigantes families. They must not be removed or reclassified as ordinary enemies without explicit evidence and approval.
 - Table alignment is semantic: explanatory text and quest-name lists are left aligned; compact labels, names, attributes, rarity, numbers, and status values are centered.
 - Affiliate/PR presentation on desktop uses two equal-width banner slots with equal visual height and fills the available content width cleanly. On mobile it collapses to one visible banner column. The PR disclosure remains clearly visible.
-- The homepage should use the available main-content width naturally and must not leave a conspicuous unused right gutter caused by the long-form paragraph width cap. Long-form internal pages may keep a readable line-length cap.
+- All public pages should use the available main-content width naturally. Ordinary body copy must not have a global readable-line-length cap such as `max-width: 82ch` that leaves a conspicuous unused right gutter. Intentional compact UI components may define their own widths, but ordinary `#main` paragraphs should fill the available column.
 
 ## Recovery point
 
@@ -153,6 +153,7 @@ Examples:
 - The palette must not regress to copied Game8 yellow accent values.
 - Repository-root `reference/` remains present after cleanup work.
 - User-corrected specifications in `Correction-derived invariants` remain covered by static regression tests where feasible.
+- Ordinary public-page body copy must not reintroduce a global fixed `max-width` that creates an unused right gutter inside `#main`.
 
 Tests belong under `tests/` and should use the Python standard library where possible so the repository has no unnecessary test dependency.
 Add tests alongside each implementation item. The GitHub Actions `tests` workflow must not run on `push` or `pull_request`; trigger it manually once with `workflow_dispatch` after the planned implementation batch is complete.
