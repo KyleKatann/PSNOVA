@@ -14,6 +14,7 @@
 @import url("/PSNOVA/css/section-nav.css");
 @import url("/PSNOVA/css/weapon-tools.css");
 @import url("/PSNOVA/css/weapon-static-heading.css");
+@import url("/PSNOVA/css/guide-content.css");
 
 /* Legacy large screenshots remain in some historical HTML. Suppress them during
  * the initial CSS pass on internal pages so every data page uses the same compact
