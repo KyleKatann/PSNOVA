@@ -1,53 +1,41 @@
-.product-overview,
-.official-links-overview {
-    display: grid;
-    gap: 18px;
-    align-items: start;
-}
-
-.product-overview {
-    grid-template-columns: minmax(0, 1fr) 160px;
-}
-
-.official-links-overview {
-    grid-template-columns: minmax(0, 1fr) 210px;
-}
-
-.product-overview .ta1,
-.official-links-overview .ta1 {
-    margin-top: 14px;
-}
-
-.product-media,
-.official-link-media {
-    margin-top: 14px;
-    padding: 10px;
+.product-table .product-image-cell,
+.official-links-table .official-image-cell {
     background: var(--surface-subtle);
-    border: 1px solid var(--border);
-    border-radius: var(--radius-sm);
+    text-align: center;
+    vertical-align: middle;
+}
+
+.product-table .product-image-cell {
+    width: 170px;
+    padding: 10px 12px;
+}
+
+.official-links-table .official-image-cell {
+    width: 210px;
+    padding: 8px 10px;
 }
 
 .product-package,
 .official-game-logo {
     display: block;
-    width: 100%;
+    max-width: 100%;
     height: auto;
-    margin: 0;
+    margin: 0 auto;
     border: 1px solid var(--border);
     border-radius: 4px;
 }
 
-.product-media {
-    width: 160px;
+.product-package {
+    width: 145px;
 }
 
-.official-link-media {
-    display: grid;
-    gap: 8px;
-    width: 210px;
+.official-game-logo {
+    width: 170px;
 }
 
 .product-copyright {
+    display: block;
+    margin-top: 4px;
     color: var(--text-muted);
     font-size: 10px;
     line-height: 1.2;
@@ -55,21 +43,17 @@
 }
 
 @media screen and (max-width: 640px) {
-    .product-overview,
-    .official-links-overview {
-        grid-template-columns: 1fr;
+    .product-table .product-image-cell {
+        width: 135px;
+        padding: 8px;
     }
 
-    .product-media,
-    .official-link-media {
-        margin-top: 0;
+    .official-links-table .official-image-cell {
+        width: 150px;
+        padding: 6px 8px;
     }
 
-    .product-media {
-        width: min(100%, 160px);
-    }
-
-    .official-link-media {
-        width: min(100%, 210px);
+    .official-game-logo {
+        width: 138px;
     }
 }
