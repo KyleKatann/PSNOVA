@@ -1,6 +1,6 @@
 /* Compact table treatment derived from the archived PSNOVA wiki.
-   Preserve the modern semantic table DOM and interaction tools while restoring
-   the original table density and information-carrying cell colors. */
+   Styling must depend on source table markup itself, never on a runtime
+   semantic-repair marker added by JavaScript. */
 
 #main .table-scroll {
     display: block;
@@ -19,9 +19,9 @@
     outline-offset: 2px;
 }
 
-/* Some archived tables, notably Gigantes, used colored td cells as their
-   header row. Match the shared header appearance immediately; JavaScript then
-   upgrades these cells to semantic th elements. */
+/* Legacy source pages still being migrated may carry bgcolor on their first
+   row. Keep the historical header appearance without JavaScript rewriting it. */
+#main table tr:first-child > th[bgcolor],
 #main table tr:first-child > td[bgcolor] {
     color: #1f3146;
     background: #e0e8f0;
@@ -30,7 +30,7 @@
     white-space: nowrap;
 }
 
-#main table[data-psnova-semantic="true"] {
+#main table {
     width: 100%;
     margin: 14px 0 28px;
     color: #26384d;
@@ -44,19 +44,30 @@
     line-height: 1.4;
 }
 
-#main details > .table-scroll > table[data-psnova-semantic="true"] {
+#main details > .table-scroll > table,
+#main details > table {
     margin: 0;
 }
 
-#main table[data-psnova-semantic="true"] th,
-#main table[data-psnova-semantic="true"] td {
+#main table th,
+#main table td {
     padding: 5px;
     border: 0;
     background: #eef5ff;
     vertical-align: middle;
 }
 
-#main table[data-psnova-semantic="true"] thead th {
+/* Old source tables used th for every data cell. Neutralize that presentation
+   until each source page is migrated statically to td, without changing DOM. */
+#main table tbody th:not([bgcolor]) {
+    color: #26384d;
+    font-weight: 400;
+    text-align: left;
+}
+
+#main table thead th,
+#main table tr:first-child > th[bgcolor],
+#main table tr:first-child > td[bgcolor] {
     color: #1f3146;
     background: #e0e8f0;
     font-weight: 800;
@@ -64,23 +75,27 @@
     white-space: nowrap;
 }
 
-#main table[data-psnova-semantic="true"] tbody tr:hover td {
+#main table tbody tr:hover > td,
+#main table tbody tr:hover > th:not([bgcolor]) {
     box-shadow: inset 0 0 0 9999px rgba(70, 103, 150, 0.07);
 }
 
-#main table[data-psnova-semantic="true"] tbody td:first-child {
+#main table tbody td:first-child,
+#main table tbody th:first-child:not([bgcolor]) {
     min-width: 142px;
     color: #183c61;
     font-weight: 700;
     text-align: left;
 }
 
-#main details.native-icon-table > .table-scroll > table[data-psnova-semantic="true"] tbody td:first-child {
+#main details.native-icon-table > .table-scroll > table tbody td:first-child,
+#main details.native-icon-table > .table-scroll > table tbody th:first-child:not([bgcolor]) {
     position: relative;
     padding-left: 27px;
 }
 
-#main details.native-icon-table > .table-scroll > table[data-psnova-semantic="true"] tbody td:first-child::before {
+#main details.native-icon-table > .table-scroll > table tbody td:first-child::before,
+#main details.native-icon-table > .table-scroll > table tbody th:first-child:not([bgcolor])::before {
     content: "";
     position: absolute;
     left: 5px;
@@ -95,79 +110,84 @@
     opacity: 0.95;
 }
 
-#main table[data-psnova-semantic="true"] .rarity-cell {
+#main table .rarity-cell {
     background: #e0e8f0;
     font-weight: 800;
     text-align: center;
 }
 
-#main table[data-psnova-semantic="true"] .rarity-cell::before {
+#main table .rarity-cell::before {
     content: "★";
     margin-right: 3px;
     font-size: 0.9em;
 }
 
-#main table[data-psnova-semantic="true"] .rarity-cell[data-rarity-band="blue"],
-#main table[data-psnova-semantic="true"] .rarity-cell[data-rarity-band="blue"]::before {
+#main table .rarity-cell[data-rarity-band="blue"],
+#main table .rarity-cell[data-rarity-band="blue"]::before {
     color: deepskyblue;
 }
 
-#main table[data-psnova-semantic="true"] .rarity-cell[data-rarity-band="green"],
-#main table[data-psnova-semantic="true"] .rarity-cell[data-rarity-band="green"]::before {
+#main table .rarity-cell[data-rarity-band="green"],
+#main table .rarity-cell[data-rarity-band="green"]::before {
     color: limegreen;
 }
 
-#main table[data-psnova-semantic="true"] .rarity-cell[data-rarity-band="red"],
-#main table[data-psnova-semantic="true"] .rarity-cell[data-rarity-band="red"]::before {
+#main table .rarity-cell[data-rarity-band="red"],
+#main table .rarity-cell[data-rarity-band="red"]::before {
     color: orangered;
 }
 
-#main table[data-psnova-semantic="true"] .rarity-cell[data-rarity-band="orange"],
-#main table[data-psnova-semantic="true"] .rarity-cell[data-rarity-band="orange"]::before {
+#main table .rarity-cell[data-rarity-band="orange"],
+#main table .rarity-cell[data-rarity-band="orange"]::before {
     color: orange;
 }
 
-#main table[data-psnova-semantic="true"] .rarity-cell[data-rarity-band="violet"],
-#main table[data-psnova-semantic="true"] .rarity-cell[data-rarity-band="violet"]::before {
+#main table .rarity-cell[data-rarity-band="violet"],
+#main table .rarity-cell[data-rarity-band="violet"]::before {
     color: violet;
 }
 
-#main table[data-psnova-semantic="true"] .weapon-stat-cell {
+#main table .weapon-stat-cell {
     text-align: center;
     font-variant-numeric: tabular-nums;
 }
 
-#main table[data-psnova-semantic="true"] .weapon-stat-cell.is-empty {
+#main table .weapon-stat-cell.is-empty {
     background: #e0e0e0;
 }
 
-#main table[data-psnova-semantic="true"] .weapon-stat-melee.has-value {
+#main table .weapon-stat-melee.has-value {
     background: #ffcccc;
 }
 
-#main table[data-psnova-semantic="true"] .weapon-stat-ranged.has-value {
+#main table .weapon-stat-ranged.has-value {
     background: #ccddff;
 }
 
-#main table[data-psnova-semantic="true"] .weapon-stat-tech.has-value {
+#main table .weapon-stat-tech.has-value {
     background: #ffffcc;
 }
 
-#main table[data-psnova-semantic="true"] .shop-level-cell {
+#main table .shop-level-cell {
     background: snow;
     text-align: center;
     font-variant-numeric: tabular-nums;
 }
 
-#main table[data-psnova-semantic="true"] tbody td:nth-child(2),
-#main table[data-psnova-semantic="true"] tbody td:nth-child(3),
-#main table[data-psnova-semantic="true"] tbody td:nth-child(4),
-#main table[data-psnova-semantic="true"] tbody td:nth-child(5),
-#main table[data-psnova-semantic="true"] tbody td:nth-child(6) {
+#main table tbody td:nth-child(2),
+#main table tbody td:nth-child(3),
+#main table tbody td:nth-child(4),
+#main table tbody td:nth-child(5),
+#main table tbody td:nth-child(6),
+#main table tbody th:nth-child(2):not([bgcolor]),
+#main table tbody th:nth-child(3):not([bgcolor]),
+#main table tbody th:nth-child(4):not([bgcolor]),
+#main table tbody th:nth-child(5):not([bgcolor]),
+#main table tbody th:nth-child(6):not([bgcolor]) {
     text-align: center;
 }
 
-#main table[data-psnova-semantic="true"] br {
+#main table br {
     line-height: 1.2;
 }
 
@@ -187,12 +207,12 @@
         white-space: normal;
     }
 
-    #main table[data-psnova-semantic="true"] {
+    #main table {
         font-size: 12px;
     }
 
-    #main table[data-psnova-semantic="true"] th,
-    #main table[data-psnova-semantic="true"] td {
+    #main table th,
+    #main table td {
         padding: 5px;
     }
 }

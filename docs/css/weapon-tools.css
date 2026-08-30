@@ -96,11 +96,50 @@ html.weapon-child-pending #main.weapon-detail-page details {
 .rarity-cell, .shop-level-cell { white-space: nowrap; font-variant-numeric: tabular-nums; }
 .rarity-cell { color: var(--accent-strong); font-weight: 800; }
 .rarity-cell::before { content: "★"; margin-right: 4px; color: var(--accent); font-size: 0.82em; vertical-align: 0.04em; }
-.rarity-cell[data-rarity-band="blue"], .rarity-cell[data-rarity-band="blue"]::before { color: deepskyblue; }
-.rarity-cell[data-rarity-band="green"], .rarity-cell[data-rarity-band="green"]::before { color: limegreen; }
-.rarity-cell[data-rarity-band="red"], .rarity-cell[data-rarity-band="red"]::before { color: orangered; }
-.rarity-cell[data-rarity-band="orange"], .rarity-cell[data-rarity-band="orange"]::before { color: orange; }
-.rarity-cell[data-rarity-band="violet"], .rarity-cell[data-rarity-band="violet"]::before { color: violet; }
+.rarity-cell[data-rarity-band="blue"], .rarity-cell[data-rarity-band="blue"]::before,
+.rarity-cell[data-rarity="1"], .rarity-cell[data-rarity="1"]::before,
+.rarity-cell[data-rarity="2"], .rarity-cell[data-rarity="2"]::before,
+.rarity-cell[data-rarity="3"], .rarity-cell[data-rarity="3"]::before { color: deepskyblue; }
+.rarity-cell[data-rarity-band="green"], .rarity-cell[data-rarity-band="green"]::before,
+.rarity-cell[data-rarity="4"], .rarity-cell[data-rarity="4"]::before,
+.rarity-cell[data-rarity="5"], .rarity-cell[data-rarity="5"]::before,
+.rarity-cell[data-rarity="6"], .rarity-cell[data-rarity="6"]::before { color: limegreen; }
+.rarity-cell[data-rarity-band="red"], .rarity-cell[data-rarity-band="red"]::before,
+.rarity-cell[data-rarity="7"], .rarity-cell[data-rarity="7"]::before,
+.rarity-cell[data-rarity="8"], .rarity-cell[data-rarity="8"]::before,
+.rarity-cell[data-rarity="9"], .rarity-cell[data-rarity="9"]::before { color: orangered; }
+.rarity-cell[data-rarity-band="orange"], .rarity-cell[data-rarity-band="orange"]::before,
+.rarity-cell[data-rarity="10"], .rarity-cell[data-rarity="10"]::before,
+.rarity-cell[data-rarity="11"], .rarity-cell[data-rarity="11"]::before,
+.rarity-cell[data-rarity="12"], .rarity-cell[data-rarity="12"]::before { color: orange; }
+.rarity-cell[data-rarity-band="violet"], .rarity-cell[data-rarity-band="violet"]::before,
+.rarity-cell[data-rarity="13"], .rarity-cell[data-rarity="13"]::before,
+.rarity-cell[data-rarity="14"], .rarity-cell[data-rarity="14"]::before,
+.rarity-cell[data-rarity="15"], .rarity-cell[data-rarity="15"]::before { color: violet; }
+
+/* Weapon tables keep the archived wiki's information-carrying cell colors.
+   These selectors are presentational only: they never change table structure or
+   source text, and work both before and after static th/td migration. */
+#main .data-toolbar ~ details table tr > :nth-child(3):not([bgcolor]),
+#main .data-toolbar ~ details table tr > :nth-child(4):not([bgcolor]),
+#main .data-toolbar ~ details table tr > :nth-child(5):not([bgcolor]) {
+    text-align: center;
+    font-variant-numeric: tabular-nums;
+}
+#main .data-toolbar ~ details table tr > :nth-child(3):not([bgcolor]):empty,
+#main .data-toolbar ~ details table tr > :nth-child(4):not([bgcolor]):empty,
+#main .data-toolbar ~ details table tr > :nth-child(5):not([bgcolor]):empty {
+    background: #e0e0e0;
+}
+#main .data-toolbar ~ details table tr > :nth-child(3):not([bgcolor]):not(:empty) { background: #ffcccc; }
+#main .data-toolbar ~ details table tr > :nth-child(4):not([bgcolor]):not(:empty) { background: #ccddff; }
+#main .data-toolbar ~ details table tr > :nth-child(5):not([bgcolor]):not(:empty) { background: #ffffcc; }
+#main .data-toolbar ~ details table tr > :nth-child(6):not([bgcolor]) {
+    background: snow;
+    text-align: center;
+    font-variant-numeric: tabular-nums;
+}
+
 tr[hidden] { display: none !important; }
 
 @media screen and (min-width: 801px) {
