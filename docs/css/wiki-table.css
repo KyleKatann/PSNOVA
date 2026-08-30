@@ -1,44 +1,39 @@
-/* Compact table treatment based on the original PSNOVA wiki data layout.
-   Keep the modern semantic table structure and tools, but restore the dense,
-   clearly gridded presentation that made the original tables easy to scan. */
+/* Compact table treatment derived from the archived PSNOVA wiki.
+   Preserve the modern semantic table DOM and interaction tools while restoring
+   the original table density and information-carrying cell colors. */
 
 #main details > table[data-psnova-semantic="true"] {
     width: 100%;
     margin: 0;
     color: #26384d;
-    background: #b9c9dc;
-    border: 1px solid #a8bbd0;
+    background: #ccd5dd;
+    border: 0;
     border-collapse: separate;
     border-spacing: 1px;
     border-radius: 0;
     overflow: visible;
     font-size: 12.5px;
-    line-height: 1.45;
+    line-height: 1.4;
 }
 
 #main details > table[data-psnova-semantic="true"] th,
 #main details > table[data-psnova-semantic="true"] td {
-    padding: 6px 7px;
+    padding: 5px;
     border: 0;
-    background: #f2f7fc;
+    background: #eef5ff;
     vertical-align: middle;
 }
 
 #main details > table[data-psnova-semantic="true"] thead th {
-    color: #17334f;
-    background: #c9e7f8;
-    border-bottom: 1px solid #9ebbd0;
+    color: #1f3146;
+    background: #e0e8f0;
     font-weight: 800;
     text-align: center;
     white-space: nowrap;
 }
 
-#main details > table[data-psnova-semantic="true"] tbody tr:nth-child(even) td {
-    background: #eaf3fb;
-}
-
 #main details > table[data-psnova-semantic="true"] tbody tr:hover td {
-    background: #dcecf9;
+    box-shadow: inset 0 0 0 9999px rgba(70, 103, 150, 0.07);
 }
 
 #main details > table[data-psnova-semantic="true"] tbody td:first-child {
@@ -50,13 +45,13 @@
 
 #main details.native-icon-table > table[data-psnova-semantic="true"] tbody td:first-child {
     position: relative;
-    padding-left: 29px;
+    padding-left: 27px;
 }
 
 #main details.native-icon-table > table[data-psnova-semantic="true"] tbody td:first-child::before {
     content: "";
     position: absolute;
-    left: 7px;
+    left: 5px;
     top: 50%;
     width: 16px;
     height: 16px;
@@ -64,9 +59,40 @@
     background-position: center;
     background-repeat: no-repeat;
     background-size: contain;
-    image-rendering: auto;
     transform: translateY(-50%);
-    opacity: 0.94;
+    opacity: 0.95;
+}
+
+#main details > table[data-psnova-semantic="true"] .rarity-cell {
+    background: #e0e8f0;
+    text-align: center;
+}
+
+#main details > table[data-psnova-semantic="true"] .weapon-stat-cell {
+    text-align: center;
+    font-variant-numeric: tabular-nums;
+}
+
+#main details > table[data-psnova-semantic="true"] .weapon-stat-cell.is-empty {
+    background: #e0e0e0;
+}
+
+#main details > table[data-psnova-semantic="true"] .weapon-stat-melee.has-value {
+    background: #ffcccc;
+}
+
+#main details > table[data-psnova-semantic="true"] .weapon-stat-ranged.has-value {
+    background: #ccddff;
+}
+
+#main details > table[data-psnova-semantic="true"] .weapon-stat-tech.has-value {
+    background: #ffffcc;
+}
+
+#main details > table[data-psnova-semantic="true"] .shop-level-cell {
+    background: snow;
+    text-align: center;
+    font-variant-numeric: tabular-nums;
 }
 
 #main details > table[data-psnova-semantic="true"] tbody td:nth-child(2),
@@ -75,11 +101,10 @@
 #main details > table[data-psnova-semantic="true"] tbody td:nth-child(5),
 #main details > table[data-psnova-semantic="true"] tbody td:nth-child(6) {
     text-align: center;
-    font-variant-numeric: tabular-nums;
 }
 
 #main details > table[data-psnova-semantic="true"] br {
-    line-height: 1.25;
+    line-height: 1.2;
 }
 
 @media screen and (max-width: 800px) {
@@ -89,6 +114,6 @@
 
     #main details > table[data-psnova-semantic="true"] th,
     #main details > table[data-psnova-semantic="true"] td {
-        padding: 6px;
+        padding: 5px;
     }
 }
