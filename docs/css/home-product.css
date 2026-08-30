@@ -1,0 +1,63 @@
+.product-overview {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 300px;
+    gap: 18px;
+    align-items: start;
+}
+
+.product-overview .ta1 {
+    margin-top: 14px;
+}
+
+.product-media {
+    display: grid;
+    grid-template-columns: 125px minmax(0, 1fr);
+    gap: 10px 12px;
+    align-items: start;
+    margin-top: 14px;
+    padding: 10px;
+    background: var(--surface-subtle);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+}
+
+.product-package,
+.product-game-logo {
+    display: block;
+    width: 100%;
+    height: auto;
+    margin: 0;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+}
+
+.product-game-logos {
+    display: grid;
+    gap: 8px;
+}
+
+.product-copyright {
+    grid-column: 1 / -1;
+    color: var(--text-muted);
+    font-size: 10px;
+    line-height: 1.2;
+    text-align: right;
+}
+
+@media screen and (max-width: 900px) {
+    .product-overview {
+        grid-template-columns: 1fr;
+    }
+
+    .product-media {
+        width: min(100%, 300px);
+        margin-top: 0;
+    }
+}
+
+@media screen and (max-width: 800px) {
+    .product-media {
+        width: 100%;
+        max-width: 300px;
+    }
+}
