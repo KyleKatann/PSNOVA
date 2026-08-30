@@ -86,6 +86,31 @@
     vertical-align: 0.04em;
 }
 
+.rarity-cell[data-rarity-band="blue"],
+.rarity-cell[data-rarity-band="blue"]::before {
+    color: deepskyblue;
+}
+
+.rarity-cell[data-rarity-band="green"],
+.rarity-cell[data-rarity-band="green"]::before {
+    color: limegreen;
+}
+
+.rarity-cell[data-rarity-band="red"],
+.rarity-cell[data-rarity-band="red"]::before {
+    color: orangered;
+}
+
+.rarity-cell[data-rarity-band="orange"],
+.rarity-cell[data-rarity-band="orange"]::before {
+    color: orange;
+}
+
+.rarity-cell[data-rarity-band="violet"],
+.rarity-cell[data-rarity-band="violet"]::before {
+    color: violet;
+}
+
 tr[hidden] {
     display: none !important;
 }
