@@ -53,6 +53,23 @@ class PublicPageVisualAuditTests(unittest.TestCase):
             with self.subTest(path=path.relative_to(DOCS)):
                 self.assertIsNone(style_block.search(html))
 
+    def test_primary_public_data_table_headers_use_header_cells(self):
+        table_pattern = re.compile(r"<table\b[^>]*>(.*?)</table>", re.IGNORECASE | re.DOTALL)
+        first_row_pattern = re.compile(r"<tr\b[^>]*>(.*?)</tr>", re.IGNORECASE | re.DOTALL)
+        legacy_td_header = re.compile(r"<td\b[^>]*\bbgcolor\s*=", re.IGNORECASE)
+
+        for path in self.primary_public_pages():
+            html = path.read_text(encoding="utf-8")
+            for table_index, table_match in enumerate(table_pattern.finditer(html), start=1):
+                first_row = first_row_pattern.search(table_match.group(1))
+                if not first_row:
+                    continue
+                with self.subTest(path=path.relative_to(DOCS), table=table_index):
+                    self.assertIsNone(
+                        legacy_td_header.search(first_row.group(1)),
+                        "Table headers must use th cells so every page receives the shared header design.",
+                    )
+
 
 if __name__ == "__main__":
     unittest.main()
