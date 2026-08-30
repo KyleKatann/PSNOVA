@@ -171,14 +171,33 @@
         decorateDataTable(table);
     }
 
+    function ensureScrollableTable(table) {
+        if (!table || !table.parentNode) {
+            return;
+        }
+
+        if (table.parentElement && table.parentElement.classList.contains("table-scroll")) {
+            return;
+        }
+
+        var wrapper = document.createElement("div");
+        wrapper.className = "table-scroll";
+        wrapper.setAttribute("role", "region");
+        wrapper.setAttribute("tabindex", "0");
+        wrapper.setAttribute("aria-label", "表を横スクロール");
+        table.parentNode.insertBefore(wrapper, table);
+        wrapper.appendChild(table);
+    }
+
     function initTableSemantics() {
         var main = document.getElementById("main");
         if (!main) {
             return;
         }
-        Array.prototype.slice.call(main.querySelectorAll("table"))
-            .filter(isLargeDataTable)
-            .forEach(normalizeDataTable);
+
+        var tables = Array.prototype.slice.call(main.querySelectorAll("table"));
+        tables.filter(isLargeDataTable).forEach(normalizeDataTable);
+        tables.forEach(ensureScrollableTable);
     }
 
     if (document.readyState === "loading") {
