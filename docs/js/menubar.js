@@ -50,6 +50,13 @@
         script.setAttribute("data-psnova-weapon-tools", "true");
         document.head.appendChild(script);
     }
+
+    if (!document.querySelector('script[data-psnova-weapon-table-style="true"]')) {
+        var tableStyleScript = document.createElement("script");
+        tableStyleScript.src = "/PSNOVA/js/weapon-table-style.js";
+        tableStyleScript.setAttribute("data-psnova-weapon-table-style", "true");
+        document.head.appendChild(tableStyleScript);
+    }
 })();
 
 function menu(){
