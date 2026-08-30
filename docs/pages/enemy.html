@@ -23,23 +23,17 @@
         <header>
             <h1 id="logo"><a href="https://kylekatann.github.io/PSNOVA/index.html"><img src="https://kylekatann.github.io/PSNOVA/img/logo.png" alt="PSNOVA 攻略サイト"></a></h1>
         </header>
-        <!-- menubar共通部分の読み込み -->
         <script type="text/javascript">menu();</script>
 
-
-        <!--カンペ h2黒背景白文字 h3白背景黒文字-->
-
         <div id="contents">
-
-            <!-- sidebar共通部分の読み込み -->
             <script type="text/javascript">side();</script>   
 
             <div id="main">
                 <section>
                     <h2>エネミー</h2>
+                    <p class="page-lead">惑星マキアには獣系・機械生物・ダーカーなど、多様なエネミーが登場する。敵ごとに弱点属性や弱点部位、破壊可能部位が異なり、部位破壊によって狙いどころや戦い方が変わる個体もいる。このページではドロップ素材と出現場所もあわせて掲載しており、素材集めやクエスト準備に利用できる。</p>
                     <img src="https://kylekatann.github.io/PSNOVA/img/enemy/enemy.jpg"/>
                     <h3>エネミーデータ</h3>
-                    <p>それぞれ弱点属性を持つ、部位破壊すると弱点を現わしたり、行動が変化するエネミーもいる。</p>
                     
                     <details>
                         <summary>獣系</summary>
@@ -247,25 +241,18 @@
 
                 </section>
 
-
             </div>
-            <!--/main-->
-
         </div>
-        <!--/contents-->
 
         <footer>
             <small>Copyright&copy; <a href="https://kylekatann.github.io/PSNOVA/index.html">PSNOVA 攻略サイト</a> All Rights Reserved.</small>
             <span class="pr"><a href="http://template-party.com/" target="_blank">Web Design:Template-Party</a></span>
         </footer>
     </div>
-    <!--/container-->
 
     <p class="nav-fix-pos-pagetop"><a href="#">↑</a></p>
 
-    <!--メニュー開閉ボタン-->
     <div id="menubar_hdr" class="close"></div>
-    <!--メニューの開閉処理条件設定　800px以下-->
     <script type="text/javascript">
         if (OCwindowWidth() <= 800) {
             open_close("menubar_hdr", "menubar-s");
