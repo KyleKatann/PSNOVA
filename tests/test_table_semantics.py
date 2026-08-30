@@ -20,6 +20,14 @@ class TableSemanticTests(unittest.TestCase):
         self.assertIn('main.querySelectorAll("table")', js)
         self.assertIn('tables.filter(isLargeDataTable).forEach(normalizeDataTable)', js)
 
+    def test_legacy_colored_td_headers_are_detected(self):
+        js = TABLE_SEMANTICS_JS.read_text(encoding="utf-8")
+        self.assertIn('function hasLegacyHeaderStyling(cell)', js)
+        self.assertIn('cell.hasAttribute("bgcolor")', js)
+        self.assertIn('cell.style.backgroundColor', js)
+        self.assertIn('legacyHeaderCount', js)
+        self.assertIn('Math.ceil(headerCells.length / 2)', js)
+
     def test_every_main_table_gets_an_idempotent_scroll_wrapper(self):
         js = TABLE_SEMANTICS_JS.read_text(encoding="utf-8")
         self.assertIn('function ensureScrollableTable(table)', js)
