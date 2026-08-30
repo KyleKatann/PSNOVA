@@ -2,6 +2,23 @@
    Preserve the modern semantic table DOM and interaction tools while restoring
    the original table density and information-carrying cell colors. */
 
+#main .table-scroll {
+    display: block;
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    overflow-x: auto;
+    overflow-y: hidden;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior-inline: contain;
+    touch-action: pan-x pan-y;
+}
+
+#main .table-scroll:focus-visible {
+    outline: 2px solid #4d78a8;
+    outline-offset: 2px;
+}
+
 #main table[data-psnova-semantic="true"] {
     width: 100%;
     margin: 14px 0 28px;
@@ -16,7 +33,7 @@
     line-height: 1.4;
 }
 
-#main details > table[data-psnova-semantic="true"] {
+#main details > .table-scroll > table[data-psnova-semantic="true"] {
     margin: 0;
 }
 
@@ -47,12 +64,12 @@
     text-align: left;
 }
 
-#main details.native-icon-table > table[data-psnova-semantic="true"] tbody td:first-child {
+#main details.native-icon-table > .table-scroll > table[data-psnova-semantic="true"] tbody td:first-child {
     position: relative;
     padding-left: 27px;
 }
 
-#main details.native-icon-table > table[data-psnova-semantic="true"] tbody td:first-child::before {
+#main details.native-icon-table > .table-scroll > table[data-psnova-semantic="true"] tbody td:first-child::before {
     content: "";
     position: absolute;
     left: 5px;
@@ -144,6 +161,12 @@
 }
 
 @media screen and (max-width: 800px) {
+    #main .table-scroll {
+        margin-right: 0;
+        padding-bottom: 3px;
+        scrollbar-width: thin;
+    }
+
     #main table[data-psnova-semantic="true"] {
         font-size: 12px;
     }
