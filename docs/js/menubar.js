@@ -17,6 +17,11 @@
 })();
 
 (function loadPageTools(){
+    var isWeaponChild = /\/pages\/weapon\/[^/]+\.html$/.test(window.location.pathname);
+    if (isWeaponChild && document.documentElement) {
+        document.documentElement.classList.add("weapon-child-pending");
+    }
+
     if (!/\/pages\/weapon(?:\.html|\/[^/]+\.html)$/.test(window.location.pathname)) {
         return;
     }

@@ -1,3 +1,11 @@
+html.weapon-child-pending #main details {
+    display: none !important;
+}
+
+html.weapon-child-pending #main.weapon-detail-page details {
+    display: block !important;
+}
+
 .weapon-catalog {
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
