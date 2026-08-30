@@ -1,15 +1,25 @@
 .site-search {
     position: relative;
-    margin: 0 0 28px;
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    gap: 16px;
+    align-items: center;
+    margin: 0 0 18px;
+    padding: 13px 15px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-sm);
 }
 
 .site-search-label {
     display: block;
-    margin: 0 0 7px;
-    color: #8a8a84;
-    font-size: 11px;
-    font-weight: 700;
-    letter-spacing: 0.04em;
+    margin: 0;
+    color: var(--text-strong);
+    font-size: 13px;
+    font-weight: 800;
+    letter-spacing: 0;
+    white-space: nowrap;
 }
 
 .site-search-box {
@@ -19,40 +29,42 @@
 .site-search input[type="search"] {
     width: 100%;
     height: 42px;
-    padding: 8px 0;
+    padding: 8px 12px;
     color: var(--text);
-    background: transparent;
-    border: 0;
-    border-bottom: 1px solid var(--border-strong);
-    border-radius: 0;
+    background: #fbfcfe;
+    border: 1px solid var(--border-strong);
+    border-radius: var(--radius-sm);
     font: inherit;
     font-size: 14px;
 }
 
 .site-search input[type="search"]:focus {
-    border-bottom-color: var(--accent);
+    background: var(--surface);
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px var(--focus-ring);
+    outline: 0;
 }
 
 .site-search input[type="search"]::placeholder {
-    color: #aaa9a2;
+    color: #929baa;
 }
 
 .site-search-results {
     position: absolute;
     z-index: 50;
-    top: calc(100% + 6px);
+    top: calc(100% + 7px);
     left: 0;
     right: 0;
     overflow: hidden;
     background: var(--surface);
     border: 1px solid var(--border);
-    border-radius: var(--radius);
-    box-shadow: 0 10px 28px rgba(20, 20, 20, 0.10);
+    border-radius: var(--radius-sm);
+    box-shadow: var(--shadow-md);
 }
 
 .site-search-results a {
     display: block;
-    padding: 10px 12px;
+    padding: 11px 12px;
     color: var(--text);
     text-decoration: none;
 }
@@ -62,13 +74,24 @@
 }
 
 .site-search-results a:hover {
-    color: var(--text);
-    background: var(--surface-subtle);
+    color: var(--accent-strong);
+    background: var(--accent-soft);
 }
 
 .site-search-empty {
     margin: 0;
-    padding: 10px 12px;
+    padding: 11px 12px;
     color: var(--text-muted);
     font-size: 13px;
+}
+
+@media screen and (max-width: 640px) {
+    .site-search {
+        display: block;
+        padding: 12px;
+    }
+
+    .site-search-label {
+        margin-bottom: 7px;
+    }
 }
