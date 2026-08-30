@@ -25,8 +25,9 @@ body:not(.homepage) #main img[src$=".JPEG"] {
     display: none !important;
 }
 
-/* The homepage is an overview rather than a long-form article. Let its content
- * use the full main column instead of leaving the long-form 82ch gutter. */
-body.homepage #main p {
+/* User-corrected layout invariant: ordinary body copy on every public page must
+ * use the available main column naturally. Do not leave a fixed readable-line
+ * gutter such as the legacy 82ch cap on #main paragraphs. */
+#main p {
     max-width: none;
 }
