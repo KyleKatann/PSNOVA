@@ -32,3 +32,25 @@ body:not(.homepage) #main img[src$=".JPEG"] {
 #main p {
     max-width: none;
 }
+
+/* User-corrected navigation readability baseline. Keep the information density
+ * compact, but do not shrink primary guide navigation below an immediately
+ * readable size compared with mainstream Japanese game-guide sites. */
+nav#menubar ul li a,
+#menubar-s a {
+    font-size: 16px;
+}
+
+#sub .submenu a {
+    font-size: 14px;
+    line-height: 1.45;
+}
+
+#sub .submenu .weapon-submenu a {
+    font-size: 13px;
+    line-height: 1.4;
+}
+
+#sub .submenu p {
+    font-size: 12px;
+}

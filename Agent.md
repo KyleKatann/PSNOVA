@@ -49,6 +49,7 @@ These are specifications established by user review and must be treated as regre
 - Public-facing site copy must not direct visitors to GitHub, GitHub Issues, Pull Requests, repository contribution channels, or similar GitHub-based reporting instructions. Hosting/infrastructure URLs under `kylekatann.github.io` may remain where technically required, but they must not be presented as a contribution or correction workflow.
 - Reader-facing guide/data pages use concise introductory copy, normally about three sentences, that states the page scope, the key comparison/check points, and the practical use of the information.
 - Search/browser page titles use exactly `PSNOVA攻略サイト` for the homepage and `PSNOVA攻略サイト - XXXXX` for every other public page. `XXXXX` must identify the linked page itself; for example, the weapon landing page is `PSNOVA攻略サイト - 武器`, not a generic site title.
+- Primary navigation text must remain immediately readable at normal desktop and mobile viewing sizes while preserving compact guide-site density. The current baseline is 16px for the top/mobile navigation, 14px for primary sidebar links, 13px for nested weapon links, and 12px for sidebar group labels; do not reduce these without an explicit design decision.
 
 ## Recovery point
 
