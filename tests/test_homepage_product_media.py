@@ -76,6 +76,15 @@ class HomepageProductMediaTests(unittest.TestCase):
         self.assertIn(".official-links-table th:first-child", css)
         self.assertIn("background: var(--accent-soft);", css)
 
+    def test_official_links_table_uses_continuous_shared_grid(self):
+        css = STYLE.read_text(encoding="utf-8")
+        self.assertIn(".official-links-table th,", css)
+        self.assertIn(".official-links-table td {", css)
+        self.assertIn("border-right: 1px solid var(--border);", css)
+        self.assertIn("border-bottom: 1px solid var(--border);", css)
+        self.assertIn(".official-links-table tr > :last-child", css)
+        self.assertIn(".official-links-table tr:last-child > td", css)
+
 
 if __name__ == "__main__":
     unittest.main()
