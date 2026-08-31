@@ -70,6 +70,12 @@ class HomepageProductMediaTests(unittest.TestCase):
         self.assertNotIn(".official-links-overview", css)
         self.assertNotIn("grid-template-columns", css)
 
+    def test_homepage_label_columns_use_one_shared_blue_surface(self):
+        css = STYLE.read_text(encoding="utf-8")
+        self.assertIn(".product-table th:first-child", css)
+        self.assertIn(".official-links-table th:first-child", css)
+        self.assertIn("background: var(--accent-soft);", css)
+
 
 if __name__ == "__main__":
     unittest.main()
