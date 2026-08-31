@@ -3,9 +3,8 @@
    behavior only and must not alter table semantics or source data. */
 @media screen and (max-width: 800px) {
     /* modern.css historically made table itself a scroll container. Internal
-       data tables now have one scroll owner only: .table-scroll. Before the
-       wrapper is attached, keep the table as a normal table rather than a
-       second nested scroller. */
+       data tables have one scroll owner only: .table-scroll. Before the wrapper
+       is attached, keep the table as a normal table rather than a nested scroller. */
     body:not(.homepage) #main table {
         display: table;
         overflow: visible;
@@ -22,24 +21,5 @@
     body:not(.homepage) #main .table-scroll > table th,
     body:not(.homepage) #main .table-scroll > table td {
         white-space: nowrap;
-    }
-
-    /* The identifying name/key column is marked by table-enhancements.js using
-       the table's logical header column. Do not use :first-child here: rowspan
-       tables such as Gigantes can shift the DOM position of the same logical
-       column between rows. Exactly one identifying column stays fixed. */
-    body:not(.homepage) #main .table-scroll > table .mobile-key-cell {
-        position: sticky;
-        left: 0;
-        z-index: 2;
-        background: var(--surface-subtle);
-        box-shadow: 1px 0 0 var(--border);
-    }
-
-    body:not(.homepage) #main .table-scroll > table > thead .mobile-key-cell,
-    body:not(.homepage) #main .table-scroll > table > tbody:first-of-type > tr:first-child > .mobile-key-cell,
-    body:not(.homepage) #main .table-scroll > table > tr:first-child > .mobile-key-cell {
-        z-index: 3;
-        background: var(--accent-soft);
     }
 }

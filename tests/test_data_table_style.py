@@ -7,9 +7,6 @@ WIKI_TABLE_CSS = ROOT / "docs" / "css" / "wiki-table.css"
 STYLE_CSS = ROOT / "docs" / "css" / "style.css"
 MOBILE_TABLE_CSS = ROOT / "docs" / "css" / "mobile-table.css"
 TABLE_JS = ROOT / "docs" / "js" / "table-enhancements.js"
-WEAPON = ROOT / "docs" / "pages" / "weapon" / "knuckle.html"
-ENEMY = ROOT / "docs" / "pages" / "enemy.html"
-GIGANTES = ROOT / "docs" / "pages" / "gigantes.html"
 
 
 class DataTableStyleTests(unittest.TestCase):
@@ -50,28 +47,15 @@ class DataTableStyleTests(unittest.TestCase):
         self.assertIn("width: max-content;", css)
         self.assertIn("min-width: 100%;", css)
 
-    def test_mobile_sticky_column_uses_logical_key_class_not_dom_first_child(self):
+    def test_mobile_internal_tables_have_no_frozen_columns(self):
         css = MOBILE_TABLE_CSS.read_text(encoding="utf-8")
         js = TABLE_JS.read_text(encoding="utf-8")
-        self.assertIn(".mobile-key-cell", css)
-        self.assertIn("position: sticky;", css)
-        self.assertIn("left: 0;", css)
-        self.assertNotIn("table th:first-child", css)
-        self.assertNotIn("table td:first-child", css)
-        self.assertIn("function identifyingColumnIndex", js)
-        self.assertIn('/名$/.test(label)', js)
-        self.assertIn("cell.rowSpan", js)
-        self.assertIn("data-mobile-key-column", js)
-
-    def test_weapon_enemy_and_gigantes_resolve_name_column_from_their_headers(self):
-        weapon = WEAPON.read_text(encoding="utf-8")
-        enemy = ENEMY.read_text(encoding="utf-8")
-        gigantes = GIGANTES.read_text(encoding="utf-8")
-
-        self.assertIn('<th scope="col">名前</th>', weapon)
-        self.assertIn('<tr><th bgcolor="#87cefa">名前</th>', enemy)
-        self.assertIn('<tr><th scope="col">種別</th><th scope="col">名前</th>', gigantes)
-        self.assertIn('rowspan="3"', gigantes)
+        self.assertNotIn("position: sticky;", css)
+        self.assertNotIn("mobile-key-cell", css)
+        self.assertNotIn("mobile-key-cell", js)
+        self.assertNotIn("data-mobile-key-column", js)
+        self.assertNotIn("identifyingColumnIndex", js)
+        self.assertNotIn("decorateMobileKeyColumn", js)
 
 
 if __name__ == "__main__":
