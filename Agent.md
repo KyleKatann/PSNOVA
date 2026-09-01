@@ -223,3 +223,7 @@ When a data correction is needed, make it a separate change with its own evidenc
 - When one implementation item touches multiple files, edit each file normally and independently, then commit the completed item together when the tooling supports that workflow.
 - After every edit, inspect the diff. If the diff expands beyond the intended target, stop that method and return to a smaller edit.
 - Regression tests must be limited to the minimum assertions that directly detect the reported defect.
+- In ChatGPT chat mode, repository source/page changes must be performed by local partial-edit commands supplied in the chat. Do not write source/page files directly through the GitHub Contents API, Git Database API, blob/tree/index operations, or other whole-file replacement methods.
+- Prefer a minimal `git apply` patch for chat-driven edits. Run `git apply --check` before `git apply`; `sed`, PowerShell text replacement, or an editor replacement may be used when they produce a smaller and safer targeted edit.
+- After applying a chat-provided edit, inspect `git diff -- <target paths>` before staging or committing. If unrelated changes appear, revert that edit and use a smaller patch.
+- GitHub APIs/connectors may continue to be used read-only for auditing, source/reference comparison, history inspection, searching, and diff verification unless the user explicitly overrides this rule.
