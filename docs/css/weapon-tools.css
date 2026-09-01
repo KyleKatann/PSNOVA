@@ -158,6 +158,27 @@ tr[hidden] { display: none !important; }
     }
 }
 
+/* Weapon detail pages scroll the search/filter toolbar normally. */
+@media screen and (min-width: 801px) {
+    #main.weapon-detail-page .data-toolbar {
+        position: static;
+        top: auto;
+        z-index: auto;
+        box-shadow: none;
+    }
+
+    #main.weapon-detail-page .data-toolbar ~ .table-scroll > .weapon-data-table thead th,
+    #main.weapon-detail-page .data-toolbar ~ .weapon-data-table thead th {
+        top: 8px;
+    }
+}
+
+@media screen and (min-width: 561px) {
+    .weapon-page-nav a[rel="prev"] { grid-column: 1; }
+    .weapon-page-nav-index { grid-column: 2; }
+    .weapon-page-nav a[rel="next"] { grid-column: 3; }
+}
+
 @media screen and (max-width: 800px) {
     .weapon-catalog { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
