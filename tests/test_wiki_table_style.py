@@ -4,7 +4,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 STYLE_ENTRY = ROOT / "docs" / "css" / "style.css"
 IMAGE_LAYOUT = ROOT / "docs" / "js" / "image-layout.js"
-TABLE_SEMANTICS = ROOT / "docs" / "js" / "table-semantics.js"
+TABLE_ENHANCEMENTS = ROOT / "docs" / "js" / "table-enhancements.js"
 TABLE_CSS = ROOT / "docs" / "css" / "wiki-table.css"
 
 
@@ -31,29 +31,31 @@ class WikiTableStyleTests(unittest.TestCase):
 
     def test_details_table_selectors_work_after_scroll_wrapper_is_inserted(self):
         css = TABLE_CSS.read_text(encoding="utf-8")
-        self.assertIn('details > .table-scroll > table[data-psnova-semantic="true"]', css)
-        self.assertIn('details.native-icon-table > .table-scroll > table[data-psnova-semantic="true"]', css)
+        self.assertIn('details > .table-scroll > table', css)
+        self.assertIn('details.native-icon-table > .table-scroll > table', css)
+        self.assertNotIn('data-psnova-semantic', css)
 
-    def test_archived_table_density_and_base_colors_are_preserved(self):
+    def test_current_table_density_palette_and_grid_are_preserved(self):
         css = TABLE_CSS.read_text(encoding="utf-8")
-        self.assertIn('table[data-psnova-semantic="true"]', css)
-        self.assertIn('background: #ccd5dd;', css)
-        self.assertIn('border-spacing: 1px;', css)
+        self.assertIn('border-spacing: 0;', css)
         self.assertIn('padding: 5px;', css)
-        self.assertIn('background: #e0e8f0;', css)
-        self.assertIn('background: #eef5ff;', css)
+        self.assertIn('background: var(--accent-soft);', css)
+        self.assertIn('border: 1px solid var(--border);', css)
+        self.assertIn('border-right: 1px solid var(--border);', css)
+        self.assertIn('border-bottom: 1px solid var(--border);', css)
+        self.assertNotIn('#e0e8f0', css.lower())
+        self.assertNotIn('#eef5ff', css.lower())
 
-    def test_archived_weapon_and_armor_stat_cell_colors_are_preserved(self):
+    def test_weapon_stat_cell_colors_are_preserved(self):
         css = TABLE_CSS.read_text(encoding="utf-8")
         self.assertIn('.weapon-stat-melee.has-value', css)
-        self.assertIn('background: #ffcccc;', css)
+        self.assertIn('background: #fff0f0;', css)
         self.assertIn('.weapon-stat-ranged.has-value', css)
-        self.assertIn('background: #ccddff;', css)
+        self.assertIn('background: var(--accent-soft);', css)
         self.assertIn('.weapon-stat-tech.has-value', css)
-        self.assertIn('background: #ffffcc;', css)
+        self.assertIn('background: #fffbe6;', css)
         self.assertIn('.weapon-stat-cell.is-empty', css)
-        self.assertIn('background: #e0e0e0;', css)
-        self.assertIn('background: snow;', css)
+        self.assertIn('background: #e7e9ee;', css)
 
     def test_weapon_tables_receive_native_icon_variable(self):
         js = IMAGE_LAYOUT.read_text(encoding="utf-8")
@@ -63,26 +65,16 @@ class WikiTableStyleTests(unittest.TestCase):
         self.assertIn('background-image: var(--native-table-icon);', css)
         self.assertIn('tbody td:first-child::before', css)
 
-    def test_shared_semantic_decorator_supplies_rarity_and_stat_classes(self):
-        js = TABLE_SEMANTICS.read_text(encoding="utf-8")
-        self.assertIn('data-rarity-band', js)
-        self.assertIn('weapon-stat-melee', js)
-        self.assertIn('weapon-stat-ranged', js)
-        self.assertIn('weapon-stat-tech', js)
-        self.assertIn('shop-level-cell', js)
-
-    def test_archived_rarity_color_bands_are_present(self):
-        css = TABLE_CSS.read_text(encoding="utf-8")
-        for band, color in (
-            ('blue', 'deepskyblue'),
-            ('green', 'limegreen'),
-            ('red', 'orangered'),
-            ('orange', 'orange'),
-            ('violet', 'violet'),
-        ):
-            with self.subTest(band=band):
-                self.assertIn(f'data-rarity-band="{band}"', css)
-                self.assertIn(f'color: {color};', css)
+    def test_shared_table_enhancer_only_decorates_existing_semantic_tables(self):
+        js = TABLE_ENHANCEMENTS.read_text(encoding="utf-8")
+        self.assertIn('function decorateSemanticDataTable(table)', js)
+        self.assertIn('if (!table || !table.tHead || !table.tBodies.length) return;', js)
+        self.assertIn('classList.add("rarity-cell", band)', js)
+        self.assertIn('stat-melee', js)
+        self.assertIn('stat-ranged', js)
+        self.assertIn('stat-tech', js)
+        self.assertNotIn('table-semantics', js)
+        self.assertNotIn('createTHead', js)
 
     def test_all_native_weapon_icon_assets_exist(self):
         for filename in (
