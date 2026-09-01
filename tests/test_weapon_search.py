@@ -7,13 +7,14 @@ MENUBAR_JS = ROOT / "docs" / "js" / "menubar.js"
 WEAPON_TOOLS_JS = ROOT / "docs" / "js" / "weapon-tools.js"
 WEAPON_TOOLS_CSS = ROOT / "docs" / "css" / "weapon-tools.css"
 WEAPON_HTML = ROOT / "docs" / "pages" / "weapon.html"
+KNUCKLE_HTML = ROOT / "docs" / "pages" / "weapon" / "knuckle.html"
 
 
 class WeaponSearchTests(unittest.TestCase):
-    def test_weapon_tools_load_from_weapon_page_loader_and_css_bundle(self):
+    def test_weapon_tools_load_for_catalog_and_weapon_children(self):
         js = MENUBAR_JS.read_text(encoding="utf-8")
         css = STYLE_ENTRY.read_text(encoding="utf-8")
-        self.assertIn(r"/pages\/weapon\.html$", js)
+        self.assertIn('/\\/pages\\/weapon(?:\\.html|\\/[^/]+\\.html)$/', js)
         self.assertIn("/PSNOVA/js/weapon-tools.js", js)
         self.assertIn('@import url("/PSNOVA/css/weapon-tools.css");', css)
 
@@ -32,12 +33,18 @@ class WeaponSearchTests(unittest.TestCase):
         self.assertIn('input[type="search"]', css)
         self.assertIn("tr[hidden]", css)
 
-    def test_weapon_data_sentinels_are_preserved(self):
+    def test_weapon_landing_page_is_catalog_not_embedded_data_copy(self):
         html = WEAPON_HTML.read_text(encoding="utf-8")
-        for value in ("ソード", "アルバギガッシュ", "タルナーダ"):
+        self.assertIn('class="weapon-catalog"', html)
+        self.assertEqual(11, html.count('class="weapon-card"'))
+        self.assertNotIn("<table", html)
+        self.assertNotIn("<details", html)
+
+    def test_static_weapon_child_preserves_data_sentinels(self):
+        html = KNUCKLE_HTML.read_text(encoding="utf-8")
+        for value in ("ナックル", "エイトオンス", "ノヴァクローグ", "ファイバーロア"):
             with self.subTest(value=value):
                 self.assertIn(value, html)
-        self.assertGreaterEqual(html.count("<table"), 10)
 
 
 if __name__ == "__main__":
