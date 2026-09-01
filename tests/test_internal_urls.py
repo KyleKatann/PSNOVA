@@ -24,10 +24,13 @@ class InternalUrlTests(unittest.TestCase):
             "/PSNOVA/css/modern.css",
             "/PSNOVA/css/site-search.css",
             "/PSNOVA/js/site-search.js",
-            "/PSNOVA/js/table-semantics.js",
+            "/PSNOVA/js/table-enhancements.js",
         ):
             with self.subTest(asset=asset):
                 self.assertIn(asset, menubar)
+
+        self.assertNotIn("table-semantics.js", menubar)
+        self.assertNotIn("data-psnova-table-semantics", menubar)
 
 
 if __name__ == "__main__":
