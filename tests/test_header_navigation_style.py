@@ -16,7 +16,7 @@ class HeaderNavigationTests(unittest.TestCase):
         self.assertNotIn("修正・加筆要望", js)
         self.assertNotIn("<nav id=\"menubar\">", js)
         self.assertNotIn("<nav id=\"menubar-s\">", js)
-        self.assertIn("function menu() {}", js)
+        self.assertNotIn("function menu()", js)
 
     def test_header_button_falls_back_to_contents_drawer(self):
         js = OPENCLOSE_JS.read_text(encoding="utf-8")

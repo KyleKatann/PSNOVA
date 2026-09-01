@@ -11,7 +11,6 @@ class SharedRenderingTests(unittest.TestCase):
         for path in (MENUBAR, SIDEBAR):
             with self.subTest(path=path.name):
                 js = path.read_text(encoding="utf-8")
-
                 self.assertNotIn(
                     "document.write",
                     js,
@@ -29,15 +28,15 @@ class SharedRenderingTests(unittest.TestCase):
             js,
         )
 
-    def test_menubar_is_compatibility_noop(self):
+    def test_obsolete_menu_compatibility_api_is_removed(self):
         js = MENUBAR.read_text(encoding="utf-8")
 
-        self.assertIn(
-            "function menu() {}",
+        self.assertNotIn(
+            "function menu()",
             js,
         )
         self.assertNotIn(
-            'insertAdjacentHTML("beforebegin", html);',
+            "compatibility no-op",
             js,
         )
 

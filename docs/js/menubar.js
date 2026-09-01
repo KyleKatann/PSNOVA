@@ -28,5 +28,3 @@
     }
 })();
 
-/* Legacy top navigation removed. Kept as a compatibility no-op because static pages still call menu(). */
-function menu() {}
