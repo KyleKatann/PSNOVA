@@ -14,11 +14,11 @@ class LegacyCssCleanupTests(unittest.TestCase):
             "/PSNOVA/css/interaction.css",
             "/PSNOVA/css/affiliate.css",
             "/PSNOVA/css/site-search.css",
-            "/PSNOVA/css/section-nav.css",
             "/PSNOVA/css/weapon-tools.css",
         ):
             with self.subTest(path=path):
                 self.assertIn(path, css)
+        self.assertNotIn("section-nav.css", css)
 
     def test_legacy_template_rules_do_not_return(self):
         css = STYLE_CSS.read_text(encoding="utf-8")
