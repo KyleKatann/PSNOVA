@@ -66,7 +66,11 @@ class WeaponDetailConsistencyTests(unittest.TestCase):
             ".table-scroll > .weapon-data-table thead th",
             css,
         )
-        self.assertIn("top: 76px;", css)
+        self.assertIn(
+            "top: var(--weapon-table-header-sticky-top, 180px);",
+            css,
+        )
+        self.assertNotIn("top: 76px;", css)
 
     def test_desktop_navigation_columns_are_explicit(self):
         css = CSS.read_text(encoding="utf-8")

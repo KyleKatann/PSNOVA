@@ -173,6 +173,45 @@
         var insertionTarget = firstTable.closest(".table-scroll") || firstTable;
         insertionTarget.parentNode.insertBefore(toolbar, insertionTarget);
 
+        function syncStickyTableHeaderOffset() {
+            if (!window.matchMedia("(min-width: 801px)").matches) {
+                main.style.removeProperty("--weapon-table-header-sticky-top");
+                return;
+            }
+
+            var toolbarStyle = window.getComputedStyle(toolbar);
+            var stickyTop = parseFloat(toolbarStyle.top);
+            var marginBottom = parseFloat(toolbarStyle.marginBottom);
+
+            if (!Number.isFinite(stickyTop)) stickyTop = 0;
+            if (!Number.isFinite(marginBottom)) marginBottom = 0;
+
+            var offset = (
+                stickyTop +
+                toolbar.getBoundingClientRect().height +
+                marginBottom
+            );
+
+            main.style.setProperty(
+                "--weapon-table-header-sticky-top",
+                Math.ceil(offset) + "px"
+            );
+        }
+
+        syncStickyTableHeaderOffset();
+
+        window.addEventListener(
+            "resize",
+            syncStickyTableHeaderOffset
+        );
+
+        if ("ResizeObserver" in window) {
+            var toolbarResizeObserver = new ResizeObserver(
+                syncStickyTableHeaderOffset
+            );
+            toolbarResizeObserver.observe(toolbar);
+        }
+
         var input = document.getElementById("weapon-search");
         var typeFilter = document.getElementById("weapon-type-filter");
         var rarityFilter = document.getElementById("weapon-rarity-filter");

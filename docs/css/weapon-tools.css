@@ -129,7 +129,7 @@ tr[hidden] { display: none !important; }
     #main .data-toolbar ~ .table-scroll > .weapon-data-table thead th,
     #main .data-toolbar ~ .weapon-data-table thead th {
         position: sticky;
-        top: 76px;
+        top: var(--weapon-table-header-sticky-top, 180px);
         z-index: 10;
         box-shadow: 0 1px 0 var(--border);
     }
