@@ -276,19 +276,45 @@
     font-weight: 700 !important;
 }
 
+/* Desktop Gigantes tables fit the content column and do not scroll horizontally. */
 #main .gigantes-table-scroll {
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
+    overflow: visible;
 }
 
 #main .gigantes-table {
-    min-width: 1100px;
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
     border-collapse: collapse;
+    table-layout: auto;
 }
 
+/* 備考 is the flexible wrapping column. */
+#main .gigantes-table th:nth-last-child(2),
+#main .gigantes-table td:nth-last-child(2) {
+    min-width: 0;
+    white-space: normal;
+    overflow-wrap: anywhere;
+}
+
+/* Each quest entry stays on one line; explicit <br> remains the separator. */
 #main .gigantes-table th:last-child,
 #main .gigantes-table td:last-child {
-    min-width: 180px;
+    white-space: nowrap;
+}
+
+@media screen and (max-width: 800px) {
+    #main .gigantes-table-scroll {
+        overflow-x: auto;
+        overflow-y: hidden;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    #main .gigantes-table {
+        width: 100%;
+        max-width: none;
+        min-width: 1100px;
+    }
 }
 
 #main .attribute-icon {
