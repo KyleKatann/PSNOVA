@@ -236,3 +236,7 @@ When a data correction is needed, make it a separate change with its own evidenc
 - Prefer a minimal `git apply` patch for chat-driven edits. Run `git apply --check` before `git apply`; `sed`, PowerShell text replacement, or an editor replacement may be used when they produce a smaller and safer targeted edit.
 - After applying a chat-provided edit, inspect `git diff -- <target paths>` before staging or committing. If unrelated changes appear, revert that edit and use a smaller patch.
 - GitHub APIs/connectors may continue to be used read-only for auditing, source/reference comparison, history inspection, searching, and diff verification unless the user explicitly overrides this rule.
+
+## Static metadata ownership
+
+- Public title, description, canonical, and OpenGraph metadata are owned by static source HTML. Do not restore `page-meta.js` or runtime metadata repair.

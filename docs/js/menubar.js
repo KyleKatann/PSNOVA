@@ -8,7 +8,6 @@
         }
     }
 
-    addScriptOnce('script[data-psnova-page-meta="true"]', "/PSNOVA/js/page-meta.js", "data-psnova-page-meta");
     addScriptOnce('script[data-psnova-image-layout="true"]', "/PSNOVA/js/image-layout.js", "data-psnova-image-layout");
     addScriptOnce('script[data-psnova-site-search="true"]', "/PSNOVA/js/site-search.js", "data-psnova-site-search");
     addScriptOnce('script[data-psnova-table-enhancements="true"]', "/PSNOVA/js/table-enhancements.js", "data-psnova-table-enhancements");

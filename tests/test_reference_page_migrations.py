@@ -57,13 +57,10 @@ class ReferencePageMigrationTests(unittest.TestCase):
     def test_faq_uses_beginner_qa_name_on_shared_discovery_surfaces(self):
         expected_label = "初心者Q&A"
 
-        paths = [
+        for path in (
             DOCS / "js" / "sidebar.js",
-            DOCS / "js" / "page-meta.js",
             DOCS / "js" / "site-search.js",
-        ]
-
-        for path in paths:
+        ):
             with self.subTest(
                 path=path.relative_to(ROOT)
             ):
@@ -79,6 +76,24 @@ class ReferencePageMigrationTests(unittest.TestCase):
                     expected_label,
                     html.unescape(text),
                 )
+
+        source = FAQ_PATH.read_text(
+            encoding="utf-8"
+        )
+
+        decoded = html.unescape(source)
+
+        self.assertIn(
+            "PSNOVA攻略サイト - 初心者Q&A",
+            decoded,
+        )
+
+        self.assertIn(
+            'rel="canonical" '
+            'href="https://kylekatann.github.io'
+            '/PSNOVA/pages/faq.html"',
+            source,
+        )
 
     def test_faq_url_remains_registered_in_sitemap(self):
         self.assertIn(
