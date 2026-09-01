@@ -2,28 +2,23 @@ import unittest
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-TABLE_SEMANTICS_JS = ROOT / "docs" / "js" / "table-semantics.js"
+TABLE_ENHANCEMENTS_JS = ROOT / "docs" / "js" / "table-enhancements.js"
 
 
 class TablePresentationCleanupTests(unittest.TestCase):
-    def test_cleanup_is_limited_to_details_data_tables(self):
-        js = TABLE_SEMANTICS_JS.read_text(encoding="utf-8")
-        self.assertIn('querySelectorAll("details table")', js)
-        self.assertNotIn('querySelectorAll("table")', js)
+    def test_runtime_enhancements_do_not_remove_source_attributes(self):
+        js = TABLE_ENHANCEMENTS_JS.read_text(encoding="utf-8")
+        self.assertNotIn("removeAttribute(", js)
+        self.assertNotIn("bgcolor", js)
+        self.assertNotIn("cellpadding", js)
+        self.assertNotIn("cellspacing", js)
+        self.assertNotIn("valign", js)
 
-    def test_deprecated_table_attributes_are_removed(self):
-        js = TABLE_SEMANTICS_JS.read_text(encoding="utf-8")
-        for attribute in ("border", "cellpadding", "cellspacing", "bgcolor", "align", "valign"):
-            with self.subTest(attribute=attribute):
-                self.assertIn('"' + attribute + '"', js)
-        self.assertIn("removeAttribute(attribute)", js)
-
-    def test_legacy_inline_table_presentation_is_removed(self):
-        js = TABLE_SEMANTICS_JS.read_text(encoding="utf-8")
-        for property_name in ("border-collapse", "background-color", "border"):
-            with self.subTest(property_name=property_name):
-                self.assertIn('"' + property_name + '"', js)
-        self.assertIn("style.removeProperty(property)", js)
+    def test_runtime_enhancements_do_not_rewrite_inline_presentation(self):
+        js = TABLE_ENHANCEMENTS_JS.read_text(encoding="utf-8")
+        self.assertNotIn("style.removeProperty", js)
+        self.assertNotIn("border-collapse", js)
+        self.assertNotIn("background-color", js)
 
 
 if __name__ == "__main__":
