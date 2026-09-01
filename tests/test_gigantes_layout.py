@@ -116,7 +116,8 @@ def test_galateere_description_stays_in_blast_cell_with_explicit_breaks():
 
     assert (
         "<td>ガラテエーレ<br>"
-        "蘇生、HP・状態異常回復、<br>"
+        "蘇生<br>"
+        "HP・状態異常回復<br>"
         "シフタ・デバンド</td><td></td>"
         in html
     )
