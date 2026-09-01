@@ -4,11 +4,12 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 MENUBAR = ROOT / "docs" / "js" / "menubar.js"
 SIDEBAR = ROOT / "docs" / "js" / "sidebar.js"
+STYLE = ROOT / "docs" / "css" / "style.css"
 
 
 class InternalUrlTests(unittest.TestCase):
     def test_shared_internal_urls_are_root_relative(self):
-        for path in (MENUBAR, SIDEBAR):
+        for path in (MENUBAR, SIDEBAR, STYLE):
             text = path.read_text(encoding="utf-8")
             with self.subTest(path=path.name):
                 self.assertNotIn("https://kylekatann.github.io/PSNOVA/", text)
@@ -20,14 +21,21 @@ class InternalUrlTests(unittest.TestCase):
 
     def test_shared_asset_loaders_use_site_root_paths(self):
         menubar = MENUBAR.read_text(encoding="utf-8")
+        style = STYLE.read_text(encoding="utf-8")
+
         for asset in (
-            "/PSNOVA/css/modern.css",
-            "/PSNOVA/css/site-search.css",
             "/PSNOVA/js/site-search.js",
             "/PSNOVA/js/table-enhancements.js",
         ):
             with self.subTest(asset=asset):
                 self.assertIn(asset, menubar)
+
+        for asset in (
+            "/PSNOVA/css/modern.css",
+            "/PSNOVA/css/site-search.css",
+        ):
+            with self.subTest(asset=asset):
+                self.assertIn(asset, style)
 
         self.assertNotIn("table-semantics.js", menubar)
         self.assertNotIn("data-psnova-table-semantics", menubar)
