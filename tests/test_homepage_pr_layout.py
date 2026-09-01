@@ -19,7 +19,7 @@ def test_all_public_pages_use_full_main_column_without_internal_page_image_suppr
     global_rule = css.rsplit("#main p {", 1)[1].split("}", 1)[0]
     assert "max-width: none;" in global_rule
     assert "body.homepage #main p" not in css
-    assert 'body:not(.homepage) #main img[src$=".jpg"]' in css
+    assert 'body:not(.homepage) #main img[src$=".jpg"]' not in css
 
 
 def test_affiliate_banner_is_two_equal_columns_on_desktop():

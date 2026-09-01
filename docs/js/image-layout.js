@@ -32,21 +32,12 @@
         }
     }
 
-    function isInternalScreenshot(image, pathname) {
-        return isInternalPage() && pathname && /\.jpe?g$/i.test(pathname) && image.closest && image.closest("#main");
-    }
-
     function applyImageHints(image) {
         if (!image || !image.getAttribute) {
             return;
         }
         var pathname = getPathname(image);
         if (!pathname) {
-            return;
-        }
-
-        if (isInternalScreenshot(image, pathname)) {
-            image.remove();
             return;
         }
 
@@ -63,22 +54,6 @@
         if (!eagerPaths[pathname] && !image.hasAttribute("loading")) {
             image.setAttribute("loading", "lazy");
         }
-    }
-
-    function removeInternalScreenshots() {
-        if (!isInternalPage()) {
-            return;
-        }
-        var main = document.getElementById("main");
-        if (!main) {
-            return;
-        }
-        Array.prototype.slice.call(main.querySelectorAll("img")).forEach(function (image) {
-            var pathname = getPathname(image);
-            if (pathname && /\.jpe?g$/i.test(pathname)) {
-                image.remove();
-            }
-        });
     }
 
     function decorateSectionIcons() {
@@ -106,7 +81,6 @@
 
     function finalizeMedia() {
         applyExistingImages();
-        removeInternalScreenshots();
         decorateSectionIcons();
     }
 

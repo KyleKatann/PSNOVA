@@ -30,18 +30,18 @@ class LazyImageTests(unittest.TestCase):
             js,
         )
 
-    def test_internal_legacy_jpegs_are_removed(self):
+    def test_image_layout_does_not_delete_legacy_jpegs_at_runtime(self):
         js = IMAGE_LAYOUT.read_text(encoding="utf-8")
 
-        self.assertIn(
+        self.assertNotIn(
             "function removeInternalScreenshots()",
             js,
         )
-        self.assertIn(
-            r"/\.jpe?g$/i.test(pathname)",
+        self.assertNotIn(
+            "function isInternalScreenshot",
             js,
         )
-        self.assertIn(
+        self.assertNotIn(
             "image.remove();",
             js,
         )

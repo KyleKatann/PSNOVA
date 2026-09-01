@@ -53,7 +53,7 @@ class ImageLayoutTests(unittest.TestCase):
             js,
         )
 
-    def test_all_internal_jpeg_screenshots_share_one_treatment(self):
+    def test_runtime_legacy_jpeg_cleanup_is_removed(self):
         js = IMAGE_LAYOUT.read_text(
             encoding="utf-8"
         )
@@ -62,27 +62,25 @@ class ImageLayoutTests(unittest.TestCase):
             encoding="utf-8"
         )
 
-        self.assertIn(
+        for forbidden in (
             "function removeInternalScreenshots()",
-            js,
-        )
-
-        self.assertIn(
-            r"/\.jpe?g$/i.test(pathname)",
-            js,
-        )
-
-        self.assertIn(
+            "function isInternalScreenshot",
             "image.remove();",
-            js,
-        )
+        ):
+            with self.subTest(
+                forbidden=forbidden
+            ):
+                self.assertNotIn(
+                    forbidden,
+                    js,
+                )
 
-        self.assertIn(
+        self.assertNotIn(
             '#main img[src$=".jpg"]',
             css,
         )
 
-        self.assertIn(
+        self.assertNotIn(
             '#main img[src$=".jpeg"]',
             css,
         )

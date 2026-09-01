@@ -15,17 +15,6 @@
 @import url("/PSNOVA/css/weapon-tools.css");
 @import url("/PSNOVA/css/guide-content.css");
 
-/* Legacy large screenshots remain in some historical HTML. Suppress them during
- * the initial CSS pass on internal pages so every data page uses the same compact
- * header treatment before JavaScript removes those nodes. The homepage keeps its
- * approved hero image. */
-body:not(.homepage) #main img[src$=".jpg"],
-body:not(.homepage) #main img[src$=".jpeg"],
-body:not(.homepage) #main img[src$=".JPG"],
-body:not(.homepage) #main img[src$=".JPEG"] {
-    display: none !important;
-}
-
 /* User-corrected layout invariant: ordinary body copy on every public page must
  * use the available main column naturally. Do not leave a fixed readable-line
  * gutter such as the legacy 82ch cap on #main paragraphs. */

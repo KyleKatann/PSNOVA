@@ -38,24 +38,19 @@ class LegacyCssCleanupTests(unittest.TestCase):
             with self.subTest(legacy=legacy):
                 self.assertNotIn(legacy, css)
 
-    def test_internal_legacy_jpegs_are_hidden_before_javascript_runs(self):
+    def test_internal_jpeg_suppression_is_not_owned_by_css(self):
         css = STYLE_CSS.read_text(encoding="utf-8")
 
-        self.assertIn(
+        self.assertNotIn(
             'body:not(.homepage) #main img[src$=".jpg"]',
             css,
         )
-        self.assertIn(
+        self.assertNotIn(
             'body:not(.homepage) #main img[src$=".jpeg"]',
             css,
         )
-        self.assertIn(
-            "display: none !important;",
-            css,
-        )
-
         self.assertNotIn(
-            "/img/gigantes/gigantes.jpg",
+            "Legacy large screenshots remain",
             css,
         )
 
