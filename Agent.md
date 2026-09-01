@@ -214,3 +214,12 @@ The implementation batch is complete only after the manually triggered final Git
 
 Do not silently alter gameplay values, names, materials, rarity, shop levels, or other source data while changing layout or code structure.
 When a data correction is needed, make it a separate change with its own evidence and test/sentinel update.
+
+## Editing constraints
+
+- Existing pages must be corrected by directly editing only the target text or markup whenever possible.
+- Do not rewrite an entire HTML page or regenerate the full document as a new string for a local correction.
+- Do not manually create or manipulate Git blobs, trees, or indexes as an editing method.
+- When one implementation item touches multiple files, edit each file normally and independently, then commit the completed item together when the tooling supports that workflow.
+- After every edit, inspect the diff. If the diff expands beyond the intended target, stop that method and return to a smaller edit.
+- Regression tests must be limited to the minimum assertions that directly detect the reported defect.
