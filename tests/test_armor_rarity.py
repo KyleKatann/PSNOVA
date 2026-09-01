@@ -27,10 +27,10 @@ class ArmorRarityTests(unittest.TestCase):
         }
         for name, rarity in sentinels.items():
             with self.subTest(name=name):
-                self.assertIn(f"<tr><th>{name}</th><th>{rarity}</th>", self.table)
+                self.assertIn(f"<tr><td>{name}</td><td>{rarity}</td>", self.table)
 
     def test_all_armor_rarities_are_visible_star_values(self):
-        rows = re.findall(r"<tr><th>(.*?)</th><th>(.*?)</th>", self.table)
+        rows = re.findall(r"<tr><td>(.*?)</td><td>(.*?)</td>", self.table)
         self.assertTrue(rows)
         for name, rarity in rows:
             if name == "名前":
@@ -41,7 +41,7 @@ class ArmorRarityTests(unittest.TestCase):
     def test_hidden_zero_sort_padding_is_not_imported(self):
         for value in ("01", "02", "03", "04", "05", "06", "07", "08", "09"):
             with self.subTest(value=value):
-                self.assertNotRegex(self.table, rf"<tr><th>[^<]+</th><th>{value}</th>")
+                self.assertNotRegex(self.table, rf"<tr><td>[^<]+</td><td>{value}</td>")
 
 
 if __name__ == "__main__":

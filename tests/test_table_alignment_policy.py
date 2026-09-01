@@ -5,67 +5,62 @@ ROOT = Path(__file__).resolve().parents[1]
 CSS = ROOT / "docs" / "css" / "wiki-table.css"
 
 
-def test_table_alignment_defaults_to_center_for_data_cells():
+def test_table_alignment_defaults_to_center_for_semantic_body_cells():
     css = CSS.read_text(encoding="utf-8")
 
-    assert "#main table tbody td,\n#main table tbody th:not([bgcolor]) {\n    text-align: center;" in css
-    assert "#main table tbody td:first-child,\n#main table tbody th:first-child:not([bgcolor])" in css
-    first_cell_rule = css.split(
-        "#main table tbody td:first-child,\n#main table tbody th:first-child:not([bgcolor])",
-        1,
-    )[1].split("}", 1)[0]
-    assert "text-align: center;" in first_cell_rule
-    assert "text-align: left;" not in first_cell_rule
-
-
-def test_table_alignment_keeps_text_and_quest_columns_left_aligned():
-    css = CSS.read_text(encoding="utf-8")
-
-    expected_selectors = (
-        "details table:has(tbody > tr > :nth-child(2):last-child)",
-        "details table:has(tbody > tr > :nth-child(4):last-child)",
-        "details table:has(> thead):has(tbody > tr > :nth-child(5):last-child)",
-        "details table:not(:has(> thead)):has(tbody > tr > :nth-child(5):last-child)",
-        "details table:has(tbody > tr > :nth-child(7):last-child)",
-        "details table:has(tbody > tr > :nth-child(8):last-child)",
-        "table:has(tbody > tr > :nth-child(14):last-child)",
-        "table:has(tbody > tr > :nth-child(6):last-child)",
-        "table:not(:has([rowspan])):has(tbody > tr > :nth-child(5):last-child) tbody > tr > :nth-child(2)",
-        "table:has([rowspan]):has(tbody > tr > :nth-child(5):last-child)",
-        "table:has(> thead):has(tbody > tr > :nth-child(4):last-child)",
-        "table:not(:has(> thead)):has(tbody > tr > :nth-child(4):last-child)",
-        "table:has([rowspan]):has(tbody > tr > :nth-child(7):last-child)",
-        "table:not(:has([rowspan])):has(tbody > tr > :nth-child(7):last-child)",
+    assert (
+        "#main table tbody td,\n"
+        "#main table tbody th {\n"
+        "    text-align: center;"
+        in css
     )
 
-    for selector in expected_selectors:
-        assert selector in css
+    assert (
+        "#main table tbody td:first-child,\n"
+        "#main table tbody th:first-child"
+        in css
+    )
+
+
+def test_legacy_source_shape_is_not_used_as_css_semantics():
+    css = CSS.read_text(encoding="utf-8")
+
+    for forbidden in (
+        "[bgcolor]",
+        "tbody th:not([bgcolor])",
+        "not(:has(> thead))",
+        "tbody:first-of-type > tr:first-child",
+    ):
+        assert forbidden not in css
+
+
+def test_explicit_table_semantics_preserve_special_text_alignment():
+    css = CSS.read_text(encoding="utf-8")
+
+    assert (
+        "details table:not(.appearance-data-table):has(> thead)"
+        in css
+    )
+
+    assert (
+        ".appearance-data-table tbody > tr > :last-child"
+        in css
+    )
+
+    assert (
+        ".trophy-data-table tbody > tr > :nth-child(2)"
+        in css
+    )
+
+    assert (
+        ".trophy-data-table tbody > tr > :nth-child(3)"
+        in css
+    )
 
     assert "text-align: left;" in css
 
 
-def test_same_width_five_column_tables_are_disambiguated_by_source_semantics():
-    css = CSS.read_text(encoding="utf-8")
-
-    assert (
-        "details table:has(> thead):has(tbody > tr > :nth-child(5):last-child) "
-        "tbody > tr > :nth-child(3)"
-    ) in css
-    assert (
-        "details table:not(:has(> thead)):has(tbody > tr > :nth-child(5):last-child) "
-        "tbody > tr > :last-child"
-    ) in css
-    assert (
-        "table:not(:has([rowspan])):has(tbody > tr > :nth-child(5):last-child) "
-        "tbody > tr > :nth-child(2)"
-    ) in css
-    assert (
-        "table:has([rowspan]):has(tbody > tr > :nth-child(5):last-child) "
-        "tbody > tr > :nth-last-child(-n+2)"
-    ) in css
-
-
-def test_alignment_policy_is_css_only_not_runtime_repair():
+def test_alignment_is_css_presentation_not_runtime_html_repair():
     css = CSS.read_text(encoding="utf-8")
 
     assert "JavaScript must not infer" in css

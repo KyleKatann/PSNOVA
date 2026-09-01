@@ -37,8 +37,9 @@ These are specifications established by user review and must be treated as regre
 - Data tables retain the compact original-wiki treatment: pale blue header/emphasis surfaces, compact padding, restrained 1px separation, and modern scrolling/search/sort behavior. Removing runtime HTML repair must not remove this visual treatment.
 - All table pale-blue UI surfaces use the same `var(--accent-soft)` color across every page. Table body cells use neutral surfaces unless a semantic status color is intentionally required.
 - Tables use subtle 1px grid lines in the shared border color so rows and columns remain easy to track without visually heavy borders.
-- Table column headers are always centered, including legacy first-row headers. Semantic left alignment applies only to body content such as notes, explanations, locations, acquisition methods, and quest lists.
-- All data-table column headers use the same strong header treatment regardless of source markup: `font-weight: 800`, `var(--accent-soft)`, and centered text. Legacy `th[bgcolor]`, semantic `<thead>`, and direct first-row `<th>` tables must render consistently.
+- Table column headers are always centered and use static semantic source markup with `<thead>` and `<th scope="col">`. Semantic left alignment applies only to body content such as notes, explanations, locations, acquisition methods, and quest lists.
+- Legacy table compatibility styling is prohibited. Shared CSS must not branch on obsolete `bgcolor`, all-`th` body rows, missing `<thead>`, or first-row position to infer historical Wiki markup. Fix current public source HTML statically instead.
+- `docs/pages/分類中/` is historical staging/reference material, not a live public-site source. Do not rewrite it during public-page modernization, and keep it excluded from the GitHub Pages build.
 - Public labels must be natural reader-facing Japanese. Developer-facing or unexplained labels such as `Shop Lv`, `shopLv`, and `ショップLv` must not appear; display `ショップレベル` instead.
 - Automatic in-page navigation strips such as the former `ページ内` bar are intentionally not used and must not be restored.
 - Weapon section headings show exactly one weapon icon. Do not combine a CSS background weapon icon with an injected `<img>` for the same heading. Row/category icons may remain where intentionally separate.
@@ -122,8 +123,8 @@ Work through this list sequentially unless a dependency requires otherwise.
 ### Priority A
 
 13. Add in-page category navigation for large data pages. **Removed by user review: automatic in-page navigation is intentionally not used.**
-14. Normalize table semantics statically in source HTML using `thead`, `tbody`, `th`, and `td` correctly. **In progress: runtime normalization is prohibited and removed; remaining legacy source pages must be migrated one page at a time.**
-15. Remove deprecated presentational HTML such as `bgcolor`, `border`, and inline table styling from source HTML and replace it with shared CSS. **In progress: runtime cleanup is prohibited; remaining legacy source pages must be migrated one page at a time.**
+14. Normalize table semantics statically in source HTML using `thead`, `tbody`, `th`, and `td` correctly. **Implemented for current public pages: runtime normalization remains prohibited. Historical staging material under `docs/pages/分類中/` is excluded from the public build rather than rewritten.**
+15. Remove deprecated presentational HTML such as `bgcolor`, `border`, and inline table styling from current public source HTML and replace it with shared CSS. **Implemented for current public data tables; runtime cleanup remains prohibited.**
 16. Remove duplicate/conflicting CSS rules while preserving behavior. **Implemented**
 17. Reduce hard-coded absolute internal URLs where safe. **Implemented**
 18. Give every important page a unique descriptive `<title>`. **In progress: the rendered title convention is standardized; legacy raw HTML titles must be migrated to the same convention as pages are statically cleaned.**

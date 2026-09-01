@@ -1,146 +1,214 @@
 import re
 from pathlib import Path
+from urllib.parse import unquote, urlparse
+from xml.etree import ElementTree
+
 
 ROOT = Path(__file__).resolve().parents[1]
 DOCS = ROOT / "docs"
+SITEMAP = DOCS / "sitemap.xml"
 CSS = DOCS / "css" / "wiki-table.css"
-MODERN = DOCS / "css" / "modern.css"
-MOBILE = DOCS / "css" / "mobile-table.css"
+CONFIG = DOCS / "_config.yml"
 AGENT = ROOT / "Agent.md"
+SITE_PREFIX = "/PSNOVA/"
 
 
-def test_shared_final_header_rule_is_strong_and_uniform():
+TABLE_RE = re.compile(
+    r"<table\b[^>]*>(.*?)</table>",
+    re.I | re.S,
+)
+
+ROW_RE = re.compile(
+    r"<tr\b[^>]*>.*?</tr>",
+    re.I | re.S,
+)
+
+CELL_RE = re.compile(
+    r"<(?P<tag>th|td)\b(?P<attrs>[^>]*)>"
+    r"(?P<body>.*?)"
+    r"</(?P=tag)>",
+    re.I | re.S,
+)
+
+
+def public_html_paths():
+    root = ElementTree.parse(SITEMAP).getroot()
+    ns = {"sm": "http://www.sitemaps.org/schemas/sitemap/0.9"}
+
+    result = set()
+
+    for loc in root.findall("sm:url/sm:loc", ns):
+        parsed = urlparse((loc.text or "").strip())
+        path = unquote(parsed.path)
+
+        if not path.startswith(SITE_PREFIX):
+            continue
+
+        relative = path[len(SITE_PREFIX):] or "index.html"
+
+        if relative.endswith(".html"):
+            result.add(DOCS / relative)
+
+    return sorted(result)
+
+
+def test_shared_header_style_is_semantic_only():
     css = CSS.read_text(encoding="utf-8")
 
-    selector = (
-        "#main table > thead th,\n"
-        "#main table > thead td,\n"
-        "#main table > tbody:first-of-type > tr:first-child > th,\n"
-        "#main table > tbody:first-of-type > tr:first-child > td[bgcolor] {"
-    )
+    assert "#main table > thead th {" in css
+    assert "font-weight: 800;" in css
+    assert "background: var(--accent-soft);" in css
+    assert "text-align: center !important;" in css
 
-    assert selector in css
-
-    start = css.index(selector)
-    end = css.index("}", start)
-    body = css[start:end]
-
-    assert "color: #1f3146;" in body
-    assert "background: var(--accent-soft);" in body
-    assert "font-weight: 800;" in body
-    assert "text-align: center !important;" in body
+    for forbidden in (
+        "[bgcolor]",
+        "tbody th:not([bgcolor])",
+        "not(:has(> thead))",
+        "tbody:first-of-type > tr:first-child",
+    ):
+        assert forbidden not in css
 
 
-def test_final_header_rule_wins_after_legacy_body_th_neutralization():
-    css = CSS.read_text(encoding="utf-8")
+def test_public_data_table_headers_use_thead_and_scope_col():
+    failures = []
 
-    neutral = css.index(
-        "#main table tbody th:not([bgcolor]) {"
-    )
-    final_header = css.index(
-        "#main table > thead th,"
-    )
+    for path in public_html_paths():
+        html = path.read_text(encoding="utf-8")
 
-    assert final_header > neutral
+        for index, table_match in enumerate(
+            TABLE_RE.finditer(html),
+            start=1,
+        ):
+            table = table_match.group(1)
 
-
-def test_other_shared_css_does_not_reduce_header_weight():
-    modern = MODERN.read_text(encoding="utf-8")
-    mobile = MOBILE.read_text(encoding="utf-8")
-
-    # modern.css already defines table headers as strong.
-    assert "table th," in modern
-    assert "font-weight: 800;" in modern
-
-    # mobile layer changes scrolling/wrapping only.
-    assert "font-weight: 400" not in mobile
-    assert "font-weight: normal" not in mobile
-
-
-def test_all_public_table_header_shapes_are_supported_by_shared_rule():
-    table_re = re.compile(
-        r"<table\b[^>]*>(.*?)</table>",
-        re.I | re.S,
-    )
-    first_row_re = re.compile(
-        r"<tr\b[^>]*>(.*?)</tr>",
-        re.I | re.S,
-    )
-
-    found_thead = 0
-    found_first_row_th = 0
-    found_legacy_bgcolor = 0
-
-    for path in DOCS.rglob("*.html"):
-        html = path.read_text(
-            encoding="utf-8",
-            errors="strict",
-        )
-
-        for table in table_re.finditer(html):
-            table_html = table.group(1)
-
-            if re.search(r"<thead\b", table_html, re.I):
-                found_thead += 1
+            if "<thead" not in table.lower():
                 continue
 
-            first_row = first_row_re.search(table_html)
-            if not first_row:
+            assert "<tbody" in table.lower(), (
+                f"{path.relative_to(ROOT)} "
+                f"table {index}: tbody missing"
+            )
+
+            thead = re.search(
+                r"<thead\b[^>]*>(.*?)</thead>",
+                table,
+                re.I | re.S,
+            )
+
+            assert thead is not None
+
+            cells = list(
+                CELL_RE.finditer(
+                    thead.group(1)
+                )
+            )
+
+            assert cells
+
+            for cell in cells:
+                if cell.group("tag").lower() != "th":
+                    failures.append(
+                        f"{path.relative_to(ROOT)} "
+                        f"table {index}: header is not TH"
+                    )
+
+                if not re.search(
+                    r'\bscope\s*=\s*["\']col["\']',
+                    cell.group("attrs"),
+                    re.I,
+                ):
+                    failures.append(
+                        f"{path.relative_to(ROOT)} "
+                        f"table {index}: TH lacks scope=col"
+                    )
+
+                if re.search(
+                    r"\bbgcolor\s*=",
+                    cell.group("attrs"),
+                    re.I,
+                ):
+                    failures.append(
+                        f"{path.relative_to(ROOT)} "
+                        f"table {index}: header bgcolor remains"
+                    )
+
+    assert not failures, "\n".join(failures)
+
+
+def test_public_semantic_table_body_does_not_use_all_th_rows():
+    failures = []
+
+    for path in public_html_paths():
+        html = path.read_text(encoding="utf-8")
+
+        for index, table_match in enumerate(
+            TABLE_RE.finditer(html),
+            start=1,
+        ):
+            table = table_match.group(1)
+
+            tbody = re.search(
+                r"<tbody\b[^>]*>(.*?)</tbody>",
+                table,
+                re.I | re.S,
+            )
+
+            if not tbody:
                 continue
 
-            row = first_row.group(1)
-
-            if re.search(r"<th\b", row, re.I):
-                found_first_row_th += 1
-
-            if re.search(
-                r"<(?:th|td)\b[^>]*\bbgcolor\s*=",
-                row,
-                re.I,
+            for row in ROW_RE.finditer(
+                tbody.group(1)
             ):
-                found_legacy_bgcolor += 1
+                cells = list(
+                    CELL_RE.finditer(
+                        row.group(0)
+                    )
+                )
 
-    # Repository currently contains multiple generations of table markup.
-    # The shared CSS must support all of them.
-    assert found_thead > 0
-    assert found_first_row_th > 0
-    assert found_legacy_bgcolor > 0
+                if cells and all(
+                    cell.group("tag").lower() == "th"
+                    for cell in cells
+                ):
+                    failures.append(
+                        f"{path.relative_to(ROOT)} "
+                        f"table {index}: all-TH body row"
+                    )
+
+    assert not failures, "\n".join(failures)
 
 
-def test_gigantes_and_legacy_enemy_headers_use_same_shared_visual_contract():
-    gigantes = (
-        DOCS / "pages" / "gigantes.html"
-    ).read_text(encoding="utf-8")
-
+def test_enemy_and_gigantes_share_semantic_header_contract():
     enemy = (
         DOCS / "pages" / "enemy.html"
     ).read_text(encoding="utf-8")
 
+    gigantes = (
+        DOCS / "pages" / "gigantes.html"
+    ).read_text(encoding="utf-8")
+
+    assert "<thead>" in enemy
+    assert '<th scope="col">名前</th>' in enemy
+
+    assert "<thead>" in gigantes
     assert '<th scope="col">種別</th>' in gigantes
-    assert '<th bgcolor="#87cefa">名前</th>' in enemy
-
-    css = CSS.read_text(encoding="utf-8")
-
-    # Both source forms terminate in the same 800-weight visual contract.
-    assert (
-        "#main table > tbody:first-of-type > "
-        "tr:first-child > th,"
-        in css
-    )
-    assert (
-        "#main table tr:first-child > th[bgcolor],"
-        in css
-    )
 
 
-def test_header_weight_rule_is_recorded_in_agent():
+def test_historical_classification_tree_is_not_part_of_public_build():
+    config = CONFIG.read_text(encoding="utf-8")
+
+    assert "exclude:" in config
+    assert "- pages/分類中" in config
+
+
+def test_agent_prohibits_legacy_table_compatibility():
     agent = AGENT.read_text(encoding="utf-8")
 
     assert (
-        "All data-table column headers use the same strong header treatment"
+        "Legacy table compatibility styling is prohibited."
         in agent
     )
-    assert "`font-weight: 800`" in agent
-    assert "Legacy `th[bgcolor]`" in agent
-    assert "semantic `<thead>`" in agent
-    assert "direct first-row `<th>`" in agent
+
+    assert (
+        "`docs/pages/分類中/` is historical staging/reference material"
+        in agent
+    )
