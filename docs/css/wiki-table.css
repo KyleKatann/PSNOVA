@@ -237,8 +237,10 @@
 #main table > thead td,
 #main table > tbody:first-of-type > tr:first-child > th,
 #main table > tbody:first-of-type > tr:first-child > td[bgcolor] {
-    text-align: center !important;
+    color: #1f3146;
     background: var(--accent-soft);
+    font-weight: 800;
+    text-align: center !important;
 }
 
 @media screen and (max-width: 800px) {

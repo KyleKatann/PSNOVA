@@ -38,6 +38,7 @@ These are specifications established by user review and must be treated as regre
 - All table pale-blue UI surfaces use the same `var(--accent-soft)` color across every page. Table body cells use neutral surfaces unless a semantic status color is intentionally required.
 - Tables use subtle 1px grid lines in the shared border color so rows and columns remain easy to track without visually heavy borders.
 - Table column headers are always centered, including legacy first-row headers. Semantic left alignment applies only to body content such as notes, explanations, locations, acquisition methods, and quest lists.
+- All data-table column headers use the same strong header treatment regardless of source markup: `font-weight: 800`, `var(--accent-soft)`, and centered text. Legacy `th[bgcolor]`, semantic `<thead>`, and direct first-row `<th>` tables must render consistently.
 - Public labels must be natural reader-facing Japanese. Developer-facing or unexplained labels such as `Shop Lv`, `shopLv`, and `ショップLv` must not appear; display `ショップレベル` instead.
 - Automatic in-page navigation strips such as the former `ページ内` bar are intentionally not used and must not be restored.
 - Weapon section headings show exactly one weapon icon. Do not combine a CSS background weapon icon with an injected `<img>` for the same heading. Row/category icons may remain where intentionally separate.
