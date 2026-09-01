@@ -4,6 +4,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 INDEX = ROOT / "docs" / "index.html"
 STYLE = ROOT / "docs" / "css" / "style.css"
+MODERN = ROOT / "docs" / "css" / "modern.css"
 AFFILIATE_CSS = ROOT / "docs" / "css" / "affiliate.css"
 AFFILIATE_JS = ROOT / "docs" / "js" / "affiliate-banner.js"
 AGENT = ROOT / "Agent.md"
@@ -11,15 +12,24 @@ AGENT = ROOT / "Agent.md"
 
 def test_all_public_pages_use_full_main_column_without_internal_page_image_suppression():
     html = INDEX.read_text(encoding="utf-8")
-    css = STYLE.read_text(encoding="utf-8")
+    style = STYLE.read_text(encoding="utf-8")
+    modern = MODERN.read_text(encoding="utf-8")
 
     assert '<body class="homepage">' in html
     assert 'alt="PSNOVAのギガンテス"' in html
-    assert "#main p {" in css
-    global_rule = css.rsplit("#main p {", 1)[1].split("}", 1)[0]
+
+    assert "#main p {" in modern
+
+    global_rule = modern.rsplit(
+        "#main p {",
+        1,
+    )[1].split("}", 1)[0]
+
     assert "max-width: none;" in global_rule
-    assert "body.homepage #main p" not in css
-    assert 'body:not(.homepage) #main img[src$=".jpg"]' not in css
+    assert "max-width: 82ch;" not in modern
+    assert "#main p {" not in style
+    assert "body.homepage #main p" not in style
+    assert 'body:not(.homepage) #main img[src$=".jpg"]' not in style
 
 
 def test_affiliate_banner_is_two_equal_columns_on_desktop():
