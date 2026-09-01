@@ -7,16 +7,15 @@ CSS = ROOT / "docs" / "css" / "weapon-tools.css"
 
 
 class StickyDataUiTests(unittest.TestCase):
-    def test_detail_toolbar_scrolls_normally(self):
+    def test_desktop_toolbar_stays_visible_after_scroll(self):
         css = CSS.read_text(
             encoding="utf-8"
         )
 
         match = re.search(
-            r"#main\.weapon-detail-page "
-            r"\.data-toolbar \{"
+            r"@media screen and \(min-width: 801px\) \{"
             r"(?P<body>.*?)"
-            r"\}",
+            r"\n\}",
             css,
             re.S,
         )
@@ -26,16 +25,12 @@ class StickyDataUiTests(unittest.TestCase):
         body = match.group("body")
 
         self.assertIn(
-            "position: static;",
-            body,
-        )
-        self.assertIn(
-            "top: auto;",
+            ".data-toolbar { position: sticky; top: 8px; z-index: 30; box-shadow: none; }",
             body,
         )
         self.assertNotIn(
-            "position: sticky",
-            body,
+            "#main.weapon-detail-page .data-toolbar",
+            css,
         )
 
     def test_detail_table_header_remains_vertically_sticky(self):
@@ -44,8 +39,7 @@ class StickyDataUiTests(unittest.TestCase):
         )
 
         self.assertIn(
-            "#main.weapon-detail-page "
-            ".data-toolbar ~ "
+            "#main .data-toolbar ~ "
             ".table-scroll > "
             ".weapon-data-table thead th",
             css,
@@ -56,7 +50,7 @@ class StickyDataUiTests(unittest.TestCase):
             css,
         )
         self.assertIn(
-            "top: 8px;",
+            "top: 76px;",
             css,
         )
 

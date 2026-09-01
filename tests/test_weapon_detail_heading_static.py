@@ -89,8 +89,15 @@ def test_static_weapon_heading_and_toolbar_rules_are_recorded():
         in agent
     )
     assert (
-        "weapon search/filter toolbar "
-        "scrolls normally with the page"
+        "weapon search/filter toolbars use `position: sticky`"
         in agent
     )
-    assert "must not be sticky" in agent
+    assert (
+        "remain visible near the top of the viewport"
+        in agent
+    )
+    assert "They use no card shadow." in agent
+    assert (
+        "weapon table header remains sticky below the toolbar"
+        in agent
+    )
