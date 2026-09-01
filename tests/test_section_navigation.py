@@ -6,26 +6,22 @@ STYLE_ENTRY = ROOT / "docs" / "css" / "style.css"
 MENUBAR_JS = ROOT / "docs" / "js" / "menubar.js"
 SECTION_NAV_JS = ROOT / "docs" / "js" / "section-nav.js"
 SECTION_NAV_CSS = ROOT / "docs" / "css" / "section-nav.css"
+AGENT = ROOT / "Agent.md"
 
 
 class SectionNavigationTests(unittest.TestCase):
-    def test_section_navigation_assets_are_loaded(self):
+    def test_automatic_section_navigation_assets_stay_removed(self):
         js = MENUBAR_JS.read_text(encoding="utf-8")
         css = STYLE_ENTRY.read_text(encoding="utf-8")
-        self.assertIn("/PSNOVA/js/section-nav.js", js)
-        self.assertIn('@import url("/PSNOVA/css/section-nav.css");', css)
+        self.assertNotIn("section-nav.js", js)
+        self.assertNotIn("section-nav.css", css)
+        self.assertFalse(SECTION_NAV_JS.exists())
+        self.assertFalse(SECTION_NAV_CSS.exists())
 
-    def test_navigation_is_generated_from_existing_headings(self):
-        js = SECTION_NAV_JS.read_text(encoding="utf-8")
-        self.assertIn('querySelectorAll("h3, details > summary")', js)
-        self.assertIn('aria-label", "ページ内目次"', js)
-        self.assertIn('href="#', js)
-        self.assertIn("items.length < 3", js)
-
-    def test_section_navigation_wraps_on_narrow_screens(self):
-        css = SECTION_NAV_CSS.read_text(encoding="utf-8")
-        self.assertIn("flex-wrap: wrap", css)
-        self.assertIn("@media screen and (max-width: 560px)", css)
+    def test_agent_records_no_automatic_in_page_navigation(self):
+        guide = AGENT.read_text(encoding="utf-8").lower()
+        self.assertIn("automatic in-page", guide)
+        self.assertIn("must not", guide)
 
 
 if __name__ == "__main__":
