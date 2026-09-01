@@ -8,6 +8,7 @@ STYLE_CSS = ROOT / "docs" / "css" / "style.css"
 class LegacyCssCleanupTests(unittest.TestCase):
     def test_style_css_is_only_the_modern_entrypoint(self):
         css = STYLE_CSS.read_text(encoding="utf-8")
+
         for path in (
             "/PSNOVA/css/modern.css",
             "/PSNOVA/css/wiki-table.css",
@@ -18,10 +19,15 @@ class LegacyCssCleanupTests(unittest.TestCase):
         ):
             with self.subTest(path=path):
                 self.assertIn(path, css)
-        self.assertNotIn("section-nav.css", css)
+
+        self.assertNotIn(
+            "section-nav.css",
+            css,
+        )
 
     def test_legacy_template_rules_do_not_return(self):
         css = STYLE_CSS.read_text(encoding="utf-8")
+
         for legacy in (
             "Template-Party",
             "linear-gradient(#FFF, #e5e5e5)",
@@ -34,9 +40,24 @@ class LegacyCssCleanupTests(unittest.TestCase):
 
     def test_internal_legacy_jpegs_are_hidden_before_javascript_runs(self):
         css = STYLE_CSS.read_text(encoding="utf-8")
-        self.assertIn('#main img[src$=".jpg"]', css)
-        self.assertIn('/img/gigantes/gigantes.jpg', css)
-        self.assertIn('display: none !important;', css)
+
+        self.assertIn(
+            'body:not(.homepage) #main img[src$=".jpg"]',
+            css,
+        )
+        self.assertIn(
+            'body:not(.homepage) #main img[src$=".jpeg"]',
+            css,
+        )
+        self.assertIn(
+            "display: none !important;",
+            css,
+        )
+
+        self.assertNotIn(
+            "/img/gigantes/gigantes.jpg",
+            css,
+        )
 
 
 if __name__ == "__main__":

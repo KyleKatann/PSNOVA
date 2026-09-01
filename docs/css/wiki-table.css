@@ -266,3 +266,34 @@
         padding: 5px;
     }
 }
+
+/* Gigantes data-table layout. Keep page HTML free of inline presentation rules. */
+#main .gigantes-table td {
+    font-weight: 400 !important;
+}
+
+#main .gigantes-table td[rowspan] {
+    font-weight: 700 !important;
+}
+
+#main .gigantes-table-scroll {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+#main .gigantes-table {
+    min-width: 1100px;
+    border-collapse: collapse;
+}
+
+#main .gigantes-table th:last-child,
+#main .gigantes-table td:last-child {
+    min-width: 180px;
+}
+
+#main .attribute-icon {
+    width: 16px;
+    height: 16px;
+    margin-left: 4px;
+    vertical-align: -3px;
+}
