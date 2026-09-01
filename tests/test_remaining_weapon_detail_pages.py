@@ -1,4 +1,3 @@
-import re
 import unittest
 from pathlib import Path
 
@@ -100,11 +99,25 @@ class RemainingWeaponDetailPageTests(unittest.TestCase):
                     r"<tr><td>[^<]+</td><td>0[1-9]</td>",
                 )
 
-                absolute_self_urls = re.findall(
-                    r'https://kylekatann\.github\.io/PSNOVA/',
+                self_url = (
+                    "https://kylekatann.github.io/PSNOVA/"
+                    f"pages/weapon/{filename}.html"
+                )
+
+                self.assertEqual(
+                    html.count(self_url),
+                    2,
+                )
+
+                self.assertIn(
+                    f'<link rel="canonical" href="{self_url}">',
                     html,
                 )
-                self.assertEqual(len(absolute_self_urls), 1)
+
+                self.assertIn(
+                    f'<meta property="og:url" content="{self_url}">',
+                    html,
+                )
 
     def test_navigation_matches_weapon_order(self):
         index_by_file = {

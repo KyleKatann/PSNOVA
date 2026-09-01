@@ -37,7 +37,8 @@ def test_known_legacy_github_notices_are_removed():
 
     assert "データの修正はgithub" not in homepage
     assert "githubの方でissue" not in material
-    assert "github" not in issue.lower()
+    issue_body = issue.lower().split("</head>", 1)[1]
+    assert "github" not in issue_body
 
 
 def test_public_copy_rule_is_recorded_in_agent_guide():
