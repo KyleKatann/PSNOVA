@@ -32,7 +32,7 @@ class WikiTableStyleTests(unittest.TestCase):
     def test_details_table_selectors_work_after_scroll_wrapper_is_inserted(self):
         css = TABLE_CSS.read_text(encoding="utf-8")
         self.assertIn('details > .table-scroll > table', css)
-        self.assertIn('details.native-icon-table > .table-scroll > table', css)
+        self.assertNotIn('details.native-icon-table', css)
         self.assertNotIn('data-psnova-semantic', css)
 
     def test_current_table_density_palette_and_grid_are_preserved(self):
@@ -57,13 +57,13 @@ class WikiTableStyleTests(unittest.TestCase):
         self.assertIn('.weapon-stat-cell.is-empty', css)
         self.assertIn('background: #e7e9ee;', css)
 
-    def test_weapon_tables_receive_native_icon_variable(self):
+    def test_weapon_runtime_native_icon_layer_is_removed(self):
         js = IMAGE_LAYOUT.read_text(encoding="utf-8")
         css = TABLE_CSS.read_text(encoding="utf-8")
-        self.assertIn('details.classList.add("native-icon-table")', js)
-        self.assertIn('details.style.setProperty("--native-table-icon"', js)
-        self.assertIn('background-image: var(--native-table-icon);', css)
-        self.assertIn('tbody td:first-child::before', css)
+        self.assertNotIn('details.classList.add("native-icon-table")', js)
+        self.assertNotIn('details.style.setProperty("--native-table-icon"', js)
+        self.assertNotIn('background-image: var(--native-table-icon);', css)
+        self.assertNotIn('details.native-icon-table', css)
 
     def test_shared_table_enhancer_only_decorates_existing_semantic_tables(self):
         js = TABLE_ENHANCEMENTS.read_text(encoding="utf-8")

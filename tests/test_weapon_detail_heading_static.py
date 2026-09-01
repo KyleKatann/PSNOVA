@@ -3,37 +3,94 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 MENUBAR = ROOT / "docs" / "js" / "menubar.js"
-LOCK_JS = ROOT / "docs" / "js" / "weapon-static-heading.js"
 STYLE = ROOT / "docs" / "css" / "style.css"
+WEAPON_CSS = ROOT / "docs" / "css" / "weapon-tools.css"
+LOCK_JS = ROOT / "docs" / "js" / "weapon-static-heading.js"
 LOCK_CSS = ROOT / "docs" / "css" / "weapon-static-heading.css"
 AGENT = ROOT / "Agent.md"
+WEAPON_DIR = ROOT / "docs" / "pages" / "weapon"
+
+WEAPONS = {
+    "sword": ("ソード", "sword.png"),
+    "partizan": ("パルチザン", "partizan.png"),
+    "doublesaber": ("ダブルセイバー", "dsaber.png"),
+    "knuckle": ("ナックル", "knuckle.png"),
+    "rifle": ("アサルトライフル", "rifle.png"),
+    "tmachinegun": ("ツインマシンガン", "tmachineg.png"),
+    "rod": ("ロッド", "rod.png"),
+    "talis": ("タリス", "thalys.png"),
+    "wand": ("ウォンド", "wand.png"),
+    "halo": ("ヘイロウ", "halo.png"),
+    "pile": ("パイル", "pile.png"),
+}
 
 
-def test_weapon_child_pages_load_static_heading_behavior():
-    js = MENUBAR.read_text(encoding="utf-8")
-    assert "isWeaponChild" in js
-    assert "/PSNOVA/js/weapon-static-heading.js" in js
-    assert "data-psnova-weapon-static-heading" in js
+def test_weapon_detail_headings_are_static_source_markup():
+    for slug, (label, icon) in WEAPONS.items():
+        html = (
+            WEAPON_DIR / f"{slug}.html"
+        ).read_text(encoding="utf-8")
+
+        assert (
+            f'<h2><img class="weapon-type-icon" '
+            f'src="/PSNOVA/img/weapon/{icon}" '
+            f'alt="" width="30" height="30">'
+            f'{label} 武器データ</h2>'
+            in html
+        )
+
+        assert "<details" not in html
+        assert "<summary" not in html
 
 
-def test_static_heading_blocks_disclosure_toggle_inputs():
-    js = LOCK_JS.read_text(encoding="utf-8")
-    assert 'event.preventDefault()' in js
-    assert 'event.key !== "Enter"' in js
-    assert 'event.key !== " "' in js
-    assert 'details.open = true' in js
-    assert 'tabindex", "-1"' in js
+def test_legacy_disclosure_runtime_is_removed():
+    menubar = MENUBAR.read_text(
+        encoding="utf-8"
+    )
+    style = STYLE.read_text(
+        encoding="utf-8"
+    )
+
+    assert not LOCK_JS.exists()
+    assert not LOCK_CSS.exists()
+
+    assert "weapon-static-heading" not in menubar
+    assert "weapon-child-pending" not in menubar
+    assert "weapon-static-heading.css" not in style
 
 
-def test_weapon_detail_heading_has_no_disclosure_affordance():
-    entry = STYLE.read_text(encoding="utf-8")
-    css = LOCK_CSS.read_text(encoding="utf-8")
-    assert '@import url("/PSNOVA/css/weapon-static-heading.css");' in entry
-    assert "pointer-events: none" in css
-    assert "::-webkit-details-marker" in css
-    assert 'content: ""' in css
+def test_static_heading_icon_style_lives_in_weapon_tools_css():
+    css = WEAPON_CSS.read_text(
+        encoding="utf-8"
+    )
+
+    assert (
+        "#main.weapon-detail-page "
+        "h2 .weapon-type-icon {"
+        in css
+    )
+
+    assert "width: 30px;" in css
+    assert "height: 30px;" in css
 
 
-def test_static_weapon_heading_rule_is_recorded():
-    agent = AGENT.read_text(encoding="utf-8")
-    assert "weapon-type heading above the table permanently expanded and non-interactive" in agent
+def test_static_weapon_heading_and_toolbar_rules_are_recorded():
+    agent = AGENT.read_text(
+        encoding="utf-8"
+    )
+
+    assert (
+        "ordinary static `<h2>` weapon-type heading"
+        in agent
+    )
+    assert (
+        "must not rely on JavaScript "
+        "to force a disclosure widget open"
+        in agent
+    )
+    assert (
+        "weapon search/filter toolbar "
+        "scrolls normally with the page"
+        in agent
+    )
+    assert "must not be sticky" in agent

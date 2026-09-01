@@ -162,28 +162,6 @@
     text-align: left;
 }
 
-#main details.native-icon-table > .table-scroll > table tbody td:first-child,
-#main details.native-icon-table > .table-scroll > table tbody th:first-child:not([bgcolor]) {
-    position: relative;
-    padding-left: 27px;
-}
-
-#main details.native-icon-table > .table-scroll > table tbody td:first-child::before,
-#main details.native-icon-table > .table-scroll > table tbody th:first-child:not([bgcolor])::before {
-    content: "";
-    position: absolute;
-    left: 5px;
-    top: 50%;
-    width: 16px;
-    height: 16px;
-    background-image: var(--native-table-icon);
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: contain;
-    transform: translateY(-50%);
-    opacity: 0.95;
-}
-
 #main table .rarity-cell {
     background: var(--accent-soft);
     font-weight: 800;

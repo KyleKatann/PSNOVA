@@ -5,19 +5,6 @@
     var eagerPaths = {
         "/PSNOVA/img/logo.png": true
     };
-    var weaponIcons = {
-        "ソード": "/PSNOVA/img/weapon/sword.png",
-        "パルチザン": "/PSNOVA/img/weapon/partizan.png",
-        "ダブルセイバー": "/PSNOVA/img/weapon/dsaber.png",
-        "ナックル": "/PSNOVA/img/weapon/knuckle.png",
-        "アサルトライフル": "/PSNOVA/img/weapon/rifle.png",
-        "ツインマシンガン": "/PSNOVA/img/weapon/tmachineg.png",
-        "ロッド": "/PSNOVA/img/weapon/rod.png",
-        "タリス": "/PSNOVA/img/weapon/thalys.png",
-        "ウォンド": "/PSNOVA/img/weapon/wand.png",
-        "ヘイロウ": "/PSNOVA/img/weapon/halo.png",
-        "パイル": "/PSNOVA/img/weapon/pile.png"
-    };
     var classIcons = {
         "ハンター": "/PSNOVA/img/job/hunter.png",
         "レンジャー": "/PSNOVA/img/job/ranger.png",
@@ -102,18 +89,6 @@
         if (!main) {
             return;
         }
-
-        Array.prototype.slice.call(main.querySelectorAll("details > summary")).forEach(function (summary) {
-            var label = summary.textContent.trim();
-            var icon = weaponIcons[label];
-            if (icon) {
-                var details = summary.parentElement;
-                if (details) {
-                    details.classList.add("native-icon-table");
-                    details.style.setProperty("--native-table-icon", 'url("' + icon + '")');
-                }
-            }
-        });
 
         Array.prototype.slice.call(main.querySelectorAll("h3")).forEach(function (heading) {
             var label = heading.textContent.trim();

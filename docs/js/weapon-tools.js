@@ -37,67 +37,17 @@
         return weaponPages.filter(function (item) { return item.slug === match[1]; })[0] || null;
     }
 
-    /* Compatibility path for weapon child pages that have not yet been migrated.
-       Migrated pages must contain only their own static table and never depend on
-       this function to delete unrelated weapon sections. */
-    function prepareLegacyChildPage(main, current) {
-        if (!current) return;
-
-        main.classList.add("weapon-detail-page");
-        var section = main.querySelector("section");
-        if (!section) return;
-
-        var heading = section.querySelector("h2");
-        if (heading) heading.textContent = current.label + " 武器データ";
-        var oldSubheading = section.querySelector("h3");
-        if (oldSubheading) oldSubheading.remove();
-        var oldImage = section.querySelector(":scope > img");
-        if (oldImage) oldImage.remove();
-        var intro = section.querySelector(":scope > p");
-        if (intro) intro.textContent = "PSNOVA（ファンタシースターノヴァ）の" + current.label + "一覧。レアリティ、攻撃力、ショップレベル、必要素材を確認できる。";
-
-        var detailsSections = Array.prototype.slice.call(section.querySelectorAll(":scope > details"));
-        var selected = null;
-        detailsSections.forEach(function (details) {
-            var summary = details.querySelector("summary");
-            if (summary && summary.textContent.trim() === current.label) selected = details;
-            else details.remove();
-        });
-        if (!selected) return;
-        selected.open = true;
-
-        var index = weaponPages.indexOf(current);
-        var previous = weaponPages[(index + weaponPages.length - 1) % weaponPages.length];
-        var next = weaponPages[(index + 1) % weaponPages.length];
-        var nav = document.createElement("nav");
-        nav.className = "weapon-page-nav";
-        nav.setAttribute("aria-label", "武器種ナビゲーション");
-        nav.innerHTML = '<a href="/PSNOVA/pages/weapon/' + previous.slug + '.html" rel="prev">← ' + previous.label + '</a>' +
-            '<a class="weapon-page-nav-index" href="/PSNOVA/pages/weapon.html">武器一覧</a>' +
-            '<a href="/PSNOVA/pages/weapon/' + next.slug + '.html" rel="next">' + next.label + ' →</a>';
-        selected.parentNode.insertBefore(nav, selected);
-    }
-
     function sectionModels(main, current) {
-        if (current) {
-            var staticTable = main.querySelector('table.weapon-data-table[data-weapon-static="true"]');
-            if (staticTable) {
-                return [{
-                    table: staticTable,
-                    details: null,
-                    type: normalizeText(current.label),
-                    typeLabel: current.label
-                }];
-            }
-        }
+        if (!current) return [];
 
-        return Array.prototype.slice.call(main.querySelectorAll("details")).map(function (details) {
-            var table = details.querySelector("table");
-            var summary = details.querySelector("summary");
-            if (!table || !summary) return null;
-            var label = summary.textContent.trim();
-            return { table: table, details: details, type: normalizeText(label), typeLabel: label };
-        }).filter(Boolean);
+        var staticTable = main.querySelector('table.weapon-data-table[data-weapon-static="true"]');
+        if (!staticTable) return [];
+
+        return [{
+            table: staticTable,
+            type: normalizeText(current.label),
+            typeLabel: current.label
+        }];
     }
 
     function uniqueInOrder(records, key, labelKey) {
@@ -161,8 +111,6 @@
         if (!main || document.getElementById("weapon-search")) return;
 
         var current = childPage();
-        var hasStaticChild = Boolean(current && main.querySelector('table.weapon-data-table[data-weapon-static="true"]'));
-        if (!hasStaticChild) prepareLegacyChildPage(main, current);
 
         var sections = sectionModels(main, current);
         if (!sections.length) return;
@@ -222,7 +170,7 @@
         ].join("");
 
         var firstTable = sections[0].table;
-        var insertionTarget = firstTable.closest(".table-scroll") || sections[0].details || firstTable;
+        var insertionTarget = firstTable.closest(".table-scroll") || firstTable;
         insertionTarget.parentNode.insertBefore(toolbar, insertionTarget);
 
         var input = document.getElementById("weapon-search");
@@ -258,23 +206,13 @@
             var selectedType = typeFilter ? typeFilter.value : "";
             var selectedRarity = rarityFilter.value;
             var selectedShop = shopFilter.value;
-            var filtering = Boolean(query || selectedType || selectedRarity || selectedShop);
             var matches = 0;
-            var visibleBySection = new Map();
             records.forEach(function (record) {
                 var visible = (!query || record.name.indexOf(query) !== -1) && (!selectedType || record.type === selectedType) &&
                     (!selectedRarity || record.rarity === selectedRarity) && (!selectedShop || record.shopLevel === selectedShop);
                 record.row.hidden = !visible;
-                if (visible) {
-                    matches += 1;
-                    visibleBySection.set(record.section, (visibleBySection.get(record.section) || 0) + 1);
-                }
+                if (visible) matches += 1;
             });
-            if (filtering) {
-                sections.forEach(function (section) {
-                    if (section.details) section.details.open = Boolean(visibleBySection.get(section));
-                });
-            }
             count.textContent = matches + " / " + records.length + " 件";
         }
 
