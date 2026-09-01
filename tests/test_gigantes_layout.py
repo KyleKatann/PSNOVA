@@ -68,3 +68,45 @@ def test_gigantes_layout_rules_are_recorded_in_agent():
     assert "`難易度SH以降での出現クエスト` column must stay on one line" in agent
     assert "`備考` column is the flexible wrapping column" in agent
     assert "explicit cell-internal `<br>`" in agent
+
+def test_gigantes_large_and_small_tables_share_the_same_layout_contract():
+    html = HTML.read_text(encoding="utf-8")
+    css = CSS.read_text(encoding="utf-8")
+
+    assert "<h3>大型ギガンテスデータ</h3>" in html
+    assert "<h3>小型ギガンテスデータ</h3>" in html
+
+    assert html.count(
+        'class="table-scroll gigantes-table-scroll"'
+    ) == 2
+    assert html.count(
+        'class="gigantes-table"'
+    ) == 2
+
+    # One shared class owns the responsive behavior for both tables.
+    assert "#main .gigantes-table-scroll {" in css
+    assert "#main .gigantes-table {" in css
+
+    # Desktop: no horizontal scrolling.
+    assert "overflow: visible;" in css
+    assert "max-width: 100%;" in css
+    assert "min-width: 0;" in css
+
+    # Notes wrap, quest names do not auto-wrap.
+    assert "#main .gigantes-table td:nth-last-child(2)" in css
+    assert "white-space: normal;" in css
+    assert "#main .gigantes-table td:last-child" in css
+    assert "white-space: nowrap;" in css
+
+    # Mobile: both tables use the same horizontal scroll wrapper.
+    assert "@media screen and (max-width: 800px)" in css
+    assert "overflow-x: auto;" in css
+    assert "min-width: 1100px;" in css
+
+
+def test_gigantes_large_small_table_names_are_recorded_in_agent():
+    agent = AGENT.read_text(encoding="utf-8")
+
+    assert "`大型ギガンテスデータ`" in agent
+    assert "`小型ギガンテスデータ`" in agent
+    assert "Both tables use the same Gigantes table-layout rules" in agent
