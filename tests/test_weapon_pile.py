@@ -9,7 +9,7 @@ class WeaponPileTests(unittest.TestCase):
     def test_pile_section_uses_pile_dataset(self):
         html = (ROOT / "docs" / "pages" / "weapon" / "pile.html").read_text(encoding="utf-8")
         match = re.search(
-            r"<summary>パイル</summary>(.*?)</details>",
+            r'<table class="weapon-data-table"[^>]*data-weapon-type="パイル"[^>]*>(.*?)</table>',
             html,
             re.DOTALL,
         )
@@ -17,14 +17,14 @@ class WeaponPileTests(unittest.TestCase):
 
         section = match.group(1)
         self.assertIn(
-            "<tr><th>パイル</th><th>3</th><th>579</th><th>529</th>",
+            "<tr><td>パイル</td><td>3</td><td>579</td><td>529</td>",
             section,
         )
         self.assertIn(
-            "<tr><th>スペキュレイナー</th><th>15</th><th>5921</th><th>5921</th>",
+            "<tr><td>スペキュレイナー</td><td>15</td><td>5921</td><td>5921</td>",
             section,
         )
-        self.assertNotIn("<tr><th>ロッド</th>", section)
+        self.assertNotIn("<tr><td>ロッド</td>", section)
 
 
 if __name__ == "__main__":
