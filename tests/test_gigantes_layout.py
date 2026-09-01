@@ -110,3 +110,19 @@ def test_gigantes_large_small_table_names_are_recorded_in_agent():
     assert "`大型ギガンテスデータ`" in agent
     assert "`小型ギガンテスデータ`" in agent
     assert "Both tables use the same Gigantes table-layout rules" in agent
+
+def test_galateere_description_stays_in_blast_cell_with_explicit_breaks():
+    html = HTML.read_text(encoding="utf-8")
+
+    assert (
+        "<td>ガラテエーレ<br>"
+        "蘇生、HP・状態異常回復、<br>"
+        "シフタ・デバンド</td><td></td>"
+        in html
+    )
+
+    assert (
+        "<td>ガラテエーレ</td>"
+        "<td>蘇生、HP・状態異常回復、シフタ・デバンド</td>"
+        not in html
+    )
