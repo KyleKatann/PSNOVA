@@ -45,15 +45,15 @@ class SharedJavascriptSafetyTests(unittest.TestCase):
             sidebar_js,
         )
 
-    def test_legacy_menubar_entrypoint_is_noop(self):
+    def test_obsolete_menubar_entrypoint_is_removed(self):
         menu_js = (
             ROOT / "docs" / "js" / "menubar.js"
         ).read_text(
             encoding="utf-8"
         )
 
-        self.assertIn(
-            "function menu() {}",
+        self.assertNotIn(
+            "function menu()",
             menu_js,
         )
 
