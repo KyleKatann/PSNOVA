@@ -3,6 +3,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 SIDEBAR_JS = ROOT / "docs" / "js" / "sidebar.js"
+MODERN_CSS = ROOT / "docs" / "css" / "modern.css"
 INTERACTION_CSS = ROOT / "docs" / "css" / "interaction.css"
 
 
@@ -29,13 +30,14 @@ class WeaponSidebarTests(unittest.TestCase):
             with self.subTest(label=label):
                 self.assertIn(f'/PSNOVA/pages/weapon/{filename}\">{label}</a>', js)
 
-    def test_weapon_submenu_is_visually_indented(self):
-        css = INTERACTION_CSS.read_text(encoding="utf-8")
-        self.assertIn("#sub .submenu .weapon-submenu", css)
-        self.assertIn("padding: 4px 0 6px 14px;", css)
-        self.assertIn("font-size: 12px;", css)
-        self.assertIn("#sub .submenu .weapon-submenu a.is-current", css)
-        self.assertIn(".weapon-data-link.is-parent-current", css)
+    def test_weapon_submenu_style_has_one_owner(self):
+        modern = MODERN_CSS.read_text(encoding="utf-8")
+        interaction = INTERACTION_CSS.read_text(encoding="utf-8")
+        self.assertIn("#sub .submenu .weapon-submenu", modern)
+        self.assertIn("padding: 4px 0 6px 14px;", modern)
+        self.assertIn("#sub .submenu .weapon-submenu a.is-current", modern)
+        self.assertIn(".weapon-data-link.is-parent-current", modern)
+        self.assertNotIn(".weapon-submenu", interaction)
 
 
 if __name__ == "__main__":
