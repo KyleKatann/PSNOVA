@@ -11,22 +11,6 @@
     background: var(--accent-soft);
 }
 
-/* Keep the official-links grid continuous across label, URL and image cells. */
-.official-links-table th,
-.official-links-table td {
-    border-right: 1px solid var(--border);
-    border-bottom: 1px solid var(--border);
-}
-
-.official-links-table tr > :last-child {
-    border-right: 0;
-}
-
-.official-links-table tr:last-child > th,
-.official-links-table tr:last-child > td {
-    border-bottom: 0;
-}
-
 .product-table .product-image-cell {
     width: 170px;
     padding: 10px 12px;
