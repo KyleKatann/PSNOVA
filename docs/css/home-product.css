@@ -1,10 +1,3 @@
-.product-table .product-image-cell,
-.official-links-table .official-image-cell {
-    background: var(--surface-subtle);
-    text-align: center;
-    vertical-align: middle;
-}
-
 /* Homepage summary/link tables use one consistent pale-blue label column. */
 .product-table th:first-child,
 .official-links-table th:first-child {
