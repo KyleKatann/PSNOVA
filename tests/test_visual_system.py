@@ -3,13 +3,13 @@ import unittest
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-MODERN_CSS = ROOT / "docs" / "css" / "modern.css"
+STYLE = ROOT / "docs" / "css" / "style.css"
 SIDEBAR_JS = ROOT / "docs" / "js" / "sidebar.js"
 
 
 class VisualSystemTests(unittest.TestCase):
     def test_color_pattern_uses_psnova_specific_cool_palette(self):
-        css = MODERN_CSS.read_text(encoding="utf-8")
+        css = STYLE.read_text(encoding="utf-8")
         self.assertIn("--nav-bg: #252d3a;", css)
         self.assertIn("--accent: #5661c9;", css)
         self.assertIn("--accent-soft: #eceefe;", css)
@@ -19,7 +19,7 @@ class VisualSystemTests(unittest.TestCase):
         self.assertNotIn("#ffbf00", css.lower())
 
     def test_information_hierarchy_has_dark_nav_white_content_and_accent_states(self):
-        css = MODERN_CSS.read_text(encoding="utf-8")
+        css = STYLE.read_text(encoding="utf-8")
         self.assertIn("background: var(--nav-bg);", css)
         self.assertIn("#main {", css)
         self.assertIn("background: var(--surface);", css)

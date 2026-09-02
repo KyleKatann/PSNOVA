@@ -3,14 +3,13 @@ from pathlib import Path
 
 
 ROOT = Path(__file__).resolve().parents[1]
-MODERN_CSS = ROOT / "docs" / "css" / "modern.css"
-STYLE_ENTRY = ROOT / "docs" / "css" / "style.css"
+STYLE = ROOT / "docs" / "css" / "style.css"
 MENUBAR_JS = ROOT / "docs" / "js" / "menubar.js"
 
 
 class ModernFoundationTests(unittest.TestCase):
-    def test_modern_stylesheet_has_core_tokens(self):
-        css = MODERN_CSS.read_text(encoding="utf-8")
+    def test_sitewide_stylesheet_has_core_tokens(self):
+        css = STYLE.read_text(encoding="utf-8")
         for token in (
             "--page-bg:",
             "--surface:",
@@ -24,16 +23,17 @@ class ModernFoundationTests(unittest.TestCase):
                 self.assertIn(token, css)
 
     def test_mobile_typography_does_not_drop_to_legacy_12px(self):
-        css = MODERN_CSS.read_text(encoding="utf-8")
+        css = STYLE.read_text(encoding="utf-8")
         self.assertIn("@media screen and (max-width: 480px)", css)
         self.assertIn("font-size: 14px", css)
 
-    def test_modern_stylesheet_is_loaded_from_initial_css_entrypoint(self):
-        css = STYLE_ENTRY.read_text(encoding="utf-8")
+    def test_sitewide_stylesheet_is_loaded_directly_without_import_chain(self):
+        css = STYLE.read_text(encoding="utf-8")
         js = MENUBAR_JS.read_text(encoding="utf-8")
-        self.assertIn('@import url("/PSNOVA/css/modern.css");', css)
+
+        self.assertNotIn("@import", css)
+        self.assertNotIn("/PSNOVA/css/style.css", js)
         self.assertNotIn("addStylesheetOnce", js)
-        self.assertNotIn("document.head.appendChild(link);", js)
 
 
 if __name__ == "__main__":

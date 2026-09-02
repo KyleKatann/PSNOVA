@@ -135,7 +135,6 @@ tr[hidden] { display: none !important; }
     }
 }
 
-
 @media screen and (min-width: 561px) {
     .weapon-page-nav a[rel="prev"] { grid-column: 1; }
     .weapon-page-nav-index { grid-column: 2; }
@@ -159,4 +158,12 @@ tr[hidden] { display: none !important; }
     .weapon-page-nav a:not(.weapon-page-nav-index) { grid-row: 2; }
     .data-toolbar-row { align-items: stretch; flex-direction: column; }
     .data-toolbar output { min-width: 0; text-align: left; }
+}
+
+/* Weapon catalog cards are an icon-led selector. Native PNG icons must remain
+ * visible even if broader internal-page image rules are tightened later. */
+#main .weapon-card img {
+    display: block !important;
+    visibility: visible;
+    opacity: 1;
 }

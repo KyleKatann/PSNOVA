@@ -4,7 +4,7 @@ ROOT = Path(__file__).resolve().parents[1]
 
 
 def test_semantic_table_headers_are_explicitly_centered_after_body_alignment_rules():
-    css = (ROOT / "docs/css/wiki-table.css").read_text(encoding="utf-8")
+    css = (ROOT / "docs/css/style.css").read_text(encoding="utf-8")
     marker = "User-corrected invariant: every semantic column-header row is centered."
     assert marker in css
     tail = css.split(marker, 1)[1]

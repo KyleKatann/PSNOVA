@@ -7,7 +7,7 @@ from xml.etree import ElementTree
 ROOT = Path(__file__).resolve().parents[1]
 DOCS = ROOT / "docs"
 SITEMAP = DOCS / "sitemap.xml"
-CSS = DOCS / "css" / "wiki-table.css"
+CSS = DOCS / "css" / "style.css"
 CONFIG = DOCS / "_config.yml"
 AGENT = ROOT / "Agent.md"
 SITE_PREFIX = "/PSNOVA/"
@@ -75,10 +75,7 @@ def test_public_data_table_headers_use_thead_and_scope_col():
     for path in public_html_paths():
         html = path.read_text(encoding="utf-8")
 
-        for index, table_match in enumerate(
-            TABLE_RE.finditer(html),
-            start=1,
-        ):
+        for index, table_match in enumerate(TABLE_RE.finditer(html), start=1):
             table = table_match.group(1)
 
             if "<thead" not in table.lower():
@@ -96,13 +93,7 @@ def test_public_data_table_headers_use_thead_and_scope_col():
             )
 
             assert thead is not None
-
-            cells = list(
-                CELL_RE.finditer(
-                    thead.group(1)
-                )
-            )
-
+            cells = list(CELL_RE.finditer(thead.group(1)))
             assert cells
 
             for cell in cells:
@@ -141,10 +132,7 @@ def test_public_semantic_table_body_does_not_use_all_th_rows():
     for path in public_html_paths():
         html = path.read_text(encoding="utf-8")
 
-        for index, table_match in enumerate(
-            TABLE_RE.finditer(html),
-            start=1,
-        ):
+        for index, table_match in enumerate(TABLE_RE.finditer(html), start=1):
             table = table_match.group(1)
 
             tbody = re.search(
@@ -156,14 +144,8 @@ def test_public_semantic_table_body_does_not_use_all_th_rows():
             if not tbody:
                 continue
 
-            for row in ROW_RE.finditer(
-                tbody.group(1)
-            ):
-                cells = list(
-                    CELL_RE.finditer(
-                        row.group(0)
-                    )
-                )
+            for row in ROW_RE.finditer(tbody.group(1)):
+                cells = list(CELL_RE.finditer(row.group(0)))
 
                 if cells and all(
                     cell.group("tag").lower() == "th"
@@ -178,17 +160,11 @@ def test_public_semantic_table_body_does_not_use_all_th_rows():
 
 
 def test_enemy_and_gigantes_share_semantic_header_contract():
-    enemy = (
-        DOCS / "pages" / "enemy.html"
-    ).read_text(encoding="utf-8")
-
-    gigantes = (
-        DOCS / "pages" / "gigantes.html"
-    ).read_text(encoding="utf-8")
+    enemy = (DOCS / "pages" / "enemy.html").read_text(encoding="utf-8")
+    gigantes = (DOCS / "pages" / "gigantes.html").read_text(encoding="utf-8")
 
     assert "<thead>" in enemy
     assert '<th scope="col">名前</th>' in enemy
-
     assert "<thead>" in gigantes
     assert '<th scope="col">種別</th>' in gigantes
 
@@ -203,12 +179,5 @@ def test_historical_classification_tree_is_not_part_of_public_build():
 def test_agent_prohibits_legacy_table_compatibility():
     agent = AGENT.read_text(encoding="utf-8")
 
-    assert (
-        "Legacy table compatibility styling is prohibited."
-        in agent
-    )
-
-    assert (
-        "`docs/pages/分類中/` is historical staging/reference material"
-        in agent
-    )
+    assert "Legacy table compatibility styling is prohibited." in agent
+    assert "`docs/pages/分類中/` is historical staging/reference material" in agent

@@ -2,7 +2,7 @@ from pathlib import Path
 
 
 ROOT = Path(__file__).resolve().parents[1]
-CSS = ROOT / "docs" / "css" / "wiki-table.css"
+CSS = ROOT / "docs" / "css" / "style.css"
 
 
 def test_table_alignment_defaults_to_center_for_semantic_body_cells():
@@ -37,26 +37,10 @@ def test_legacy_source_shape_is_not_used_as_css_semantics():
 def test_explicit_table_semantics_preserve_special_text_alignment():
     css = CSS.read_text(encoding="utf-8")
 
-    assert (
-        "details table:not(.appearance-data-table):has(> thead)"
-        in css
-    )
-
-    assert (
-        ".appearance-data-table tbody > tr > :last-child"
-        in css
-    )
-
-    assert (
-        ".trophy-data-table tbody > tr > :nth-child(2)"
-        in css
-    )
-
-    assert (
-        ".trophy-data-table tbody > tr > :nth-child(3)"
-        in css
-    )
-
+    assert "details table:not(.appearance-data-table):has(> thead)" in css
+    assert ".appearance-data-table tbody > tr > :last-child" in css
+    assert ".trophy-data-table tbody > tr > :nth-child(2)" in css
+    assert ".trophy-data-table tbody > tr > :nth-child(3)" in css
     assert "text-align: left;" in css
 
 

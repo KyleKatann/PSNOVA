@@ -6,7 +6,7 @@ ROOT = Path(__file__).resolve().parents[1]
 MENUBAR_JS = ROOT / "docs" / "js" / "menubar.js"
 OPENCLOSE_JS = ROOT / "docs" / "js" / "openclose.js"
 SIDEBAR_JS = ROOT / "docs" / "js" / "sidebar.js"
-INTERACTION_CSS = ROOT / "docs" / "css" / "interaction.css"
+STYLE = ROOT / "docs" / "css" / "style.css"
 
 
 class HeaderNavigationTests(unittest.TestCase):
@@ -27,7 +27,7 @@ class HeaderNavigationTests(unittest.TestCase):
         self.assertIn('document.body.classList.toggle("mobile-nav-open", open)', js)
 
     def test_mobile_contents_is_off_canvas_until_opened(self):
-        css = INTERACTION_CSS.read_text(encoding="utf-8")
+        css = STYLE.read_text(encoding="utf-8")
         self.assertIn("#sub.is-open", css)
         self.assertIn("transform: translateX(105%);", css)
         self.assertIn("transform: translateX(0);", css)

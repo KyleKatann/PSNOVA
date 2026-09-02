@@ -19,6 +19,14 @@
         return;
     }
 
+    if (!document.querySelector('link[data-psnova-weapon-tools-style="true"]')) {
+        var stylesheet = document.createElement("link");
+        stylesheet.rel = "stylesheet";
+        stylesheet.href = "/PSNOVA/css/weapon-tools.css";
+        stylesheet.setAttribute("data-psnova-weapon-tools-style", "true");
+        document.head.appendChild(stylesheet);
+    }
+
     if (!document.querySelector('script[data-psnova-weapon-tools="true"]')) {
         var script = document.createElement("script");
         script.src = "/PSNOVA/js/weapon-tools.js";

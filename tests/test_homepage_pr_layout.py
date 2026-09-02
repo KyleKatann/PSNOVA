@@ -4,36 +4,28 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 INDEX = ROOT / "docs" / "index.html"
 STYLE = ROOT / "docs" / "css" / "style.css"
-MODERN = ROOT / "docs" / "css" / "modern.css"
-AFFILIATE_CSS = ROOT / "docs" / "css" / "affiliate.css"
 AFFILIATE_JS = ROOT / "docs" / "js" / "affiliate-banner.js"
 AGENT = ROOT / "Agent.md"
 
 
 def test_all_public_pages_use_full_main_column_without_internal_page_image_suppression():
     html = INDEX.read_text(encoding="utf-8")
-    style = STYLE.read_text(encoding="utf-8")
-    modern = MODERN.read_text(encoding="utf-8")
+    css = STYLE.read_text(encoding="utf-8")
 
     assert '<body class="homepage">' in html
     assert 'alt="PSNOVAのギガンテス"' in html
+    assert "#main p {" in css
 
-    assert "#main p {" in modern
-
-    global_rule = modern.rsplit(
-        "#main p {",
-        1,
-    )[1].split("}", 1)[0]
+    global_rule = css.rsplit("#main p {", 1)[1].split("}", 1)[0]
 
     assert "max-width: none;" in global_rule
-    assert "max-width: 82ch;" not in modern
-    assert "#main p {" not in style
-    assert "body.homepage #main p" not in style
-    assert 'body:not(.homepage) #main img[src$=".jpg"]' not in style
+    assert "max-width: 82ch;" not in css
+    assert "body.homepage #main p" not in css
+    assert 'body:not(.homepage) #main img[src$=".jpg"]' not in css
 
 
 def test_affiliate_banner_is_two_equal_columns_on_desktop():
-    css = AFFILIATE_CSS.read_text(encoding="utf-8")
+    css = STYLE.read_text(encoding="utf-8")
     js = AFFILIATE_JS.read_text(encoding="utf-8")
 
     assert "grid-template-columns: repeat(2, minmax(0, 1fr));" in css
@@ -47,12 +39,15 @@ def test_affiliate_banner_is_two_equal_columns_on_desktop():
 
 
 def test_affiliate_banner_collapses_to_one_visible_item_on_mobile():
-    css = AFFILIATE_CSS.read_text(encoding="utf-8")
+    css = STYLE.read_text(encoding="utf-8")
 
     assert "@media (max-width: 800px)" in css
     assert "grid-template-columns: 1fr;" in css
     assert ".affiliate-banner-item:nth-child(n + 2)" in css
-    mobile_second_item = css.split(".affiliate-banner-item:nth-child(n + 2)", 1)[1].split("}", 1)[0]
+    mobile_second_item = css.split(
+        ".affiliate-banner-item:nth-child(n + 2)",
+        1,
+    )[1].split("}", 1)[0]
     assert "display: none;" in mobile_second_item
 
 
