@@ -91,7 +91,6 @@
 .data-toolbar input[type="search"]::placeholder { color: #98a2b3; }
 .data-toolbar output { flex: 0 0 auto; min-width: 88px; color: var(--text-muted); font-size: 13px; text-align: right; }
 .data-filter-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; margin-top: 12px; }
-.data-filter-grid.is-single-type { grid-template-columns: repeat(3, minmax(0, 1fr)); }
 .data-filter-field select { width: 100%; }
 .rarity-cell, .shop-level-cell { white-space: nowrap; font-variant-numeric: tabular-nums; }
 .rarity-cell[data-rarity="1"], .rarity-cell[data-rarity="1"]::before,
@@ -139,7 +138,7 @@ tr[hidden] { display: none !important; }
 }
 
 @media screen and (max-width: 700px) {
-    .data-filter-grid, .data-filter-grid.is-single-type { grid-template-columns: 1fr; }
+    .data-filter-grid { grid-template-columns: 1fr; }
 }
 
 @media screen and (max-width: 560px) {
