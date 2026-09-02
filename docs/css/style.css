@@ -514,19 +514,6 @@ footer a {
         padding: 20px 16px 26px;
     }
 
-    #sub {
-        width: 100%;
-        flex-basis: auto;
-        order: 2;
-        margin-top: 24px;
-        padding-top: 0;
-        border-top: 0;
-    }
-
-    #sub nav {
-        position: static;
-    }
-
     #main h2 {
         font-size: 27px;
     }
@@ -1032,13 +1019,16 @@ body.is-fixed-pagetop .nav-fix-pos-pagetop a {
     }
 
     #sub {
+        width: 100%;
+        flex-basis: auto;
+        order: 2;
         position: fixed;
         top: 0;
         right: 0;
         bottom: 0;
         left: auto;
         z-index: 70;
-        width: min(86vw, 340px);
+        max-width: min(86vw, 340px);
         height: 100vh;
         height: 100dvh;
         margin: 0;
