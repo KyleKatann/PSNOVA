@@ -531,13 +531,6 @@ footer a {
         font-size: 27px;
     }
 
-    table {
-        display: block;
-        overflow-x: auto;
-        white-space: nowrap;
-        -webkit-overflow-scrolling: touch;
-    }
-
     #menubar_hdr {
         top: 11px;
         right: 13px;
@@ -783,14 +776,6 @@ footer a {
         scrollbar-width: thin;
     }
 
-    /* Keep the table as a table and let .table-scroll be the single touch scroller. */
-    #main .table-scroll > table {
-        display: table;
-        max-width: none;
-        overflow: visible;
-        white-space: normal;
-    }
-
     #main table {
         font-size: 12px;
     }
@@ -857,12 +842,14 @@ footer a {
 /* === MOBILE TABLE OVERRIDES === */
 
 @media screen and (max-width: 800px) {
+    /* Before the wrapper is attached, keep the table itself non-scrollable. */
     body:not(.homepage) #main table {
         display: table;
         overflow: visible;
         white-space: normal;
     }
 
+    /* .table-scroll is the only horizontal scroller after enhancement. */
     body:not(.homepage) #main .table-scroll > table {
         width: max-content;
         min-width: 100%;
