@@ -94,25 +94,18 @@
 .data-filter-grid.is-single-type { grid-template-columns: repeat(3, minmax(0, 1fr)); }
 .data-filter-field select { width: 100%; }
 .rarity-cell, .shop-level-cell { white-space: nowrap; font-variant-numeric: tabular-nums; }
-.rarity-cell { color: var(--accent-strong); font-weight: 800; }
-.rarity-cell::before { content: "★"; margin-right: 4px; color: var(--accent); font-size: 0.82em; vertical-align: 0.04em; }
-.rarity-cell[data-rarity-band="blue"], .rarity-cell[data-rarity-band="blue"]::before,
 .rarity-cell[data-rarity="1"], .rarity-cell[data-rarity="1"]::before,
 .rarity-cell[data-rarity="2"], .rarity-cell[data-rarity="2"]::before,
 .rarity-cell[data-rarity="3"], .rarity-cell[data-rarity="3"]::before { color: deepskyblue; }
-.rarity-cell[data-rarity-band="green"], .rarity-cell[data-rarity-band="green"]::before,
 .rarity-cell[data-rarity="4"], .rarity-cell[data-rarity="4"]::before,
 .rarity-cell[data-rarity="5"], .rarity-cell[data-rarity="5"]::before,
 .rarity-cell[data-rarity="6"], .rarity-cell[data-rarity="6"]::before { color: limegreen; }
-.rarity-cell[data-rarity-band="red"], .rarity-cell[data-rarity-band="red"]::before,
 .rarity-cell[data-rarity="7"], .rarity-cell[data-rarity="7"]::before,
 .rarity-cell[data-rarity="8"], .rarity-cell[data-rarity="8"]::before,
 .rarity-cell[data-rarity="9"], .rarity-cell[data-rarity="9"]::before { color: orangered; }
-.rarity-cell[data-rarity-band="orange"], .rarity-cell[data-rarity-band="orange"]::before,
 .rarity-cell[data-rarity="10"], .rarity-cell[data-rarity="10"]::before,
 .rarity-cell[data-rarity="11"], .rarity-cell[data-rarity="11"]::before,
 .rarity-cell[data-rarity="12"], .rarity-cell[data-rarity="12"]::before { color: orange; }
-.rarity-cell[data-rarity-band="violet"], .rarity-cell[data-rarity-band="violet"]::before,
 .rarity-cell[data-rarity="13"], .rarity-cell[data-rarity="13"]::before,
 .rarity-cell[data-rarity="14"], .rarity-cell[data-rarity="14"]::before,
 .rarity-cell[data-rarity="15"], .rarity-cell[data-rarity="15"]::before { color: violet; }

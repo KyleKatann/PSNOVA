@@ -3,7 +3,8 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 JS = ROOT / "docs" / "js" / "weapon-tools.js"
-CSS = ROOT / "docs" / "css" / "weapon-tools.css"
+STYLE = ROOT / "docs" / "css" / "style.css"
+WEAPON_CSS = ROOT / "docs" / "css" / "weapon-tools.css"
 
 
 class CompactWeaponStatusTests(unittest.TestCase):
@@ -15,11 +16,17 @@ class CompactWeaponStatusTests(unittest.TestCase):
         self.assertNotIn("cells[1].innerHTML", js)
         self.assertNotIn("cells[1].textContent =", js)
 
-    def test_rarity_uses_restrained_css_badge(self):
-        css = CSS.read_text(encoding="utf-8")
-        self.assertIn(".rarity-cell::before", css)
-        self.assertIn('content: "★"', css)
-        self.assertIn("font-variant-numeric: tabular-nums", css)
+    def test_rarity_badge_has_one_shared_owner_and_weapon_only_colors(self):
+        style = STYLE.read_text(encoding="utf-8")
+        weapon_css = WEAPON_CSS.read_text(encoding="utf-8")
+
+        self.assertIn("#main table .rarity-cell::before", style)
+        self.assertIn('content: "★"', style)
+        self.assertNotIn(".rarity-cell::before {", weapon_css)
+        self.assertNotIn("data-rarity-band", weapon_css)
+        self.assertIn('data-rarity="1"', weapon_css)
+        self.assertIn('data-rarity="15"', weapon_css)
+        self.assertIn("font-variant-numeric: tabular-nums", weapon_css)
 
     def test_existing_numeric_sort_inputs_are_preserved(self):
         js = JS.read_text(encoding="utf-8")
