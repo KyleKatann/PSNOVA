@@ -57,3 +57,34 @@ def test_page_specific_css_has_distinct_owners():
     assert ".weapon-catalog {" not in style
     assert ".product-table .product-image-cell" in home
     assert ".product-table .product-image-cell" not in style
+
+
+def test_weapon_filter_grid_does_not_duplicate_single_type_selectors():
+    weapon = WEAPON.read_text(encoding="utf-8")
+
+    assert ".data-filter-grid.is-single-type" not in weapon
+    assert weapon.count(".data-filter-grid { grid-template-columns: 1fr; }") == 1
+
+
+def test_shop_numeric_format_has_one_shared_owner():
+    style = STYLE.read_text(encoding="utf-8")
+    weapon = WEAPON.read_text(encoding="utf-8")
+
+    shared_shop = block(style, "#main table .shop-level-cell")
+    weapon_shop = block(weapon, ".shop-level-cell")
+
+    assert "font-variant-numeric: tabular-nums;" in shared_shop
+    assert "font-variant-numeric" not in weapon_shop
+    assert "white-space: nowrap;" in weapon_shop
+
+
+def test_home_cells_inherit_shared_table_presentation():
+    style = STYLE.read_text(encoding="utf-8")
+    home = HOME.read_text(encoding="utf-8")
+
+    shared_cells = block(style, "#main table th,\n#main table td")
+
+    assert "background: var(--surface-subtle);" in shared_cells
+    assert "vertical-align: middle;" in shared_cells
+    assert "background: var(--surface-subtle);" not in home
+    assert "vertical-align: middle;" not in home
