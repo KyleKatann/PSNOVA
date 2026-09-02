@@ -142,7 +142,7 @@ tr[hidden] { display: none !important; }
 }
 
 @media screen and (max-width: 560px) {
-    .weapon-catalog { grid-template-columns: 1fr 1fr; gap: 8px; }
+    .weapon-catalog { gap: 8px; }
     .weapon-card { min-height: 68px; padding: 9px; gap: 8px; font-size: 14px; }
     .weapon-card img { width: 38px; height: 38px; flex-basis: 38px; }
     .weapon-page-nav { grid-template-columns: 1fr 1fr; }
