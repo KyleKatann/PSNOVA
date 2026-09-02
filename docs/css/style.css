@@ -858,12 +858,6 @@ footer a {
     transition-timing-function: ease;
 }
 
-summary:hover,
-#sub .submenu a:hover,
-.site-search-results a:hover {
-    background-color: var(--surface-muted);
-}
-
 button:active,
 summary:active {
     transform: translateY(1px);
