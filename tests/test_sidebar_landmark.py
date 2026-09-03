@@ -44,6 +44,14 @@ class SidebarLandmarkTests(unittest.TestCase):
             source,
         )
         self.assertIn(
+            "has_shared_sidebar_script",
+            source,
+        )
+        self.assertIn(
+            '== "/PSNOVA/js/sidebar.js"',
+            source,
+        )
+        self.assertNotIn(
             '"side();" in text',
             source,
         )

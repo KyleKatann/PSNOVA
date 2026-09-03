@@ -205,8 +205,15 @@ def inventory():
         if "main" not in tags:
             findings["main"].append(rel)
 
+        has_shared_sidebar_script = any(
+            tag == "script"
+            and (attrs.get("src") or "").strip()
+            == "/PSNOVA/js/sidebar.js"
+            for tag, attrs in parser.tags
+        )
+
         has_shared_sidebar = (
-            "side();" in text
+            has_shared_sidebar_script
             and shared_sidebar_is_aside
         )
 
