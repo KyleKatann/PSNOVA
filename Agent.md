@@ -33,6 +33,8 @@ Modernization work must preserve existing data and URLs while improving usabilit
 
 ## Correction-derived invariants
 
+- Public pages load the four shared head scripts (`openclose.js`, `fixmenu_pagetop.js`, `menubar.js`, `sidebar.js`) with `defer`. Public HTML must not contain inline initialization scripts; shared components initialize themselves from external JS after parsing while preserving document-order execution.
+
 - Every public page explicitly declares the repository-owned `/PSNOVA/img/logo.png` as its favicon. Keep favicon resources local to the repository and do not introduce external icon hotlinks.
 
 - Homepage descriptive tables use explicit row-header semantics: the label cell at the start of each 商品概要 and 公式サイト row is `<th scope="row">`. Reserve `scope="col"` for actual column headers.

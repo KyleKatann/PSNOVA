@@ -16,15 +16,23 @@ class SharedRenderingTests(unittest.TestCase):
                     js,
                 )
 
-    def test_sidebar_html_is_inserted_next_to_call_site(self):
+    def test_sidebar_html_is_inserted_before_main_without_call_site_dependency(self):
         js = SIDEBAR.read_text(encoding="utf-8")
 
         self.assertIn(
-            'insertAdjacentHTML("beforebegin", html);',
+            'var main = contents.querySelector("#main");',
             js,
         )
         self.assertIn(
+            'main.insertAdjacentHTML("beforebegin", html);',
+            js,
+        )
+        self.assertNotIn(
             "document.currentScript",
+            js,
+        )
+        self.assertIn(
+            "function initSidebar()",
             js,
         )
 

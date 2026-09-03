@@ -49,14 +49,21 @@ var html =`
 </aside>
 `;
 
-var callSite = document.currentScript;
-if (callSite) {
-    callSite.insertAdjacentHTML("beforebegin", html);
+if (document.getElementById("sub")) {
+    markCurrentSidebarLink();
+    return;
+}
+
+var contents = document.getElementById("contents");
+if (!contents) {
+    return;
+}
+
+var main = contents.querySelector("#main");
+if (main) {
+    main.insertAdjacentHTML("beforebegin", html);
 } else {
-    var contents = document.getElementById("contents");
-    if (contents) {
-        contents.insertAdjacentHTML("afterbegin", html);
-    }
+    contents.insertAdjacentHTML("afterbegin", html);
 }
 
 markCurrentSidebarLink();
@@ -88,4 +95,17 @@ function markCurrentSidebarLink(){
     });
 }
 
-window.addEventListener("DOMContentLoaded", markCurrentSidebarLink, false);
+
+function initSidebar() {
+    side();
+}
+
+if (document.readyState === "loading") {
+    document.addEventListener(
+        "DOMContentLoaded",
+        initSidebar,
+        { once: true }
+    );
+} else {
+    initSidebar();
+}

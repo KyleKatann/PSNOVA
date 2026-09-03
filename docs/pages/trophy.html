@@ -17,10 +17,10 @@
     <link rel="icon" href="/PSNOVA/img/logo.png" type="image/png">
     <link rel="stylesheet" href="/PSNOVA/css/style.css">
 
-    <script src="/PSNOVA/js/openclose.js"></script>
-    <script src="/PSNOVA/js/fixmenu_pagetop.js"></script>
-    <script src="/PSNOVA/js/menubar.js"></script>
-    <script src="/PSNOVA/js/sidebar.js"></script>
+    <script defer src="/PSNOVA/js/openclose.js"></script>
+    <script defer src="/PSNOVA/js/fixmenu_pagetop.js"></script>
+    <script defer src="/PSNOVA/js/menubar.js"></script>
+    <script defer src="/PSNOVA/js/sidebar.js"></script>
 </head>
 
 <body>
@@ -32,7 +32,6 @@
 
 
         <div id="contents">
-            <script>side();</script>
 
             <main id="main">
                 <section>
@@ -112,11 +111,6 @@
     <!--メニュー開閉ボタン-->
     <button type="button" id="menubar_hdr" class="close"></button>
     <!--メニューの開閉処理条件設定　800px以下-->
-    <script>
-        if (OCwindowWidth() <= 800) {
-            open_close("menubar_hdr", "menubar-s");
-        }
-    </script>
 
 </body>
 </html>
