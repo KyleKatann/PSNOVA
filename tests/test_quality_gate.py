@@ -37,6 +37,47 @@ class QualityGateTests(unittest.TestCase):
         )
         self.assertIn("run_full_ui()", source)
 
+    def test_axe_runs_public_accessibility_audit(self):
+        source = QUALITY.read_text(encoding="utf-8")
+
+        self.assertIn("def run_axe():", source)
+        self.assertIn(
+            '"tests/ui/accessibility.spec.js"',
+            source,
+        )
+        self.assertIn(
+            '"--project=desktop-chromium"',
+            source,
+        )
+        start = source.index("def run_axe():")
+        end = source.index("\ndef run_targeted_ui", start)
+        axe_body = source[start:end]
+
+        self.assertNotIn(
+            '"--workers=1"',
+            axe_body,
+        )
+        self.assertIn(
+            'sub.add_parser("axe")',
+            source,
+        )
+
+        inventory_start = source.index("def inventory():")
+        inventory_end = source.index(
+            "\ndef show_status():",
+            inventory_start,
+        )
+        inventory = source[inventory_start:inventory_end]
+
+        self.assertNotIn(
+            '"axe accessibility scan"',
+            inventory,
+        )
+        self.assertNotIn(
+            '"color contrast"',
+            inventory,
+        )
+
     def test_targeted_supports_project_and_grep(self):
         source = QUALITY.read_text(encoding="utf-8")
 

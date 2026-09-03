@@ -33,6 +33,14 @@ Modernization work must preserve existing data and URLs while improving usabilit
 
 ## Correction-derived invariants
 
+- Shared muted text and rarity text colors must meet WCAG AA 4.5:1 contrast against their normal site backgrounds. Preserve the canonical rarity hue mapping (1-3 blue, 4-6 green, 7-9 red, 10-12 orange, 13-15 purple), but use the centralized `--rarity-*` tokens rather than low-contrast CSS named colors.
+
+- Dynamic widgets must expose valid accessible names and ARIA semantics. The site-data search is an editable `combobox` controlling `#site-search-results`; rendered affiliate image links must have a discernible accessible name even when their remote images use empty alt.
+
+- Every public page footer exposes the site-information pages `/PSNOVA/copyright.html` and `/PSNOVA/issue.html`. Keep all public pages reachable from `/PSNOVA/` through internal navigation; do not silence the orphan-page regression test with allow-lists.
+
+- Every public HTML page must remain reachable from `/PSNOVA/` through public internal links, including links supplied by the shared sidebar. `tests/test_public_navigation_reachability.py` guards against orphan public pages.
+
 - Public `<img>` elements declare both numeric `width` and `height` using the source image's intrinsic dimensions. CSS remains responsible for responsive rendered sizing; the HTML dimensions reserve the correct aspect ratio before image load and reduce layout shift.
 
 - Public pages load the four shared head scripts (`openclose.js`, `fixmenu_pagetop.js`, `menubar.js`, `sidebar.js`) with `defer`. Public HTML must not contain inline initialization scripts; shared components initialize themselves from external JS after parsing while preserving document-order execution.

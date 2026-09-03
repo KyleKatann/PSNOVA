@@ -29,8 +29,17 @@
     }
 
     function renderBannerItems() {
-        return pickBanners(2).map(function (markup) {
-            return '<div class="affiliate-banner-item">' + markup + '</div>';
+        return pickBanners(2).map(function (markup, index) {
+            var accessibleMarkup = markup.replace(
+                "<a ",
+                '<a aria-label="楽天市場の商品広告 ' +
+                    (index + 1) +
+                    '（外部サイト）" '
+            );
+
+            return '<div class="affiliate-banner-item">' +
+                accessibleMarkup +
+                '</div>';
         }).join("");
     }
 

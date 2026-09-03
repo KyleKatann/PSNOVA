@@ -50,6 +50,16 @@ def run_full_ui():
     ])
 
 
+def run_axe():
+    run([
+        npx_command(),
+        "playwright",
+        "test",
+        "tests/ui/accessibility.spec.js",
+        "--project=desktop-chromium",
+    ])
+
+
 def run_targeted_ui(project=None, grep=None):
     command = [
         npx_command(),
@@ -440,8 +450,6 @@ def inventory():
 
     print("\nDynamic audits still planned:")
     for item in (
-        "axe accessibility scan",
-        "color contrast",
         "keyboard-only traversal",
         "focus order and visibility",
         "200% / 400% zoom and reflow",
@@ -452,7 +460,6 @@ def inventory():
         "runtime DOM mutation allow-list",
         "page-weight budget",
         "dead / duplicate CSS",
-        "orphan-page graph",
     ):
         print("  -", item)
 
@@ -485,6 +492,7 @@ def main():
     sub.add_parser("fast")
     sub.add_parser("finish")
     sub.add_parser("full")
+    sub.add_parser("axe")
     sub.add_parser("inventory")
     sub.add_parser("status")
     sub.add_parser("reset")
@@ -515,6 +523,9 @@ def main():
     elif args.command == "full":
         run_fast()
         run_full_ui()
+
+    elif args.command == "axe":
+        run_axe()
 
     elif args.command == "targeted":
         run_fast()

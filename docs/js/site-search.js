@@ -41,7 +41,7 @@
 
         var wrapper = document.createElement("div");
         wrapper.className = "site-search";
-        wrapper.innerHTML = '<label class="site-search-label" for="site-data-search">攻略データを検索</label><div class="site-search-box"><input id="site-data-search" type="search" autocomplete="off" placeholder="武器、防具、素材、エネミー..." aria-controls="site-search-results" aria-expanded="false"><div id="site-search-results" class="site-search-results" role="listbox" hidden></div></div>';
+        wrapper.innerHTML = '<label class="site-search-label" for="site-data-search">攻略データを検索</label><div class="site-search-box"><input id="site-data-search" type="search" role="combobox" aria-autocomplete="list" autocomplete="off" placeholder="武器、防具、素材、エネミー..." aria-controls="site-search-results" aria-expanded="false"><div id="site-search-results" class="site-search-results" role="listbox" hidden></div></div>';
         container.insertBefore(wrapper, header.nextSibling);
 
         var input = document.getElementById("site-data-search");
