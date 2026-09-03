@@ -194,14 +194,26 @@ for (const routePath of publicRoutes()) {
       expect(pointerMode.fine, 'desktop-site touch project must not emulate a fine primary pointer').toBe(false);
 
       if (routePath === '/PSNOVA/pages/gigantes.html') {
-        const tableScroll = await page.locator('.gigantes-table-scroll').evaluate((wrapper) => ({
-          overflowX: getComputedStyle(wrapper).overflowX,
-          clientWidth: wrapper.clientWidth,
-          scrollWidth: wrapper.scrollWidth,
-        }));
+        const gigantesTables = page.locator('.gigantes-table');
+        const tableScrolls = page.locator('.gigantes-table-scroll');
 
-        expect(tableScroll.overflowX).toBe('auto');
-        expect(tableScroll.scrollWidth).toBeGreaterThan(tableScroll.clientWidth);
+        await expect(gigantesTables).toHaveCount(2);
+        await expect(tableScrolls).toHaveCount(2);
+
+        const tableScrollMetrics = await tableScrolls.evaluateAll((wrappers) =>
+          wrappers.map((wrapper) => ({
+            tableCount: wrapper.querySelectorAll(':scope > .gigantes-table').length,
+            overflowX: getComputedStyle(wrapper).overflowX,
+            clientWidth: wrapper.clientWidth,
+            scrollWidth: wrapper.scrollWidth,
+          }))
+        );
+
+        for (const tableScroll of tableScrollMetrics) {
+          expect(tableScroll.tableCount).toBe(1);
+          expect(tableScroll.overflowX).toBe('auto');
+          expect(tableScroll.scrollWidth).toBeGreaterThan(tableScroll.clientWidth);
+        }
       }
     }
 
