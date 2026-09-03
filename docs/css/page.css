@@ -157,23 +157,7 @@
 .data-toolbar output { flex: 0 0 auto; min-width: 88px; color: var(--text-muted); font-size: 13px; text-align: right; }
 .data-filter-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; margin-top: 12px; }
 .data-filter-field select { width: 100%; }
-.rarity-cell { white-space: nowrap; font-variant-numeric: tabular-nums; }
 .shop-level-cell { white-space: nowrap; }
-.rarity-cell[data-rarity="1"], .rarity-cell[data-rarity="1"]::before,
-.rarity-cell[data-rarity="2"], .rarity-cell[data-rarity="2"]::before,
-.rarity-cell[data-rarity="3"], .rarity-cell[data-rarity="3"]::before { color: deepskyblue; }
-.rarity-cell[data-rarity="4"], .rarity-cell[data-rarity="4"]::before,
-.rarity-cell[data-rarity="5"], .rarity-cell[data-rarity="5"]::before,
-.rarity-cell[data-rarity="6"], .rarity-cell[data-rarity="6"]::before { color: limegreen; }
-.rarity-cell[data-rarity="7"], .rarity-cell[data-rarity="7"]::before,
-.rarity-cell[data-rarity="8"], .rarity-cell[data-rarity="8"]::before,
-.rarity-cell[data-rarity="9"], .rarity-cell[data-rarity="9"]::before { color: orangered; }
-.rarity-cell[data-rarity="10"], .rarity-cell[data-rarity="10"]::before,
-.rarity-cell[data-rarity="11"], .rarity-cell[data-rarity="11"]::before,
-.rarity-cell[data-rarity="12"], .rarity-cell[data-rarity="12"]::before { color: orange; }
-.rarity-cell[data-rarity="13"], .rarity-cell[data-rarity="13"]::before,
-.rarity-cell[data-rarity="14"], .rarity-cell[data-rarity="14"]::before,
-.rarity-cell[data-rarity="15"], .rarity-cell[data-rarity="15"]::before { color: violet; }
 
 /* Static detail tables are ordinary semantic tables, not disclosure widgets. */
 #main .weapon-data-table tbody > tr > :last-child {

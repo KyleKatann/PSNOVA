@@ -5,14 +5,6 @@
         return match ? Number(match[0]) : NaN;
     }
 
-    function rarityBand(value) {
-        if (!Number.isFinite(value)) return "";
-        if (value >= 13) return "rarity-high";
-        if (value >= 10) return "rarity-mid";
-        if (value >= 7) return "rarity-low";
-        return "";
-    }
-
     function normalizedLabel(value) {
         return (value || "").replace(/\s+/g, "").toLowerCase();
     }
@@ -33,8 +25,17 @@
                     Array.prototype.forEach.call(tbody.rows, function (row) {
                         var cell = row.cells[index];
                         if (!cell) return;
-                        var band = rarityBand(numericValue(cell));
-                        if (band) cell.classList.add("rarity-cell", band);
+
+                        var rarity = numericValue(cell);
+                        if (!Number.isFinite(rarity) || rarity < 1 || rarity > 15) return;
+
+                        cell.classList.add("rarity-cell");
+                        cell.setAttribute("data-rarity", String(rarity));
+                        cell.setAttribute("aria-label", "レアリティ " + rarity);
+
+                        if (cell.textContent.indexOf("★") !== -1) {
+                            cell.classList.add("rarity-source-star");
+                        }
                     });
                 });
             }

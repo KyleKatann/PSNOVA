@@ -36,6 +36,7 @@ Modernization work must preserve existing data and URLs while improving usabilit
 These are specifications established by user review and must be treated as regression constraints:
 
 - Public CSS has two owners only: `docs/css/style.css` for shared/sitewide styles and `docs/css/page.css` for page-specific styles. Do not create a third public stylesheet; add rules to the appropriate existing owner instead.
+- Rarity presentation has exactly one CSS owner in `docs/css/style.css`, and the weapon-page rarity display is the canonical visual specification for the whole site: `★` badge treatment, tabular numerals, and the 1-3 blue / 4-6 green / 7-9 red / 10-12 orange / 13-15 violet color scale. `page.css` must not contain rarity styling. Shared JavaScript may add rarity classes/attributes without rewriting source text; if source HTML already contains a visible `★`, suppress only the decorative pseudo-star so `★★` is never displayed.
 - Data tables retain the compact original-wiki treatment: pale blue header/emphasis surfaces, compact padding, restrained 1px separation, and modern scrolling/search/sort behavior. Removing runtime HTML repair must not remove this visual treatment.
 - All table pale-blue UI surfaces use the same `var(--accent-soft)` color across every page. Table body cells use neutral surfaces unless a semantic status color is intentionally required.
 - Tables use subtle 1px grid lines in the shared border color so rows and columns remain easy to track without visually heavy borders.

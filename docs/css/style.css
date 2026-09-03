@@ -1,7 +1,6 @@
 @charset "utf-8";
 
-/* PSNOVA sitewide stylesheet. Page-specific weapon and homepage rules live in
- * weapon-tools.css and home-product.css respectively. */
+/* PSNOVA sitewide stylesheet. Page-specific rules live in page.css. */
 
 /* === FOUNDATION AND SITE LAYOUT === */
 
@@ -677,10 +676,13 @@ footer a {
     text-align: left;
 }
 
+/* Weapon rarity presentation is the canonical sitewide rarity treatment. */
 #main table .rarity-cell {
     background: var(--accent-soft);
     font-weight: 800;
     text-align: center;
+    white-space: nowrap;
+    font-variant-numeric: tabular-nums;
 }
 
 #main table .rarity-cell::before {
@@ -689,28 +691,54 @@ footer a {
     font-size: 0.9em;
 }
 
-#main table .rarity-cell[data-rarity-band="blue"],
-#main table .rarity-cell[data-rarity-band="blue"]::before {
+/* Armor/material source HTML already contains a visible star. Preserve source
+   text and suppress only the decorative pseudo-star to avoid ★★ duplication. */
+#main table .rarity-cell.rarity-source-star::before {
+    content: none;
+}
+
+#main table .rarity-cell[data-rarity="1"],
+#main table .rarity-cell[data-rarity="1"]::before,
+#main table .rarity-cell[data-rarity="2"],
+#main table .rarity-cell[data-rarity="2"]::before,
+#main table .rarity-cell[data-rarity="3"],
+#main table .rarity-cell[data-rarity="3"]::before {
     color: deepskyblue;
 }
 
-#main table .rarity-cell[data-rarity-band="green"],
-#main table .rarity-cell[data-rarity-band="green"]::before {
+#main table .rarity-cell[data-rarity="4"],
+#main table .rarity-cell[data-rarity="4"]::before,
+#main table .rarity-cell[data-rarity="5"],
+#main table .rarity-cell[data-rarity="5"]::before,
+#main table .rarity-cell[data-rarity="6"],
+#main table .rarity-cell[data-rarity="6"]::before {
     color: limegreen;
 }
 
-#main table .rarity-cell[data-rarity-band="red"],
-#main table .rarity-cell[data-rarity-band="red"]::before {
+#main table .rarity-cell[data-rarity="7"],
+#main table .rarity-cell[data-rarity="7"]::before,
+#main table .rarity-cell[data-rarity="8"],
+#main table .rarity-cell[data-rarity="8"]::before,
+#main table .rarity-cell[data-rarity="9"],
+#main table .rarity-cell[data-rarity="9"]::before {
     color: orangered;
 }
 
-#main table .rarity-cell[data-rarity-band="orange"],
-#main table .rarity-cell[data-rarity-band="orange"]::before {
+#main table .rarity-cell[data-rarity="10"],
+#main table .rarity-cell[data-rarity="10"]::before,
+#main table .rarity-cell[data-rarity="11"],
+#main table .rarity-cell[data-rarity="11"]::before,
+#main table .rarity-cell[data-rarity="12"],
+#main table .rarity-cell[data-rarity="12"]::before {
     color: orange;
 }
 
-#main table .rarity-cell[data-rarity-band="violet"],
-#main table .rarity-cell[data-rarity-band="violet"]::before {
+#main table .rarity-cell[data-rarity="13"],
+#main table .rarity-cell[data-rarity="13"]::before,
+#main table .rarity-cell[data-rarity="14"],
+#main table .rarity-cell[data-rarity="14"]::before,
+#main table .rarity-cell[data-rarity="15"],
+#main table .rarity-cell[data-rarity="15"]::before {
     color: violet;
 }
 
