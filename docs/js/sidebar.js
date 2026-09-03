@@ -98,6 +98,10 @@ function markCurrentSidebarLink(){
 
 function initSidebar() {
     side();
+
+    if (typeof initResponsiveContentsMenu === "function") {
+        initResponsiveContentsMenu();
+    }
 }
 
 if (document.readyState === "loading") {

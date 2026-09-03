@@ -88,6 +88,27 @@ class PublicScriptLoadingTests(unittest.TestCase):
             js,
         )
         self.assertIn(
+            'typeof initResponsiveContentsMenu === "function"',
+            js,
+        )
+        self.assertIn(
+            "initResponsiveContentsMenu();",
+            js,
+        )
+
+        init_start = js.index("function initSidebar()")
+        side_call = js.index("side();", init_start)
+        menu_bind = js.index(
+            "initResponsiveContentsMenu();",
+            init_start,
+        )
+
+        self.assertLess(
+            side_call,
+            menu_bind,
+            "Mobile menu must bind after #sub is generated.",
+        )
+        self.assertIn(
             '"DOMContentLoaded"',
             js,
         )
