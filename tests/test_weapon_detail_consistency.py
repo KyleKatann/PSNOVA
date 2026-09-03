@@ -33,7 +33,7 @@ class WeaponDetailConsistencyTests(unittest.TestCase):
                     html,
                 )
                 self.assertIn(
-                    '<div id="main" class="weapon-detail-page">',
+                    '<main id="main" class="weapon-detail-page">',
                     html,
                 )
                 self.assertIn(

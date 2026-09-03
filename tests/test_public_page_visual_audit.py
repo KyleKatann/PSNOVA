@@ -42,7 +42,10 @@ class PublicPageVisualAuditTests(unittest.TestCase):
                 self.assertTrue(path.exists())
 
     def test_every_primary_public_page_uses_the_shared_visual_shell(self):
-        main_pattern = re.compile(r'<div id="main"(?:\s+[^>]*)?>', re.IGNORECASE)
+        main_pattern = re.compile(
+            r'<main\b(?=[^>]*\bid="main")[^>]*>',
+            re.IGNORECASE,
+        )
         h2_pattern = re.compile(r"<h2\b[^>]*>.*?</h2>", re.IGNORECASE | re.DOTALL)
 
         for path in self.primary_public_pages():

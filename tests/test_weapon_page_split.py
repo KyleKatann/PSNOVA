@@ -42,7 +42,7 @@ class WeaponPageSplitTests(unittest.TestCase):
                 html = path.read_text(encoding="utf-8")
 
                 self.assertIn(
-                    '<div id="main" class="weapon-detail-page">',
+                    '<main id="main" class="weapon-detail-page">',
                     html,
                 )
                 self.assertIn(

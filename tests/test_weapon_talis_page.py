@@ -12,7 +12,7 @@ class TalisWeaponPageTests(unittest.TestCase):
         cls.html = PAGE.read_text(encoding="utf-8")
 
     def test_weapon_detail_structure(self):
-        self.assertIn('<div id="main" class="weapon-detail-page">', self.html)
+        self.assertIn('<main id="main" class="weapon-detail-page">', self.html)
         self.assertIn(
             '<img class="weapon-type-icon" src="/PSNOVA/img/weapon/thalys.png"',
             self.html,

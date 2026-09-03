@@ -33,6 +33,8 @@ Modernization work must preserve existing data and URLs while improving usabilit
 
 ## Correction-derived invariants
 
+- Every public page uses exactly one native `<main id="main">` landmark for its primary content. The sitewide skip link targets this element with `href="#main"`; do not regress it to a generic `div` or duplicate the main landmark.
+
 - Every public page begins with a keyboard-accessible skip link to `#main`. Keep the link visually hidden until focus so keyboard and assistive-technology users can bypass repeated site navigation.
 
 - Use `python tools/psnova_quality.py finish` as the normal post-fix quality gate. It runs `git diff --check` and the complete pytest suite after every fix, and automatically runs the full Playwright UI-health suite only on every fifth completed fix. Use `targeted` only for changes that directly affect browser UI behavior, and use `inventory` to list remaining static audit candidates.
