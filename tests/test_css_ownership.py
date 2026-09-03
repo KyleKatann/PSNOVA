@@ -64,16 +64,40 @@ def test_weapon_filter_grid_does_not_duplicate_single_type_selectors():
     assert page.count(".data-filter-grid { grid-template-columns: 1fr; }") == 1
 
 
-def test_shop_numeric_format_has_one_shared_owner():
+def test_shop_level_presentation_has_one_sitewide_owner():
     style = STYLE.read_text(encoding="utf-8")
     page = PAGE.read_text(encoding="utf-8")
 
     shared_shop = block(style, "#main table .shop-level-cell")
-    page_shop = block(page, ".shop-level-cell")
 
+    assert "background: #fffdf8;" in shared_shop
+    assert "text-align: center;" in shared_shop
+    assert "white-space: nowrap;" in shared_shop
     assert "font-variant-numeric: tabular-nums;" in shared_shop
-    assert "font-variant-numeric" not in page_shop
-    assert "white-space: nowrap;" in page_shop
+    assert ".shop-level-cell" not in page
+
+
+def test_coarse_pointer_shared_overflow_stays_in_sitewide_css():
+    style = STYLE.read_text(encoding="utf-8")
+    page = PAGE.read_text(encoding="utf-8")
+
+    shared_scroll = block(style, "#main .table-scroll")
+    assert "max-width: 100%;" in shared_scroll
+    assert "overflow-x: auto;" in shared_scroll
+    assert "overflow-y: hidden;" in shared_scroll
+    assert "-webkit-overflow-scrolling: touch;" in shared_scroll
+
+    coarse_marker = "@media screen and (min-width: 801px) and (pointer: coarse) {"
+    assert coarse_marker in style
+    shared_coarse = style.split(coarse_marker, 1)[1].split("#main .attribute-icon", 1)[0]
+    assert "#main .gigantes-table-scroll" in shared_coarse
+    assert "#main .gigantes-table" in shared_coarse
+    assert "min-width: 1100px;" in shared_coarse
+
+    assert "#main .gigantes-table-scroll" not in page
+    assert "#main .gigantes-table {" not in page
+    assert "#main.weapon-detail-page .table-scroll," not in page
+    assert "overflow-x: auto;" not in page.split(coarse_marker, 1)[1]
 
 
 def test_home_cells_inherit_shared_table_presentation():

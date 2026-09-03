@@ -157,7 +157,6 @@
 .data-toolbar output { flex: 0 0 auto; min-width: 88px; color: var(--text-muted); font-size: 13px; text-align: right; }
 .data-filter-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; margin-top: 12px; }
 .data-filter-field select { width: 100%; }
-.shop-level-cell { white-space: nowrap; }
 
 /* Static detail tables are ordinary semantic tables, not disclosure widgets. */
 #main .weapon-data-table tbody > tr > :last-child {
@@ -205,20 +204,11 @@ tr[hidden] { display: none !important; }
     .data-toolbar output { min-width: 0; text-align: left; }
 }
 
-/* === COARSE-POINTER DESKTOP-SITE FALLBACKS === */
-
 /* A mobile browser in "desktop site" mode can expose a desktop-sized CSS
- * viewport while the primary pointer remains touch/coarse. Keep wide tables
- * inside their existing scroll wrapper instead of widening the page. */
+ * viewport while the primary pointer remains touch/coarse. Common wrapper
+ * overflow and Gigantes fallbacks live in style.css; only weapon-table sizing
+ * remains page-specific here. */
 @media screen and (min-width: 801px) and (pointer: coarse) {
-    #main.weapon-detail-page .table-scroll,
-    #main .gigantes-table-scroll {
-        max-width: 100%;
-        overflow-x: auto;
-        overflow-y: hidden;
-        -webkit-overflow-scrolling: touch;
-    }
-
     #main.weapon-detail-page .table-scroll > .weapon-data-table {
         width: max-content;
         min-width: 100%;
@@ -229,12 +219,6 @@ tr[hidden] { display: none !important; }
     #main.weapon-detail-page .table-scroll > .weapon-data-table th,
     #main.weapon-detail-page .table-scroll > .weapon-data-table td {
         white-space: nowrap;
-    }
-
-    #main .gigantes-table {
-        width: 100%;
-        max-width: none;
-        min-width: 1100px;
     }
 }
 

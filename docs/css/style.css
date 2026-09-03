@@ -347,7 +347,6 @@ nav#menubar ul li a span {
     line-height: 1.45;
     text-decoration: none;
 }
-
 #sub .submenu a::after {
     content: "›";
     position: absolute;
@@ -766,6 +765,7 @@ footer a {
 #main table .shop-level-cell {
     background: #fffdf8;
     text-align: center;
+    white-space: nowrap;
     font-variant-numeric: tabular-nums;
 }
 
@@ -835,6 +835,21 @@ footer a {
 
 @media screen and (max-width: 800px) {
     #main .gigantes-table-scroll {
+        overflow-x: auto;
+        overflow-y: hidden;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    #main .gigantes-table {
+        width: 100%;
+        max-width: none;
+        min-width: 1100px;
+    }
+}
+
+@media screen and (min-width: 801px) and (pointer: coarse) {
+    #main .gigantes-table-scroll {
+        max-width: 100%;
         overflow-x: auto;
         overflow-y: hidden;
         -webkit-overflow-scrolling: touch;
@@ -1297,7 +1312,6 @@ body.is-fixed-pagetop .nav-fix-pos-pagetop a {
     color: var(--accent-strong);
     background: var(--accent-soft);
 }
-
 .site-search-empty {
     margin: 0;
     padding: 11px 12px;
