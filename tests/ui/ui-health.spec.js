@@ -4,7 +4,6 @@ const { test, expect } = require('@playwright/test');
 
 const ROOT = path.resolve(__dirname, '../..');
 const DOCS = path.join(ROOT, 'docs');
-const LOCAL_ORIGIN = 'http://127.0.0.1:4173';
 const CRITICAL_RESOURCE_TYPES = new Set(['document', 'stylesheet', 'script', 'image']);
 
 function publicRoutes() {
@@ -22,12 +21,44 @@ function publicRoutes() {
   return [...new Set(routes)].sort();
 }
 
-async function routePublishedAssetsToLocalServer(page) {
+function localFileForPublishedUrl(url) {
+  const published = new URL(url);
+  const prefix = '/PSNOVA/';
+
+  if (!published.pathname.startsWith(prefix)) return null;
+
+  let relativePath = decodeURIComponent(published.pathname.slice(prefix.length));
+  if (!relativePath) relativePath = 'index.html';
+
+  const localPath = path.resolve(DOCS, relativePath);
+  const relativeToDocs = path.relative(DOCS, localPath);
+
+  if (
+    relativeToDocs.startsWith('..') ||
+    path.isAbsolute(relativeToDocs) ||
+    !fs.existsSync(localPath) ||
+    !fs.statSync(localPath).isFile()
+  ) {
+    return null;
+  }
+
+  return localPath;
+}
+
+async function routePublishedAssetsToLocalFiles(page) {
   await page.route('https://kylekatann.github.io/PSNOVA/**', async (route) => {
-    const published = new URL(route.request().url());
-    const localUrl = `${LOCAL_ORIGIN}${published.pathname}${published.search}`;
-    const response = await route.fetch({ url: localUrl });
-    await route.fulfill({ response });
+    const localPath = localFileForPublishedUrl(route.request().url());
+
+    if (!localPath) {
+      await route.fulfill({
+        status: 404,
+        contentType: 'text/plain',
+        body: 'Not Found',
+      });
+      return;
+    }
+
+    await route.fulfill({ path: localPath });
   });
 }
 
@@ -53,7 +84,7 @@ for (const routePath of publicRoutes()) {
     const browserErrors = [];
     const failedResources = [];
 
-    await routePublishedAssetsToLocalServer(page);
+    await routePublishedAssetsToLocalFiles(page);
 
     page.on('pageerror', (error) => {
       browserErrors.push(`pageerror: ${error.message}`);

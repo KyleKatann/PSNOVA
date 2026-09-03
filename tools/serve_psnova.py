@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import argparse
+import socket
 from functools import partial
 from http.server import SimpleHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
@@ -11,7 +12,15 @@ ROOT = Path(__file__).resolve().parents[1]
 DOCS = ROOT / "docs"
 
 
+
+class PSNOVAThreadingHTTPServer(ThreadingHTTPServer):
+    request_queue_size = socket.SOMAXCONN
+    allow_reuse_address = True
+    daemon_threads = True
+
+
 class PSNOVARequestHandler(SimpleHTTPRequestHandler):
+    protocol_version = "HTTP/1.1"
     def translate_path(self, path: str) -> str:
         request_path = urlsplit(path).path
         if request_path == "/PSNOVA":
@@ -30,7 +39,7 @@ def main() -> None:
     args = parser.parse_args()
 
     handler = partial(PSNOVARequestHandler, directory=str(DOCS))
-    server = ThreadingHTTPServer(("127.0.0.1", args.port), handler)
+    server = PSNOVAThreadingHTTPServer(("127.0.0.1", args.port), handler)
     server.serve_forever()
 
 

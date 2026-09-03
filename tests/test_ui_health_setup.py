@@ -60,6 +60,23 @@ class UiHealthSetupTests(unittest.TestCase):
         self.assertIn('request_path[len("/PSNOVA"):]', server)
         self.assertIn('ROOT / "docs"', server)
 
+    def test_local_ui_stack_supports_full_parallel_execution(self):
+        config = CONFIG.read_text(encoding="utf-8")
+        server = SERVER.read_text(encoding="utf-8")
+        ui_test = UI_TEST.read_text(encoding="utf-8")
+
+        self.assertIn("fullyParallel: true", config)
+        self.assertIn("workers: '100%'", config)
+
+        self.assertIn("request_queue_size = socket.SOMAXCONN", server)
+        self.assertIn("allow_reuse_address = True", server)
+        self.assertIn("daemon_threads = True", server)
+        self.assertIn('protocol_version = "HTTP/1.1"', server)
+
+        self.assertIn("route.fulfill({ path: localPath })", ui_test)
+        self.assertNotIn("route.fetch({ url: localUrl })", ui_test)
+
+
     def test_actions_remain_manual_only_and_run_ui_health(self):
         workflow = WORKFLOW.read_text(encoding="utf-8")
 

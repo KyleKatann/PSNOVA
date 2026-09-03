@@ -3,8 +3,8 @@ const { defineConfig } = require('@playwright/test');
 module.exports = defineConfig({
   testDir: './tests/ui',
   timeout: 30_000,
-  fullyParallel: false,
-  workers: 1,
+  fullyParallel: true,
+  workers: '100%',
   reporter: [
     ['list'],
     ['html', { open: 'never' }],
