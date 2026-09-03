@@ -33,6 +33,8 @@ Modernization work must preserve existing data and URLs while improving usabilit
 
 ## Correction-derived invariants
 
+- Use `python tools/psnova_quality.py finish` as the normal post-fix quality gate. It runs `git diff --check` and the complete pytest suite after every fix, and automatically runs the full Playwright UI-health suite only on every fifth completed fix. Use `targeted` only for changes that directly affect browser UI behavior, and use `inventory` to list remaining static audit candidates.
+
 - Active repository text files use LF line endings on every platform via `.gitattributes` (`* text=auto eol=lf`). Historical material under `reference/` and `docs/pages/分類中/` is excluded from newline normalization and must remain byte-preserved.
 
 - Public HTML uses the modern HTML shell: do not restore obsolete `X-UA-Compatible` metadata or redundant `type="text/javascript"` attributes on classic scripts.
