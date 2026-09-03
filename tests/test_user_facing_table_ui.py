@@ -34,6 +34,12 @@ def test_public_ui_uses_clear_japanese_shop_level_label():
             assert label not in text, f"{path.relative_to(ROOT)} contains {label!r}"
 
 
+def test_consumable_material_quantities_use_multiplication_sign():
+    html = (ROOT / "docs/pages/item.html").read_text(encoding="utf-8")
+    assert "グランピース×1" in html
+    assert "グランピースx" not in html
+
+
 def test_automatic_page_section_navigation_stays_removed():
     loader = (ROOT / "docs/js/menubar.js").read_text(encoding="utf-8")
     entry_css = (ROOT / "docs/css/style.css").read_text(encoding="utf-8")
