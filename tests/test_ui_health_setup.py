@@ -27,6 +27,9 @@ class UiHealthSetupTests(unittest.TestCase):
         self.assertIn("trace: 'retain-on-failure'", config)
         self.assertIn("desktop-chromium", config)
         self.assertIn("mobile-chromium", config)
+        self.assertIn("desktop-site-touch", config)
+        self.assertIn("viewport: { width: 980, height: 844 }", config)
+        self.assertIn("hasTouch: true", config)
         self.assertNotIn("toHaveScreenshot", test)
 
     def test_ui_health_covers_public_routes_and_obvious_rendering_failures(self):
@@ -43,6 +46,9 @@ class UiHealthSetupTests(unittest.TestCase):
             "document.styleSheets",
             "#main and #sub should not overlap on desktop",
             "aria-expanded",
+            "window.matchMedia('(pointer: coarse)').matches",
+            "weapon header must remain above the first data row",
+            "gigantes-table-scroll",
         ):
             with self.subTest(token=token):
                 self.assertIn(token, test)

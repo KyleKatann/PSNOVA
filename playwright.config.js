@@ -32,6 +32,15 @@ module.exports = defineConfig({
         isMobile: true,
       },
     },
+    {
+      name: 'desktop-site-touch',
+      use: {
+        browserName: 'chromium',
+        viewport: { width: 980, height: 844 },
+        hasTouch: true,
+        isMobile: true,
+      },
+    },
   ],
   webServer: {
     command: 'python tools/serve_psnova.py --port 4173',

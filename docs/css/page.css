@@ -182,7 +182,10 @@
 
 tr[hidden] { display: none !important; }
 
-@media screen and (min-width: 801px) {
+/* Sticky weapon controls are desktop-pointer affordances. A smartphone using
+ * "desktop site" still has a coarse pointer, so it must keep headers in normal
+ * table flow instead of applying the large sticky top offset. */
+@media screen and (min-width: 801px) and (hover: hover) and (pointer: fine) {
     .data-toolbar { position: sticky; top: 8px; z-index: 30; box-shadow: none; }
     #main .data-toolbar ~ .table-scroll > .weapon-data-table thead th,
     #main .data-toolbar ~ .weapon-data-table thead th {
@@ -216,6 +219,39 @@ tr[hidden] { display: none !important; }
     .weapon-page-nav a:not(.weapon-page-nav-index) { grid-row: 2; }
     .data-toolbar-row { align-items: stretch; flex-direction: column; }
     .data-toolbar output { min-width: 0; text-align: left; }
+}
+
+/* === COARSE-POINTER DESKTOP-SITE FALLBACKS === */
+
+/* A mobile browser in "desktop site" mode can expose a desktop-sized CSS
+ * viewport while the primary pointer remains touch/coarse. Keep wide tables
+ * inside their existing scroll wrapper instead of widening the page. */
+@media screen and (min-width: 801px) and (pointer: coarse) {
+    #main.weapon-detail-page .table-scroll,
+    #main .gigantes-table-scroll {
+        max-width: 100%;
+        overflow-x: auto;
+        overflow-y: hidden;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    #main.weapon-detail-page .table-scroll > .weapon-data-table {
+        width: max-content;
+        min-width: 100%;
+        max-width: none;
+        white-space: nowrap;
+    }
+
+    #main.weapon-detail-page .table-scroll > .weapon-data-table th,
+    #main.weapon-detail-page .table-scroll > .weapon-data-table td {
+        white-space: nowrap;
+    }
+
+    #main .gigantes-table {
+        width: 100%;
+        max-width: none;
+        min-width: 1100px;
+    }
 }
 
 /* Weapon catalog cards are an icon-led selector. Native PNG icons must remain

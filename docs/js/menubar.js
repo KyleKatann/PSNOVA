@@ -15,7 +15,11 @@
 })();
 
 (function loadPageTools(){
-    if (!/\/pages\/weapon(?:\.html|\/[^/]+\.html)$/.test(window.location.pathname)) {
+    var path = window.location.pathname;
+    var isWeaponPage = /\/pages\/weapon(?:\.html|\/[^/]+\.html)$/.test(path);
+    var isGigantesPage = /\/pages\/gigantes\.html$/.test(path);
+
+    if (!isWeaponPage && !isGigantesPage) {
         return;
     }
 
@@ -25,6 +29,10 @@
         stylesheet.href = "/PSNOVA/css/page.css";
         stylesheet.setAttribute("data-psnova-page-style", "true");
         document.head.appendChild(stylesheet);
+    }
+
+    if (!isWeaponPage) {
+        return;
     }
 
     if (!document.querySelector('script[data-psnova-weapon-tools="true"]')) {

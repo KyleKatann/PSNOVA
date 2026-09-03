@@ -1,43 +1,31 @@
-import re
 import unittest
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 CSS = ROOT / "docs" / "css" / "page.css"
 JS = ROOT / "docs" / "js" / "weapon-tools.js"
+MENUBAR = ROOT / "docs" / "js" / "menubar.js"
 
 
 class StickyDataUiTests(unittest.TestCase):
-    def test_desktop_toolbar_stays_visible_after_scroll(self):
-        css = CSS.read_text(
-            encoding="utf-8"
-        )
-
-        match = re.search(
-            r"@media screen and \(min-width: 801px\) \{"
-            r"(?P<body>.*?)"
-            r"\n\}",
-            css,
-            re.S,
-        )
-
-        self.assertIsNotNone(match)
-
-        body = match.group("body")
+    def test_desktop_toolbar_stays_visible_after_scroll_on_fine_pointer(self):
+        css = CSS.read_text(encoding="utf-8")
 
         self.assertIn(
+            "@media screen and (min-width: 801px) and (hover: hover) and (pointer: fine) {",
+            css,
+        )
+        self.assertIn(
             ".data-toolbar { position: sticky; top: 8px; z-index: 30; box-shadow: none; }",
-            body,
+            css,
         )
         self.assertNotIn(
             "#main.weapon-detail-page .data-toolbar",
             css,
         )
 
-    def test_detail_table_header_remains_vertically_sticky(self):
-        css = CSS.read_text(
-            encoding="utf-8"
-        )
+    def test_detail_table_header_remains_vertically_sticky_on_fine_pointer(self):
+        css = CSS.read_text(encoding="utf-8")
 
         self.assertIn(
             "#main .data-toolbar ~ "
@@ -45,7 +33,6 @@ class StickyDataUiTests(unittest.TestCase):
             ".weapon-data-table thead th",
             css,
         )
-
         self.assertIn(
             "position: sticky;",
             css,
@@ -59,10 +46,33 @@ class StickyDataUiTests(unittest.TestCase):
             css,
         )
 
-    def test_table_header_offset_tracks_rendered_toolbar_height(self):
-        js = JS.read_text(
-            encoding="utf-8"
+    def test_touch_desktop_site_keeps_tables_inside_scroll_wrappers(self):
+        css = CSS.read_text(encoding="utf-8")
+        menubar = MENUBAR.read_text(encoding="utf-8")
+
+        self.assertIn(
+            "@media screen and (min-width: 801px) and (pointer: coarse) {",
+            css,
         )
+        self.assertIn(
+            "#main.weapon-detail-page .table-scroll > .weapon-data-table",
+            css,
+        )
+        self.assertIn(
+            "#main .gigantes-table-scroll",
+            css,
+        )
+        self.assertIn(
+            "min-width: 1100px;",
+            css,
+        )
+        self.assertIn(
+            'var isGigantesPage = /\\/pages\\/gigantes\\.html$/.test(path);',
+            menubar,
+        )
+
+    def test_table_header_offset_tracks_rendered_toolbar_height(self):
+        js = JS.read_text(encoding="utf-8")
 
         self.assertIn(
             "toolbar.getBoundingClientRect().height",
@@ -82,32 +92,26 @@ class StickyDataUiTests(unittest.TestCase):
         )
 
     def test_legacy_details_sticky_selector_is_removed(self):
-        css = CSS.read_text(
-            encoding="utf-8"
-        )
+        css = CSS.read_text(encoding="utf-8")
 
         self.assertNotIn(
             "#main .data-toolbar ~ "
             "details table thead th",
             css,
         )
-
         self.assertNotIn(
             "weapon-child-pending",
             css,
         )
 
     def test_mobile_layout_rules_remain(self):
-        css = CSS.read_text(
-            encoding="utf-8"
-        )
+        css = CSS.read_text(encoding="utf-8")
 
         self.assertIn(
             "@media screen and "
             "(max-width: 700px)",
             css,
         )
-
         self.assertIn(
             "@media screen and "
             "(max-width: 560px)",

@@ -135,12 +135,15 @@ for (const routePath of publicRoutes()) {
       expect(['/PSNOVA/css/style.css', '/PSNOVA/css/page.css']).toContain(cssPath);
     }
 
-    const needsPageCss = routePath === '/PSNOVA/index.html' || /\/pages\/weapon(?:\.html|\/)/.test(routePath);
+    const needsPageCss =
+      routePath === '/PSNOVA/index.html' ||
+      routePath === '/PSNOVA/pages/gigantes.html' ||
+      /\/pages\/weapon(?:\.html|\/)/.test(routePath);
     if (needsPageCss) {
       expect(cssPaths).toContain('/PSNOVA/css/page.css');
     }
 
-    if (testInfo.project.name === 'desktop-chromium') {
+    if (testInfo.project.name !== 'mobile-chromium') {
       const overlaps = await page.evaluate(() => {
         const main = document.querySelector('#main')?.getBoundingClientRect();
         const sub = document.querySelector('#sub')?.getBoundingClientRect();
@@ -164,6 +167,42 @@ for (const routePath of publicRoutes()) {
       await page.keyboard.press('Escape');
       await expect(menuButton).toHaveAttribute('aria-expanded', 'false');
       await expect(sidebar).not.toHaveClass(/is-open/);
+    }
+
+    if (testInfo.project.name === 'desktop-site-touch') {
+      const pointerMode = await page.evaluate(() => ({
+        coarse: window.matchMedia('(pointer: coarse)').matches,
+        fine: window.matchMedia('(pointer: fine)').matches,
+      }));
+      expect(pointerMode.coarse, 'desktop-site touch project must emulate a coarse pointer').toBe(true);
+      expect(pointerMode.fine, 'desktop-site touch project must not emulate a fine primary pointer').toBe(false);
+
+      if (/\/pages\/weapon\/[^/]+\.html$/.test(routePath)) {
+        const header = page.locator('.weapon-data-table thead th').first();
+        const firstRow = page.locator('.weapon-data-table tbody tr:not([hidden])').first();
+        const headerBox = await header.boundingBox();
+        const rowBox = await firstRow.boundingBox();
+        const headerPosition = await header.evaluate((cell) => getComputedStyle(cell).position);
+
+        expect(headerBox, 'weapon header should render').not.toBeNull();
+        expect(rowBox, 'first weapon row should render').not.toBeNull();
+        expect(headerPosition, 'touch desktop-site header must stay in normal flow').not.toBe('sticky');
+        expect(
+          headerBox.y + headerBox.height,
+          'weapon header must remain above the first data row'
+        ).toBeLessThanOrEqual(rowBox.y + 1);
+      }
+
+      if (routePath === '/PSNOVA/pages/gigantes.html') {
+        const tableScroll = await page.locator('.gigantes-table-scroll').evaluate((wrapper) => ({
+          overflowX: getComputedStyle(wrapper).overflowX,
+          clientWidth: wrapper.clientWidth,
+          scrollWidth: wrapper.scrollWidth,
+        }));
+
+        expect(tableScroll.overflowX).toBe('auto');
+        expect(tableScroll.scrollWidth).toBeGreaterThan(tableScroll.clientWidth);
+      }
     }
 
     expect(failedResources, 'critical local resources failed').toEqual([]);
