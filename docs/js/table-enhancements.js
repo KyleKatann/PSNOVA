@@ -61,6 +61,7 @@
 
         var wrapper = document.createElement("div");
         wrapper.className = "table-scroll";
+        wrapper.setAttribute("tabindex", "0");
         wrapper.setAttribute("role", "region");
         wrapper.setAttribute("aria-label", "横スクロール可能なデータ表");
         table.parentNode.insertBefore(wrapper, table);
