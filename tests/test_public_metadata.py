@@ -95,6 +95,8 @@ class PublicMetadataTests(unittest.TestCase):
                 "og:description",
                 "og:type",
                 "og:url",
+                "og:image",
+                "og:image:alt",
                 "og:site_name",
             )
 
@@ -131,6 +133,40 @@ class PublicMetadataTests(unittest.TestCase):
             og_url = og_value("og:url")
             og_site_name = og_value("og:site_name")
             og_type = og_value("og:type")
+            og_image = og_value("og:image")
+            og_image_alt = og_value("og:image:alt")
+
+            if og_image:
+                image_parts = urlsplit(og_image)
+
+                if image_parts.scheme != "https":
+                    violations.append(
+                        f"{rel}: og:image must use HTTPS ({og_image})"
+                    )
+
+                if image_parts.netloc != SITE_HOST:
+                    violations.append(
+                        f"{rel}: unexpected og:image host ({og_image})"
+                    )
+
+                image_prefix = SITE_PREFIX + "img/"
+                if not image_parts.path.startswith(image_prefix):
+                    violations.append(
+                        f"{rel}: og:image outside site image directory ({og_image})"
+                    )
+                else:
+                    image_relative = image_parts.path[len(SITE_PREFIX):]
+                    image_path = DOCS / image_relative
+
+                    if not image_path.is_file():
+                        violations.append(
+                            f"{rel}: og:image file does not exist ({og_image})"
+                        )
+
+            if og_image is not None and not og_image_alt:
+                violations.append(
+                    f"{rel}: og:image requires nonempty og:image:alt"
+                )
 
             if og_title is not None and parser.title != og_title:
                 violations.append(
