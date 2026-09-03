@@ -19,6 +19,21 @@ def test_weapon_ui_uses_clear_japanese_shop_level_label():
         assert forbidden not in script
 
 
+def test_public_ui_uses_clear_japanese_shop_level_label():
+    docs = ROOT / "docs"
+    forbidden = ("Shop Lv", "ShopLv", "shopLv", "ショップLv")
+
+    for path in docs.rglob("*"):
+        if not path.is_file() or path.suffix not in {".html", ".js"}:
+            continue
+        if "分類中" in path.parts:
+            continue
+
+        text = path.read_text(encoding="utf-8")
+        for label in forbidden:
+            assert label not in text, f"{path.relative_to(ROOT)} contains {label!r}"
+
+
 def test_automatic_page_section_navigation_stays_removed():
     loader = (ROOT / "docs/js/menubar.js").read_text(encoding="utf-8")
     entry_css = (ROOT / "docs/css/style.css").read_text(encoding="utf-8")
