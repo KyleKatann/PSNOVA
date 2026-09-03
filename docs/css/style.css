@@ -83,6 +83,24 @@ select:focus-visible {
     background: #dfe3ff;
 }
 
+.skip-link {
+    position: fixed;
+    top: 8px;
+    left: 8px;
+    z-index: 1000;
+    padding: 9px 14px;
+    color: var(--nav-text);
+    background: var(--nav-bg);
+    border-radius: var(--radius-sm);
+    font-weight: 700;
+    text-decoration: none;
+    transform: translateY(-200%);
+}
+
+.skip-link:focus {
+    transform: translateY(0);
+}
+
 header {
     display: flex;
     align-items: center;
@@ -1000,7 +1018,10 @@ body.is-fixed-pagetop .nav-fix-pos-pagetop a {
         z-index: 90;
         width: 44px;
         height: 44px;
+        padding: 0;
         cursor: pointer;
+        appearance: none;
+        font: inherit;
         border: 1px solid var(--border-strong);
         border-radius: var(--radius-sm);
         background: var(--surface);

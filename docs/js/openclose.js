@@ -51,21 +51,12 @@ function open_close(buttonId, menuId) {
     button.dataset.psnovaMenuBound = "true";
     button.hidden = false;
     button.removeAttribute("aria-hidden");
-    button.setAttribute("role", "button");
-    button.setAttribute("tabindex", "0");
     button.setAttribute("aria-controls", menu.id);
     button.setAttribute("aria-label", isContentsDrawer ? "攻略メニューを開閉" : "メニューを開閉");
     setOpen(false);
 
     button.addEventListener("click", function () {
         setOpen(button.getAttribute("aria-expanded") !== "true");
-    });
-
-    button.addEventListener("keydown", function (event) {
-        if (event.key === "Enter" || event.key === " ") {
-            event.preventDefault();
-            button.click();
-        }
     });
 
     if (backdrop) {
