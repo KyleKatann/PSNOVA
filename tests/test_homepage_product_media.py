@@ -37,7 +37,8 @@ class HomepageProductMediaTests(unittest.TestCase):
         for label, source in LOGOS.items():
             with self.subTest(label=label):
                 row = re.search(
-                    rf'<tr>\s*<th>{re.escape(label)}</th>.*?</tr>',
+                    rf'<tr>\s*<th\s+scope=["\']row["\']>'
+                    rf'{re.escape(label)}</th>.*?</tr>',
                     html,
                     flags=re.DOTALL,
                 )
@@ -49,7 +50,8 @@ class HomepageProductMediaTests(unittest.TestCase):
     def test_sega_credit_stays_inside_official_image_cell(self):
         html = INDEX.read_text(encoding="utf-8")
         row = re.search(
-            r'<tr>\s*<th>PSO2 公式サイト</th>.*?</tr>',
+            r'<tr>\s*<th\s+scope=["\']row["\']>'
+            r'PSO2 公式サイト</th>.*?</tr>',
             html,
             flags=re.DOTALL,
         )
