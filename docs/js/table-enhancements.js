@@ -57,15 +57,19 @@
     }
 
     function ensureScrollableTable(table) {
-        if (!table || table.closest(".table-scroll")) return;
+        if (!table) return;
 
-        var wrapper = document.createElement("div");
-        wrapper.className = "table-scroll";
+        var wrapper = table.closest(".table-scroll");
+        if (!wrapper) {
+            wrapper = document.createElement("div");
+            wrapper.className = "table-scroll";
+            table.parentNode.insertBefore(wrapper, table);
+            wrapper.appendChild(table);
+        }
+
         wrapper.setAttribute("tabindex", "0");
         wrapper.setAttribute("role", "region");
         wrapper.setAttribute("aria-label", "横スクロール可能なデータ表");
-        table.parentNode.insertBefore(wrapper, table);
-        wrapper.appendChild(table);
     }
 
     function initTableEnhancements() {

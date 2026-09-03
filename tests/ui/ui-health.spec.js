@@ -203,6 +203,9 @@ for (const routePath of publicRoutes()) {
         const tableScrollMetrics = await tableScrolls.evaluateAll((wrappers) =>
           wrappers.map((wrapper) => ({
             tableCount: wrapper.querySelectorAll(':scope > .gigantes-table').length,
+            tabIndex: wrapper.tabIndex,
+            role: wrapper.getAttribute('role'),
+            ariaLabel: wrapper.getAttribute('aria-label'),
             overflowX: getComputedStyle(wrapper).overflowX,
             clientWidth: wrapper.clientWidth,
             scrollWidth: wrapper.scrollWidth,
@@ -211,6 +214,9 @@ for (const routePath of publicRoutes()) {
 
         for (const tableScroll of tableScrollMetrics) {
           expect(tableScroll.tableCount).toBe(1);
+          expect(tableScroll.tabIndex).toBe(0);
+          expect(tableScroll.role).toBe('region');
+          expect(tableScroll.ariaLabel).toBeTruthy();
           expect(tableScroll.overflowX).toBe('auto');
           expect(tableScroll.scrollWidth).toBeGreaterThan(tableScroll.clientWidth);
         }
