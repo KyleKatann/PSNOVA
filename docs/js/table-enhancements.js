@@ -56,6 +56,52 @@
         });
     }
 
+    var tableRegionLabelCounter = 0;
+
+    function ensureLabelSourceId(element) {
+        if (element.id) return element.id;
+
+        var id;
+        do {
+            tableRegionLabelCounter += 1;
+            id = "psnova-table-region-label-" + tableRegionLabelCounter;
+        } while (document.getElementById(id));
+
+        element.id = id;
+        return id;
+    }
+
+    function findTableRegionLabelSource(table, wrapper) {
+        if (table.caption && table.caption.textContent.trim()) {
+            return table.caption;
+        }
+
+        var details = table.closest("details");
+        if (details) {
+            var summary = details.querySelector(":scope > summary");
+            if (summary && summary.textContent.trim()) {
+                return summary;
+            }
+        }
+
+        var scope = table.closest("section") || document.getElementById("main");
+        if (!scope) return null;
+
+        var headings = scope.querySelectorAll("h2, h3, h4, h5, h6");
+        var candidate = null;
+
+        Array.prototype.forEach.call(headings, function (heading) {
+            if (
+                heading.textContent.trim() &&
+                (heading.compareDocumentPosition(wrapper) & Node.DOCUMENT_POSITION_FOLLOWING)
+            ) {
+                candidate = heading;
+            }
+        });
+
+        return candidate;
+    }
+
     function ensureScrollableTable(table) {
         if (!table) return;
 
@@ -69,7 +115,15 @@
 
         wrapper.setAttribute("tabindex", "0");
         wrapper.setAttribute("role", "region");
-        wrapper.setAttribute("aria-label", "横スクロール可能なデータ表");
+
+        var labelSource = findTableRegionLabelSource(table, wrapper);
+        if (labelSource) {
+            wrapper.setAttribute("aria-labelledby", ensureLabelSourceId(labelSource));
+            wrapper.removeAttribute("aria-label");
+        } else {
+            wrapper.removeAttribute("aria-labelledby");
+            wrapper.setAttribute("aria-label", "データ表");
+        }
     }
 
     function initTableEnhancements() {

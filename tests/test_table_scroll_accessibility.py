@@ -19,7 +19,7 @@ class TableScrollAccessibilityTests(unittest.TestCase):
             js,
         )
         self.assertIn(
-            'wrapper.setAttribute("aria-label", "横スクロール可能なデータ表");',
+            'wrapper.setAttribute("aria-labelledby", ensureLabelSourceId(labelSource));',
             js,
         )
 

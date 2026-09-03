@@ -143,6 +143,32 @@ for (const routePath of publicRoutes()) {
       expect(cssPaths).toContain('/PSNOVA/css/page.css');
     }
 
+    const tableRegionNames = await page.locator('#main .table-scroll[role="region"]').evaluateAll((regions) =>
+      regions.map((region) => {
+        const labelledBy = (region.getAttribute('aria-labelledby') || '').trim();
+        if (labelledBy) {
+          return labelledBy
+            .split(/\s+/)
+            .map((id) => document.getElementById(id)?.textContent?.trim() || '')
+            .filter(Boolean)
+            .join(' ')
+            .trim();
+        }
+        return (region.getAttribute('aria-label') || '').trim();
+      })
+    );
+
+    for (const regionName of tableRegionNames) {
+      expect(regionName, 'table scroll region must have an accessible name').not.toBe('');
+    }
+
+    if (tableRegionNames.length > 1) {
+      expect(
+        new Set(tableRegionNames).size,
+        `duplicate table region names: ${tableRegionNames.join(' | ')}`
+      ).toBe(tableRegionNames.length);
+    }
+
     if (testInfo.project.name !== 'mobile-chromium') {
       const overlaps = await page.evaluate(() => {
         const main = document.querySelector('#main')?.getBoundingClientRect();
@@ -205,7 +231,6 @@ for (const routePath of publicRoutes()) {
             tableCount: wrapper.querySelectorAll(':scope > .gigantes-table').length,
             tabIndex: wrapper.tabIndex,
             role: wrapper.getAttribute('role'),
-            ariaLabel: wrapper.getAttribute('aria-label'),
             overflowX: getComputedStyle(wrapper).overflowX,
             clientWidth: wrapper.clientWidth,
             scrollWidth: wrapper.scrollWidth,
@@ -216,7 +241,6 @@ for (const routePath of publicRoutes()) {
           expect(tableScroll.tableCount).toBe(1);
           expect(tableScroll.tabIndex).toBe(0);
           expect(tableScroll.role).toBe('region');
-          expect(tableScroll.ariaLabel).toBeTruthy();
           expect(tableScroll.overflowX).toBe('auto');
           expect(tableScroll.scrollWidth).toBeGreaterThan(tableScroll.clientWidth);
         }
