@@ -163,7 +163,7 @@
     text-align: left;
 }
 
-tr[hidden] { display: none !important; }
+#main .weapon-data-table tr[hidden] { display: none !important; }
 
 /* Sticky weapon controls are desktop-pointer affordances. A smartphone using
  * "desktop site" still has a coarse pointer, so it must keep headers in normal

@@ -36,6 +36,14 @@ class WeaponFilterTests(unittest.TestCase):
         self.assertIn("grid-template-columns: repeat(3, minmax(0, 1fr));", css)
         self.assertIn("grid-template-columns: 1fr;", css)
 
+    def test_hidden_row_rule_is_scoped_to_weapon_tables(self):
+        css = PAGE_CSS.read_text(encoding="utf-8")
+        self.assertIn(
+            "#main .weapon-data-table tr[hidden] { display: none !important; }",
+            css,
+        )
+        self.assertNotIn("\ntr[hidden] {", css)
+
 
 if __name__ == "__main__":
     unittest.main()
