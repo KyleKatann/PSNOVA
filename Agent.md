@@ -33,6 +33,8 @@ Modernization work must preserve existing data and URLs while improving usabilit
 
 ## Correction-derived invariants
 
+- Public HTML uses the modern HTML shell: do not restore obsolete `X-UA-Compatible` metadata or redundant `type="text/javascript"` attributes on classic scripts.
+
 - Local Playwright UI health tests are designed for full logical-CPU parallelism: use `fullyParallel: true` and `workers: '100%'`. The local test server must use a maximum OS socket backlog, threaded request handling, and HTTP/1.1 persistent connections. Published `kylekatann.github.io/PSNOVA/` assets must be fulfilled directly from repository files rather than re-fetched through the localhost server. Do not reduce worker count as a workaround for connection-refusal failures; fix the shared test infrastructure instead.
 
 These are specifications established by user review and must be treated as regression constraints:

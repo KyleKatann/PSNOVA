@@ -5,7 +5,6 @@
     <meta name="google-site-verification" content="NsNsncNsiSgjh28pUzZjnNIob0hAFjr0hUXcqb5yTVk" /> <!--googleに発見してもらうためのコード-->
 
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>PSNOVA攻略サイト</title>
     <meta name="description" content="PSNOVA(ファンタシースター ノヴァ)の武器、防具、素材、エネミー、特殊能力などを整理した攻略データサイトです。">
     <link rel="canonical" href="https://kylekatann.github.io/PSNOVA/">
@@ -18,10 +17,10 @@
     <link rel="stylesheet" href="/PSNOVA/css/style.css">
     <link rel="stylesheet" href="/PSNOVA/css/page.css">
 
-    <script type="text/javascript" src="/PSNOVA/js/openclose.js"></script>
-    <script type="text/javascript" src="/PSNOVA/js/fixmenu_pagetop.js"></script>
-    <script type="text/javascript" src="/PSNOVA/js/menubar.js"></script>
-    <script type="text/javascript" src="/PSNOVA/js/sidebar.js"></script>
+    <script src="/PSNOVA/js/openclose.js"></script>
+    <script src="/PSNOVA/js/fixmenu_pagetop.js"></script>
+    <script src="/PSNOVA/js/menubar.js"></script>
+    <script src="/PSNOVA/js/sidebar.js"></script>
 </head>
 
 <body class="homepage">
@@ -38,7 +37,7 @@
         <div id="contents">
 
             <!-- sidebar共通部分の読み込み -->
-            <script type="text/javascript">side();</script>   
+            <script>side();</script>
 
             <div id="main">
                 <section>
@@ -129,7 +128,7 @@
                             <td>C（15歳以上対象）</td>
                         </tr>
                     </table>
-                    
+
                     <h3>公式サイトへのリンク</h3>
                     <table class="ta1 official-links-table">
                         <tr>
@@ -174,7 +173,7 @@
     <!--メニュー開閉ボタン-->
     <div id="menubar_hdr" class="close"></div>
     <!--メニューの開閉処理条件設定　800px以下-->
-    <script type="text/javascript">
+    <script>
         if (OCwindowWidth() <= 800) {
             open_close("menubar_hdr", "menubar-s");
         }

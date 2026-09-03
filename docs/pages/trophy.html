@@ -3,7 +3,6 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>PSNOVA攻略サイト - トロフィー</title>
     <meta name="description" content="PSNOVAのトロフィー一覧と獲得条件を確認できます。">
     <link rel="canonical" href="https://kylekatann.github.io/PSNOVA/pages/trophy.html">
@@ -15,10 +14,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/PSNOVA/css/style.css">
 
-    <script type="text/javascript" src="/PSNOVA/js/openclose.js"></script>
-    <script type="text/javascript" src="/PSNOVA/js/fixmenu_pagetop.js"></script>
-    <script type="text/javascript" src="/PSNOVA/js/menubar.js"></script>
-    <script type="text/javascript" src="/PSNOVA/js/sidebar.js"></script>
+    <script src="/PSNOVA/js/openclose.js"></script>
+    <script src="/PSNOVA/js/fixmenu_pagetop.js"></script>
+    <script src="/PSNOVA/js/menubar.js"></script>
+    <script src="/PSNOVA/js/sidebar.js"></script>
 </head>
 
 <body>
@@ -29,14 +28,14 @@
 
 
         <div id="contents">
-            <script type="text/javascript">side();</script>
+            <script>side();</script>
 
             <div id="main">
                 <section>
                     <h2>トロフィー</h2>
                     <p class="page-lead">PSNOVAのトロフィー一覧と獲得条件をまとめている。ストーリー進行で自然に取得できるものに加え、特定の行動や育成、撃破数などのやり込みを求められるものもある。コンプリートを目指す際は、未取得トロフィーの条件と入手方法の確認に利用できる。</p>
                     <h3>トロフィー一覧</h3>
-                    
+
                     <table class="trophy-data-table">
                         <thead><tr><th scope="col">名称</th><th scope="col">内容</th><th scope="col">入手方法</th><th scope="col">種類</th></tr></thead>
                         <tbody>
@@ -88,7 +87,7 @@
                         <tr><td>湯けむりの向こう側へ</td><td>"覗かなかった者は一流のアークス。最後まで覗いた物もまた、一流のアークス。<br>そんな気がしてならない！"</td><td>拠点施設：スパ(ミニスパでも可)を設置し<br>ラボから退出する際に自動発生するイベントを見る</td><td>-</td></tr>
                         </tbody>
                     </table>
-                
+
                 </section>
 
 
@@ -109,7 +108,7 @@
     <!--メニュー開閉ボタン-->
     <div id="menubar_hdr" class="close"></div>
     <!--メニューの開閉処理条件設定　800px以下-->
-    <script type="text/javascript">
+    <script>
         if (OCwindowWidth() <= 800) {
             open_close("menubar_hdr", "menubar-s");
         }

@@ -3,7 +3,6 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>PSNOVA攻略サイト - 消費アイテム</title>
     <meta name="description" content="PSNOVAの消費アイテムと効果を一覧で確認できます。">
     <link rel="canonical" href="https://kylekatann.github.io/PSNOVA/pages/item.html">
@@ -15,11 +14,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/PSNOVA/css/style.css">
 
-    <script type="text/javascript" src="/PSNOVA/js/openclose.js"></script>
-    <script type="text/javascript" src="/PSNOVA/js/fixmenu_pagetop.js"></script>
-    <script type="text/javascript" src="/PSNOVA/js/menubar.js"></script>
-    <script type="text/javascript" src="/PSNOVA/js/sidebar.js"></script>
-    
+    <script src="/PSNOVA/js/openclose.js"></script>
+    <script src="/PSNOVA/js/fixmenu_pagetop.js"></script>
+    <script src="/PSNOVA/js/menubar.js"></script>
+    <script src="/PSNOVA/js/sidebar.js"></script>
+
 </head>
 
 <body>
@@ -36,13 +35,13 @@
         <div id="contents">
 
             <!-- sidebar共通部分の読み込み -->
-            <script type="text/javascript">side();</script>   
+            <script>side();</script>
 
             <div id="main">
                 <section>
                     <h2>消費アイテム</h2>
                     <p class="page-lead">消費アイテムは、HP回復、状態異常回復、味方の蘇生、能力強化など、クエスト中の立て直しを支える補助手段となる。アイテムごとに最大所持数や効果、製作に必要な素材が異なるため、挑戦するクエストに合わせた準備が重要になる。このページでは各アイテムの効果、所持上限、必要素材を一覧で確認できる。</p>
-                    
+
                     <h3>アイテム</h3>
                     <table>
                         <thead><tr><th scope="col">名称</th><th scope="col">レアリティ</th><th scope="col">最大所持数</th><th scope="col">説明文</th><th scope="col">効果</th><th scope="col">必要素材</th><th scope="col">備考</th></tr></thead>
@@ -78,7 +77,7 @@
     <!--メニュー開閉ボタン-->
     <div id="menubar_hdr" class="close"></div>
     <!--メニューの開閉処理条件設定　800px以下-->
-    <script type="text/javascript">
+    <script>
         if (OCwindowWidth() <= 800) {
             open_close("menubar_hdr", "menubar-s");
         }

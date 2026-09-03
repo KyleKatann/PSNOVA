@@ -3,7 +3,6 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>PSNOVA攻略サイト - 防具</title>
     <meta name="description" content="PSNOVAの防具データを一覧掲載。性能や必要情報を比較して確認できます。">
     <link rel="canonical" href="https://kylekatann.github.io/PSNOVA/pages/armor.html">
@@ -15,11 +14,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/PSNOVA/css/style.css">
 
-    <script type="text/javascript" src="/PSNOVA/js/openclose.js"></script>
-    <script type="text/javascript" src="/PSNOVA/js/fixmenu_pagetop.js"></script>
-    <script type="text/javascript" src="/PSNOVA/js/menubar.js"></script>
-    <script type="text/javascript" src="/PSNOVA/js/sidebar.js"></script>
-    
+    <script src="/PSNOVA/js/openclose.js"></script>
+    <script src="/PSNOVA/js/fixmenu_pagetop.js"></script>
+    <script src="/PSNOVA/js/menubar.js"></script>
+    <script src="/PSNOVA/js/sidebar.js"></script>
+
 </head>
 
 <body>
@@ -36,15 +35,15 @@
         <div id="contents">
 
             <!-- sidebar共通部分の読み込み -->
-            <script type="text/javascript">side();</script>   
+            <script>side();</script>
 
             <div id="main">
                 <section>
                     <h2>防具</h2>
                     <p class="page-lead">シールドユニットはキャラクターを覆う力場を展開し、打撃・射撃・法撃や属性攻撃への防御性能を高める装備となる。製作に使用するコアによって性能が変化するため、基礎防御値だけでなく属性耐性や必要素材も含めて比較したい。このページではレアリティ、各種防御値、ショップレベル、必要素材を一覧で確認できる。</p>
-                    
+
                     <h3>シールドユニット</h3>
-                    
+
                     <table>
                         <thead><tr><th scope="col">名前</th><th scope="col">レアリティ</th><th scope="col">打撃</th><th scope="col">射撃</th><th scope="col">法撃</th><th scope="col">炎</th><th scope="col">氷</th><th scope="col">雷</th><th scope="col">風</th><th scope="col">光</th><th scope="col">闇</th><th scope="col">ショップレベル</th><th scope="col">必要素材</th><th scope="col">備考</th></tr></thead>
                         <tbody>
@@ -155,7 +154,7 @@
     <!--メニュー開閉ボタン-->
     <div id="menubar_hdr" class="close"></div>
     <!--メニューの開閉処理条件設定　800px以下-->
-    <script type="text/javascript">
+    <script>
         if (OCwindowWidth() <= 800) {
             open_close("menubar_hdr", "menubar-s");
         }

@@ -3,7 +3,6 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>PSNOVA攻略サイト - アタッチパーツ</title>
     <meta name="description" content="PSNOVAのアタッチパーツを一覧掲載。各パーツの情報をまとめて確認できます。">
     <link rel="canonical" href="https://kylekatann.github.io/PSNOVA/pages/attachment.html">
@@ -15,11 +14,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/PSNOVA/css/style.css">
 
-    <script type="text/javascript" src="/PSNOVA/js/openclose.js"></script>
-    <script type="text/javascript" src="/PSNOVA/js/fixmenu_pagetop.js"></script>
-    <script type="text/javascript" src="/PSNOVA/js/menubar.js"></script>
-    <script type="text/javascript" src="/PSNOVA/js/sidebar.js"></script>
-    
+    <script src="/PSNOVA/js/openclose.js"></script>
+    <script src="/PSNOVA/js/fixmenu_pagetop.js"></script>
+    <script src="/PSNOVA/js/menubar.js"></script>
+    <script src="/PSNOVA/js/sidebar.js"></script>
+
 </head>
 
 <body>
@@ -36,18 +35,18 @@
         <div id="contents">
 
             <!-- sidebar共通部分の読み込み -->
-            <script type="text/javascript">side();</script>   
+            <script>side();</script>
 
             <div id="main">
                 <section>
                     <h2>アタッチパーツ</h2>
-                    
+
                     <h3>アタッチパーツ</h3>
                     <p>
                         ４つまで武器につけることができる。つけたアタッチパーツの特殊能力が発揮される。<br>
                         ステータス系・アナザーヒストリー・テンプレーションなどは重複して効果を発揮するが、倍率系の大半は重複して効果を発揮しない。<br>
                     </p>
-                    
+
                     <table>
                         <thead><tr><th scope="col">名前</th><th scope="col">レアリティ</th><th scope="col">追加能力</th><th scope="col">必要素材</th><th scope="col">外見系統</th><th scope="col">備考</th></tr></thead>
                         <tbody>
@@ -414,7 +413,7 @@
     <!--メニュー開閉ボタン-->
     <div id="menubar_hdr" class="close"></div>
     <!--メニューの開閉処理条件設定　800px以下-->
-    <script type="text/javascript">
+    <script>
         if (OCwindowWidth() <= 800) {
             open_close("menubar_hdr", "menubar-s");
         }
