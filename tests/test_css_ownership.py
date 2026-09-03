@@ -3,8 +3,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 STYLE = ROOT / "docs" / "css" / "style.css"
-WEAPON = ROOT / "docs" / "css" / "weapon-tools.css"
-HOME = ROOT / "docs" / "css" / "home-product.css"
+PAGE = ROOT / "docs" / "css" / "page.css"
 
 
 def block(css, selector):
@@ -47,44 +46,43 @@ def test_semantic_table_header_is_owned_by_sitewide_css():
     assert "white-space: nowrap;" in body
 
 
-def test_page_specific_css_has_distinct_owners():
+def test_page_specific_css_has_one_owner_file():
     style = STYLE.read_text(encoding="utf-8")
-    weapon = WEAPON.read_text(encoding="utf-8")
-    home = HOME.read_text(encoding="utf-8")
+    page = PAGE.read_text(encoding="utf-8")
 
-    assert ".weapon-catalog {" in weapon
-    assert ".data-toolbar {" in weapon
+    assert ".weapon-catalog {" in page
+    assert ".data-toolbar {" in page
+    assert ".product-table .product-image-cell" in page
     assert ".weapon-catalog {" not in style
-    assert ".product-table .product-image-cell" in home
     assert ".product-table .product-image-cell" not in style
 
 
 def test_weapon_filter_grid_does_not_duplicate_single_type_selectors():
-    weapon = WEAPON.read_text(encoding="utf-8")
+    page = PAGE.read_text(encoding="utf-8")
 
-    assert ".data-filter-grid.is-single-type" not in weapon
-    assert weapon.count(".data-filter-grid { grid-template-columns: 1fr; }") == 1
+    assert ".data-filter-grid.is-single-type" not in page
+    assert page.count(".data-filter-grid { grid-template-columns: 1fr; }") == 1
 
 
 def test_shop_numeric_format_has_one_shared_owner():
     style = STYLE.read_text(encoding="utf-8")
-    weapon = WEAPON.read_text(encoding="utf-8")
+    page = PAGE.read_text(encoding="utf-8")
 
     shared_shop = block(style, "#main table .shop-level-cell")
-    weapon_shop = block(weapon, ".shop-level-cell")
+    page_shop = block(page, ".shop-level-cell")
 
     assert "font-variant-numeric: tabular-nums;" in shared_shop
-    assert "font-variant-numeric" not in weapon_shop
-    assert "white-space: nowrap;" in weapon_shop
+    assert "font-variant-numeric" not in page_shop
+    assert "white-space: nowrap;" in page_shop
 
 
 def test_home_cells_inherit_shared_table_presentation():
     style = STYLE.read_text(encoding="utf-8")
-    home = HOME.read_text(encoding="utf-8")
+    page = PAGE.read_text(encoding="utf-8")
 
     shared_cells = block(style, "#main table th,\n#main table td")
 
     assert "background: var(--surface-subtle);" in shared_cells
     assert "vertical-align: middle;" in shared_cells
-    assert "background: var(--surface-subtle);" not in home
-    assert "vertical-align: middle;" not in home
+    assert "background: var(--surface-subtle);" not in page
+    assert "vertical-align: middle;" not in page

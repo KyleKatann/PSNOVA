@@ -8,7 +8,7 @@ DOCS = ROOT / "docs"
 SITEMAP = DOCS / "sitemap.xml"
 WEAPON_DIR = DOCS / "pages" / "weapon"
 STYLE_CSS = DOCS / "css" / "style.css"
-WEAPON_CSS = DOCS / "css" / "weapon-tools.css"
+PAGE_CSS = DOCS / "css" / "page.css"
 SITE_PREFIX = "https://kylekatann.github.io/PSNOVA/"
 
 
@@ -114,10 +114,10 @@ class PublicPageVisualAuditTests(unittest.TestCase):
 
     def test_weapon_submenu_styles_have_one_owner(self):
         style_css = STYLE_CSS.read_text(encoding="utf-8")
-        weapon_css = WEAPON_CSS.read_text(encoding="utf-8")
+        page_css = PAGE_CSS.read_text(encoding="utf-8")
 
         self.assertIn(".weapon-submenu", style_css)
-        self.assertNotIn(".weapon-submenu", weapon_css)
+        self.assertNotIn(".weapon-submenu", page_css)
 
 
 if __name__ == "__main__":

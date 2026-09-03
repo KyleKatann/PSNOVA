@@ -19,11 +19,11 @@
         return;
     }
 
-    if (!document.querySelector('link[data-psnova-weapon-tools-style="true"]')) {
+    if (!document.querySelector('link[data-psnova-page-style="true"]')) {
         var stylesheet = document.createElement("link");
         stylesheet.rel = "stylesheet";
-        stylesheet.href = "/PSNOVA/css/weapon-tools.css";
-        stylesheet.setAttribute("data-psnova-weapon-tools-style", "true");
+        stylesheet.href = "/PSNOVA/css/page.css";
+        stylesheet.setAttribute("data-psnova-page-style", "true");
         document.head.appendChild(stylesheet);
     }
 

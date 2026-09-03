@@ -3,7 +3,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 WEAPON_DIR = ROOT / "docs" / "pages" / "weapon"
-CSS = ROOT / "docs" / "css" / "weapon-tools.css"
+CSS = ROOT / "docs" / "css" / "page.css"
 
 PAGES = {
     "sword": "ソード",

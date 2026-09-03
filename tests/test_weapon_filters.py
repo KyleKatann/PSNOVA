@@ -3,7 +3,8 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 WEAPON_TOOLS_JS = ROOT / "docs" / "js" / "weapon-tools.js"
-WEAPON_TOOLS_CSS = ROOT / "docs" / "css" / "weapon-tools.css"
+PAGE_CSS = ROOT / "docs" / "css" / "page.css"
+
 
 class WeaponFilterTests(unittest.TestCase):
     def test_weapon_filters_are_created_from_existing_data(self):
@@ -29,10 +30,12 @@ class WeaponFilterTests(unittest.TestCase):
         self.assertIn('shopFilter.addEventListener("change", applyFilters)', js)
 
     def test_filter_controls_are_responsive(self):
-        css = WEAPON_TOOLS_CSS.read_text(encoding="utf-8")
+        css = PAGE_CSS.read_text(encoding="utf-8")
+        self.assertIn("/* === WEAPON PAGES === */", css)
         self.assertIn(".data-filter-grid", css)
         self.assertIn("grid-template-columns: repeat(3, minmax(0, 1fr));", css)
         self.assertIn("grid-template-columns: 1fr;", css)
+
 
 if __name__ == "__main__":
     unittest.main()

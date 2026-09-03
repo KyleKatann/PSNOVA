@@ -29,11 +29,13 @@ Modernization work must preserve existing data and URLs while improving usabilit
 20. **Data tables must use restrained 1px grid lines based on the shared border token.** Grid lines should improve row/column tracking without becoming visually dominant; do not return to heavy dark borders or 1px colored gaps between every cell.
 21. **Public page titles follow one naming convention.** The homepage title is exactly `PSNOVA攻略サイト`. Every other public page title is `PSNOVA攻略サイト - XXXXX`, where `XXXXX` is the concise reader-facing page name such as `武器`, `防具`, `初心者Q&A`, or `ナックル`. The title suffix, main visible page heading, metadata mapping, and actual page purpose must not contradict one another. Do not use reversed forms such as `武器 | PSNOVA攻略`, verbose SEO keyword chains, or a generic `PSNOVA 攻略サイト` title on a specific content page. Prefer the same convention in raw HTML; runtime metadata must not be used to conceal a knowingly incorrect source title.
 22. **Never hotlink site-display assets from external websites.** Images, fonts, CSS, JavaScript, and other visual/runtime assets used by the public site must be stored in this repository and referenced with local `/PSNOVA/...` paths. Do not use remote image URLs, CDN asset URLs, or other external-site asset references. Intentional reader navigation such as approved affiliate links is a separate concern and is not an asset hotlink.
+23. **Do not increase the number of public CSS files.** The public CSS file count must never exceed two. `docs/css/style.css` owns shared/sitewide styles and `docs/css/page.css` owns page-specific styles such as homepage and weapon UI. Extend or consolidate these existing owners instead of adding another stylesheet; further consolidation may reduce the count, but stylesheet proliferation is prohibited.
 
 ## Correction-derived invariants
 
 These are specifications established by user review and must be treated as regression constraints:
 
+- Public CSS has two owners only: `docs/css/style.css` for shared/sitewide styles and `docs/css/page.css` for page-specific styles. Do not create a third public stylesheet; add rules to the appropriate existing owner instead.
 - Data tables retain the compact original-wiki treatment: pale blue header/emphasis surfaces, compact padding, restrained 1px separation, and modern scrolling/search/sort behavior. Removing runtime HTML repair must not remove this visual treatment.
 - All table pale-blue UI surfaces use the same `var(--accent-soft)` color across every page. Table body cells use neutral surfaces unless a semantic status color is intentionally required.
 - Tables use subtle 1px grid lines in the shared border color so rows and columns remain easy to track without visually heavy borders.

@@ -4,7 +4,7 @@ import unittest
 
 ROOT = Path(__file__).resolve().parents[1]
 WEAPON_PAGE = ROOT / "docs" / "pages" / "weapon.html"
-WEAPON_STYLE = ROOT / "docs" / "css" / "weapon-tools.css"
+PAGE_STYLE = ROOT / "docs" / "css" / "page.css"
 AGENT = ROOT / "Agent.md"
 
 ICONS = {
@@ -32,8 +32,8 @@ class WeaponCatalogIconTests(unittest.TestCase):
                 html,
             )
 
-    def test_weapon_card_icons_are_forced_visible_by_weapon_css(self):
-        css = WEAPON_STYLE.read_text(encoding="utf-8")
+    def test_weapon_card_icons_are_forced_visible_by_page_css(self):
+        css = PAGE_STYLE.read_text(encoding="utf-8")
         self.assertIn('#main .weapon-card img {', css)
         self.assertIn('display: block !important;', css)
         self.assertIn('visibility: visible;', css)

@@ -7,14 +7,13 @@ STYLE_CSS = CSS_DIR / "style.css"
 
 
 class LegacyCssCleanupTests(unittest.TestCase):
-    def test_public_css_inventory_is_three_bundles_without_import_chain(self):
+    def test_public_css_inventory_is_two_bundles_without_import_chain(self):
         names = {path.name for path in CSS_DIR.glob("*.css")}
         self.assertEqual(
             names,
             {
                 "style.css",
-                "weapon-tools.css",
-                "home-product.css",
+                "page.css",
             },
         )
 

@@ -4,7 +4,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 MENUBAR = ROOT / "docs" / "js" / "menubar.js"
 STYLE = ROOT / "docs" / "css" / "style.css"
-WEAPON_CSS = ROOT / "docs" / "css" / "weapon-tools.css"
+PAGE_CSS = ROOT / "docs" / "css" / "page.css"
 LOCK_JS = ROOT / "docs" / "js" / "weapon-static-heading.js"
 LOCK_CSS = ROOT / "docs" / "css" / "weapon-static-heading.css"
 AGENT = ROOT / "Agent.md"
@@ -59,8 +59,8 @@ def test_legacy_disclosure_runtime_is_removed():
     assert "weapon-static-heading.css" not in style
 
 
-def test_static_heading_icon_style_lives_in_weapon_tools_css():
-    css = WEAPON_CSS.read_text(
+def test_static_heading_icon_style_lives_in_page_css():
+    css = PAGE_CSS.read_text(
         encoding="utf-8"
     )
 
