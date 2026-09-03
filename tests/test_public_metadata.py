@@ -6,8 +6,9 @@ from urllib.parse import urlsplit
 
 ROOT = Path(__file__).resolve().parents[1]
 DOCS = ROOT / "docs"
+
 SITE_NAME = "PSNOVA攻略サイト"
-SITE_ORIGIN = "https://kylekatann.github.io"
+SITE_HOST = "kylekatann.github.io"
 SITE_PREFIX = "/PSNOVA/"
 
 
@@ -79,7 +80,7 @@ class PublicMetadataTests(unittest.TestCase):
 
             if len(parser.descriptions) != 1:
                 violations.append(
-                    f"{rel}: expected 1 meta description, "
+                    f"{rel}: expected 1 description, "
                     f"found {len(parser.descriptions)}"
                 )
 
@@ -99,6 +100,7 @@ class PublicMetadataTests(unittest.TestCase):
 
             for prop in required_og:
                 values = parser.og.get(prop, [])
+
                 if len(values) != 1:
                     violations.append(
                         f"{rel}: expected 1 {prop}, found {len(values)}"
@@ -111,36 +113,28 @@ class PublicMetadataTests(unittest.TestCase):
                 if len(parser.descriptions) == 1
                 else None
             )
+
             canonical = (
                 (parser.canonicals[0] or "").strip()
                 if len(parser.canonicals) == 1
                 else None
             )
 
-            og_title = (
-                (parser.og.get("og:title", [None])[0] or "").strip()
-                if len(parser.og.get("og:title", [])) == 1
-                else None
-            )
-            og_description = (
-                (parser.og.get("og:description", [None])[0] or "").strip()
-                if len(parser.og.get("og:description", [])) == 1
-                else None
-            )
-            og_url = (
-                (parser.og.get("og:url", [None])[0] or "").strip()
-                if len(parser.og.get("og:url", [])) == 1
-                else None
-            )
-            og_site_name = (
-                (parser.og.get("og:site_name", [None])[0] or "").strip()
-                if len(parser.og.get("og:site_name", [])) == 1
-                else None
-            )
+            def og_value(name):
+                values = parser.og.get(name, [])
+                if len(values) != 1:
+                    return None
+                return (values[0] or "").strip()
+
+            og_title = og_value("og:title")
+            og_description = og_value("og:description")
+            og_url = og_value("og:url")
+            og_site_name = og_value("og:site_name")
+            og_type = og_value("og:type")
 
             if og_title is not None and parser.title != og_title:
                 violations.append(
-                    f"{rel}: title and og:title differ "
+                    f"{rel}: title != og:title "
                     f"({parser.title!r} != {og_title!r})"
                 )
 
@@ -150,13 +144,13 @@ class PublicMetadataTests(unittest.TestCase):
                 and description != og_description
             ):
                 violations.append(
-                    f"{rel}: description and og:description differ"
+                    f"{rel}: description != og:description"
                 )
 
             if canonical is not None and og_url is not None:
                 if canonical != og_url:
                     violations.append(
-                        f"{rel}: canonical and og:url differ "
+                        f"{rel}: canonical != og:url "
                         f"({canonical!r} != {og_url!r})"
                     )
 
@@ -170,13 +164,24 @@ class PublicMetadataTests(unittest.TestCase):
                     violations.append(
                         f"{rel}: homepage title must be {SITE_NAME!r}"
                     )
-            elif parser.title and not parser.title.startswith(
-                SITE_NAME + " - "
-            ):
-                violations.append(
-                    f"{rel}: non-homepage title violates naming convention "
-                    f"({parser.title!r})"
-                )
+
+                if og_type is not None and og_type != "website":
+                    violations.append(
+                        f"{rel}: homepage og:type must be 'website'"
+                    )
+            else:
+                if parser.title and not parser.title.startswith(
+                    SITE_NAME + " - "
+                ):
+                    violations.append(
+                        f"{rel}: unexpected page title format "
+                        f"({parser.title!r})"
+                    )
+
+                if og_type is not None and og_type != "article":
+                    violations.append(
+                        f"{rel}: content page og:type must be 'article'"
+                    )
 
             if canonical:
                 parts = urlsplit(canonical)
@@ -186,7 +191,7 @@ class PublicMetadataTests(unittest.TestCase):
                         f"{rel}: canonical must use HTTPS ({canonical})"
                     )
 
-                if parts.netloc != "kylekatann.github.io":
+                if parts.netloc != SITE_HOST:
                     violations.append(
                         f"{rel}: unexpected canonical host ({canonical})"
                     )
