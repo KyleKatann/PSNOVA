@@ -3,6 +3,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 CSS = ROOT / "docs" / "css" / "page.css"
+STYLE = ROOT / "docs" / "css" / "style.css"
 JS = ROOT / "docs" / "js" / "weapon-tools.js"
 MENUBAR = ROOT / "docs" / "js" / "menubar.js"
 
@@ -38,6 +39,7 @@ class StickyDataUiTests(unittest.TestCase):
 
     def test_touch_desktop_site_keeps_tables_inside_scroll_wrappers(self):
         css = CSS.read_text(encoding="utf-8")
+        shared = STYLE.read_text(encoding="utf-8")
         menubar = MENUBAR.read_text(encoding="utf-8")
 
         self.assertIn(
@@ -50,11 +52,11 @@ class StickyDataUiTests(unittest.TestCase):
         )
         self.assertIn(
             "#main .gigantes-table-scroll",
-            css,
+            shared,
         )
         self.assertIn(
             "min-width: 1100px;",
-            css,
+            shared,
         )
         self.assertIn(
             'var isGigantesPage = /\\/pages\\/gigantes\\.html$/.test(path);',

@@ -3,6 +3,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 SIDEBAR_JS = ROOT / "docs" / "js" / "sidebar.js"
+STYLE_CSS = ROOT / "docs" / "css" / "style.css"
 MODERN_CSS = ROOT / "docs" / "css" / "modern.css"
 INTERACTION_CSS = ROOT / "docs" / "css" / "interaction.css"
 
@@ -42,34 +43,29 @@ class WeaponSidebarTests(unittest.TestCase):
                 )
 
     def test_weapon_submenu_style_has_one_owner(self):
-        modern = MODERN_CSS.read_text(
-            encoding="utf-8"
-        )
-        interaction = INTERACTION_CSS.read_text(
+        style = STYLE_CSS.read_text(
             encoding="utf-8"
         )
 
         self.assertIn(
             "#sub .weapon-submenu {",
-            modern,
+            style,
         )
         self.assertIn(
             "list-style: none;",
-            modern,
+            style,
         )
         self.assertIn(
             "#sub .submenu .weapon-submenu a.is-current",
-            modern,
+            style,
         )
         self.assertIn(
             "#sub .submenu a.is-parent-current",
-            modern,
+            style,
         )
 
-        self.assertNotIn(
-            ".weapon-submenu",
-            interaction,
-        )
+        self.assertFalse(MODERN_CSS.exists())
+        self.assertFalse(INTERACTION_CSS.exists())
 
 
 if __name__ == "__main__":

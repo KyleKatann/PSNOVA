@@ -19,7 +19,6 @@ class SidebarStyleTests(unittest.TestCase):
         css = STYLE.read_text(encoding="utf-8")
         self.assertIn("#main {\n        width: 100%;\n        order: 1;", css)
         self.assertIn("#sub {\n        width: 100%;\n        flex-basis: auto;\n        order: 2;", css)
-        self.assertIn("border-top: 0;", css)
         self.assertIn("#sub nav {\n        position: static;", css)
 
 

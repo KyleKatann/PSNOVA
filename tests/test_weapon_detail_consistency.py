@@ -58,19 +58,21 @@ class WeaponDetailConsistencyTests(unittest.TestCase):
             css,
         )
 
-    def test_detail_table_header_remains_sticky_below_toolbar(self):
+    def test_detail_table_header_remains_in_normal_flow(self):
         css = CSS.read_text(encoding="utf-8")
 
-        self.assertIn(
-            "#main .data-toolbar ~ "
-            ".table-scroll > .weapon-data-table thead th",
+        self.assertNotIn(
+            ".weapon-data-table thead th",
             css,
         )
-        self.assertIn(
-            "top: var(--weapon-table-header-sticky-top, 180px);",
+        self.assertNotIn(
+            "--weapon-table-header-sticky-top",
             css,
         )
-        self.assertNotIn("top: 76px;", css)
+        self.assertNotIn(
+            "top: 76px;",
+            css,
+        )
 
     def test_desktop_navigation_columns_are_explicit(self):
         css = CSS.read_text(encoding="utf-8")

@@ -19,8 +19,9 @@ class TableVisualRegressionTests(unittest.TestCase):
 
     def test_weapon_table_visual_encoding_is_kept_in_shared_table_css(self):
         css = STYLE.read_text(encoding="utf-8")
-        self.assertIn('.rarity-cell[data-rarity-band="blue"]', css)
-        self.assertIn('.rarity-cell[data-rarity-band="violet"]', css)
+        self.assertIn('.rarity-cell[data-rarity="1"]', css)
+        self.assertIn('.rarity-cell[data-rarity="15"]', css)
+        self.assertIn(".rarity-source-star::before", css)
         self.assertIn('.weapon-stat-melee.has-value', css)
         self.assertIn('background: #fff0f0;', css)
         self.assertIn('.weapon-stat-ranged.has-value', css)

@@ -98,6 +98,7 @@ def test_static_weapon_heading_and_toolbar_rules_are_recorded():
     )
     assert "They use no card shadow." in agent
     assert (
-        "weapon table header remains sticky below the toolbar"
+        "Weapon table headers must remain in normal document flow"
         in agent
     )
+    assert "must never use `position: sticky`" in agent

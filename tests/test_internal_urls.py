@@ -10,7 +10,7 @@ STYLE = ROOT / "docs" / "css" / "style.css"
 
 class InternalUrlTests(unittest.TestCase):
     def test_shared_internal_urls_are_root_relative(self):
-        for path in (MENUBAR, SIDEBAR, STYLE):
+        for path in (MENUBAR, SIDEBAR):
             text = path.read_text(encoding="utf-8")
 
             with self.subTest(path=path.name):
@@ -43,12 +43,19 @@ class InternalUrlTests(unittest.TestCase):
             with self.subTest(asset=asset):
                 self.assertIn(asset, menubar)
 
-        for asset in (
-            "/PSNOVA/css/modern.css",
-            "/PSNOVA/css/site-search.css",
+        self.assertIn(
+            "/PSNOVA/css/page.css",
+            menubar,
+        )
+
+        for legacy in (
+            "modern.css",
+            "site-search.css",
+            "interaction.css",
         ):
-            with self.subTest(asset=asset):
-                self.assertIn(asset, style)
+            with self.subTest(legacy=legacy):
+                self.assertNotIn(legacy, menubar)
+                self.assertNotIn(legacy, style)
 
         self.assertNotIn(
             "table-semantics.js",

@@ -69,7 +69,15 @@ class WikiTableStyleTests(unittest.TestCase):
         js = TABLE_ENHANCEMENTS.read_text(encoding="utf-8")
         self.assertIn('function decorateSemanticDataTable(table)', js)
         self.assertIn('if (!table || !table.tHead || !table.tBodies.length) return;', js)
-        self.assertIn('classList.add("rarity-cell", band)', js)
+        self.assertIn('classList.add("rarity-cell")', js)
+        self.assertIn(
+            'cell.setAttribute("data-rarity", String(rarity))',
+            js,
+        )
+        self.assertIn(
+            'classList.add("rarity-source-star")',
+            js,
+        )
         self.assertIn('stat-melee', js)
         self.assertIn('stat-ranged', js)
         self.assertIn('stat-tech', js)

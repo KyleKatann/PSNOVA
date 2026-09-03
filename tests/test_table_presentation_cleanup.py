@@ -1,3 +1,4 @@
+import re
 import unittest
 from pathlib import Path
 
@@ -8,7 +9,16 @@ TABLE_ENHANCEMENTS_JS = ROOT / "docs" / "js" / "table-enhancements.js"
 class TablePresentationCleanupTests(unittest.TestCase):
     def test_runtime_enhancements_do_not_remove_source_attributes(self):
         js = TABLE_ENHANCEMENTS_JS.read_text(encoding="utf-8")
-        self.assertNotIn("removeAttribute(", js)
+        removed_attributes = set(
+            re.findall(
+                r'removeAttribute\("([^"]+)"\)',
+                js,
+            )
+        )
+        self.assertLessEqual(
+            removed_attributes,
+            {"aria-label", "aria-labelledby"},
+        )
         self.assertNotIn("bgcolor", js)
         self.assertNotIn("cellpadding", js)
         self.assertNotIn("cellspacing", js)

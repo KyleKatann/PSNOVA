@@ -21,8 +21,14 @@ class TableSemanticTests(unittest.TestCase):
         self.assertIn("ensureScrollableTable", js)
         self.assertIn('querySelectorAll("#main table")', js)
         self.assertIn('wrapper.className = "table-scroll"', js)
+        self.assertIn('wrapper.setAttribute("tabindex", "0")', js)
         self.assertIn('wrapper.setAttribute("role", "region")', js)
-        self.assertIn('wrapper.setAttribute("aria-label", "横スクロール可能なデータ表")', js)
+        self.assertIn("findTableRegionLabelSource", js)
+        self.assertIn('wrapper.setAttribute("aria-labelledby"', js)
+        self.assertIn(
+            'wrapper.setAttribute("aria-label", "データ表")',
+            js,
+        )
 
     def test_table_enhancements_do_not_create_semantic_structure(self):
         js = TABLE_ENHANCEMENTS_JS.read_text(encoding="utf-8")

@@ -1,3 +1,4 @@
+import re
 import unittest
 from pathlib import Path
 
@@ -32,7 +33,6 @@ class NoRuntimeHtmlRepairTests(unittest.TestCase):
             'createElement("td")',
             "replaceChild",
             "replaceElementTag",
-            "removeAttribute(",
             "bgcolor",
             "stripLegacy",
             "stripTrailingQuestionMark",
@@ -45,6 +45,19 @@ class NoRuntimeHtmlRepairTests(unittest.TestCase):
                     script,
                     "Table enhancement JavaScript must not repair or normalize source HTML.",
                 )
+
+        removed_attributes = set(
+            re.findall(
+                r'removeAttribute\("([^"]+)"\)',
+                script,
+            )
+        )
+        self.assertLessEqual(
+            removed_attributes,
+            {"aria-label", "aria-labelledby"},
+            "Runtime may only switch accessibility naming attributes; "
+            "it must not strip source HTML attributes.",
+        )
 
         self.assertIn("decorateSemanticDataTable", script)
         self.assertIn("ensureScrollableTable", script)

@@ -74,5 +74,5 @@ def test_old_page_specific_css_names_stay_removed():
 def test_agent_guide_caps_public_css_at_two_files():
     guide = AGENT.read_text(encoding="utf-8")
     assert "public CSS file count must never exceed two" in guide
-    assert "`style.css`" in guide
-    assert "`page.css`" in guide
+    assert "`docs/css/style.css`" in guide
+    assert "`docs/css/page.css`" in guide
