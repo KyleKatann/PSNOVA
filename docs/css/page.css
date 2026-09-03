@@ -165,18 +165,12 @@
 
 #main .weapon-data-table tr[hidden] { display: none !important; }
 
-/* Sticky weapon controls are desktop-pointer affordances. A smartphone using
- * "desktop site" still has a coarse pointer, so it must keep headers in normal
- * table flow instead of applying the large sticky top offset. */
+/* Keep only the weapon filter toolbar sticky on fine-pointer desktop.
+ * Table headers remain in normal flow: .table-scroll owns horizontal overflow,
+ * so making descendant headers sticky would resolve their top offset against
+ * that scroll wrapper and can push the header below body rows. */
 @media screen and (min-width: 801px) and (hover: hover) and (pointer: fine) {
     .data-toolbar { position: sticky; top: 8px; z-index: 30; box-shadow: none; }
-    #main .data-toolbar ~ .table-scroll > .weapon-data-table thead th,
-    #main .data-toolbar ~ .weapon-data-table thead th {
-        position: sticky;
-        top: var(--weapon-table-header-sticky-top, 180px);
-        z-index: 10;
-        box-shadow: 0 1px 0 var(--border);
-    }
 }
 
 @media screen and (min-width: 561px) {

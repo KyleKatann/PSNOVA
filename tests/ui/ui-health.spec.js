@@ -169,6 +169,22 @@ for (const routePath of publicRoutes()) {
       await expect(sidebar).not.toHaveClass(/is-open/);
     }
 
+    if (/\/pages\/weapon\/[^/]+\.html$/.test(routePath)) {
+      const header = page.locator('.weapon-data-table thead th').first();
+      const firstRow = page.locator('.weapon-data-table tbody tr:not([hidden])').first();
+      const headerBox = await header.boundingBox();
+      const rowBox = await firstRow.boundingBox();
+      const headerPosition = await header.evaluate((cell) => getComputedStyle(cell).position);
+
+      expect(headerBox, 'weapon header should render').not.toBeNull();
+      expect(rowBox, 'first weapon row should render').not.toBeNull();
+      expect(headerPosition, 'weapon header must stay in normal flow').not.toBe('sticky');
+      expect(
+        headerBox.y + headerBox.height,
+        'weapon header must remain above the first data row'
+      ).toBeLessThanOrEqual(rowBox.y + 1);
+    }
+
     if (testInfo.project.name === 'desktop-site-touch') {
       const pointerMode = await page.evaluate(() => ({
         coarse: window.matchMedia('(pointer: coarse)').matches,
@@ -176,22 +192,6 @@ for (const routePath of publicRoutes()) {
       }));
       expect(pointerMode.coarse, 'desktop-site touch project must emulate a coarse pointer').toBe(true);
       expect(pointerMode.fine, 'desktop-site touch project must not emulate a fine primary pointer').toBe(false);
-
-      if (/\/pages\/weapon\/[^/]+\.html$/.test(routePath)) {
-        const header = page.locator('.weapon-data-table thead th').first();
-        const firstRow = page.locator('.weapon-data-table tbody tr:not([hidden])').first();
-        const headerBox = await header.boundingBox();
-        const rowBox = await firstRow.boundingBox();
-        const headerPosition = await header.evaluate((cell) => getComputedStyle(cell).position);
-
-        expect(headerBox, 'weapon header should render').not.toBeNull();
-        expect(rowBox, 'first weapon row should render').not.toBeNull();
-        expect(headerPosition, 'touch desktop-site header must stay in normal flow').not.toBe('sticky');
-        expect(
-          headerBox.y + headerBox.height,
-          'weapon header must remain above the first data row'
-        ).toBeLessThanOrEqual(rowBox.y + 1);
-      }
 
       if (routePath === '/PSNOVA/pages/gigantes.html') {
         const tableScroll = await page.locator('.gigantes-table-scroll').evaluate((wrapper) => ({

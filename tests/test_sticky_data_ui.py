@@ -24,25 +24,15 @@ class StickyDataUiTests(unittest.TestCase):
             css,
         )
 
-    def test_detail_table_header_remains_vertically_sticky_on_fine_pointer(self):
+    def test_detail_table_header_stays_in_normal_flow(self):
         css = CSS.read_text(encoding="utf-8")
 
-        self.assertIn(
-            "#main .data-toolbar ~ "
-            ".table-scroll > "
+        self.assertNotIn(
             ".weapon-data-table thead th",
             css,
         )
-        self.assertIn(
-            "position: sticky;",
-            css,
-        )
-        self.assertIn(
-            "top: var(--weapon-table-header-sticky-top, 180px);",
-            css,
-        )
         self.assertNotIn(
-            "top: 76px;",
+            "--weapon-table-header-sticky-top",
             css,
         )
 
@@ -71,22 +61,18 @@ class StickyDataUiTests(unittest.TestCase):
             menubar,
         )
 
-    def test_table_header_offset_tracks_rendered_toolbar_height(self):
+    def test_weapon_tools_do_not_compute_sticky_header_offsets(self):
         js = JS.read_text(encoding="utf-8")
 
-        self.assertIn(
-            "toolbar.getBoundingClientRect().height",
-            js,
-        )
-        self.assertIn(
-            "toolbarStyle.marginBottom",
-            js,
-        )
-        self.assertIn(
+        self.assertNotIn(
             "--weapon-table-header-sticky-top",
             js,
         )
-        self.assertIn(
+        self.assertNotIn(
+            "toolbar.getBoundingClientRect().height",
+            js,
+        )
+        self.assertNotIn(
             "new ResizeObserver(",
             js,
         )
