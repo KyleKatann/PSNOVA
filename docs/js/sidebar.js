@@ -1,6 +1,6 @@
 function side(){
 var html =`
-<div id="sub">
+<aside id="sub">
 <nav aria-label="攻略メニュー">
 <h2>攻略メニュー</h2>
 <ul class="submenu">
@@ -46,7 +46,7 @@ var html =`
     <li><a href="/PSNOVA/pages/trophy.html">トロフィー</a></li>
 </ul>
 </nav>
-</div>
+</aside>
 `;
 
 var callSite = document.currentScript;

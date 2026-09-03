@@ -176,6 +176,15 @@ def inventory():
 
     html_files = list(public_html_files())
 
+    sidebar_source = (
+        DOCS / "js" / "sidebar.js"
+    ).read_text(encoding="utf-8")
+
+    shared_sidebar_is_aside = (
+        '<aside id="sub">' in sidebar_source
+        and "</aside>" in sidebar_source
+    )
+
     for path in html_files:
         text = path.read_text(encoding="utf-8")
         rel = path.relative_to(ROOT).as_posix()
@@ -196,7 +205,12 @@ def inventory():
         if "main" not in tags:
             findings["main"].append(rel)
 
-        if "aside" not in tags:
+        has_shared_sidebar = (
+            "side();" in text
+            and shared_sidebar_is_aside
+        )
+
+        if "aside" not in tags and not has_shared_sidebar:
             findings["aside"].append(rel)
 
         missing_caption = sum(
