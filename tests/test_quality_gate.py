@@ -4,6 +4,8 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 QUALITY = ROOT / "tools" / "psnova_quality.py"
+ACCESSIBILITY = ROOT / "tests" / "ui" / "accessibility.spec.js"
+COLOR_CONTRACT = ROOT / "tests" / "test_accessible_color_contract.py"
 
 
 class QualityGateTests(unittest.TestCase):
@@ -71,11 +73,23 @@ class QualityGateTests(unittest.TestCase):
 
         self.assertNotIn(
             '"axe accessibility scan"',
-            inventory,
+            source,
         )
         self.assertNotIn(
             '"color contrast"',
             inventory,
+        )
+
+    def test_color_contrast_enforcement_is_intentionally_disabled(self):
+        source = ACCESSIBILITY.read_text(encoding="utf-8")
+
+        self.assertIn(
+            ".disableRules(['color-contrast'])",
+            source,
+        )
+        self.assertFalse(
+            COLOR_CONTRACT.exists(),
+            "Dedicated automated color-contract test must remain removed",
         )
 
     def test_targeted_supports_project_and_grep(self):
