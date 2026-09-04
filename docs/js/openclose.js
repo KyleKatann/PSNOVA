@@ -11,6 +11,15 @@ function resolveNavigationTarget(menuId) {
     return menu;
 }
 
+function placeContentsDrawerTrigger(button, isContentsDrawer) {
+    if (!isContentsDrawer) return;
+
+    var header = document.querySelector("#container > header");
+    if (header && button.parentElement !== header) {
+        header.appendChild(button);
+    }
+}
+
 function open_close(buttonId, menuId) {
     var button = document.getElementById(buttonId);
     var menu = resolveNavigationTarget(menuId);
@@ -20,6 +29,8 @@ function open_close(buttonId, menuId) {
 
     var isContentsDrawer = menu.id === "sub";
     var backdrop = null;
+
+    placeContentsDrawerTrigger(button, isContentsDrawer);
 
     if (isContentsDrawer) {
         backdrop = document.getElementById("mobile-nav-backdrop");
@@ -56,7 +67,15 @@ function open_close(buttonId, menuId) {
     setOpen(false);
 
     button.addEventListener("click", function () {
-        setOpen(button.getAttribute("aria-expanded") !== "true");
+        var opening = button.getAttribute("aria-expanded") !== "true";
+        setOpen(opening);
+
+        if (opening && isContentsDrawer) {
+            var firstLink = menu.querySelector("a[href]");
+            if (firstLink) {
+                firstLink.focus();
+            }
+        }
     });
 
     if (backdrop) {
