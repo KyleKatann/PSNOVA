@@ -12,7 +12,7 @@
     --surface-hover: #edf0f7;
     --text: #1f2937;
     --text-strong: #111827;
-    --text-muted: #687386;
+    --text-muted: #596474;
     --border: #d5dae4;
     --border-strong: #b9c1cf;
     --nav-bg: #252d3a;
@@ -725,7 +725,7 @@ footer a {
 #main table .rarity-cell[data-rarity="2"]::before,
 #main table .rarity-cell[data-rarity="3"],
 #main table .rarity-cell[data-rarity="3"]::before {
-    color: deepskyblue;
+    color: var(--rarity-blue);
 }
 
 #main table .rarity-cell[data-rarity="4"],
@@ -734,7 +734,7 @@ footer a {
 #main table .rarity-cell[data-rarity="5"]::before,
 #main table .rarity-cell[data-rarity="6"],
 #main table .rarity-cell[data-rarity="6"]::before {
-    color: limegreen;
+    color: var(--rarity-green);
 }
 
 #main table .rarity-cell[data-rarity="7"],
@@ -743,7 +743,7 @@ footer a {
 #main table .rarity-cell[data-rarity="8"]::before,
 #main table .rarity-cell[data-rarity="9"],
 #main table .rarity-cell[data-rarity="9"]::before {
-    color: orangered;
+    color: var(--rarity-red);
 }
 
 #main table .rarity-cell[data-rarity="10"],
@@ -752,7 +752,7 @@ footer a {
 #main table .rarity-cell[data-rarity="11"]::before,
 #main table .rarity-cell[data-rarity="12"],
 #main table .rarity-cell[data-rarity="12"]::before {
-    color: orange;
+    color: var(--rarity-orange);
 }
 
 #main table .rarity-cell[data-rarity="13"],
@@ -761,7 +761,7 @@ footer a {
 #main table .rarity-cell[data-rarity="14"]::before,
 #main table .rarity-cell[data-rarity="15"],
 #main table .rarity-cell[data-rarity="15"]::before {
-    color: violet;
+    color: var(--rarity-purple);
 }
 
 #main table .weapon-stat-cell {

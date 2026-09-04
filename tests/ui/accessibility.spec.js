@@ -42,13 +42,12 @@ function publicRoutes() {
 
 test.describe.configure({ mode: 'parallel' });
 
-test.describe('axe WCAG A/AA excluding color contrast', () => {
+test.describe('axe WCAG A/AA', () => {
   for (const route of publicRoutes()) {
     test(route, async ({ page }, testInfo) => {
       await page.goto(route, { waitUntil: 'load' });
 
       const results = await new AxeBuilder({ page })
-        .disableRules(['color-contrast'])
         .withTags([
           'wcag2a',
           'wcag2aa',
