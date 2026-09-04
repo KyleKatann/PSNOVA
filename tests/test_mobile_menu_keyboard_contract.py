@@ -11,7 +11,7 @@ def test_mobile_menu_reorders_trigger_before_binding():
 
     assert 'document.querySelector("#container > header")' in source
     assert "header.appendChild(button)" in source
-    assert "placeContentsDrawerTrigger(button, isContentsDrawer);" in source
+    assert "placeResponsiveMenuTrigger();" in source
 
 
 def test_mobile_menu_moves_focus_into_drawer_and_back_on_escape():
