@@ -29,7 +29,11 @@ class DynamicWidgetAccessibilityTests(unittest.TestCase):
             js,
         )
         self.assertIn(
-            'role="option" tabindex="-1" aria-selected="false"',
+            'role="option"',
+            js,
+        )
+        self.assertIn(
+            'option.setAttribute("tabindex", "-1")',
             js,
         )
         self.assertIn(
@@ -49,6 +53,24 @@ class DynamicWidgetAccessibilityTests(unittest.TestCase):
         self.assertIn('event.key === "ArrowUp"', js)
         self.assertIn('event.key === "Escape"', js)
         self.assertIn("window.location.assign", js)
+
+    def test_site_search_indexes_every_data_row_cell_and_supports_partial_text(self):
+        js = SEARCH.read_text(encoding="utf-8")
+
+        self.assertIn('Array.prototype.slice.call(row.cells).map', js)
+        self.assertIn('var rowText = cells.join(" / ").trim()', js)
+        self.assertIn('haystack.indexOf(normalizedQuery) !== -1', js)
+        self.assertIn('new DOMParser().parseFromString(html, "text/html")', js)
+        self.assertIn('loadSourcesWithLimit(remoteSources, 4)', js)
+
+    def test_site_search_result_preserves_exact_table_row_target(self):
+        js = SEARCH.read_text(encoding="utf-8")
+
+        self.assertIn('url.searchParams.set("site-search-table"', js)
+        self.assertIn('url.searchParams.set("site-search-row"', js)
+        self.assertIn('row.setAttribute("data-site-search-target", "true")', js)
+        self.assertIn('cell.setAttribute("data-site-search-hit", "true")', js)
+        self.assertIn('row.scrollIntoView({ block: "center", inline: "nearest" })', js)
 
     def test_affiliate_links_receive_accessible_names(self):
         js = AFFILIATE.read_text(encoding="utf-8")
