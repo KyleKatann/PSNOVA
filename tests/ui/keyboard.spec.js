@@ -114,7 +114,7 @@ test('site search highlights partial matches in results and destination row', as
 
   await expect(result).toBeVisible({ timeout: 15000 });
   await expect(result).toContainText('素材');
-  await expect(result.locator('mark.site-search-match')).toContainText('磁晶龍');
+  await expect(result.locator('mark.site-search-match').first()).toContainText('磁晶龍');
   await result.click();
 
   await expect(page).toHaveURL(/\/PSNOVA\/pages\/material\.html\?site-search=/);
@@ -124,5 +124,5 @@ test('site search highlights partial matches in results and destination row', as
   await expect(targetRow).toContainText('冷たく燃える金属結晶');
   await expect(targetRow).toContainText('目を覚ます磁晶龍H');
   await expect(targetRow.locator('[data-site-search-hit="true"]')).toContainText('目を覚ます磁晶龍H');
-  await expect(targetRow.locator('mark.site-search-match')).toContainText('磁晶龍');
+  await expect(targetRow.locator('mark.site-search-match').first()).toContainText('磁晶龍');
 });
