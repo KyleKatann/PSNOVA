@@ -51,7 +51,7 @@ test.describe('axe WCAG A/AA excluding color contrast', () => {
         .disableRules(['color-contrast'])
         .withTags([
           'wcag2a',
-          'wcg2aa',
+          'wcag2aa',
           'wcag21a',
           'wcag21aa',
           'wcag22aa',
