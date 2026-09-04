@@ -35,6 +35,8 @@ Modernization work must preserve existing data and URLs while improving usabilit
 
 - Preserve the user-approved PSNOVA color palette. Do not automatically darken or replace site colors solely to satisfy automated contrast checks. Automated axe audits intentionally exclude `color-contrast` unless the user explicitly requests color-accessibility enforcement.
 
+- Mobile navigation keeps a logical keyboard focus path: shared initialization moves `#menubar_hdr` into `#container > header` before interaction; opening the攻略 drawer moves focus to its first link; Escape closes the drawer and returns focus to the trigger. Do not use positive `tabindex` values to repair focus order.
+
 - Dynamic widgets must expose valid accessible names and ARIA semantics. The site-data search is an editable `combobox` controlling `#site-search-results`; rendered affiliate image links must have a discernible accessible name even when their remote images use empty alt.
 
 - Every public page footer exposes the site-information pages `/PSNOVA/copyright.html` and `/PSNOVA/issue.html`. Keep all public pages reachable from `/PSNOVA/` through internal navigation; do not silence the orphan-page regression test with allow-lists.
