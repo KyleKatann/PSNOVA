@@ -11,11 +11,11 @@ function resolveNavigationTarget(menuId) {
     return menu;
 }
 
-function placeContentsDrawerTrigger(button, isContentsDrawer) {
-    if (!isContentsDrawer) return;
-
+function placeResponsiveMenuTrigger() {
+    var button = document.getElementById("menubar_hdr");
     var header = document.querySelector("#container > header");
-    if (header && button.parentElement !== header) {
+
+    if (button && header && button.parentElement !== header) {
         header.appendChild(button);
     }
 }
@@ -30,9 +30,8 @@ function open_close(buttonId, menuId) {
     var isContentsDrawer = menu.id === "sub";
     var backdrop = null;
 
-    placeContentsDrawerTrigger(button, isContentsDrawer);
-
     if (isContentsDrawer) {
+        placeResponsiveMenuTrigger();
         backdrop = document.getElementById("mobile-nav-backdrop");
         if (!backdrop) {
             backdrop = document.createElement("div");
@@ -106,6 +105,8 @@ function initResponsiveContentsMenu() {
         open_close("menubar_hdr", "sub");
     }
 }
+
+placeResponsiveMenuTrigger();
 
 if (document.readyState === "loading") {
     document.addEventListener("DOMContentLoaded", initResponsiveContentsMenu, { once: true });
