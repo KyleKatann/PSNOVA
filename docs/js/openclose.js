@@ -11,6 +11,15 @@ function resolveNavigationTarget(menuId) {
     return menu;
 }
 
+function placeResponsiveMenuTrigger() {
+    var button = document.getElementById("menubar_hdr");
+    var header = document.querySelector("#container > header");
+
+    if (button && header && button.parentElement !== header) {
+        header.appendChild(button);
+    }
+}
+
 function open_close(buttonId, menuId) {
     var button = document.getElementById(buttonId);
     var menu = resolveNavigationTarget(menuId);
@@ -22,6 +31,7 @@ function open_close(buttonId, menuId) {
     var backdrop = null;
 
     if (isContentsDrawer) {
+        placeResponsiveMenuTrigger();
         backdrop = document.getElementById("mobile-nav-backdrop");
         if (!backdrop) {
             backdrop = document.createElement("div");
@@ -56,7 +66,15 @@ function open_close(buttonId, menuId) {
     setOpen(false);
 
     button.addEventListener("click", function () {
-        setOpen(button.getAttribute("aria-expanded") !== "true");
+        var opening = button.getAttribute("aria-expanded") !== "true";
+        setOpen(opening);
+
+        if (opening && isContentsDrawer) {
+            var firstLink = menu.querySelector("a[href]");
+            if (firstLink) {
+                firstLink.focus();
+            }
+        }
     });
 
     if (backdrop) {
@@ -87,6 +105,8 @@ function initResponsiveContentsMenu() {
         open_close("menubar_hdr", "sub");
     }
 }
+
+placeResponsiveMenuTrigger();
 
 if (document.readyState === "loading") {
     document.addEventListener("DOMContentLoaded", initResponsiveContentsMenu, { once: true });
