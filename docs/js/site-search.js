@@ -46,8 +46,46 @@
 
         var input = document.getElementById("site-data-search");
         var results = document.getElementById("site-search-results");
+        var activeIndex = -1;
+
+        function getOptions() {
+            return Array.prototype.slice.call(
+                results.querySelectorAll('[role="option"]')
+            );
+        }
+
+        function clearActiveOption() {
+            getOptions().forEach(function (option) {
+                option.classList.remove("is-active");
+                option.setAttribute("aria-selected", "false");
+            });
+            activeIndex = -1;
+            input.removeAttribute("aria-activedescendant");
+        }
+
+        function setActiveOption(index) {
+            var options = getOptions();
+            if (!options.length) {
+                clearActiveOption();
+                return;
+            }
+
+            if (index < 0) index = options.length - 1;
+            if (index >= options.length) index = 0;
+
+            activeIndex = index;
+            options.forEach(function (option, optionIndex) {
+                var selected = optionIndex === activeIndex;
+                option.classList.toggle("is-active", selected);
+                option.setAttribute("aria-selected", String(selected));
+            });
+
+            input.setAttribute("aria-activedescendant", options[activeIndex].id);
+            options[activeIndex].scrollIntoView({ block: "nearest" });
+        }
 
         function closeResults() {
+            clearActiveOption();
             results.hidden = true;
             results.innerHTML = "";
             input.setAttribute("aria-expanded", "false");
@@ -63,18 +101,51 @@
                 return normalize(page.title + " " + page.keywords).indexOf(query) !== -1;
             }).slice(0, 8);
             results.innerHTML = matches.length
-                ? matches.map(function (page) {
-                    return '<a role="option" href="' + page.url + '">' + page.title + '</a>';
+                ? matches.map(function (page, index) {
+                    return '<a id="site-search-option-' + index + '" role="option" aria-selected="false" tabindex="-1" href="' + page.url + '">' + page.title + '</a>';
                 }).join("")
                 : '<p class="site-search-empty">該当するデータカテゴリがありません</p>';
+            clearActiveOption();
             results.hidden = false;
             input.setAttribute("aria-expanded", "true");
         }
 
         input.addEventListener("input", renderResults);
         input.addEventListener("keydown", function (event) {
+            if (event.key === "ArrowDown" || event.key === "ArrowUp") {
+                if (results.hidden && normalize(input.value)) {
+                    renderResults();
+                }
+
+                var options = getOptions();
+                if (!options.length) return;
+
+                event.preventDefault();
+                if (event.key === "ArrowDown") {
+                    setActiveOption(activeIndex < 0 ? 0 : activeIndex + 1);
+                } else {
+                    setActiveOption(activeIndex < 0 ? options.length - 1 : activeIndex - 1);
+                }
+                return;
+            }
+
+            if (event.key === "Enter") {
+                var activeOption = getOptions()[activeIndex];
+                if (activeOption) {
+                    event.preventDefault();
+                    activeOption.click();
+                }
+                return;
+            }
+
             if (event.key === "Escape") {
+                event.preventDefault();
                 input.value = "";
+                closeResults();
+                return;
+            }
+
+            if (event.key === "Tab") {
                 closeResults();
             }
         });
