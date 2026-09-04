@@ -28,6 +28,27 @@ class DynamicWidgetAccessibilityTests(unittest.TestCase):
             'role="listbox"',
             js,
         )
+        self.assertIn(
+            'role="option" tabindex="-1" aria-selected="false"',
+            js,
+        )
+        self.assertIn(
+            'input.setAttribute(\n                "aria-activedescendant"',
+            js,
+        )
+
+    def test_site_search_has_submit_and_keyboard_navigation(self):
+        js = SEARCH.read_text(encoding="utf-8")
+
+        self.assertIn(
+            '<button class="site-search-submit" type="submit">検索</button>',
+            js,
+        )
+        self.assertIn('form.addEventListener("submit"', js)
+        self.assertIn('event.key === "ArrowDown"', js)
+        self.assertIn('event.key === "ArrowUp"', js)
+        self.assertIn('event.key === "Escape"', js)
+        self.assertIn("window.location.assign", js)
 
     def test_affiliate_links_receive_accessible_names(self):
         js = AFFILIATE.read_text(encoding="utf-8")
