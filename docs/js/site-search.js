@@ -1,36 +1,7 @@
 (function () {
-    var pages = [
-        { title: "初心者Q&A", url: "/PSNOVA/pages/faq.html", keywords: "FAQ 質問 初心者 体験版 システム 高難易度 PSO2" },
-        { title: "クラス", url: "/PSNOVA/pages/class.html", keywords: "クラス ハンター レンジャー フォース バスター class" },
-        { title: "スキル", url: "/PSNOVA/pages/skill.html", keywords: "スキル skill ハンター レンジャー フォース バスター" },
-        { title: "武器データ", url: "/PSNOVA/pages/weapon.html", keywords: "武器 ウェポン 武器種" },
-        { title: "ソード", url: "/PSNOVA/pages/weapon/sword.html", keywords: "武器 ソード sword" },
-        { title: "パルチザン", url: "/PSNOVA/pages/weapon/partizan.html", keywords: "武器 パルチザン partizan" },
-        { title: "ダブルセイバー", url: "/PSNOVA/pages/weapon/doublesaber.html", keywords: "武器 ダブルセイバー doublesaber" },
-        { title: "ナックル", url: "/PSNOVA/pages/weapon/knuckle.html", keywords: "武器 ナックル knuckle" },
-        { title: "アサルトライフル", url: "/PSNOVA/pages/weapon/rifle.html", keywords: "武器 ライフル rifle" },
-        { title: "ツインマシンガン", url: "/PSNOVA/pages/weapon/tmachinegun.html", keywords: "武器 ツインマシンガン machinegun" },
-        { title: "ロッド", url: "/PSNOVA/pages/weapon/rod.html", keywords: "武器 ロッド rod" },
-        { title: "タリス", url: "/PSNOVA/pages/weapon/talis.html", keywords: "武器 タリス talis" },
-        { title: "ウォンド", url: "/PSNOVA/pages/weapon/wand.html", keywords: "武器 ウォンド wand" },
-        { title: "ヘイロウ", url: "/PSNOVA/pages/weapon/halo.html", keywords: "武器 ヘイロウ halo" },
-        { title: "パイル", url: "/PSNOVA/pages/weapon/pile.html", keywords: "武器 パイル pile" },
-        { title: "防具データ", url: "/PSNOVA/pages/armor.html", keywords: "防具 アーマー armor" },
-        { title: "アタッチパーツ", url: "/PSNOVA/pages/attachment.html", keywords: "アタッチ パーツ attachment" },
-        { title: "特殊能力", url: "/PSNOVA/pages/specialability.html", keywords: "特殊能力 ability" },
-        { title: "素材", url: "/PSNOVA/pages/material.html", keywords: "素材 material コア" },
-        { title: "消費アイテム", url: "/PSNOVA/pages/item.html", keywords: "アイテム item 消費" },
-        { title: "エネミー", url: "/PSNOVA/pages/enemy.html", keywords: "敵 enemy エネミー" },
-        { title: "ギガンテス", url: "/PSNOVA/pages/gigantes.html", keywords: "ギガンテス gigantes ボス" },
-        { title: "難易度", url: "/PSNOVA/pages/difficulty.html", keywords: "難易度 difficulty クエスト" },
-        { title: "種族", url: "/PSNOVA/pages/species.html", keywords: "種族 species キャラクター" },
-        { title: "外見・コスチューム", url: "/PSNOVA/pages/appearance.html", keywords: "外見 ヘアスタイル コスチューム アクセサリー appearance" },
-        { title: "トロフィー", url: "/PSNOVA/pages/trophy.html", keywords: "トロフィー trophy" }
-    ];
-
-    var searchSources = [
-        { title: "ゲーム紹介", url: "/PSNOVA/", keywords: "PSNOVA ファンタシースター ノヴァ ゲーム紹介" }
-    ].concat(pages);
+    var SITEMAP_URL = "/PSNOVA/sitemap.xml";
+    var MAX_RESULTS = 12;
+    var FETCH_CONCURRENCY = 4;
 
     function normalize(value) {
         return (value || "")
@@ -40,17 +11,44 @@
             .trim();
     }
 
-    function textOf(node) {
-        return normalize(node && node.textContent).replace(/\s+/g, " ");
+    function cleanText(value) {
+        return (value || "").replace(/\s+/g, " ").trim();
     }
 
-    function sourcePath(url) {
-        var path = new URL(url, window.location.href).pathname;
-        return path.replace(/\/index\.html$/, "/");
+    function canonicalPath(url) {
+        return new URL(url, window.location.href).pathname.replace(/\/index\.html$/, "/");
     }
 
-    function currentPath() {
-        return window.location.pathname.replace(/\/index\.html$/, "/");
+    function isPublicPageUrl(url) {
+        var parsed;
+        try {
+            parsed = new URL(url, window.location.href);
+        } catch (error) {
+            return false;
+        }
+
+        if (parsed.origin !== window.location.origin) return false;
+        if (parsed.pathname.indexOf("/PSNOVA/") !== 0) return false;
+        if (parsed.pathname.indexOf("/分類中/") !== -1) return false;
+
+        return parsed.pathname.endsWith("/") || parsed.pathname.endsWith(".html");
+    }
+
+    function pageTitleFromDocument(doc) {
+        var heading = doc.querySelector("#main h2");
+        if (heading && cleanText(heading.textContent)) {
+            return cleanText(heading.textContent);
+        }
+
+        var title = cleanText(doc.title);
+        return title.replace(/^PSNOVA攻略サイト\s*-\s*/, "") || "PSNOVA攻略サイト";
+    }
+
+    function sourceFromDocument(doc, url) {
+        return {
+            title: pageTitleFromDocument(doc),
+            url: canonicalPath(url)
+        };
     }
 
     function dataRows(table) {
@@ -65,7 +63,7 @@
         var details = table.closest("details");
         var summary = details && details.querySelector(":scope > summary");
         if (summary) {
-            return summary.textContent.replace(/\s+/g, " ").trim();
+            return cleanText(summary.textContent);
         }
 
         var headings = Array.prototype.slice.call(
@@ -75,23 +73,34 @@
 
         headings.forEach(function (heading) {
             if (heading.compareDocumentPosition(table) & 4) {
-                latest = heading.textContent.replace(/\s+/g, " ").trim();
+                latest = cleanText(heading.textContent);
             }
         });
 
         return latest;
     }
 
-    function extractTableEntries(doc, source) {
+    function extractDocumentEntries(doc, source) {
+        var entries = [{
+            kind: "page",
+            pageTitle: source.title,
+            section: "",
+            label: source.title,
+            text: source.title,
+            cells: [],
+            url: source.url,
+            tableIndex: null,
+            rowIndex: null
+        }];
+
         var tables = Array.prototype.slice.call(doc.querySelectorAll("#main table"));
-        var entries = [];
 
         tables.forEach(function (table, tableIndex) {
             var section = sectionForTable(doc, table);
 
             dataRows(table).forEach(function (row, rowIndex) {
                 var cells = Array.prototype.slice.call(row.cells).map(function (cell) {
-                    return cell.textContent.replace(/\s+/g, " ").trim();
+                    return cleanText(cell.textContent);
                 });
                 var rowText = cells.join(" / ").trim();
 
@@ -114,22 +123,6 @@
         return entries;
     }
 
-    function metadataEntries() {
-        return searchSources.map(function (source) {
-            return {
-                kind: "page",
-                pageTitle: source.title,
-                section: "",
-                label: source.title,
-                text: source.title + " " + source.keywords,
-                cells: [],
-                url: source.url,
-                tableIndex: null,
-                rowIndex: null
-            };
-        });
-    }
-
     function matchesQuery(entry, normalizedQuery) {
         var haystack = normalize(entry.text);
         if (haystack.indexOf(normalizedQuery) !== -1) return true;
@@ -143,23 +136,27 @@
     function scoreEntry(entry, normalizedQuery) {
         if (!matchesQuery(entry, normalizedQuery)) return -1;
 
-        var label = normalize(entry.label);
+        var normalizedCells = entry.cells.map(normalize);
         var section = normalize(entry.section);
-        var text = normalize(entry.text);
+        var label = normalize(entry.label);
         var score = entry.kind === "row" ? 200 : 100;
 
-        if (label === normalizedQuery) score += 1200;
-        else if (label.indexOf(normalizedQuery) === 0) score += 900;
-        else if (label.indexOf(normalizedQuery) !== -1) score += 700;
+        if (normalizedCells.some(function (cell) { return cell === normalizedQuery; })) {
+            score += 1200;
+        } else if (normalizedCells.some(function (cell) { return cell.indexOf(normalizedQuery) === 0; })) {
+            score += 900;
+        } else if (normalizedCells.some(function (cell) { return cell.indexOf(normalizedQuery) !== -1; })) {
+            score += 700;
+        }
+
+        if (entry.kind === "page") {
+            if (label === normalizedQuery) score += 1400;
+            else if (label.indexOf(normalizedQuery) === 0) score += 1000;
+            else if (label.indexOf(normalizedQuery) !== -1) score += 800;
+        }
 
         if (section === normalizedQuery) score += 500;
         else if (section.indexOf(normalizedQuery) !== -1) score += 300;
-
-        if (text.indexOf(normalizedQuery) !== -1) score += 250;
-
-        if (entry.kind === "page" && label === normalizedQuery) {
-            score += 500;
-        }
 
         return score;
     }
@@ -168,7 +165,6 @@
         var match = entry.cells.find(function (cell) {
             return normalize(cell).indexOf(normalizedQuery) !== -1;
         });
-
         if (match) return match;
 
         var terms = normalizedQuery.split(" ").filter(Boolean);
@@ -209,12 +205,10 @@
             return;
         }
 
-        var tables = document.querySelectorAll("#main table");
-        var table = tables[tableIndex];
+        var table = document.querySelectorAll("#main table")[tableIndex];
         if (!table) return;
 
-        var rows = dataRows(table);
-        var row = rows[rowIndex];
+        var row = dataRows(table)[rowIndex];
         if (!row) return;
 
         var details = row.closest("details");
@@ -234,6 +228,60 @@
                 row.scrollIntoView({ block: "center", inline: "nearest" });
             });
         });
+    }
+
+    function loadSitemapSources() {
+        return fetch(SITEMAP_URL, { credentials: "same-origin" })
+            .then(function (response) {
+                if (!response.ok) {
+                    throw new Error("Sitemap fetch failed: " + response.status);
+                }
+                return response.text();
+            })
+            .then(function (xmlText) {
+                var xml = new DOMParser().parseFromString(xmlText, "application/xml");
+                if (xml.querySelector("parsererror")) {
+                    throw new Error("Sitemap XML parse failed");
+                }
+
+                var seen = Object.create(null);
+                var sources = [];
+                var locNodes = Array.prototype.slice.call(
+                    xml.getElementsByTagNameNS("*", "loc")
+                );
+
+                locNodes.forEach(function (loc) {
+                    var rawUrl = cleanText(loc.textContent);
+                    if (!isPublicPageUrl(rawUrl)) return;
+
+                    var path = canonicalPath(rawUrl);
+                    if (seen[path]) return;
+                    seen[path] = true;
+                    sources.push({ url: path });
+                });
+
+                return sources;
+            });
+    }
+
+    function fetchDocumentEntries(source) {
+        return fetch(source.url, { credentials: "same-origin" })
+            .then(function (response) {
+                if (!response.ok) {
+                    throw new Error("Search source fetch failed: " + response.status);
+                }
+                return response.text();
+            })
+            .then(function (html) {
+                var doc = new DOMParser().parseFromString(html, "text/html");
+                return extractDocumentEntries(
+                    doc,
+                    sourceFromDocument(doc, source.url)
+                );
+            })
+            .catch(function () {
+                return [];
+            });
     }
 
     function initSiteSearch() {
@@ -258,19 +306,12 @@
         var submitButton = wrapper.querySelector(".site-search-submit");
         var activeIndex = -1;
         var currentMatches = [];
-        var searchIndex = metadataEntries();
         var indexPromise = null;
         var indexComplete = false;
+        var indexFailed = false;
 
-        var currentSource = searchSources.find(function (source) {
-            return sourcePath(source.url) === currentPath();
-        });
-
-        if (currentSource) {
-            searchIndex = searchIndex.concat(
-                extractTableEntries(document, currentSource)
-            );
-        }
+        var currentSource = sourceFromDocument(document, window.location.href);
+        var searchIndex = extractDocumentEntries(document, currentSource);
 
         function optionElements() {
             return Array.prototype.slice.call(
@@ -315,10 +356,39 @@
                 .sort(function (left, right) {
                     return right.score - left.score || left.order - right.order;
                 })
-                .slice(0, 12)
+                .slice(0, MAX_RESULTS)
                 .map(function (item) {
                     return item.entry;
                 });
+        }
+
+        function appendResult(entry, index, query) {
+            var option = document.createElement("a");
+            option.id = "site-search-option-" + index;
+            option.setAttribute("role", "option");
+            option.setAttribute("tabindex", "-1");
+            option.setAttribute("aria-selected", "false");
+            option.href = resultUrl(entry, query);
+
+            var title = document.createElement("span");
+            title.className = "site-search-result-title";
+            title.textContent = entry.label;
+            option.appendChild(title);
+
+            if (entry.kind === "row") {
+                var context = document.createElement("span");
+                context.className = "site-search-result-context";
+                context.textContent = entry.pageTitle + (entry.section ? " › " + entry.section : "");
+                option.appendChild(context);
+
+                var matchedCell = matchingCellText(entry, normalize(query));
+                var snippet = document.createElement("span");
+                snippet.className = "site-search-result-snippet";
+                snippet.textContent = cleanText(matchedCell).slice(0, 180);
+                option.appendChild(snippet);
+            }
+
+            results.appendChild(option);
         }
 
         function renderResults() {
@@ -335,39 +405,27 @@
 
             if (currentMatches.length) {
                 currentMatches.forEach(function (entry, index) {
-                    var option = document.createElement("a");
-                    option.id = "site-search-option-" + index;
-                    option.setAttribute("role", "option");
-                    option.setAttribute("tabindex", "-1");
-                    option.setAttribute("aria-selected", "false");
-                    option.href = resultUrl(entry, query);
-
-                    if (entry.kind === "row") {
-                        var context = entry.pageTitle;
-                        if (entry.section && entry.section !== entry.pageTitle) {
-                            context += " › " + entry.section;
-                        }
-                        option.textContent = entry.label + " — " + context + " — " + entry.text;
-                    } else {
-                        option.textContent = entry.label;
-                    }
-
-                    results.appendChild(option);
+                    appendResult(entry, index, query);
                 });
             } else {
                 var empty = document.createElement("p");
                 empty.className = "site-search-empty";
                 empty.textContent = indexComplete
                     ? "該当するデータがありません"
-                    : "全ページのデータを検索中です…";
+                    : "全ページの表を検索中です…";
                 results.appendChild(empty);
             }
 
             results.hidden = false;
             input.setAttribute("aria-expanded", "true");
-            status.textContent = indexComplete
-                ? (currentMatches.length + "件の候補を表示")
-                : "表の全列を検索中…";
+
+            if (indexFailed) {
+                status.textContent = "一部ページを読み込めませんでした。表示済みデータから検索しています。";
+            } else if (!indexComplete) {
+                status.textContent = "公開ページの表を動的に検索中…";
+            } else {
+                status.textContent = currentMatches.length + "件の候補を表示";
+            }
         }
 
         function setActiveOption(index) {
@@ -392,23 +450,6 @@
             options[activeIndex].scrollIntoView({ block: "nearest" });
         }
 
-        function fetchSource(source) {
-            return fetch(source.url, { credentials: "same-origin" })
-                .then(function (response) {
-                    if (!response.ok) {
-                        throw new Error("Search source fetch failed: " + response.status);
-                    }
-                    return response.text();
-                })
-                .then(function (html) {
-                    var doc = new DOMParser().parseFromString(html, "text/html");
-                    return extractTableEntries(doc, source);
-                })
-                .catch(function () {
-                    return [];
-                });
-        }
-
         function loadSourcesWithLimit(sources, limit) {
             var queueIndex = 0;
 
@@ -420,13 +461,11 @@
                 var source = sources[queueIndex];
                 queueIndex += 1;
 
-                return fetchSource(source).then(function (entries) {
+                return fetchDocumentEntries(source).then(function (entries) {
                     searchIndex = searchIndex.concat(entries);
-
                     if (normalize(input.value) && activeIndex < 0) {
                         renderResults();
                     }
-
                     return worker();
                 });
             }
@@ -443,11 +482,17 @@
         function ensureSearchIndex() {
             if (indexPromise) return indexPromise;
 
-            var remoteSources = searchSources.filter(function (source) {
-                return sourcePath(source.url) !== currentPath();
-            });
-
-            indexPromise = loadSourcesWithLimit(remoteSources, 4)
+            indexPromise = loadSitemapSources()
+                .then(function (sources) {
+                    var current = canonicalPath(window.location.href);
+                    var remoteSources = sources.filter(function (source) {
+                        return canonicalPath(source.url) !== current;
+                    });
+                    return loadSourcesWithLimit(remoteSources, FETCH_CONCURRENCY);
+                })
+                .catch(function () {
+                    indexFailed = true;
+                })
                 .then(function () {
                     indexComplete = true;
                     if (normalize(input.value) && activeIndex < 0) {
@@ -510,9 +555,7 @@
 
         input.addEventListener("keydown", function (event) {
             if (event.key === "ArrowDown") {
-                if (results.hidden) {
-                    renderResults();
-                }
+                if (results.hidden) renderResults();
                 if (currentMatches.length) {
                     event.preventDefault();
                     setActiveOption(activeIndex + 1);
@@ -521,9 +564,7 @@
             }
 
             if (event.key === "ArrowUp") {
-                if (results.hidden) {
-                    renderResults();
-                }
+                if (results.hidden) renderResults();
                 if (currentMatches.length) {
                     event.preventDefault();
                     setActiveOption(activeIndex < 0 ? currentMatches.length - 1 : activeIndex - 1);
