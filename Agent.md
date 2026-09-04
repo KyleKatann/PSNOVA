@@ -33,7 +33,7 @@ Modernization work must preserve existing data and URLs while improving usabilit
 
 ## Correction-derived invariants
 
-- Shared muted text and rarity text colors must meet WCAG AA 4.5:1 contrast against their normal site backgrounds. Preserve the canonical rarity hue mapping (1-3 blue, 4-6 green, 7-9 red, 10-12 orange, 13-15 purple), but use the centralized `--rarity-*` tokens rather than low-contrast CSS named colors.
+- Preserve the user-approved PSNOVA color palette. Do not automatically darken or replace site colors solely to satisfy automated contrast checks. Automated axe audits intentionally exclude `color-contrast` unless the user explicitly requests color-accessibility enforcement.
 
 - Dynamic widgets must expose valid accessible names and ARIA semantics. The site-data search is an editable `combobox` controlling `#site-search-results`; rendered affiliate image links must have a discernible accessible name even when their remote images use empty alt.
 
