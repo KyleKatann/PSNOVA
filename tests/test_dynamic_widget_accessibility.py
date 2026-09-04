@@ -70,6 +70,24 @@ class DynamicWidgetAccessibilityTests(unittest.TestCase):
         self.assertIn('cell.setAttribute("data-site-search-hit", "true")', js)
         self.assertIn('row.scrollIntoView({ block: "center", inline: "nearest" })', js)
 
+    def test_site_search_marks_matching_text_with_site_accent(self):
+        js = SEARCH.read_text(encoding="utf-8")
+
+        self.assertIn('document.createElement("mark")', js)
+        self.assertIn('mark.className = "site-search-match"', js)
+        self.assertIn('mark.style.background = "var(--accent)"', js)
+        self.assertIn('appendMarkedText(title, entry.label, query)', js)
+        self.assertIn('highlightElementForQuery(cell, query)', js)
+
+    def test_site_search_controls_stay_on_one_row(self):
+        js = SEARCH.read_text(encoding="utf-8")
+
+        self.assertIn('controls.style.display = "flex"', js)
+        self.assertIn('input.style.flex = "1 1 0"', js)
+        self.assertIn('input.style.minWidth = "0"', js)
+        self.assertIn('button.style.flex = "0 0 auto"', js)
+        self.assertIn('button.style.height = "42px"', js)
+
     def test_affiliate_links_receive_accessible_names(self):
         js = AFFILIATE.read_text(encoding="utf-8")
 
