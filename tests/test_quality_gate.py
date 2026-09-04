@@ -73,7 +73,7 @@ class QualityGateTests(unittest.TestCase):
 
         self.assertNotIn(
             '"axe accessibility scan"',
-            source,
+            inventory,
         )
         self.assertNotIn(
             '"color contrast"',
