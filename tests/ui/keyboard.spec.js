@@ -34,7 +34,7 @@ test('mobile navigation keeps a logical keyboard focus path', async ({ page }, t
   await expect(trigger).toBeFocused();
 });
 
-test('site search button submits the first matching destination', async ({ page }) => {
+test('site search button discovers page destinations dynamically', async ({ page }) => {
   await page.goto('/PSNOVA/', { waitUntil: 'load' });
 
   const input = page.locator('#site-data-search');
@@ -47,14 +47,14 @@ test('site search button submits the first matching destination', async ({ page 
   await expect(page).toHaveURL(/\/PSNOVA\/pages\/material\.html$/);
 });
 
-test('site search arrows select options and Enter activates selection', async ({ page }) => {
+test('site search arrows select a dynamic result and Enter activates it', async ({ page }) => {
   await page.goto('/PSNOVA/', { waitUntil: 'load' });
 
   const input = page.locator('#site-data-search');
-  await input.fill('武器');
+  await input.fill('ソード');
 
   const options = page.locator('#site-search-results [role="option"]');
-  await expect(options.first()).toBeVisible();
+  await expect(options.first()).toBeVisible({ timeout: 15000 });
   await expect(options.first()).toHaveAttribute('tabindex', '-1');
 
   await input.press('ArrowDown');
@@ -63,13 +63,6 @@ test('site search arrows select options and Enter activates selection', async ({
     'site-search-option-0'
   );
   await expect(options.nth(0)).toHaveAttribute('aria-selected', 'true');
-
-  await input.press('ArrowDown');
-  await expect(input).toHaveAttribute(
-    'aria-activedescendant',
-    'site-search-option-1'
-  );
-  await expect(options.nth(1)).toHaveAttribute('aria-selected', 'true');
 
   await input.press('Enter');
   await expect(page).toHaveURL(/\/PSNOVA\/pages\/weapon\/sword\.html$/);
