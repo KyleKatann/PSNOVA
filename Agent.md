@@ -31,6 +31,7 @@ Modernization work must preserve existing data and URLs while improving usabilit
 22. **Never hotlink site-display assets from external websites.** Images, fonts, CSS, JavaScript, and other visual/runtime assets used by the public site must be stored in this repository and referenced with local `/PSNOVA/...` paths. Do not use remote image URLs, CDN asset URLs, or other external-site asset references. Intentional reader navigation such as approved affiliate links is a separate concern and is not an asset hotlink.
 23. **Do not increase the number of public CSS files.** The public CSS file count must never exceed two. `docs/css/style.css` owns shared/sitewide styles and `docs/css/page.css` owns page-specific styles such as homepage and weapon UI. Extend or consolidate these existing owners instead of adding another stylesheet; further consolidation may reduce the count, but stylesheet proliferation is prohibited.
 24. **Use `master` as the only active development and publishing branch. Do not create, switch to, or use feature branches, work branches, temporary implementation branches, or PR branches for PSNOVA work unless the user explicitly reverses this rule. Normal implementation, commits, and pushes must go directly to `master`. Existing backup/archive branches may remain as read-only historical recovery points but must not be used for active work.**
+25. **Do not discard historical Wiki article content during modernization.** When migrating from `reference/psnovanet/psnova` or `docs/pages/分類中/`, preserve every reader-useful gameplay fact, table row/value, note, requirement, exception, acquisition condition, password/code, quest detail, and explanatory guide point unless it is an exact duplicate, archived Wiki/Wayback chrome, analytics/ads/edit/comment UI, or a separately evidenced factual correction. If useful source content has no obvious place in the new layout, create an appropriate section rather than omit it. Add source-vs-public regression or sentinel coverage where feasible so accidental omissions are detected automatically.
 
 ## Session execution contract
 
@@ -57,7 +58,6 @@ Modernization work must preserve existing data and URLs while improving usabilit
 - Every public HTML page must remain reachable from `/PSNOVA/` through public internal links, including links supplied by the shared sidebar. `tests/test_public_navigation_reachability.py` guards against orphan public pages.
 
 - Public `<img>` elements declare both numeric `width` and `height` using the source image's intrinsic dimensions. CSS remains responsible for responsive rendered sizing; the HTML dimensions reserve the correct aspect ratio before image load and reduce layout shift.
-
 - Public pages load the four shared head scripts (`openclose.js`, `fixmenu_pagetop.js`, `menubar.js`, `sidebar.js`) with `defer`. Public HTML must not contain inline initialization scripts; shared components initialize themselves from external JS after parsing while preserving document-order execution.
 
 - Every public page explicitly declares the repository-owned `/PSNOVA/img/logo.png` as its favicon. Keep favicon resources local to the repository and do not introduce external icon hotlinks.
@@ -117,7 +117,6 @@ These are specifications established by user review and must be treated as regre
 - On mobile, internal data-table cells do not auto-wrap because the tables are horizontally scrollable. All internal data tables use `.table-scroll` as the single horizontal scroll container. No body or header column is fixed or sticky; the first column scrolls horizontally together with every other column.
 
 ## Recovery point
-
 The pre-modernization site is preserved in Git history and in:
 
 - Branch: `backup/pre-modernization-20260830`
