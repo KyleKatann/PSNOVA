@@ -67,6 +67,36 @@ EXPECTED = {'/PSNOVA/': {'description': 'PSNOVA(ファンタシースター ノ�
  '/PSNOVA/pages/weapon/wand.html': {'description': 'PSNOVAのウォンド一覧。レアリティ、攻撃力、ショップレベル、必要素材を確認できます。',
                                     'title': 'PSNOVA攻略サイト - ウォンド'}}
 
+EXPECTED.update({
+    '/PSNOVA/pages/granarts.html': {
+        'description': 'PSNOVAの8武器種のグランアーツから、武器種別の性能・効果ページを選べます。',
+        'title': 'PSNOVA攻略サイト - グランアーツ'},
+    '/PSNOVA/pages/granarts/doublesaber.html': {
+        'description': 'PSNOVAのダブルセイバー系グランアーツを一覧掲載。技量補正、説明、Lv30威力、消費GPを確認できます。',
+        'title': 'PSNOVA攻略サイト - ダブルセイバーのグランアーツ'},
+    '/PSNOVA/pages/granarts/halo.html': {
+        'description': 'PSNOVAのヘイロウ系グランアーツを一覧掲載。技量補正、説明、Lv30威力、消費GPを確認できます。',
+        'title': 'PSNOVA攻略サイト - ヘイロウのグランアーツ'},
+    '/PSNOVA/pages/granarts/knuckle.html': {
+        'description': 'PSNOVAのナックル系グランアーツを一覧掲載。技量補正、説明、Lv30威力、消費GPを確認できます。',
+        'title': 'PSNOVA攻略サイト - ナックルのグランアーツ'},
+    '/PSNOVA/pages/granarts/partizan.html': {
+        'description': 'PSNOVAのパルチザン系グランアーツを一覧掲載。技量補正、説明、Lv30威力、消費GPを確認できます。',
+        'title': 'PSNOVA攻略サイト - パルチザンのグランアーツ'},
+    '/PSNOVA/pages/granarts/pile.html': {
+        'description': 'PSNOVAのパイル系グランアーツを一覧掲載。技量補正、説明、Lv30威力、消費GPを確認できます。',
+        'title': 'PSNOVA攻略サイト - パイルのグランアーツ'},
+    '/PSNOVA/pages/granarts/rifle.html': {
+        'description': 'PSNOVAのアサルトライフル系グランアーツを一覧掲載。技量補正、説明、Lv30威力、消費GPを確認できます。',
+        'title': 'PSNOVA攻略サイト - アサルトライフルのグランアーツ'},
+    '/PSNOVA/pages/granarts/sword.html': {
+        'description': 'PSNOVAのソード系グランアーツを一覧掲載。技量補正、説明、Lv30威力、消費GPを確認できます。',
+        'title': 'PSNOVA攻略サイト - ソードのグランアーツ'},
+    '/PSNOVA/pages/granarts/tmachinegun.html': {
+        'description': 'PSNOVAのツインマシンガン系グランアーツを一覧掲載。技量補正、説明、Lv30威力、消費GPを確認できます。',
+        'title': 'PSNOVA攻略サイト - ツインマシンガンのグランアーツ'},
+})
+
 
 class HeadMetadataParser(HTMLParser):
     def __init__(self):
@@ -198,7 +228,7 @@ def parse(route):
 
 def test_sitemap_and_static_metadata_cover_same_routes():
     assert sitemap_routes() == set(EXPECTED)
-    assert len(EXPECTED) == 29
+    assert len(EXPECTED) == 38
 
 
 def test_public_metadata_is_static_and_exact():

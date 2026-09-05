@@ -28,6 +28,19 @@ var html =`
             <li><a href="/PSNOVA/pages/weapon/pile.html">パイル</a></li>
         </ul>
     </li>
+    <li class="has-submenu weapon-data-item">
+        <a class="weapon-data-link" href="/PSNOVA/pages/granarts.html">グランアーツ</a>
+        <ul class="weapon-submenu" aria-label="グランアーツ武器種">
+            <li><a href="/PSNOVA/pages/granarts/sword.html">ソード</a></li>
+            <li><a href="/PSNOVA/pages/granarts/partizan.html">パルチザン</a></li>
+            <li><a href="/PSNOVA/pages/granarts/doublesaber.html">ダブルセイバー</a></li>
+            <li><a href="/PSNOVA/pages/granarts/knuckle.html">ナックル</a></li>
+            <li><a href="/PSNOVA/pages/granarts/rifle.html">アサルトライフル</a></li>
+            <li><a href="/PSNOVA/pages/granarts/tmachinegun.html">ツインマシンガン</a></li>
+            <li><a href="/PSNOVA/pages/granarts/halo.html">ヘイロウ</a></li>
+            <li><a href="/PSNOVA/pages/granarts/pile.html">パイル</a></li>
+        </ul>
+    </li>
     <li><a href="/PSNOVA/pages/technic.html">テクニック</a></li>
     <li><a href="/PSNOVA/pages/armor.html">防具データ</a></li>
     <li><a href="/PSNOVA/pages/attachment.html">アタッチパーツ</a></li>
@@ -73,6 +86,7 @@ markCurrentSidebarLink();
 function markCurrentSidebarLink(){
     var currentPath = window.location.pathname.replace(/\/$/, "");
     var weaponChild = /^\/PSNOVA\/pages\/weapon\/[^/]+\.html$/.test(currentPath);
+    var granartsChild = /^\/PSNOVA\/pages\/granarts\/[^/]+\.html$/.test(currentPath);
     var links = document.querySelectorAll("#sub .submenu a[href]");
 
     Array.prototype.slice.call(links).forEach(function(link){
@@ -85,9 +99,13 @@ function markCurrentSidebarLink(){
 
         var exactCurrent = linkPath === currentPath;
         var weaponParentCurrent = weaponChild && linkPath === "/PSNOVA/pages/weapon.html";
+        var granartsParentCurrent = granartsChild && linkPath === "/PSNOVA/pages/granarts.html";
 
         link.classList.toggle("is-current", exactCurrent);
-        link.classList.toggle("is-parent-current", weaponParentCurrent);
+        link.classList.toggle(
+            "is-parent-current",
+            weaponParentCurrent || granartsParentCurrent
+        );
         if (exactCurrent) {
             link.setAttribute("aria-current", "page");
         } else {
