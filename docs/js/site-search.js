@@ -3,9 +3,16 @@
     var MAX_RESULTS = 12;
     var FETCH_CONCURRENCY = 4;
 
-    function normalize(value) {
+    function foldKana(value) {
         return (value || "")
             .normalize("NFKC")
+            .replace(/[\u30a1-\u30f6]/g, function (character) {
+                return String.fromCharCode(character.charCodeAt(0) - 0x60);
+            });
+    }
+
+    function normalize(value) {
+        return foldKana(value)
             .toLowerCase()
             .replace(/\s+/g, " ")
             .trim();
@@ -180,8 +187,8 @@
 
     function directMatchRanges(text, query) {
         var source = text || "";
-        var normalizedSource = source.normalize("NFKC").toLowerCase();
-        var normalizedQuery = normalize(query);
+        var normalizedSource = foldKana(source).toLowerCase();
+        var normalizedQuery = foldKana(query).toLowerCase().trim();
         var ranges = [];
 
         if (!normalizedQuery || normalizedSource.length !== source.length) {

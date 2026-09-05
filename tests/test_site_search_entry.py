@@ -46,6 +46,17 @@ class SiteSearchEntryTests(unittest.TestCase):
         self.assertIn('role="listbox"', js)
         self.assertIn('event.key === "Escape"', js)
 
+    def test_site_search_folds_hiragana_and_katakana_for_matches_and_highlights(self):
+        js = SITE_SEARCH_JS.read_text(encoding="utf-8")
+        self.assertIn("function foldKana(value)", js)
+        self.assertIn(r".replace(/[\u30a1-\u30f6]/g", js)
+        self.assertIn("character.charCodeAt(0) - 0x60", js)
+        self.assertIn("var normalizedSource = foldKana(source).toLowerCase();", js)
+        self.assertIn(
+            "var normalizedQuery = foldKana(query).toLowerCase().trim();",
+            js,
+        )
+
     def test_search_styles_use_existing_design_tokens(self):
         css = STYLE.read_text(encoding="utf-8")
         self.assertIn("var(--surface)", css)
