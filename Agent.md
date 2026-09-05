@@ -32,6 +32,16 @@ Modernization work must preserve existing data and URLs while improving usabilit
 23. **Do not increase the number of public CSS files.** The public CSS file count must never exceed two. `docs/css/style.css` owns shared/sitewide styles and `docs/css/page.css` owns page-specific styles such as homepage and weapon UI. Extend or consolidate these existing owners instead of adding another stylesheet; further consolidation may reduce the count, but stylesheet proliferation is prohibited.
 24. **Use `master` as the only active development and publishing branch. Do not create, switch to, or use feature branches, work branches, temporary implementation branches, or PR branches for PSNOVA work unless the user explicitly reverses this rule. Normal implementation, commits, and pushes must go directly to `master`. Existing backup/archive branches may remain as read-only historical recovery points but must not be used for active work.**
 
+## Session execution contract
+
+- At the start of a work session, establish a baseline from the current Git worktree, current branch, Git history, repository files, and commands actually executed in that session. Do not infer the current state from prior conversations.
+- Run `git status`, `git branch --show-current`, `git log -5 --oneline`, and `python tools/psnova_quality.py finish` before implementation work when a local worktree is available, and record their results as the session baseline.
+- Never infer who made an earlier change from reflog, commits, deleted files, or other repository traces. Attribute work to the current agent only when that agent actually performed the operation in the current session.
+- Keep pre-existing FAILs separate from FAILs introduced by the current session. Classify every discovered FAIL as: (1) directly related to the current item, (2) related to a later explicitly planned item, or (3) outside the current objective.
+- Fix category (1) now, record and defer category (2) until its planned item, and record category (3) without modifying unrelated code merely to make the quality gate green.
+- When the objective, this guide, current code, and tests already provide a reasonable decision rule, continue to the next planned item without stopping only to ask for confirmation. Ask only when a product decision is genuinely ambiguous, an irreversible/high-risk action is required, or unavailable external credentials/information are essential.
+- Temporary session handover documents must not be created or committed to the remote repository. Durable project rules belong in `Agent.md` or another explicitly approved permanent document; transient handover notes remain outside the remote repository.
+
 ## Correction-derived invariants
 
 - Individual weapon-detail page introductions describe the weapon itself—its handling, role, range, or combat traits—rather than merely describing the table or page contents. Do not reintroduce boilerplate such as `武器データを掲載する`, `一覧で確認できる`, or `このページでは` into these leads.
@@ -42,7 +52,7 @@ Modernization work must preserve existing data and URLs while improving usabilit
 
 - Dynamic widgets must expose valid accessible names and ARIA semantics. The site-data search is an editable `combobox` controlling `#site-search-results`; rendered affiliate image links must have a discernible accessible name even when their remote images use empty alt.
 
-- Every public page footer exposes the site-information pages `/PSNOVA/copyright.html` and `/PSNOVA/issue.html`. Keep all public pages reachable from `/PSNOVA/` through internal navigation; do not silence the orphan-page regression test with allow-lists.
+- `/PSNOVA/copyright.html` and `/PSNOVA/issue.html` are retired public pages. Do not restore them to public HTML, sitemap, metadata, footer, navigation, site search, or other public routing/indexing unless the user explicitly reverses this retirement decision.
 
 - Every public HTML page must remain reachable from `/PSNOVA/` through public internal links, including links supplied by the shared sidebar. `tests/test_public_navigation_reachability.py` guards against orphan public pages.
 
