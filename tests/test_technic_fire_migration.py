@@ -64,22 +64,38 @@ def test_fire_technic_page_preserves_reader_useful_source_sentinels():
         assert sentinel in public
 
 
-def test_fire_technic_page_keeps_all_30_levels_as_columns():
+def test_fire_technic_page_splits_levels_into_two_15_column_tables():
     public = PUBLIC.read_text(encoding="utf-8")
 
-    assert public.count('class="technic-level-table"') == 5
+    assert public.count('class="technic-level-table"') == 10
+    assert public.count('class="table-scroll technic-level-scroll"') == 10
+
     for level in range(1, 31):
         assert public.count(f'<th scope="col">{level}</th>') == 5
 
-    assert public.count('<tr><th scope="row">威力</th>') == 5
-    assert public.count('<tr><th scope="row">消費GP</th>') == 5
-    assert public.count('<tr><th scope="row">メモリーフラグメント</th>') == 5
-    assert public.count('<tr><th scope="row">グランピース(炎属性)</th>') == 5
-    assert public.count('<tr><th scope="row">その他必要素材</th>') == 5
+    assert public.count('<tr><th scope="row">威力</th>') == 10
+    assert public.count('<tr><th scope="row">消費GP</th>') == 10
+    assert public.count('<tr><th scope="row">メモリーフラグメント</th>') == 10
+    assert public.count('<tr><th scope="row">グランピース(炎属性)</th>') == 10
+
+    assert public.count('<tr><th scope="row">追加素材</th>') == 5
+    assert public.count("<td>ホ※</td>") == 5
+    assert public.count("<td>ブ※</td>") == 5
+    assert public.count("<td>マ※</td>") == 5
+    assert "※ホ" not in public
+    assert "※ブ" not in public
+    assert "※マ" not in public
+    assert "その他必要素材" not in public
+
+    assert "min-width: 2200px" not in public
+    assert "min-width:2200px" not in public
+    assert "table-layout:fixed" not in public
 
 
-def test_fire_technic_page_keeps_level_transition_materials_and_final_values():
+def test_fire_technic_page_keeps_material_legend_and_final_values():
     public = PUBLIC.read_text(encoding="utf-8")
+
+    assert "追加素材: ホ※=ホワイトチケット×1 / ブ※=ブラックチケット×2 / マ※=マキアファクター×1" in public
 
     assert "<td>486</td><td>1555</td>" in public
     assert "<td>2527</td><td>2673</td>" in public
@@ -90,11 +106,8 @@ def test_fire_technic_page_keeps_level_transition_materials_and_final_values():
     assert "<td>138</td><td>139</td>" in public
 
     assert "J×6<br>K×10" in public
-    assert "ホワイトチケット×1" in public
     assert "L×8<br>M×8" in public
-    assert "ブラックチケット×2" in public
     assert "L×6<br>M×10" in public
-    assert "マキアファクター×1" in public
     assert "フォイエLv1のみ、メモリーフラグメント: - / グランピース(炎属性): -。" in public
 
 
