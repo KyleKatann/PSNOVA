@@ -33,6 +33,8 @@ Modernization work must preserve existing data and URLs while improving usabilit
 
 ## Correction-derived invariants
 
+- Individual weapon-detail page introductions describe the weapon itself—its handling, role, range, or combat traits—rather than merely describing the table or page contents. Do not reintroduce boilerplate such as `武器データを掲載する`, `一覧で確認できる`, or `このページでは` into these leads.
+
 - Preserve the user-approved PSNOVA color palette. Do not automatically darken or replace site colors solely to satisfy automated contrast checks. Automated axe audits intentionally exclude `color-contrast` unless the user explicitly requests color-accessibility enforcement.
 
 - Mobile navigation keeps a logical keyboard focus path: shared initialization moves `#menubar_hdr` into `#container > header` before interaction; opening the攻略 drawer moves focus to its first link; Escape closes the drawer and returns focus to the trigger. Do not use positive `tabindex` values to repair focus order.
