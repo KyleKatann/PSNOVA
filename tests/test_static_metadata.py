@@ -43,6 +43,8 @@ EXPECTED = {'/PSNOVA/': {'description': 'PSNOVA(ファンタシースター ノ�
                                 'title': 'PSNOVA攻略サイト - テクニック'},
  '/PSNOVA/pages/technic/fire.html': {'description': 'PSNOVAの炎属性テクニック5種について、技量補正、説明、Lv1〜30の威力・消費GP、強化素材と攻略上の注記を確認できます。',
                                      'title': 'PSNOVA攻略サイト - 炎属性テクニック'},
+ '/PSNOVA/pages/technic/ice.html': {'description': 'PSNOVAの氷属性テクニック5種について、技量補正、説明、Lv1〜30の威力・消費GP、強化素材と攻略上の注記を確認できます。',
+                                    'title': 'PSNOVA攻略サイト - 氷属性テクニック'},
  '/PSNOVA/pages/trophy.html': {'description': 'PSNOVAのトロフィー一覧と獲得条件を確認できます。', 'title': 'PSNOVA攻略サイト - トロフィー'},
  '/PSNOVA/pages/weapon.html': {'description': 'PSNOVAの11種類の武器種から、個別の性能・必要素材ページを選べます。',
                                'title': 'PSNOVA攻略サイト - 武器'},
@@ -230,7 +232,7 @@ def parse(route):
 
 def test_sitemap_and_static_metadata_cover_same_routes():
     assert sitemap_routes() == set(EXPECTED)
-    assert len(EXPECTED) == 39
+    assert len(EXPECTED) == 40
 
 
 def test_public_metadata_is_static_and_exact():
