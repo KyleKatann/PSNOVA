@@ -65,20 +65,37 @@ def test_ice_technic_page_preserves_reader_useful_source_sentinels():
         assert sentinel in public
 
 
-def test_ice_technic_page_keeps_level_transition_and_final_values():
+def test_ice_technic_page_keeps_all_30_levels_as_columns():
     public = PUBLIC.read_text(encoding="utf-8")
 
-    assert "<tr><td>20</td><td>562</td><td>20</td></tr>" in public
-    assert "<tr><td>21</td><td>2571</td><td>20</td></tr>" in public
-    assert "<tr><td>30</td><td>6323</td><td>20</td></tr>" in public
-    assert "<tr><td>30</td><td>5223</td><td>22</td></tr>" in public
-    assert "<tr><td>30</td><td>5838</td><td>22</td></tr>" in public
-    assert "<tr><td>30</td><td>2244</td><td>20</td></tr>" in public
-    assert "<tr><td>20</td><td>129</td><td>20</td></tr>" in public
-    assert "<tr><td>30</td><td>139</td><td>20</td></tr>" in public
-    assert "<tr><td>25</td><td>J×6<br>K×10</td><td>×40</td><td>ホワイトチケット×1</td></tr>" in public
-    assert "<tr><td>29</td><td>L×8<br>M×8</td><td>×50</td><td>ブラックチケット×2</td></tr>" in public
-    assert "<tr><td>30</td><td>L×6<br>M×10</td><td>×50</td><td>マキアファクター×1</td></tr>" in public
+    assert public.count('class="technic-level-table"') == 5
+    for level in range(1, 31):
+        assert public.count(f'<th scope="col">{level}</th>') == 5
+
+    assert public.count('<tr><th scope="row">威力</th>') == 5
+    assert public.count('<tr><th scope="row">消費GP</th>') == 5
+    assert public.count('<tr><th scope="row">メモリーフラグメント</th>') == 5
+    assert public.count('<tr><th scope="row">グランピース(氷属性)</th>') == 5
+    assert public.count('<tr><th scope="row">その他必要素材</th>') == 5
+
+
+def test_ice_technic_page_keeps_level_transition_materials_and_final_values():
+    public = PUBLIC.read_text(encoding="utf-8")
+
+    assert "<td>562</td><td>2571</td>" in public
+    assert "<td>5718</td><td>6323</td>" in public
+    assert "<td>4737</td><td>5223</td>" in public
+    assert "<td>5286</td><td>5838</td>" in public
+    assert "<td>2126</td><td>2244</td>" in public
+    assert "<td>129</td><td>130</td>" in public
+    assert "<td>138</td><td>139</td>" in public
+
+    assert "J×6<br>K×10" in public
+    assert "ホワイトチケット×1" in public
+    assert "L×8<br>M×8" in public
+    assert "ブラックチケット×2" in public
+    assert "L×6<br>M×10" in public
+    assert "マキアファクター×1" in public
 
 
 def test_ice_technic_page_does_not_invent_shifta_duration_for_deband():
