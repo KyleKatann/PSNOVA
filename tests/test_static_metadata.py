@@ -15,12 +15,8 @@ AGENT = ROOT / "Agent.md"
 
 EXPECTED = {'/PSNOVA/': {'description': 'PSNOVA(ファンタシースター ノヴァ)の武器、防具、素材、エネミー、特殊能力などを整理した攻略データサイトです。',
               'title': 'PSNOVA攻略サイト'},
- '/PSNOVA/copyright.html': {'description': 'PSNOVA攻略サイトの著作権表示、免責事項、掲載情報の取り扱いについて案内します。',
-                            'title': 'PSNOVA攻略サイト - 著作権・免責事項'},
  '/PSNOVA/index.html': {'description': 'PSNOVA(ファンタシースター ノヴァ)の武器、防具、素材、エネミー、特殊能力などを整理した攻略データサイトです。',
                         'title': 'PSNOVA攻略サイト'},
- '/PSNOVA/issue.html': {'description': 'PSNOVA攻略サイトの掲載内容の修正・加筆方針について案内します。',
-                        'title': 'PSNOVA攻略サイト - 修正・加筆について'},
  '/PSNOVA/pages/appearance.html': {'description': 'PSNOVAのヘアスタイル、コスチューム、アクセサリーなど外見変更要素を一覧で確認できます。',
                                    'title': 'PSNOVA攻略サイト - 外見'},
  '/PSNOVA/pages/armor.html': {'description': 'PSNOVAの防具データを一覧掲載。性能や必要情報を比較して確認できます。',
@@ -200,7 +196,7 @@ def parse(route):
 
 def test_sitemap_and_static_metadata_cover_same_routes():
     assert sitemap_routes() == set(EXPECTED)
-    assert len(EXPECTED) == 30
+    assert len(EXPECTED) == 28
 
 
 def test_public_metadata_is_static_and_exact():
