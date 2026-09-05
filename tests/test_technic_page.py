@@ -51,6 +51,47 @@ def test_technic_overview_preserves_staged_usage_contract():
         assert text in html
 
 
+def test_technic_overview_uses_weapon_catalog_pattern_for_attributes():
+    html = PAGE.read_text(encoding="utf-8")
+
+    assert '<link rel="stylesheet" href="/PSNOVA/css/page.css">' in html
+    assert '<h3>属性から選ぶ</h3>' in html
+    assert '<div class="weapon-catalog">' in html
+    assert html.count('class="weapon-card"') == 6
+
+    cards = {
+        "炎属性": (
+            "/PSNOVA/pages/technic/fire.html",
+            "/PSNOVA/img/tech/fire.png",
+        ),
+        "氷属性": (
+            "/PSNOVA/pages/technic/ice.html",
+            "/PSNOVA/img/tech/ice.png",
+        ),
+        "雷属性": ("#attribute-thunder", "/PSNOVA/img/tech/thunder.png"),
+        "風属性": ("#attribute-wind", "/PSNOVA/img/tech/wind.png"),
+        "光属性": ("#attribute-light", "/PSNOVA/img/tech/light.png"),
+        "闇属性": ("#attribute-dark", "/PSNOVA/img/tech/dark.png"),
+    }
+
+    for label, (href, image) in cards.items():
+        assert f'class="weapon-card" href="{href}"' in html
+        assert f'src="{image}"' in html
+        assert f'<span>{label}</span>' in html
+
+
+def test_technic_overview_does_not_publish_unmigrated_detail_routes():
+    html = PAGE.read_text(encoding="utf-8")
+
+    for route in (
+        "/PSNOVA/pages/technic/lightning.html",
+        "/PSNOVA/pages/technic/wind.html",
+        "/PSNOVA/pages/technic/light.html",
+        "/PSNOVA/pages/technic/dark.html",
+    ):
+        assert route not in html
+
+
 def test_technic_overview_lists_all_six_attributes():
     parser = TechniqueTableParser()
     parser.feed(PAGE.read_text(encoding="utf-8"))
