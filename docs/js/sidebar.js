@@ -28,6 +28,7 @@ var html =`
             <li><a href="/PSNOVA/pages/weapon/pile.html">パイル</a></li>
         </ul>
     </li>
+    <li><a href="/PSNOVA/pages/technic.html">テクニック</a></li>
     <li><a href="/PSNOVA/pages/armor.html">防具データ</a></li>
     <li><a href="/PSNOVA/pages/attachment.html">アタッチパーツ</a></li>
     <li><a href="/PSNOVA/pages/specialability.html">特殊能力</a></li>
