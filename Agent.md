@@ -58,6 +58,7 @@ Modernization work must preserve existing data and URLs while improving usabilit
 - Every public HTML page must remain reachable from `/PSNOVA/` through public internal links, including links supplied by the shared sidebar. `tests/test_public_navigation_reachability.py` guards against orphan public pages.
 
 - Public `<img>` elements declare both numeric `width` and `height` using the source image's intrinsic dimensions. CSS remains responsible for responsive rendered sizing; the HTML dimensions reserve the correct aspect ratio before image load and reduce layout shift.
+
 - Public pages load the four shared head scripts (`openclose.js`, `fixmenu_pagetop.js`, `menubar.js`, `sidebar.js`) with `defer`. Public HTML must not contain inline initialization scripts; shared components initialize themselves from external JS after parsing while preserving document-order execution.
 
 - Every public page explicitly declares the repository-owned `/PSNOVA/img/logo.png` as its favicon. Keep favicon resources local to the repository and do not introduce external icon hotlinks.
@@ -117,6 +118,7 @@ These are specifications established by user review and must be treated as regre
 - On mobile, internal data-table cells do not auto-wrap because the tables are horizontally scrollable. All internal data tables use `.table-scroll` as the single horizontal scroll container. No body or header column is fixed or sticky; the first column scrolls horizontally together with every other column.
 
 ## Recovery point
+
 The pre-modernization site is preserved in Git history and in:
 
 - Branch: `backup/pre-modernization-20260830`
