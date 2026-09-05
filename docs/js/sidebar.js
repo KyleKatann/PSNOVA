@@ -45,6 +45,7 @@ var html =`
         <a href="/PSNOVA/pages/technic.html">テクニック</a>
         <ul class="weapon-submenu" aria-label="テクニック属性">
             <li><a href="/PSNOVA/pages/technic/fire.html">炎属性</a></li>
+            <li><a href="/PSNOVA/pages/technic/ice.html">氷属性</a></li>
         </ul>
     </li>
     <li><a href="/PSNOVA/pages/armor.html">防具データ</a></li>
