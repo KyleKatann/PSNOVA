@@ -42,7 +42,7 @@ var html =`
         </ul>
     </li>
     <li class="has-submenu weapon-data-item">
-        <a class="weapon-data-link" href="/PSNOVA/pages/technic.html">テクニック</a>
+        <a href="/PSNOVA/pages/technic.html">テクニック</a>
         <ul class="weapon-submenu" aria-label="テクニック属性">
             <li><a href="/PSNOVA/pages/technic/fire.html">炎属性</a></li>
         </ul>
