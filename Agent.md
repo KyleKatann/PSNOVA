@@ -119,13 +119,12 @@ These are specifications established by user review and must be treated as regre
 
 ## Recovery point
 
-The pre-modernization site is preserved in Git history and in:
+The pre-modernization site is preserved in `master` history:
 
-- Branch: `backup/pre-modernization-20260830`
-- Source commit at backup creation: `cb3ac9bdc6b6551a18f2ced40e57d152f9e6b2a6`
+- Historical recovery commit: `cb3ac9bdc6b6551a18f2ced40e57d152f9e6b2a6`
 - Historical source/reference material: repository-root `reference/`
 
-Do not modify or repurpose the backup branch. `reference/` may be read for comparison, but keep the archive intact.
+No backup branch is required for this recovery point. Do not recreate a backup branch solely to preserve it. `reference/` may be read for comparison, but keep the archive intact.
 
 ## Design direction
 
@@ -281,10 +280,8 @@ When a data correction is needed, make it a separate change with its own evidenc
 - When one implementation item touches multiple files, edit each file normally and independently, then commit the completed item together when the tooling supports that workflow.
 - After every edit, inspect the diff. If the diff expands beyond the intended target, stop that method and return to a smaller edit.
 - Regression tests must be limited to the minimum assertions that directly detect the reported defect.
-- In ChatGPT chat mode, repository source/page changes must be performed by local partial-edit commands supplied in the chat. Do not write source/page files directly through the GitHub Contents API, Git Database API, blob/tree/index operations, or other whole-file replacement methods.
-- Prefer a minimal `git apply` patch for chat-driven edits. Run `git apply --check` before `git apply`; `sed`, PowerShell text replacement, or an editor replacement may be used when they produce a smaller and safer targeted edit.
-- After applying a chat-provided edit, inspect `git diff -- <target paths>` before staging or committing. If unrelated changes appear, revert that edit and use a smaller patch.
-- GitHub APIs/connectors may continue to be used read-only for auditing, source/reference comparison, history inspection, searching, and diff verification unless the user explicitly overrides this rule.
+- Routine chat-driven repository changes must not require the human user to act as a local editing proxy. When connected write tooling can make a targeted, reviewable change safely, the agent may edit and commit directly to `master`.
+- For work expected to take a long time, touch many files, or require repeated local build/test cycles, using a local worktree is acceptable when it materially improves reliability or efficiency.
 
 ## Static metadata ownership
 
