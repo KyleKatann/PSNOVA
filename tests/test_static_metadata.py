@@ -35,6 +35,8 @@ EXPECTED = {'/PSNOVA/': {'description': 'PSNOVA(ファンタシースター ノ�
  '/PSNOVA/pages/item.html': {'description': 'PSNOVAの消費アイテムと効果を一覧で確認できます。', 'title': 'PSNOVA攻略サイト - 消費アイテム'},
  '/PSNOVA/pages/material.html': {'description': 'PSNOVAの素材データを一覧掲載。必要な素材や入手情報を探す際に利用できます。',
                                  'title': 'PSNOVA攻略サイト - 素材'},
+ '/PSNOVA/pages/novafactor.html': {'description': 'PSNOVAのノヴァファクター集めについて、必要装備とXHのおすすめ周回クエストをまとめています。',
+                                   'title': 'PSNOVA攻略サイト - ノヴァファクター集め'},
  '/PSNOVA/pages/skill.html': {'description': 'PSNOVAのスキル一覧と効果をまとめて確認できます。', 'title': 'PSNOVA攻略サイト - スキル'},
  '/PSNOVA/pages/specialability.html': {'description': 'PSNOVAの特殊能力を一覧掲載。能力名と効果を比較して確認できます。',
                                        'title': 'PSNOVA攻略サイト - 特殊能力'},
@@ -232,7 +234,7 @@ def parse(route):
 
 def test_sitemap_and_static_metadata_cover_same_routes():
     assert sitemap_routes() == set(EXPECTED)
-    assert len(EXPECTED) == 40
+    assert len(EXPECTED) == 41
 
 
 def test_public_metadata_is_static_and_exact():
