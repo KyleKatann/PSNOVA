@@ -172,6 +172,16 @@ def test_quest_pages_are_registered_in_sidebar_and_sitemap():
         assert f"https://kylekatann.github.io{path}" in sitemap
 
 
+def test_great_spire_is_registered_in_sidebar_and_sitemap():
+    sidebar = (ROOT / "docs" / "js" / "sidebar.js").read_text(encoding="utf-8")
+    sitemap = (ROOT / "docs" / "sitemap.xml").read_text(encoding="utf-8")
+    path = "/PSNOVA/pages/quest/great-spire.html"
+
+    assert f'href="{path}"' in sidebar
+    assert ">大尖塔</a>" in sidebar
+    assert f"https://kylekatann.github.io{path}" in sitemap
+
+
 def test_quest_sidebar_heading_links_to_difficulty_page():
     sidebar = (ROOT / "docs" / "js" / "sidebar.js").read_text(encoding="utf-8")
 
