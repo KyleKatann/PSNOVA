@@ -293,6 +293,86 @@
     background-image: url("/PSNOVA/img/tech/デバンド.png");
 }
 
+#main.technic-thunder-page > .technic-entry:nth-of-type(2) > .technic-entry-title::before {
+    background-image: url("/PSNOVA/img/tech/ゾンデ.png");
+}
+
+#main.technic-thunder-page > .technic-entry:nth-of-type(3) > .technic-entry-title::before {
+    background-image: url("/PSNOVA/img/tech/ギ・ゾンデ.png");
+}
+
+#main.technic-thunder-page > .technic-entry:nth-of-type(4) > .technic-entry-title::before {
+    background-image: url("/PSNOVA/img/tech/ラ・ゾンデ.png");
+}
+
+#main.technic-thunder-page > .technic-entry:nth-of-type(5) > .technic-entry-title::before {
+    background-image: url("/PSNOVA/img/tech/サ・ゾンデ.png");
+}
+
+#main.technic-thunder-page > .technic-entry:nth-of-type(6) > .technic-entry-title::before {
+    background-image: url("/PSNOVA/img/tech/ゾンディール.png");
+}
+
+#main.technic-wind-page > .technic-entry:nth-of-type(2) > .technic-entry-title::before {
+    background-image: url("/PSNOVA/img/tech/ザン.png");
+}
+
+#main.technic-wind-page > .technic-entry:nth-of-type(3) > .technic-entry-title::before {
+    background-image: url("/PSNOVA/img/tech/ギ・ザン.png");
+}
+
+#main.technic-wind-page > .technic-entry:nth-of-type(4) > .technic-entry-title::before {
+    background-image: url("/PSNOVA/img/tech/ラ・ザン.png");
+}
+
+#main.technic-wind-page > .technic-entry:nth-of-type(5) > .technic-entry-title::before {
+    background-image: url("/PSNOVA/img/tech/サ・ザン.png");
+}
+
+#main.technic-wind-page > .technic-entry:nth-of-type(6) > .technic-entry-title::before {
+    background-image: url("/PSNOVA/img/tech/ナ・ザン.png");
+}
+
+#main.technic-light-page > .technic-entry:nth-of-type(2) > .technic-entry-title::before {
+    background-image: url("/PSNOVA/img/tech/グランツ.png");
+}
+
+#main.technic-light-page > .technic-entry:nth-of-type(3) > .technic-entry-title::before {
+    background-image: url("/PSNOVA/img/tech/ギ・グランツ.png");
+}
+
+#main.technic-light-page > .technic-entry:nth-of-type(4) > .technic-entry-title::before {
+    background-image: url("/PSNOVA/img/tech/ラ・グランツ.png");
+}
+
+#main.technic-light-page > .technic-entry:nth-of-type(5) > .technic-entry-title::before {
+    background-image: url("/PSNOVA/img/tech/レスタ.png");
+}
+
+#main.technic-light-page > .technic-entry:nth-of-type(6) > .technic-entry-title::before {
+    background-image: url("/PSNOVA/img/tech/アンティ.png");
+}
+
+#main.technic-dark-page > .technic-entry:nth-of-type(2) > .technic-entry-title::before {
+    background-image: url("/PSNOVA/img/tech/メギド.png");
+}
+
+#main.technic-dark-page > .technic-entry:nth-of-type(3) > .technic-entry-title::before {
+    background-image: url("/PSNOVA/img/tech/ギ・メギド.png");
+}
+
+#main.technic-dark-page > .technic-entry:nth-of-type(4) > .technic-entry-title::before {
+    background-image: url("/PSNOVA/img/tech/ラ・メギド.png");
+}
+
+#main.technic-dark-page > .technic-entry:nth-of-type(5) > .technic-entry-title::before {
+    background-image: url("/PSNOVA/img/tech/メギバース.png");
+}
+
+#main.technic-dark-page > .technic-entry:nth-of-type(6) > .technic-entry-title::before {
+    background-image: url("/PSNOVA/img/tech/サ・メギド.png");
+}
+
 #main.technic-detail-page .technic-note {
     color: #344054;
     background: var(--surface-subtle);
