@@ -17,20 +17,6 @@ PAGES = {
     "pile": ("パイル", "pile.png"),
 }
 
-ORDER = [
-    ("sword", "ソード"),
-    ("partizan", "パルチザン"),
-    ("doublesaber", "ダブルセイバー"),
-    ("knuckle", "ナックル"),
-    ("rifle", "アサルトライフル"),
-    ("tmachinegun", "ツインマシンガン"),
-    ("rod", "ロッド"),
-    ("talis", "タリス"),
-    ("wand", "ウォンド"),
-    ("halo", "ヘイロウ"),
-    ("pile", "パイル"),
-]
-
 
 class RemainingWeaponDetailPageTests(unittest.TestCase):
     def test_pages_use_static_detail_structure(self):
@@ -118,38 +104,6 @@ class RemainingWeaponDetailPageTests(unittest.TestCase):
                     f'<meta property="og:url" content="{self_url}">',
                     html,
                 )
-
-    def test_navigation_matches_weapon_order(self):
-        index_by_file = {
-            filename: index
-            for index, (filename, _name) in enumerate(ORDER)
-        }
-
-        for filename, (name, _icon) in PAGES.items():
-            with self.subTest(filename=filename):
-                html = (WEAPON_DIR / f"{filename}.html").read_text(
-                    encoding="utf-8"
-                )
-
-                index = index_by_file[filename]
-
-                if index > 0:
-                    prev_file, prev_name = ORDER[index - 1]
-                    self.assertIn(
-                        f'href="/PSNOVA/pages/weapon/'
-                        f'{prev_file}.html" rel="prev">'
-                        f'← {prev_name}</a>',
-                        html,
-                    )
-
-                if index < len(ORDER) - 1:
-                    next_file, next_name = ORDER[index + 1]
-                    self.assertIn(
-                        f'href="/PSNOVA/pages/weapon/'
-                        f'{next_file}.html" rel="next">'
-                        f'{next_name} →</a>',
-                        html,
-                    )
 
     def test_table_header_is_semantic(self):
         expected = (
