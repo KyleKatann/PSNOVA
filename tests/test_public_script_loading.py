@@ -50,6 +50,22 @@ class PublicScriptLoadingTests(unittest.TestCase):
             + "\n".join(violations),
         )
 
+    def test_retired_page_top_script_is_not_referenced(self):
+        violations = []
+        retired = "/PSNOVA/js/fixmenu_pagetop.js"
+
+        for path in public_html_files():
+            html = path.read_text(encoding="utf-8")
+            if retired in html:
+                violations.append(str(path.relative_to(ROOT)))
+
+        self.assertEqual(
+            [],
+            violations,
+            "Retired page-top script references remain:\n"
+            + "\n".join(violations),
+        )
+
     def test_public_html_has_no_inline_scripts(self):
         violations = []
 
