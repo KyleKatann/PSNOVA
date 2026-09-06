@@ -48,7 +48,7 @@ def test_technic_tables_use_square_fixed_shared_column_geometry():
     assert "box-shadow: none;" in css
 
 
-def test_technic_descriptions_are_gray_and_material_legends_are_yellow():
+def test_technic_descriptions_match_gray_blue_accent_pattern_and_material_legends_are_yellow():
     css = PAGE_CSS.read_text(encoding="utf-8")
 
     note_rule = css.split("#main.technic-detail-page .technic-note {", 1)[1].split("}", 1)[0]
@@ -56,7 +56,8 @@ def test_technic_descriptions_are_gray_and_material_legends_are_yellow():
 
     assert "background: var(--surface-subtle);" in note_rule
     assert "border: 1px solid #e5e8ef;" in note_rule
-    assert "border-left: 4px solid #98a2b3;" in note_rule
+    assert "border-left: 4px solid var(--accent);" in note_rule
+    assert "#98a2b3" not in note_rule
     assert "#fff9ec" not in note_rule
     assert "#c99a34" not in note_rule
 
