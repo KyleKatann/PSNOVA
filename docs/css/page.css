@@ -526,3 +526,25 @@
         padding: 7px 9px;
     }
 }
+
+/* === NPC PAGE === */
+
+#main .npc-table {
+    width: 100%;
+    min-width: 1000px;
+    table-layout: fixed;
+}
+
+#main .npc-table .npc-col-name { width: 90px; }
+#main .npc-table .npc-col-species { width: 90px; }
+#main .npc-table .npc-col-sex { width: 48px; }
+#main .npc-table .npc-col-class { width: 80px; }
+#main .npc-table .npc-col-style { width: 120px; }
+#main .npc-table .npc-col-feature { width: 160px; }
+#main .npc-table .npc-col-join { width: 170px; }
+#main .npc-table .npc-col-effect { width: 242px; }
+
+#main .npc-table th,
+#main .npc-table td {
+    white-space: nowrap;
+}
