@@ -17,26 +17,31 @@ jobs:
           python3 - <<'PY'
           from pathlib import Path
 
-          retired = '    <script defer src="/PSNOVA/js/fixmenu_pagetop.js"></script>\n'
+          token = '/PSNOVA/js/fixmenu_pagetop.js'
           pages = [Path('docs/index.html'), *Path('docs/pages').rglob('*.html')]
           changed = 0
+
           for path in pages:
               if '分類中' in path.parts:
                   continue
               text = path.read_text(encoding='utf-8')
-              if retired in text:
-                  path.write_text(text.replace(retired, ''), encoding='utf-8', newline='\n')
-                  changed += 1
+              lines = text.splitlines(keepends=True)
+              updated_lines = [line for line in lines if token not in line]
+              if updated_lines == lines:
+                  continue
+              path.write_text(''.join(updated_lines), encoding='utf-8', newline='\n')
+              changed += 1
 
           Path('docs/fixmenu-pagetop-compat.txt').unlink(missing_ok=True)
 
           remaining = [
               str(path) for path in pages
               if '分類中' not in path.parts
-              and 'fixmenu_pagetop.js' in path.read_text(encoding='utf-8')
+              and token in path.read_text(encoding='utf-8')
           ]
           if remaining:
               raise SystemExit('remaining: ' + ', '.join(remaining))
+
           print('updated HTML files:', changed)
           PY
       - name: Commit and remove this workflow
