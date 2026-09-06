@@ -126,39 +126,11 @@
         }
     }
 
-    function placeTechnicMaterialNotes() {
-        var main = document.getElementById("main");
-        if (!main) return;
-
-        var pageNote = main.querySelector(".technic-material-note");
-        if (!pageNote) return;
-
-        var detailSections = Array.prototype.filter.call(
-            main.querySelectorAll("section"),
-            function (section) {
-                return section.querySelectorAll(".technic-level-scroll").length === 2;
-            }
-        );
-
-        if (!detailSections.length) return;
-
-        detailSections.forEach(function (section) {
-            if (section.querySelector(".technic-material-note")) return;
-
-            var tables = section.querySelectorAll(".technic-level-scroll");
-            tables[1].insertAdjacentElement("afterend", pageNote.cloneNode(true));
-        });
-
-        pageNote.remove();
-    }
-
     function initTableEnhancements() {
         Array.prototype.slice.call(document.querySelectorAll("#main table")).forEach(function (table) {
             decorateSemanticDataTable(table);
             ensureScrollableTable(table);
         });
-
-        placeTechnicMaterialNotes();
     }
 
     if (document.readyState === "loading") {
