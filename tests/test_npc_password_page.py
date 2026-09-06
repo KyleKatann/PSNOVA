@@ -116,7 +116,7 @@ def test_npc_password_page_preserves_unlock_mechanics_and_warning():
 
     required = (
         "グランドアクト1まで進めると利用可能",
-        "リーンベル以外はアップデートにより追加される。",
+        "リーンベル以外のNPCを解放するには、パスワード入力前にゲームをアップデートしておく必要がある。",
         "解凍にグランエナジーは不要。",
         "これらの追加クルーを追加すると、同行クルーの並び順がおかしくなる不具合があります。",
     )
@@ -135,7 +135,8 @@ def test_npc_password_page_uses_modern_public_shell():
     assert '<link rel="canonical" href="https://kylekatann.github.io/PSNOVA/pages/npc-password.html">' in page
     assert '<link rel="stylesheet" href="/PSNOVA/css/page.css">' in page
     assert '<main id="main">' in page
-    assert '<table class="npc-table">' in page
+    assert '<table class="npc-password-table">' in page
+    assert '<table class="npc-table' not in page
     assert "<details>" not in page
     assert "<summary>" not in page
     assert "web.archive.org" not in page
