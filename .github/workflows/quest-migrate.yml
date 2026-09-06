@@ -7,6 +7,7 @@ on:
     paths:
       - tools/quest_migrate.py
       - tools/quest_migration_audit.py
+      - tools/quest_migration_finalize.py
       - .github/workflows/quest-migrate.yml
 
 permissions:
@@ -34,6 +35,9 @@ jobs:
 
       - name: Generate quest pages
         run: python tools/quest_migrate.py
+
+      - name: Normalize public quest names
+        run: python tools/quest_migration_finalize.py
 
       - name: Commit generated pages
         run: |
