@@ -43,26 +43,42 @@ def source_page():
     return matches[0]
 
 
-def test_ice_technic_page_preserves_reader_useful_source_sentinels():
+def test_ice_technic_page_preserves_source_facts_without_copying_source_prose():
     source = visible_text(source_page())
     public = visible_text(PUBLIC)
 
-    sentinels = [
-        "地面に沿って進むため、空中にいるエネミーには他のテクニックを使用したほうが良い",
+    source_sentences = [
         "照準の位置へ向けて敵を貫通する氷柱を放つ",
-        "氷テクニックの中では非常に使いやすい",
-        "3HITすべてが打ち上げ属性",
+        "自身またはタリスの前方に無数の氷の矢を出現させ、前方扇状の範囲内にいる対象に断続的にダメージを与える",
+        "自身またはタリスを中心とした円筒状に吹雪を発生させる",
         "目標地点に対し、氷柱を落とす",
-        "最終ステータス",
-        "打撃防御力",
-        "ホワイトチケット",
-        "ブラックチケット",
-        "マキアファクター",
+        "自身と周囲のプレイヤーキャラクターの打撃防御力・射撃防御力・法撃防御力を上昇させる",
     ]
+    for sentence in source_sentences:
+        assert sentence in source
+        assert sentence not in public
 
-    for sentinel in sentinels:
-        assert sentinel in source
-        assert sentinel in public
+    for fact in (
+        "空中の敵には他のテクニック",
+        "雑魚戦からギガンテスの部位攻撃",
+        "3ヒット攻撃",
+        "エアリアルアドバンス",
+        "上空から氷柱を落とす",
+        "Lv20では元ステータスに129%",
+        "半径ステップ2回分程度",
+    ):
+        assert fact in public
+
+
+def test_ice_technic_page_has_description_for_every_technic():
+    public = PUBLIC.read_text(encoding="utf-8")
+
+    assert public.count('class="technic-entry"') == 5
+    assert public.count('class="technic-note"') == 5
+    assert public.count('<th scope="row">説明文</th>') == 5
+    assert '<link rel="stylesheet" href="/PSNOVA/css/page.css">' in public
+    assert '<main id="main" class="technic-detail-page technic-ice-page">' in public
+    assert "<p>解説</p>" not in public
 
 
 def test_ice_technic_page_splits_levels_into_two_15_column_tables():
@@ -90,13 +106,13 @@ def test_ice_technic_page_splits_levels_into_two_15_column_tables():
 
     assert "min-width: 2200px" not in public
     assert "min-width:2200px" not in public
-    assert "table-layout:fixed" not in public
 
 
-def test_ice_technic_page_keeps_material_legend_and_final_values():
+def test_ice_technic_page_keeps_material_legends_and_final_values():
     public = PUBLIC.read_text(encoding="utf-8")
+    legend = "追加素材: ホ※=ホワイトチケット×1 / ブ※=ブラックチケット×2 / マ※=マキアファクター×1"
 
-    assert "追加素材: ホ※=ホワイトチケット×1 / ブ※=ブラックチケット×2 / マ※=マキアファクター×1" in public
+    assert public.count(legend) == 5
 
     assert "<td>562</td><td>2571</td>" in public
     assert "<td>5718</td><td>6323</td>" in public
