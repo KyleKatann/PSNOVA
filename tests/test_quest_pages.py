@@ -126,3 +126,12 @@ def test_quest_pages_are_registered_in_sidebar_and_sitemap():
         assert f'href="{path}"' in sidebar
         assert f">{title}</a>" in sidebar
         assert f"https://kylekatann.github.io{path}" in sitemap
+
+
+def test_quest_sidebar_heading_links_to_difficulty_page():
+    sidebar = (ROOT / "docs" / "js" / "sidebar.js").read_text(encoding="utf-8")
+
+    assert '<a class="quest-data-link" href="/PSNOVA/pages/difficulty.html">クエスト</a>' in sidebar
+    assert '<li><p>クエスト</p></li>' not in sidebar
+    assert '>難易度</a>' not in sidebar
+    assert 'aria-label="クエストエリア"' in sidebar
