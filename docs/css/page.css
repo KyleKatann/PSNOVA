@@ -253,12 +253,44 @@
     background-size: contain;
 }
 
-#main.technic-fire-page .technic-entry-title::before {
-    background-image: url("/PSNOVA/img/tech/fire.png");
+#main.technic-fire-page .technic-entry:has(.technic-level-scroll[aria-label^="フォイエ "]) .technic-entry-title::before {
+    background-image: url("/PSNOVA/img/tech/フォイエ.png");
 }
 
-#main.technic-ice-page .technic-entry-title::before {
-    background-image: url("/PSNOVA/img/tech/ice.png");
+#main.technic-fire-page .technic-entry:has(.technic-level-scroll[aria-label^="ギ・フォイエ "]) .technic-entry-title::before {
+    background-image: url("/PSNOVA/img/tech/ギ・フォイエ.png");
+}
+
+#main.technic-fire-page .technic-entry:has(.technic-level-scroll[aria-label^="ラ・フォイエ "]) .technic-entry-title::before {
+    background-image: url("/PSNOVA/img/tech/ラ・フォイエ.png");
+}
+
+#main.technic-fire-page .technic-entry:has(.technic-level-scroll[aria-label^="サ・フォイエ "]) .technic-entry-title::before {
+    background-image: url("/PSNOVA/img/tech/サ・フォイエ.png");
+}
+
+#main.technic-fire-page .technic-entry:has(.technic-level-scroll[aria-label^="シフタ "]) .technic-entry-title::before {
+    background-image: url("/PSNOVA/img/tech/シフタ.png");
+}
+
+#main.technic-ice-page .technic-entry:has(.technic-level-scroll[aria-label^="バータ "]) .technic-entry-title::before {
+    background-image: url("/PSNOVA/img/tech/バータ.png");
+}
+
+#main.technic-ice-page .technic-entry:has(.technic-level-scroll[aria-label^="ギ・バータ "]) .technic-entry-title::before {
+    background-image: url("/PSNOVA/img/tech/ギ・バータ.png");
+}
+
+#main.technic-ice-page .technic-entry:has(.technic-level-scroll[aria-label^="ラ・バータ "]) .technic-entry-title::before {
+    background-image: url("/PSNOVA/img/tech/ラ・バータ.png");
+}
+
+#main.technic-ice-page .technic-entry:has(.technic-level-scroll[aria-label^="サ・バータ "]) .technic-entry-title::before {
+    background-image: url("/PSNOVA/img/tech/サ・バータ.png");
+}
+
+#main.technic-ice-page .technic-entry:has(.technic-level-scroll[aria-label^="デバンド "]) .technic-entry-title::before {
+    background-image: url("/PSNOVA/img/tech/デバンド.png");
 }
 
 #main.technic-detail-page .technic-note {
