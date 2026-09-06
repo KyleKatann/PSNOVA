@@ -3,7 +3,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 MENUBAR_JS = ROOT / "docs" / "js" / "menubar.js"
-TABLE_ENHANCEMENTS_JS = ROOT / "docs" / "js" / "table-enhancements.js"
+TABLE_ENHANCEMENTS_JS = MENUBAR_JS
 OLD_TABLE_SEMANTICS_JS = ROOT / "docs" / "js" / "table-semantics.js"
 
 
@@ -13,7 +13,9 @@ class TableSemanticTests(unittest.TestCase):
         self.assertFalse(OLD_TABLE_SEMANTICS_JS.exists())
         self.assertNotIn("table-semantics.js", loader)
         self.assertNotIn("data-psnova-table-semantics", loader)
-        self.assertIn("/PSNOVA/js/table-enhancements.js", loader)
+        self.assertIn("decorateSemanticDataTable", loader)
+        self.assertIn("ensureScrollableTable", loader)
+        self.assertNotIn("/PSNOVA/js/table-enhancements.js", loader)
 
     def test_table_enhancements_only_decorate_existing_semantics(self):
         js = TABLE_ENHANCEMENTS_JS.read_text(encoding="utf-8")
