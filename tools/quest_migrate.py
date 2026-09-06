@@ -274,7 +274,6 @@ def build_page(config: PageConfig) -> tuple[str, int]:
     <link rel="stylesheet" href="/PSNOVA/css/style.css">
     <link rel="stylesheet" href="/PSNOVA/css/page.css">
     <script defer src="/PSNOVA/js/openclose.js"></script>
-    <script defer src="/PSNOVA/js/fixmenu_pagetop.js"></script>
     <script defer src="/PSNOVA/js/menubar.js"></script>
     <script defer src="/PSNOVA/js/sidebar.js"></script>
 </head>
