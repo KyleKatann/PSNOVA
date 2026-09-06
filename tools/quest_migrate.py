@@ -184,7 +184,11 @@ def parse_quest(table: Tag) -> dict[str, object]:
 def quest_markup(data: dict[str, object], strategy: str) -> str:
     difficulties = data["difficulties"]
     difficulty_html = "<br>".join(f"{d} / {level}" if level else d for d, level in difficulties)
-    strategy_html = escape(strategy) if strategy else "-"
+    strategy_markup = (
+        f'                    <p><strong>攻略:</strong> {escape(strategy)}</p>\n'
+        if strategy
+        else ""
+    )
     return f'''                    <h4>{data["name"]}</h4>
                     <table>
                         <thead>
@@ -208,8 +212,7 @@ def quest_markup(data: dict[str, object], strategy: str) -> str:
                             </tr>
                         </tbody>
                     </table>
-                    <p><strong>攻略:</strong> {strategy_html}</p>
-'''
+{strategy_markup}'''
 
 
 def overview_markup(start: Tag) -> str:
