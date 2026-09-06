@@ -259,3 +259,36 @@ Examples:
 - Attachment rarity tests preserve source-reference `★1` through `★10` values and reject zero-font sort prefixes or plain-number replacements in the attachment rarity column.
 
 Tests belong under `tests/` and should use the Python standard library where possible so the repository has no unnecessary test dependency.
+Add tests alongside each implementation item. The GitHub Actions `tests` workflow must not run on `push` or `pull_request`; trigger it manually once with `workflow_dispatch` after the planned implementation batch is complete.
+
+## Definition of done for each item
+
+An implementation item is ready for final validation when:
+
+- The change is implemented.
+- Relevant automated tests are added or updated when feasible.
+- The public-site behavior is not knowingly regressed on desktop or mobile.
+- User-corrected specifications affected by the item are recorded or refreshed in `Correction-derived invariants`.
+- The item has its own clear commit.
+
+The implementation batch is complete only after the manually triggered final GitHub Actions run passes.
+
+## Data safety
+
+Do not silently alter gameplay values, names, materials, rarity, shop levels, or other source data while changing layout or code structure.
+When a data correction is needed, make it a separate change with its own evidence and test/sentinel update.
+
+## Editing constraints
+
+- Existing pages must be corrected by directly editing only the target text or markup whenever possible.
+- Do not rewrite an entire HTML page or regenerate the full document as a new string for a local correction.
+- Do not manually create or manipulate Git blobs, trees, or indexes as an editing method.
+- When one implementation item touches multiple files, edit each file normally and independently, then commit the completed item together when the tooling supports that workflow.
+- After every edit, inspect the diff. If the diff expands beyond the intended target, stop that method and return to a smaller edit.
+- Regression tests must be limited to the minimum assertions that directly detect the reported defect.
+- Routine chat-driven repository changes must not require the human user to act as a local editing proxy. When connected write tooling can make a targeted, reviewable change safely, the agent may edit and commit directly to `master`.
+- For work expected to take a long time, touch many files, or require repeated local build/test cycles, using a local worktree is acceptable when it materially improves reliability or efficiency.
+
+## Static metadata ownership
+
+- Public title, description, canonical, and OpenGraph metadata are owned by static source HTML. Do not restore `page-meta.js` or runtime metadata repair.
