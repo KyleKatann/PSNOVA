@@ -118,6 +118,7 @@ These are specifications established by user review and must be treated as regre
 - Homepage product visuals are part of their information tables, not separate cards or adjacent blocks. In `商品概要`, the PS Vita package occupies a rightmost table cell spanning the product rows. In `公式サイトへのリンク`, each PSNOVA/PSO2 logo occupies the rightmost cell of its matching link row, and `©SEGA` stays inside that official-image cell.
 - On mobile, internal data-table cells do not auto-wrap because the tables are horizontally scrollable. All internal data tables use `.table-scroll` as the single horizontal scroll container. No body or header column is fixed or sticky; the first column scrolls horizontally together with every other column.
 - Every technic entry must include a reader-facing description in static HTML. The archived PSNOVA Wiki is the primary source. If the PSNOVA source genuinely lacks enough behavior description, use the PSO2 Wiki only as a secondary source for the generic action/behavior of the technique, then rewrite it in original reader-facing Japanese. Never copy source wording verbatim, and never import PSO2-specific values, balance, timing, ranges, or other gameplay facts into PSNOVA unless independently verified for PSNOVA.
+- Technic entry headings must show the assigned native individual technique PNG, not the generic indigo internal-page section marker. The technic heading icon layer must explicitly clear the generic marker background and must not depend on `:has()` support to reveal the image.
 - Existing technic descriptions imported from the archived Wiki must also be rewritten rather than reproduced verbatim. Preserve the gameplay meaning and all PSNOVA-specific facts, but modernize the wording so public copy is not a transcription of the source Wiki.
 - Technic Lv tables use the same column geometry across every technique and every attribute: one fixed-width row-label column plus 15 equal-width level columns in each `Lv1〜15` / `Lv16〜30` block. On desktop the 15-level table must fit the main content width without horizontal scrolling; mobile may use the existing horizontal table scroller.
 - Technic descriptive/behavior notes use one consistent gray highlight treatment. Material legends for additional upgrade materials use the yellow highlight treatment. Do not use yellow for technique descriptions or explanatory/攻略 notes; reserve it for material legends such as `ホ※` / `ブ※` / `マ※`.
@@ -258,36 +259,3 @@ Examples:
 - Attachment rarity tests preserve source-reference `★1` through `★10` values and reject zero-font sort prefixes or plain-number replacements in the attachment rarity column.
 
 Tests belong under `tests/` and should use the Python standard library where possible so the repository has no unnecessary test dependency.
-Add tests alongside each implementation item. The GitHub Actions `tests` workflow must not run on `push` or `pull_request`; trigger it manually once with `workflow_dispatch` after the planned implementation batch is complete.
-
-## Definition of done for each item
-
-An implementation item is ready for final validation when:
-
-- The change is implemented.
-- Relevant automated tests are added or updated when feasible.
-- The public-site behavior is not knowingly regressed on desktop or mobile.
-- User-corrected specifications affected by the item are recorded or refreshed in `Correction-derived invariants`.
-- The item has its own clear commit.
-
-The implementation batch is complete only after the manually triggered final GitHub Actions run passes.
-
-## Data safety
-
-Do not silently alter gameplay values, names, materials, rarity, shop levels, or other source data while changing layout or code structure.
-When a data correction is needed, make it a separate change with its own evidence and test/sentinel update.
-
-## Editing constraints
-
-- Existing pages must be corrected by directly editing only the target text or markup whenever possible.
-- Do not rewrite an entire HTML page or regenerate the full document as a new string for a local correction.
-- Do not manually create or manipulate Git blobs, trees, or indexes as an editing method.
-- When one implementation item touches multiple files, edit each file normally and independently, then commit the completed item together when the tooling supports that workflow.
-- After every edit, inspect the diff. If the diff expands beyond the intended target, stop that method and return to a smaller edit.
-- Regression tests must be limited to the minimum assertions that directly detect the reported defect.
-- Routine chat-driven repository changes must not require the human user to act as a local editing proxy. When connected write tooling can make a targeted, reviewable change safely, the agent may edit and commit directly to `master`.
-- For work expected to take a long time, touch many files, or require repeated local build/test cycles, using a local worktree is acceptable when it materially improves reliability or efficiency.
-
-## Static metadata ownership
-
-- Public title, description, canonical, and OpenGraph metadata are owned by static source HTML. Do not restore `page-meta.js` or runtime metadata repair.
