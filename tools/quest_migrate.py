@@ -127,7 +127,7 @@ def quest_table_after(heading: Tag) -> Tag | None:
     return None
 
 
-def攻略_after(table: Tag) -> str:
+def strategy_after(table: Tag) -> str:
     wrapper = table.parent
     node = wrapper.next_sibling if isinstance(wrapper, Tag) else None
     while node is not None:
@@ -136,17 +136,18 @@ def攻略_after(table: Tag) -> str:
         if isinstance(node, Tag) and node.name in {"ul", "p"}:
             text = plain_text(node)
             if text.startswith("攻略"):
-                text = text.split("：", 1)[1].strip() if "：" in text else text.split(":", 1)[1].strip() if ":" in text else ""
-                return text
+                if "：" in text:
+                    return text.split("：", 1)[1].strip()
+                if ":" in text:
+                    return text.split(":", 1)[1].strip()
+                return ""
         node = node.next_sibling
     return ""
 
 
 def parse_quest(table: Tag) -> dict[str, object]:
-    rows = table.find_all("tr", recursive=False)
-    if not rows:
-        body = table.find("tbody")
-        rows = body.find_all("tr", recursive=False) if isinstance(body, Tag) else []
+    body = table.find("tbody")
+    rows = body.find_all("tr", recursive=False) if isinstance(body, Tag) else table.find_all("tr", recursive=False)
     if len(rows) < 4:
         raise RuntimeError("unexpected quest table shape")
 
@@ -165,7 +166,7 @@ def parse_quest(table: Tag) -> dict[str, object]:
         level = text_fragment(cells[1]) if len(cells) > 1 else ""
         if len(cells) > 2:
             candidate = text_fragment(cells[2])
-            if candidate and not candidate.startswith("表を編集"):
+            if candidate:
                 enemy_html = candidate
         if difficulty:
             difficulties.append((difficulty, level))
@@ -180,10 +181,10 @@ def parse_quest(table: Tag) -> dict[str, object]:
     }
 
 
-def quest_markup(data: dict[str, object],攻略: str) -> str:
+def quest_markup(data: dict[str, object], strategy: str) -> str:
     difficulties = data["difficulties"]
     difficulty_html = "<br>".join(f"{d} / {level}" if level else d for d, level in difficulties)
-   攻略_html = escape(攻略) if攻略 else "-"
+    strategy_html = escape(strategy) if strategy else "-"
     return f'''                    <h4>{data["name"]}</h4>
                     <table>
                         <thead>
@@ -207,7 +208,7 @@ def quest_markup(data: dict[str, object],攻略: str) -> str:
                             </tr>
                         </tbody>
                     </table>
-                    <p><strong>攻略:</strong> {攻略_html}</p>
+                    <p><strong>攻略:</strong> {strategy_html}</p>
 '''
 
 
@@ -247,7 +248,7 @@ def build_page(config: PageConfig) -> tuple[str, int]:
         data = parse_quest(table)
         if not data["name"]:
             data["name"] = escape(title)
-        body.append(quest_markup(data,攻略_after(table)))
+        body.append(quest_markup(data, strategy_after(table)))
         quest_count += 1
 
     canonical = f"https://kylekatann.github.io/PSNOVA/pages/quest/{config.dest}"
