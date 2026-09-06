@@ -68,6 +68,7 @@ var html =`
     <li><a href="/PSNOVA/pages/skill.html">スキル</a></li>
     <li><a href="/PSNOVA/pages/species.html">種族</a></li>
     <li><a href="/PSNOVA/pages/npc.html">NPC</a></li>
+    <li><a href="/PSNOVA/pages/npc-password.html">NPC(パスワード解放)</a></li>
     <li><a href="/PSNOVA/pages/appearance.html">ヘアスタイル・コスチューム・アクセサリー</a></li>
 
     <li><a href="/PSNOVA/pages/trophy.html">トロフィー</a></li>
