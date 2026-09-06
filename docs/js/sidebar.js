@@ -47,6 +47,10 @@ var html =`
         <ul class="weapon-submenu" aria-label="テクニック属性">
             <li><a href="/PSNOVA/pages/technic/fire.html">炎属性</a></li>
             <li><a href="/PSNOVA/pages/technic/ice.html">氷属性</a></li>
+            <li><a href="/PSNOVA/pages/technic/thunder.html">雷属性</a></li>
+            <li><a href="/PSNOVA/pages/technic/wind.html">風属性</a></li>
+            <li><a href="/PSNOVA/pages/technic/light.html">光属性</a></li>
+            <li><a href="/PSNOVA/pages/technic/dark.html">闇属性</a></li>
         </ul>
     </li>
     <li><a href="/PSNOVA/pages/armor.html">防具データ</a></li>
