@@ -18,9 +18,12 @@ def test_agent_records_technic_presentation_contract():
         "Never copy source wording verbatim",
         "Existing technic descriptions imported from the archived Wiki must also be rewritten",
         "Technic Lv tables use the same column geometry across every technique and every attribute",
-        "Technic supplementary notes and material legends use one consistent yellow highlight treatment",
+        "Technic descriptive/behavior notes use one consistent gray highlight treatment",
+        "reserve it for material legends such as `ホ※` / `ブ※` / `マ※`",
     ):
         assert rule in guide
+
+    assert "Technic supplementary notes and material legends use one consistent yellow highlight treatment" not in guide
 
 
 def test_shared_data_tables_are_shadowless():
@@ -45,13 +48,18 @@ def test_technic_tables_use_square_fixed_shared_column_geometry():
     assert "box-shadow: none;" in css
 
 
-def test_technic_notes_share_one_yellow_highlight_style():
+def test_technic_descriptions_are_gray_and_material_legends_are_yellow():
     css = PAGE_CSS.read_text(encoding="utf-8")
 
-    assert (
-        "#main.technic-detail-page .technic-note,\n"
-        "#main.technic-detail-page .technic-material-note"
-    ) in css
-    assert "background: #fff9ec;" in css
-    assert "border: 1px solid #ead8aa;" in css
-    assert "border-left: 4px solid #c99a34;" in css
+    note_rule = css.split("#main.technic-detail-page .technic-note {", 1)[1].split("}", 1)[0]
+    material_rule = css.split("#main.technic-detail-page .technic-material-note {", 1)[1].split("}", 1)[0]
+
+    assert "background: var(--surface-subtle);" in note_rule
+    assert "border: 1px solid #e5e8ef;" in note_rule
+    assert "border-left: 4px solid #98a2b3;" in note_rule
+    assert "#fff9ec" not in note_rule
+    assert "#c99a34" not in note_rule
+
+    assert "background: #fff9ec;" in material_rule
+    assert "border: 1px solid #ead8aa;" in material_rule
+    assert "border-left: 4px solid #c99a34;" in material_rule
