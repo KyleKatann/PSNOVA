@@ -124,7 +124,7 @@ def test_fire_technic_page_keeps_material_legends_and_final_values():
     assert "J×6<br>K×10" in public
     assert "L×8<br>M×8" in public
     assert "L×6<br>M×10" in public
-    assert "フォイエLv1のみ、メモーフラグメント: - / グランピース(炎属性): -。" in public
+    assert "<h2>強化素材について</h2>" not in public
 
 
 def test_fire_technic_page_excludes_archive_and_wiki_editing_chrome():
