@@ -4,14 +4,16 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 MENUBAR = ROOT / "docs" / "js" / "menubar.js"
 SIDEBAR = ROOT / "docs" / "js" / "sidebar.js"
-BANNER = ROOT / "docs" / "js" / "affiliate-banner.js"
+BANNER = MENUBAR
 
 
 class AffiliateLinkTests(unittest.TestCase):
-    def test_rotating_rakuten_banner_is_loaded_globally(self):
+    def test_rotating_rakuten_banner_is_bundled_globally(self):
         menubar = MENUBAR.read_text(encoding="utf-8")
-        self.assertIn('/PSNOVA/js/affiliate-banner.js', menubar)
-        self.assertIn('data-psnova-affiliate-banner', menubar)
+        self.assertIn("function renderBannerItems()", menubar)
+        self.assertIn("function insertBanner()", menubar)
+        self.assertNotIn("/PSNOVA/js/affiliate-banner.js", menubar)
+        self.assertNotIn("data-psnova-affiliate-banner", menubar)
 
     def test_six_rakuten_campaign_banners_are_available(self):
         js = BANNER.read_text(encoding="utf-8")
