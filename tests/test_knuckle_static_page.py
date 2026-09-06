@@ -5,7 +5,6 @@ import unittest
 
 ROOT = Path(__file__).resolve().parents[1]
 KNUCKLE = ROOT / "docs" / "pages" / "weapon" / "knuckle.html"
-TOOLS = ROOT / "docs" / "js" / "weapon-tools.js"
 
 
 class KnuckleStaticPageTests(unittest.TestCase):
@@ -62,7 +61,7 @@ class KnuckleStaticPageTests(unittest.TestCase):
         self.assertIn("<td>ノヴァクローグ</td>", html)
         self.assertIn("<td>ファイバーロア</td>", html)
 
-    def test_static_page_keeps_one_icon_and_static_navigation(self):
+    def test_static_page_keeps_one_icon_and_catalog_navigation(self):
         html = KNUCKLE.read_text(encoding="utf-8")
 
         self.assertEqual(
@@ -73,38 +72,11 @@ class KnuckleStaticPageTests(unittest.TestCase):
         )
 
         self.assertIn(
-            "/PSNOVA/pages/weapon/doublesaber.html",
+            '<a class="weapon-page-nav-index" href="/PSNOVA/pages/weapon.html">武器一覧</a>',
             html,
         )
-        self.assertIn(
-            "/PSNOVA/pages/weapon/rifle.html",
-            html,
-        )
-        self.assertIn(
-            "/PSNOVA/pages/weapon.html",
-            html,
-        )
-
-    def test_weapon_tools_enhance_static_table_only(self):
-        js = TOOLS.read_text(encoding="utf-8")
-
-        self.assertIn(
-            'table.weapon-data-table[data-weapon-static="true"]',
-            js,
-        )
-
-        self.assertNotIn(
-            "prepareLegacyChildPage",
-            js,
-        )
-        self.assertNotIn(
-            "details.remove();",
-            js,
-        )
-        self.assertNotIn(
-            "selected.open = true;",
-            js,
-        )
+        self.assertNotIn('rel="prev"', html)
+        self.assertNotIn('rel="next"', html)
 
 
 if __name__ == "__main__":
