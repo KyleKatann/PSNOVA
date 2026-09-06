@@ -20,6 +20,7 @@ def test_agent_records_technic_presentation_contract():
         "Technic Lv tables use the same column geometry across every technique and every attribute",
         "Technic descriptive/behavior notes use one consistent gray highlight treatment",
         "reserve it for material legends such as `ホ※` / `ブ※` / `マ※`",
+        "Technic material-legend text uses the same `#26384d` text color as ordinary data tables",
     ):
         assert rule in guide
 
@@ -79,6 +80,8 @@ def test_technic_descriptions_match_gray_blue_accent_pattern_and_material_legend
     assert "#fff9ec" not in note_rule
     assert "#c99a34" not in note_rule
 
+    assert "color: #26384d;" in material_rule
+    assert "color: #614714;" not in material_rule
     assert "background: #fff9ec;" in material_rule
     assert "border: 1px solid #ead8aa;" in material_rule
     assert "border-left: 4px solid #c99a34;" in material_rule
