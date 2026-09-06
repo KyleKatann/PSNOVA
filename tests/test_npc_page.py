@@ -5,6 +5,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 NPC_PAGE = ROOT / "docs" / "pages" / "npc.html"
+PAGE_CSS = ROOT / "docs" / "css" / "page.css"
 SIDEBAR = ROOT / "docs" / "js" / "sidebar.js"
 SITEMAP = ROOT / "docs" / "sitemap.xml"
 
@@ -126,17 +127,45 @@ def test_npc_page_preserves_guest_and_friendship_mechanics():
         assert text in page
 
 
-def test_npc_page_uses_modern_public_shell_and_spoiler_disclosures():
+def test_npc_page_uses_modern_public_shell_without_spoiler_disclosures():
     page = NPC_PAGE.read_text(encoding="utf-8")
 
     assert "<title>PSNOVA攻略サイト - NPC</title>" in page
     assert '<link rel="canonical" href="https://kylekatann.github.io/PSNOVA/pages/npc.html">' in page
+    assert '<link rel="stylesheet" href="/PSNOVA/css/page.css">' in page
     assert '<main id="main">' in page
     assert '<div class="table-scroll">' in page
-    assert page.count("<details>") == 3
+    assert "<details>" not in page
+    assert "<summary>" not in page
+    assert "ネタバレ" not in page
     assert "web.archive.org" not in page
     assert "paraedit" not in page
     assert "コメントの挿入" not in page
+
+
+def test_npc_table_uses_readable_fixed_column_geometry():
+    page = NPC_PAGE.read_text(encoding="utf-8")
+    css = PAGE_CSS.read_text(encoding="utf-8")
+
+    assert '<table class="npc-table">' in page
+    for col_class in (
+        "npc-col-name",
+        "npc-col-species",
+        "npc-col-sex",
+        "npc-col-class",
+        "npc-col-style",
+        "npc-col-feature",
+        "npc-col-join",
+        "npc-col-effect",
+    ):
+        assert f'class="{col_class}"' in page
+
+    assert "#main .npc-table" in css
+    assert "min-width: 1000px;" in css
+    assert "table-layout: fixed;" in css
+    assert "#main .npc-table .npc-col-name { width: 90px; }" in css
+    assert "#main .npc-table .npc-col-effect { width: 242px; }" in css
+    assert "white-space: nowrap;" in css
 
 
 def test_npc_page_is_in_sidebar_and_sitemap():
