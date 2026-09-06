@@ -1,4 +1,0 @@
----
-permalink: /js/fixmenu_pagetop.js
----
-/* Page-top behavior is bundled into /PSNOVA/js/openclose.js. */
