@@ -61,14 +61,18 @@ var html =`
     <li><a href="/PSNOVA/pages/item.html">消費アイテム</a></li>
 
     <li><p>クエスト</p></li>
-    <li><a href="/PSNOVA/pages/difficulty.html">難易度</a></li>
+    <li class="has-submenu quest-data-item">
+        <a class="quest-data-link" href="/PSNOVA/pages/difficulty.html">難易度</a>
+        <ul class="quest-submenu" aria-label="クエストエリア">
+            <li><a href="/PSNOVA/pages/quest/steel-wilderness.html">鋼の荒野</a></li>
+            <li><a href="/PSNOVA/pages/quest/gran-water-source.html">グラン水源</a></li>
+            <li><a href="/PSNOVA/pages/quest/flame-highlands.html">炎の高地</a></li>
+            <li><a href="/PSNOVA/pages/quest/ancient-city.html">古代都市</a></li>
+            <li><a href="/PSNOVA/pages/quest/nova-interior.html">ノヴァ内部</a></li>
+            <li><a href="/PSNOVA/pages/quest/additional.html">追加クエスト</a></li>
+        </ul>
+    </li>
     <li><a href="/PSNOVA/pages/promise-order.html">プロミスオーダー</a></li>
-    <li><a href="/PSNOVA/pages/quest/steel-wilderness.html">鋼の荒野</a></li>
-    <li><a href="/PSNOVA/pages/quest/gran-water-source.html">グラン水源</a></li>
-    <li><a href="/PSNOVA/pages/quest/flame-highlands.html">炎の高地</a></li>
-    <li><a href="/PSNOVA/pages/quest/ancient-city.html">古代都市</a></li>
-    <li><a href="/PSNOVA/pages/quest/nova-interior.html">ノヴァ内部</a></li>
-    <li><a href="/PSNOVA/pages/quest/additional.html">追加クエスト</a></li>
 
     <li><p>キャラクター</p></li>
     <li><a href="/PSNOVA/pages/class.html">クラス</a></li>
@@ -110,6 +114,7 @@ function markCurrentSidebarLink(){
     var weaponChild = /^\/PSNOVA\/pages\/weapon\/[^/]+\.html$/.test(currentPath);
     var granartsChild = /^\/PSNOVA\/pages\/granarts\/[^/]+\.html$/.test(currentPath);
     var technicChild = /^\/PSNOVA\/pages\/technic\/[^/]+\.html$/.test(currentPath);
+    var questChild = /^\/PSNOVA\/pages\/quest\/[^/]+\.html$/.test(currentPath);
     var promiseOrderChild = /^\/PSNOVA\/pages\/promise-order\/[^/]+\.html$/.test(currentPath);
     var links = document.querySelectorAll("#sub .submenu a[href]");
 
@@ -125,12 +130,13 @@ function markCurrentSidebarLink(){
         var weaponParentCurrent = weaponChild && linkPath === "/PSNOVA/pages/weapon.html";
         var granartsParentCurrent = granartsChild && linkPath === "/PSNOVA/pages/granarts.html";
         var technicParentCurrent = technicChild && linkPath === "/PSNOVA/pages/technic.html";
+        var questParentCurrent = questChild && linkPath === "/PSNOVA/pages/difficulty.html";
         var promiseOrderParentCurrent = promiseOrderChild && linkPath === "/PSNOVA/pages/promise-order.html";
 
         link.classList.toggle("is-current", exactCurrent);
         link.classList.toggle(
             "is-parent-current",
-            weaponParentCurrent || granartsParentCurrent || technicParentCurrent || promiseOrderParentCurrent
+            weaponParentCurrent || granartsParentCurrent || technicParentCurrent || questParentCurrent || promiseOrderParentCurrent
         );
         if (exactCurrent) {
             link.setAttribute("aria-current", "page");
