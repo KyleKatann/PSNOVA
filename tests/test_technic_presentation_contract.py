@@ -3,6 +3,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 AGENT = ROOT / "Agent.md"
+STYLE_CSS = ROOT / "docs" / "css" / "style.css"
 PAGE_CSS = ROOT / "docs" / "css" / "page.css"
 
 
@@ -11,6 +12,7 @@ def test_agent_records_technic_presentation_contract():
 
     for rule in (
         "All public data tables use the same square-corner treatment",
+        "Do not add rounded corners or card-like shadows to a table, its caption, or its table-scroll wrapper",
         "Every technic entry must include a reader-facing description in static HTML",
         "use the PSO2 Wiki only as a secondary source",
         "Never copy source wording verbatim",
@@ -19,6 +21,15 @@ def test_agent_records_technic_presentation_contract():
         "Technic supplementary notes and material legends use one consistent yellow highlight treatment",
     ):
         assert rule in guide
+
+
+def test_shared_data_tables_are_shadowless():
+    css = STYLE_CSS.read_text(encoding="utf-8")
+    table_rule = css.split("#main table {", 1)[1].split("}", 1)[0]
+
+    assert "box-shadow: none;" in table_rule
+    assert "var(--shadow-sm)" not in table_rule
+    assert "var(--shadow-md)" not in table_rule
 
 
 def test_technic_tables_use_square_fixed_shared_column_geometry():
