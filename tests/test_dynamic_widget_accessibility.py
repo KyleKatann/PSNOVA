@@ -3,8 +3,8 @@ from pathlib import Path
 
 
 ROOT = Path(__file__).resolve().parents[1]
-SEARCH = ROOT / "docs" / "js" / "site-search.js"
-AFFILIATE = ROOT / "docs" / "js" / "affiliate-banner.js"
+SEARCH = ROOT / "docs" / "js" / "sidebar.js"
+AFFILIATE = ROOT / "docs" / "js" / "menubar.js"
 
 
 class DynamicWidgetAccessibilityTests(unittest.TestCase):
