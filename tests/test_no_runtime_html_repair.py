@@ -5,8 +5,8 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 DOCS = ROOT / "docs"
 OLD_NORMALIZER = DOCS / "js" / "table-semantics.js"
-TABLE_ENHANCEMENTS = DOCS / "js" / "table-enhancements.js"
-MENUBAR = DOCS / "js" / "menubar.js"
+TABLE_ENHANCEMENTS = DOCS / "js" / "menubar.js"
+MENUBAR = TABLE_ENHANCEMENTS
 
 
 class NoRuntimeHtmlRepairTests(unittest.TestCase):
@@ -16,9 +16,11 @@ class NoRuntimeHtmlRepairTests(unittest.TestCase):
             "Do not repair source HTML at runtime; fix the raw HTML or its generator instead.",
         )
 
-    def test_shared_loader_uses_enhancement_only_table_script(self):
+    def test_shared_bundle_contains_enhancement_only_table_logic(self):
         loader = MENUBAR.read_text(encoding="utf-8")
-        self.assertIn("/PSNOVA/js/table-enhancements.js", loader)
+        self.assertIn("decorateSemanticDataTable", loader)
+        self.assertIn("ensureScrollableTable", loader)
+        self.assertNotIn("/PSNOVA/js/table-enhancements.js", loader)
         self.assertNotIn("table-semantics.js", loader)
         self.assertNotIn("data-psnova-table-semantics", loader)
 
