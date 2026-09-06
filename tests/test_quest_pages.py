@@ -1,5 +1,9 @@
 from pathlib import Path
 
+from bs4 import BeautifulSoup
+
+from tools import quest_migrate
+
 
 ROOT = Path(__file__).resolve().parents[1]
 QUEST_PAGES = {
@@ -76,12 +80,47 @@ def test_quest_pages_preserve_full_detail_fields_and_counts():
         html = page_text(filename)
         assert html.count("<h4>") == expected_count
         assert html.count("<table>") == expected_count
-        assert html.count("<strong>攻略:</strong>") == expected_count
         for header in required_headers:
             assert header in html
         total += expected_count
 
     assert total == 104
+
+
+def test_quest_pages_match_source_migration_content():
+    configs = {config.dest: config for config in quest_migrate.PAGES}
+
+    for filename, (_, _, _, expected_count) in QUEST_PAGES.items():
+        generated, source_count = quest_migrate.build_page(configs[filename])
+        public = page_text(filename)
+
+        assert source_count == expected_count
+
+        generated_soup = BeautifulSoup(generated, "html.parser")
+        public_soup = BeautifulSoup(public, "html.parser")
+
+        generated_names = [node.get_text(" ", strip=True) for node in generated_soup.select("h4")]
+        public_names = [node.get_text(" ", strip=True) for node in public_soup.select("h4")]
+        assert public_names == generated_names
+
+        generated_tables = [table.get_text("|", strip=True) for table in generated_soup.select("table")]
+        public_tables = [table.get_text("|", strip=True) for table in public_soup.select("table")]
+        assert public_tables == generated_tables
+
+        generated_strategy = [
+            paragraph.get_text(" ", strip=True)
+            for paragraph in generated_soup.select("p")
+            if paragraph.find("strong")
+            and paragraph.find("strong").get_text(strip=True) == "攻略:"
+        ]
+        public_strategy = {
+            paragraph.get_text(" ", strip=True)
+            for paragraph in public_soup.select("p")
+            if paragraph.find("strong")
+            and paragraph.find("strong").get_text(strip=True) == "攻略:"
+        }
+        for strategy in generated_strategy:
+            assert strategy in public_strategy
 
 
 def test_quest_name_mismatches_use_article_heading_names():
