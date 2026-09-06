@@ -60,9 +60,8 @@ var html =`
     <li><a href="/PSNOVA/pages/material.html">素材</a></li>
     <li><a href="/PSNOVA/pages/item.html">消費アイテム</a></li>
 
-    <li><p>クエスト</p></li>
     <li class="has-submenu quest-data-item">
-        <a class="quest-data-link" href="/PSNOVA/pages/difficulty.html">難易度</a>
+        <a class="quest-data-link" href="/PSNOVA/pages/difficulty.html">クエスト</a>
         <ul class="weapon-submenu quest-submenu" aria-label="クエストエリア">
             <li><a href="/PSNOVA/pages/quest/steel-wilderness.html">鋼の荒野</a></li>
             <li><a href="/PSNOVA/pages/quest/gran-water-source.html">グラン水源</a></li>
