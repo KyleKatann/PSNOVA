@@ -70,7 +70,9 @@ Modernization work must preserve existing data and URLs while improving usabilit
 
 - Public `<img>` elements declare both numeric `width` and `height` using the source image's intrinsic dimensions. CSS remains responsible for responsive rendered sizing; the HTML dimensions reserve the correct aspect ratio before image load and reduce layout shift.
 
-- Public pages load the four shared head scripts (`openclose.js`, `fixmenu_pagetop.js`, `menubar.js`, `sidebar.js`) with `defer`. Public HTML must not contain inline initialization scripts; shared components initialize themselves from external JS after parsing while preserving document-order execution.
+- Public pages load the three shared JavaScript bundles (`openclose.js`, `menubar.js`, `sidebar.js`) with `defer`. Public HTML must not contain inline initialization scripts; shared components initialize themselves from external JS after parsing while preserving document-order execution. The retired `/PSNOVA/js/fixmenu_pagetop.js` URL may exist only as a no-logic non-JavaScript build-compatibility output for older raw HTML that has not yet had that script tag removed; new or regenerated public HTML must emit only the three bundles.
+
+- Repository-owned public runtime JavaScript source is exactly three files: `docs/js/openclose.js`, `docs/js/menubar.js`, and `docs/js/sidebar.js`. `openclose.js` owns responsive-menu and page-top behavior; `menubar.js` owns page-style loading, image hints/class icons, table enhancements, and affiliate-banner behavior; `sidebar.js` owns sidebar/current-link behavior and site search. Retired standalone files such as `fixmenu_pagetop.js`, `image-layout.js`, `table-enhancements.js`, `affiliate-banner.js`, `site-search.js`, and `weapon-tools.js` must not be recreated or dynamically loaded unless the user explicitly reverses the three-bundle decision and the JavaScript freeze.
 
 - Every public page explicitly declares the repository-owned `/PSNOVA/img/logo.png` as its favicon. Keep favicon resources local to the repository and do not introduce external icon hotlinks.
 
