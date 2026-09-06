@@ -9,7 +9,6 @@ SIDEBAR = DOCS / "js" / "sidebar.js"
 
 PUBLIC_SCRIPTS = (
     "/PSNOVA/js/openclose.js",
-    "/PSNOVA/js/fixmenu_pagetop.js",
     "/PSNOVA/js/menubar.js",
     "/PSNOVA/js/sidebar.js",
 )
