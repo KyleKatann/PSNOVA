@@ -152,16 +152,6 @@ function initTechnicDetailPresentation() {
     Array.prototype.slice.call(main.querySelectorAll(":scope > section")).forEach(function(section, index){
         if (index === 0) {
             section.classList.add("technic-page-intro");
-
-            var backLink = section.querySelector('a[href="/PSNOVA/pages/technic.html"]');
-            if (backLink) {
-                var backContainer = backLink.closest("p");
-                if (backContainer && backContainer.parentElement === section) {
-                    backContainer.remove();
-                } else {
-                    backLink.remove();
-                }
-            }
             return;
         }
         if (!section.querySelector(".technic-level-table")) {
