@@ -46,17 +46,19 @@ class WeaponDetailConsistencyTests(unittest.TestCase):
                 )
                 self.assertNotIn("<details>", html)
 
-    def test_detail_toolbar_uses_shared_desktop_sticky_rule(self):
-        css = CSS.read_text(encoding="utf-8")
+    def test_weapon_pages_keep_only_catalog_navigation(self):
+        for slug in PAGES:
+            with self.subTest(slug=slug):
+                html = (WEAPON_DIR / f"{slug}.html").read_text(
+                    encoding="utf-8"
+                )
 
-        self.assertIn(
-            ".data-toolbar { position: sticky; top: 8px; z-index: 30; box-shadow: none; }",
-            css,
-        )
-        self.assertNotIn(
-            "#main.weapon-detail-page .data-toolbar {",
-            css,
-        )
+                self.assertIn(
+                    '<a class="weapon-page-nav-index" href="/PSNOVA/pages/weapon.html">武器一覧</a>',
+                    html,
+                )
+                self.assertNotIn('rel="prev"', html)
+                self.assertNotIn('rel="next"', html)
 
     def test_detail_table_header_remains_in_normal_flow(self):
         css = CSS.read_text(encoding="utf-8")
@@ -71,22 +73,6 @@ class WeaponDetailConsistencyTests(unittest.TestCase):
         )
         self.assertNotIn(
             "top: 76px;",
-            css,
-        )
-
-    def test_desktop_navigation_columns_are_explicit(self):
-        css = CSS.read_text(encoding="utf-8")
-
-        self.assertIn(
-            '.weapon-page-nav a[rel="prev"] { grid-column: 1; }',
-            css,
-        )
-        self.assertIn(
-            ".weapon-page-nav-index { grid-column: 2; }",
-            css,
-        )
-        self.assertIn(
-            '.weapon-page-nav a[rel="next"] { grid-column: 3; }',
             css,
         )
 
