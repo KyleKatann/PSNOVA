@@ -125,7 +125,7 @@ These are specifications established by user review and must be treated as regre
 - Technic entry headings must show the assigned native individual technique PNG, not the generic indigo internal-page section marker. The technic heading icon layer must explicitly clear the generic marker background and must not depend on `:has()` support to reveal the image.
 - Existing technic descriptions imported from the archived Wiki must also be rewritten rather than reproduced verbatim. Preserve the gameplay meaning and all PSNOVA-specific facts, but modernize the wording so public copy is not a transcription of the source Wiki.
 - Technic Lv tables use the same column geometry across every technique and every attribute: one fixed-width row-label column plus 15 equal-width level columns in each `Lv1〜15` / `Lv16〜30` block. On desktop the 15-level table must fit the main content width without horizontal scrolling; mobile may use the existing horizontal table scroller.
-- Technic descriptive/behavior notes use one consistent gray highlight treatment. Material legends for additional upgrade materials use the yellow highlight treatment. Do not use yellow for technique descriptions or explanatory/攻略 notes; reserve it for material legends such as `ホ※` / `ブ※` / `マ※`.
+- Technic descriptive/behavior notes use one consistent gray highlight treatment. Material legends for additional upgrade materials use the yellow highlight treatment. Do not use yellow for technique descriptions or explanatory/攻略 notes; reserve it for material legends such as `ホ※` / `ブ※` / `マ※`. Technic material-legend text uses the same `#26384d` text color as ordinary data tables; only the legend background and border treatment remain yellow.
 
 ## Recovery point
 
