@@ -4,16 +4,19 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 STYLE = ROOT / "docs" / "css" / "style.css"
 MENUBAR_JS = ROOT / "docs" / "js" / "menubar.js"
-SITE_SEARCH_JS = ROOT / "docs" / "js" / "site-search.js"
+SITE_SEARCH_JS = ROOT / "docs" / "js" / "sidebar.js"
 
 
 class SiteSearchEntryTests(unittest.TestCase):
-    def test_site_search_assets_are_loaded_globally(self):
-        js = MENUBAR_JS.read_text(encoding="utf-8")
+    def test_site_search_is_bundled_with_sidebar(self):
+        menubar = MENUBAR_JS.read_text(encoding="utf-8")
+        js = SITE_SEARCH_JS.read_text(encoding="utf-8")
         css = STYLE.read_text(encoding="utf-8")
-        self.assertIn("/PSNOVA/js/site-search.js", js)
+        self.assertIn("function initSiteSearch()", js)
+        self.assertIn('var SITEMAP_URL = "/PSNOVA/sitemap.xml"', js)
+        self.assertNotIn("/PSNOVA/js/site-search.js", menubar)
+        self.assertNotIn("data-psnova-site-search", menubar)
         self.assertIn(".site-search {", css)
-        self.assertIn("data-psnova-site-search", js)
         self.assertNotIn("@import", css)
 
     def test_site_search_mounts_without_removed_menubar(self):
