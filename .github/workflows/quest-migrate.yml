@@ -1,0 +1,44 @@
+name: Quest migrate
+
+on:
+  push:
+    branches:
+      - master
+    paths:
+      - tools/quest_migrate.py
+      - .github/workflows/quest-migrate.yml
+
+permissions:
+  contents: write
+
+jobs:
+  migrate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          ref: master
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install parser
+        run: python -m pip install beautifulsoup4
+
+      - name: Generate quest pages
+        run: python tools/quest_migrate.py
+
+      - name: Commit generated pages
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add docs/pages/quest/*.html
+          if git diff --cached --quiet; then
+            echo "No generated changes"
+            exit 0
+          fi
+          git commit -m "feat: migrate full quest details"
+          git push origin HEAD:master
