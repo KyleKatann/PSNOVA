@@ -463,6 +463,12 @@
     font-weight: 700;
 }
 
+#main.technic-detail-page .technic-level-table tbody tr:nth-child(5) > th,
+#main.technic-detail-page .technic-level-table tbody tr:nth-child(5) > td {
+    color: var(--text);
+    background: #fff8e8;
+}
+
 #main.technic-detail-page .technic-material-note {
     margin: -2px 0 28px;
     padding: 10px 12px;
