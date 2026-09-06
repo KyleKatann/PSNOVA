@@ -3,22 +3,18 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 MENUBAR = ROOT / "docs" / "js" / "menubar.js"
-IMAGE_LAYOUT = ROOT / "docs" / "js" / "image-layout.js"
+IMAGE_LAYOUT = MENUBAR
 STYLE_ENTRY = ROOT / "docs" / "css" / "style.css"
 
 
 class ImageLayoutTests(unittest.TestCase):
-    def test_image_layout_script_is_loaded_globally(self):
+    def test_image_layout_is_bundled_globally(self):
         js = MENUBAR.read_text(encoding="utf-8")
 
-        self.assertIn(
-            "/PSNOVA/js/image-layout.js",
-            js,
-        )
-        self.assertIn(
-            "data-psnova-image-layout",
-            js,
-        )
+        self.assertIn("var knownDimensions = {", js)
+        self.assertIn("function applyImageHints(image)", js)
+        self.assertNotIn("/PSNOVA/js/image-layout.js", js)
+        self.assertNotIn("data-psnova-image-layout", js)
 
     def test_known_persistent_image_has_explicit_dimensions(self):
         js = IMAGE_LAYOUT.read_text(
