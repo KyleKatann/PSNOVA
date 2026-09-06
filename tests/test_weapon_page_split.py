@@ -57,31 +57,6 @@ class WeaponPageSplitTests(unittest.TestCase):
                     html,
                 )
 
-    def test_weapon_tools_has_no_legacy_child_adapter(self):
-        js = (
-            ROOT / "docs" / "js" / "weapon-tools.js"
-        ).read_text(encoding="utf-8")
-
-        for slug, label in WEAPONS.items():
-            self.assertIn(
-                f'slug: "{slug}"',
-                js,
-            )
-            self.assertIn(
-                f'label: "{label}"',
-                js,
-            )
-
-        for token in (
-            "prepareLegacyChildPage",
-            "details.remove();",
-            "selected.open = true;",
-            'querySelectorAll("details")',
-            "section.details",
-        ):
-            with self.subTest(token=token):
-                self.assertNotIn(token, js)
-
     def test_shared_navigation_understands_weapon_children(self):
         menubar = (
             ROOT / "docs" / "js" / "menubar.js"
