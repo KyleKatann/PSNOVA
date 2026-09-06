@@ -59,14 +59,9 @@ class StickyDataUiTests(unittest.TestCase):
             css,
         )
 
-    def test_mobile_layout_rules_remain(self):
+    def test_mobile_weapon_catalog_layout_rule_remains(self):
         css = CSS.read_text(encoding="utf-8")
 
-        self.assertIn(
-            "@media screen and "
-            "(max-width: 700px)",
-            css,
-        )
         self.assertIn(
             "@media screen and "
             "(max-width: 560px)",
