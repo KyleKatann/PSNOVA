@@ -122,9 +122,73 @@ function markCurrentSidebarLink(){
     });
 }
 
+function ensurePageStylesheet() {
+    if (document.querySelector('link[href="/PSNOVA/css/page.css"]')) {
+        return;
+    }
+
+    var link = document.createElement("link");
+    link.rel = "stylesheet";
+    link.href = "/PSNOVA/css/page.css";
+    document.head.appendChild(link);
+}
+
+function initTechnicDetailPresentation() {
+    var main = document.getElementById("main");
+    if (!main || !main.querySelector(".technic-level-table")) {
+        return;
+    }
+
+    ensurePageStylesheet();
+    main.classList.add("technic-detail-page");
+
+    var currentPath = window.location.pathname.replace(/\/$/, "");
+    if (currentPath === "/PSNOVA/pages/technic/fire.html") {
+        main.classList.add("technic-fire-page");
+    } else if (currentPath === "/PSNOVA/pages/technic/ice.html") {
+        main.classList.add("technic-ice-page");
+    }
+
+    Array.prototype.slice.call(main.querySelectorAll(":scope > section")).forEach(function(section, index){
+        if (index === 0) {
+            section.classList.add("technic-page-intro");
+            return;
+        }
+        if (!section.querySelector(".technic-level-table")) {
+            return;
+        }
+
+        section.classList.add("technic-entry");
+
+        var heading = section.querySelector(":scope > h2");
+        if (heading) {
+            heading.classList.add("technic-entry-title");
+        }
+
+        var summaryTable = section.querySelector(":scope > table");
+        if (summaryTable && !summaryTable.classList.contains("technic-level-table")) {
+            summaryTable.classList.add("technic-summary-table");
+        }
+
+        Array.prototype.slice.call(section.querySelectorAll(".technic-level-table tbody tr")).forEach(function(row){
+            var labelCell = row.querySelector("th[scope='row']");
+            if (!labelCell) {
+                return;
+            }
+
+            var label = labelCell.textContent.replace(/\s+/g, "").trim();
+            if (label === "威力") {
+                row.classList.add("technic-power-row");
+            } else if (label === "追加素材") {
+                row.classList.add("technic-extra-material-row");
+            }
+        });
+    });
+}
 
 function initSidebar() {
     side();
+    initTechnicDetailPresentation();
 
     if (typeof initResponsiveContentsMenu === "function") {
         initResponsiveContentsMenu();
