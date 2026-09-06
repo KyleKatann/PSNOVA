@@ -45,6 +45,8 @@ Modernization work must preserve existing data and URLs while improving usabilit
 
 ## Correction-derived invariants
 
+- Public reader-facing copy must be self-contained PSNOVA guide prose and must never mention or imply that the information came from another source, site, archive, Wiki, migration target, or reference document. Phrases such as `原典では`, `旧Wikiでは`, `アーカイブでは`, `参考元では`, `移植元では`, `元ページでは`, `出典では`, or equivalent source-provenance wording are prohibited in public HTML. Provenance and verification notes belong only in repository documentation, tests, code comments, or internal work logs unless the user explicitly requests citations on a public page.
+
 - Individual weapon-detail page introductions describe the weapon itself—its handling, role, range, or combat traits—rather than merely describing the table or page contents. Do not reintroduce boilerplate such as `武器データを掲載する`, `一覧で確認できる`, or `このページでは` into these leads.
 
 - Preserve the user-approved PSNOVA color palette. Do not automatically darken or replace site colors solely to satisfy automated contrast checks. Automated axe audits intentionally exclude `color-contrast` unless the user explicitly requests color-accessibility enforcement.
