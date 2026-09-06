@@ -12,13 +12,6 @@ def test_semantic_table_headers_are_explicitly_centered_after_body_alignment_rul
     assert "text-align: center !important;" in tail
 
 
-def test_weapon_ui_uses_clear_japanese_shop_level_label():
-    script = (ROOT / "docs/js/weapon-tools.js").read_text(encoding="utf-8")
-    assert "ショップレベル" in script
-    for forbidden in ("Shop Lv", "ShopLv", "shopLv", "ショップLv"):
-        assert forbidden not in script
-
-
 def test_public_ui_uses_clear_japanese_shop_level_label():
     docs = ROOT / "docs"
     forbidden = ("Shop Lv", "ShopLv", "shopLv", "ショップLv")
