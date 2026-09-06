@@ -30,16 +30,5 @@
         stylesheet.setAttribute("data-psnova-page-style", "true");
         document.head.appendChild(stylesheet);
     }
-
-    if (!isWeaponPage) {
-        return;
-    }
-
-    if (!document.querySelector('script[data-psnova-weapon-tools="true"]')) {
-        var script = document.createElement("script");
-        script.src = "/PSNOVA/js/weapon-tools.js";
-        script.setAttribute("data-psnova-weapon-tools", "true");
-        document.head.appendChild(script);
-    }
 })();
 
