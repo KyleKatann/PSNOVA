@@ -125,6 +125,7 @@ def test_ice_technic_page_keeps_material_legends_and_final_values():
     assert "J×6<br>K×10" in public
     assert "L×8<br>M×8" in public
     assert "L×6<br>M×10" in public
+    assert "<h2>強化素材について</h2>" not in public
 
 
 def test_ice_technic_page_does_not_invent_shifta_duration_for_deband():
