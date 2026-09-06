@@ -120,7 +120,7 @@ These are specifications established by user review and must be treated as regre
 - Every technic entry must include a reader-facing description in static HTML. The archived PSNOVA Wiki is the primary source. If the PSNOVA source genuinely lacks enough behavior description, use the PSO2 Wiki only as a secondary source for the generic action/behavior of the technique, then rewrite it in original reader-facing Japanese. Never copy source wording verbatim, and never import PSO2-specific values, balance, timing, ranges, or other gameplay facts into PSNOVA unless independently verified for PSNOVA.
 - Existing technic descriptions imported from the archived Wiki must also be rewritten rather than reproduced verbatim. Preserve the gameplay meaning and all PSNOVA-specific facts, but modernize the wording so public copy is not a transcription of the source Wiki.
 - Technic Lv tables use the same column geometry across every technique and every attribute: one fixed-width row-label column plus 15 equal-width level columns in each `Lv1〜15` / `Lv16〜30` block. On desktop the 15-level table must fit the main content width without horizontal scrolling; mobile may use the existing horizontal table scroller.
-- Technic supplementary notes and material legends use one consistent yellow highlight treatment. Do not mix gray note cards with yellow note cards for the same kind of supplemental information.
+- Technic descriptive/behavior notes use one consistent gray highlight treatment. Material legends for additional upgrade materials use the yellow highlight treatment. Do not use yellow for technique descriptions or explanatory/攻略 notes; reserve it for material legends such as `ホ※` / `ブ※` / `マ※`.
 
 ## Recovery point
 
@@ -193,7 +193,7 @@ Work through this list sequentially unless a dependency requires otherwise.
 
 26. Lazy-load below-the-fold images where appropriate. **Implemented**
 27. Remove duplicate image assets. **Implemented**
-28. Optimize large images while preserving acceptable quality. **Deferred: requires a binary image-processing pass that can verify output quality and size.**
+28. Optimize large images while preserving acceptable quality and size. **Deferred: requires a binary image-processing pass that can verify output quality and size.**
 29. Move generation notebooks/tools out of the public `docs/` tree. **Implemented**
 30. Remove `.ipynb_checkpoints` from version control and ignore them. **Implemented**
 31. Separate `data/`, `tools/`, and `docs/` concerns. **Implemented**
