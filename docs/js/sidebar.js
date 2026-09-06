@@ -8,6 +8,8 @@ var html =`
 
     <li><p>攻略情報</p></li>
     <li><a href="/PSNOVA/pages/faq.html">初心者Q&amp;A</a></li>
+    <li><a href="/PSNOVA/pages/walkthrough.html">攻略チャート</a></li>
+    <li><a href="/PSNOVA/pages/tips-bugs.html">小技・バグ</a></li>
     <li><a href="/PSNOVA/pages/novafactor.html">ノヴァファクター集め</a></li>
     <li><a href="/PSNOVA/pages/download.html">ダウンロードコンテンツ</a></li>
     <li><a href="/PSNOVA/pages/base.html">拠点</a></li>
@@ -69,6 +71,7 @@ var html =`
             <li><a href="/PSNOVA/pages/quest/gran-water-source.html">グラン水源</a></li>
             <li><a href="/PSNOVA/pages/quest/flame-highlands.html">炎の高地</a></li>
             <li><a href="/PSNOVA/pages/quest/ancient-city.html">古代都市</a></li>
+            <li><a href="/PSNOVA/pages/quest/great-spire.html">大尖塔</a></li>
             <li><a href="/PSNOVA/pages/quest/nova-interior.html">ノヴァ内部</a></li>
             <li><a href="/PSNOVA/pages/quest/additional.html">追加クエスト</a></li>
         </ul>
@@ -82,6 +85,7 @@ var html =`
     <li><a href="/PSNOVA/pages/npc.html">NPC</a></li>
     <li><a href="/PSNOVA/pages/npc-password.html">NPC(パスワード解放)</a></li>
     <li><a href="/PSNOVA/pages/npc-coldsleep.html">コールドスリープ</a></li>
+    <li><a href="/PSNOVA/pages/traits.html">特徴</a></li>
     <li><a href="/PSNOVA/pages/appearance.html">ヘアスタイル・コスチューム・アクセサリー</a></li>
 
     <li><a href="/PSNOVA/pages/trophy.html">トロフィー</a></li>
