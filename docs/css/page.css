@@ -261,29 +261,6 @@
     background-image: url("/PSNOVA/img/tech/ice.png");
 }
 
-#main.technic-detail-page .technic-entry-title::after {
-    display: inline-flex;
-    align-items: center;
-    min-height: 24px;
-    margin-left: 2px;
-    padding: 2px 9px;
-    color: var(--accent-strong);
-    background: var(--accent-soft);
-    border: 1px solid #cfd4f5;
-    border-radius: 999px;
-    font-size: 11px;
-    font-weight: 800;
-    letter-spacing: 0.02em;
-}
-
-#main.technic-fire-page .technic-entry-title::after {
-    content: "炎属性";
-}
-
-#main.technic-ice-page .technic-entry-title::after {
-    content: "氷属性";
-}
-
 #main.technic-detail-page .technic-note {
     color: #344054;
     background: var(--surface-subtle);
@@ -426,12 +403,6 @@
         width: 26px;
         height: 26px;
         flex-basis: 26px;
-    }
-
-    #main.technic-detail-page .technic-entry-title::after {
-        min-height: 22px;
-        padding: 1px 7px;
-        font-size: 10px;
     }
 
     #main.technic-detail-page .technic-level-table {
