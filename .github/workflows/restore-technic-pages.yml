@@ -12,7 +12,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          fetch-depth: 4
+          fetch-depth: 0
       - name: Restore technic pages and remove retired tag only
         shell: bash
         run: |
