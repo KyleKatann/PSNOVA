@@ -288,7 +288,7 @@
     color: #344054;
     background: var(--surface-subtle);
     border: 1px solid #e5e8ef;
-    border-left: 4px solid #98a2b3;
+    border-left: 4px solid var(--accent);
     border-radius: var(--radius-sm);
 }
 
