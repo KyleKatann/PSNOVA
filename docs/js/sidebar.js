@@ -110,6 +110,7 @@ function markCurrentSidebarLink(){
     var weaponChild = /^\/PSNOVA\/pages\/weapon\/[^/]+\.html$/.test(currentPath);
     var granartsChild = /^\/PSNOVA\/pages\/granarts\/[^/]+\.html$/.test(currentPath);
     var technicChild = /^\/PSNOVA\/pages\/technic\/[^/]+\.html$/.test(currentPath);
+    var promiseOrderChild = /^\/PSNOVA\/pages\/promise-order\/[^/]+\.html$/.test(currentPath);
     var links = document.querySelectorAll("#sub .submenu a[href]");
 
     Array.prototype.slice.call(links).forEach(function(link){
@@ -124,11 +125,12 @@ function markCurrentSidebarLink(){
         var weaponParentCurrent = weaponChild && linkPath === "/PSNOVA/pages/weapon.html";
         var granartsParentCurrent = granartsChild && linkPath === "/PSNOVA/pages/granarts.html";
         var technicParentCurrent = technicChild && linkPath === "/PSNOVA/pages/technic.html";
+        var promiseOrderParentCurrent = promiseOrderChild && linkPath === "/PSNOVA/pages/promise-order.html";
 
         link.classList.toggle("is-current", exactCurrent);
         link.classList.toggle(
             "is-parent-current",
-            weaponParentCurrent || granartsParentCurrent || technicParentCurrent
+            weaponParentCurrent || granartsParentCurrent || technicParentCurrent || promiseOrderParentCurrent
         );
         if (exactCurrent) {
             link.setAttribute("aria-current", "page");
