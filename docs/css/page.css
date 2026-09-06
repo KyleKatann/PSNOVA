@@ -284,25 +284,39 @@
     content: "氷属性";
 }
 
-#main.technic-detail-page .technic-entry > p:first-of-type,
-#main.technic-detail-page .technic-entry > ul:first-of-type {
-    margin-bottom: 18px;
-    padding: 10px 12px;
-    color: #344054;
-    background: var(--surface-subtle);
-    border: 1px solid #e5e8ef;
+#main.technic-detail-page .technic-note,
+#main.technic-detail-page .technic-material-note {
+    color: #614714;
+    background: #fff9ec;
+    border: 1px solid #ead8aa;
+    border-left: 4px solid #c99a34;
     border-radius: var(--radius-sm);
 }
 
-#main.technic-detail-page .technic-entry > ul:first-of-type {
-    padding-left: 32px;
+#main.technic-detail-page .technic-note {
+    margin: 0 0 18px;
+    padding: 10px 12px;
+}
+
+#main.technic-detail-page .technic-note > p {
+    margin: 0 0 8px;
+    color: inherit;
+}
+
+#main.technic-detail-page .technic-note > p:last-child {
+    margin-bottom: 0;
+}
+
+#main.technic-detail-page .technic-note > ul {
+    margin: 0;
+    padding-left: 22px;
 }
 
 #main.technic-detail-page .technic-summary-table {
     margin: 12px 0 22px;
-    overflow: hidden;
-    border-radius: var(--radius-sm);
-    box-shadow: var(--shadow-sm);
+    overflow: visible;
+    border-radius: 0;
+    box-shadow: none;
 }
 
 #main.technic-detail-page .technic-summary-table tbody th {
@@ -313,21 +327,29 @@
 
 #main.technic-detail-page .technic-level-scroll {
     margin: 14px 0 16px;
-    border-radius: var(--radius-sm);
-    box-shadow: var(--shadow-sm);
+    border-radius: 0;
+    box-shadow: none;
 }
 
 #main.technic-detail-page .technic-level-table {
+    width: 100%;
     margin: 0;
+    table-layout: fixed;
+    border-radius: 0;
+}
+
+#main.technic-detail-page .technic-level-table tr > :first-child {
+    width: 184px;
+    min-width: 184px;
 }
 
 #main.technic-detail-page .technic-level-table caption {
     padding: 8px 12px;
     color: #303b59;
-    background: #f1f3ff;
+    background: var(--accent-soft);
     border: 1px solid var(--border);
     border-bottom: 0;
-    border-radius: var(--radius-sm) var(--radius-sm) 0 0;
+    border-radius: 0;
     font-size: 12px;
     font-weight: 800;
     text-align: left;
@@ -336,32 +358,27 @@
 
 #main.technic-detail-page .technic-level-table thead th {
     color: #24325f;
-    background: #e9edff;
+    background: var(--accent-soft);
 }
 
-#main.technic-detail-page .technic-power-row > th,
-#main.technic-detail-page .technic-power-row > td {
+#main.technic-detail-page .technic-level-table tbody tr:first-child > th,
+#main.technic-detail-page .technic-level-table tbody tr:first-child > td {
     background: #f5f6ff;
     font-weight: 700;
 }
 
-#main.technic-detail-page .technic-extra-material-row > th,
-#main.technic-detail-page .technic-extra-material-row > td {
+#main.technic-detail-page .technic-level-table tbody tr:nth-child(5) > th,
+#main.technic-detail-page .technic-level-table tbody tr:nth-child(5) > td {
     background: #fff8e8;
 }
 
-#main.technic-detail-page .technic-extra-material-row > th {
+#main.technic-detail-page .technic-level-table tbody tr:nth-child(5) > th {
     color: #7a5414;
 }
 
 #main.technic-detail-page .technic-material-note {
     margin: -2px 0 28px;
     padding: 10px 12px;
-    color: #614714;
-    background: #fff9ec;
-    border: 1px solid #ead8aa;
-    border-left: 4px solid #c99a34;
-    border-radius: var(--radius-sm);
     font-size: 13px;
     line-height: 1.55;
 }
@@ -386,6 +403,11 @@
         min-height: 22px;
         padding: 1px 7px;
         font-size: 10px;
+    }
+
+    #main.technic-detail-page .technic-level-table {
+        width: 960px;
+        min-width: 960px;
     }
 
     #main.technic-detail-page .technic-level-table caption {
