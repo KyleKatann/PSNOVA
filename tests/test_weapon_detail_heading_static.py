@@ -74,7 +74,7 @@ def test_static_heading_icon_style_lives_in_page_css():
     assert "height: 30px;" in css
 
 
-def test_static_weapon_heading_and_toolbar_rules_are_recorded():
+def test_static_weapon_heading_and_retired_control_rules_are_recorded():
     agent = AGENT.read_text(
         encoding="utf-8"
     )
@@ -89,16 +89,16 @@ def test_static_weapon_heading_and_toolbar_rules_are_recorded():
         in agent
     )
     assert (
-        "weapon search/filter toolbars use `position: sticky`"
+        "Weapon detail pages keep only the centered `武器一覧` link"
         in agent
     )
     assert (
-        "remain visible near the top of the viewport"
+        "The weapon-specific search/filter/sort toolbar is retired."
         in agent
     )
-    assert "They use no card shadow." in agent
+    assert "`docs/js/weapon-tools.js`" in agent
     assert (
-        "Weapon table headers must remain in normal document flow"
+        "Weapon table headers remain in normal document flow"
         in agent
     )
     assert "must never use `position: sticky`" in agent
