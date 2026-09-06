@@ -113,6 +113,7 @@
             wrapper.appendChild(table);
         }
 
+        wrapper.style.touchAction = "pan-x pan-y pinch-zoom";
         wrapper.setAttribute("tabindex", "0");
         wrapper.setAttribute("role", "region");
 
