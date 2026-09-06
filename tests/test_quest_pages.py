@@ -87,6 +87,11 @@ def test_quest_pages_preserve_full_detail_fields_and_counts():
     assert total == 104
 
 
+def test_quest_pages_omit_empty_strategy_placeholders():
+    for filename in QUEST_PAGES:
+        assert "<strong>攻略:</strong> -" not in page_text(filename)
+
+
 def test_quest_pages_match_source_migration_content():
     configs = {config.dest: config for config in quest_migrate.PAGES}
 
