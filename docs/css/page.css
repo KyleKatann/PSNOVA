@@ -390,6 +390,28 @@
     line-height: 1.55;
 }
 
+/* Smartphone desktop-site mode keeps Technic Lv tables inside the main column.
+ * Compact the row-label column so the 15 level columns can use the freed width. */
+@media screen and (min-width: 801px) and (pointer: coarse) {
+    #main.technic-detail-page .technic-level-scroll > .technic-level-table {
+        width: 100%;
+        min-width: 100%;
+        max-width: 100%;
+        white-space: normal;
+    }
+
+    #main.technic-detail-page .technic-level-table th,
+    #main.technic-detail-page .technic-level-table td {
+        white-space: normal;
+    }
+
+    #main.technic-detail-page .technic-level-table tr > :first-child {
+        width: 120px;
+        min-width: 120px;
+        overflow-wrap: anywhere;
+    }
+}
+
 @media screen and (max-width: 800px) {
     #main.technic-detail-page .technic-entry {
         margin-top: 28px;
