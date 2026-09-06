@@ -27,19 +27,12 @@ class TalisWeaponPageTests(unittest.TestCase):
 
     def test_weapon_navigation(self):
         self.assertIn(
-            'href="/PSNOVA/pages/weapon/rod.html" rel="prev">← ロッド</a>',
-            self.html,
-        )
-        self.assertIn(
             'class="weapon-page-nav-index" '
             'href="/PSNOVA/pages/weapon.html">武器一覧</a>',
             self.html,
         )
-        self.assertIn(
-            'href="/PSNOVA/pages/weapon/wand.html" '
-            'rel="next">ウォンド →</a>',
-            self.html,
-        )
+        self.assertNotIn('rel="prev"', self.html)
+        self.assertNotIn('rel="next"', self.html)
 
     def test_legacy_weapon_markup_is_removed(self):
         self.assertNotIn('border="1"', self.html)
