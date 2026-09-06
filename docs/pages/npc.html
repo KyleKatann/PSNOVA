@@ -15,6 +15,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="/PSNOVA/img/logo.png" type="image/png">
     <link rel="stylesheet" href="/PSNOVA/css/style.css">
+    <link rel="stylesheet" href="/PSNOVA/css/page.css">
     <script defer src="/PSNOVA/js/openclose.js"></script>
     <script defer src="/PSNOVA/js/fixmenu_pagetop.js"></script>
     <script defer src="/PSNOVA/js/menubar.js"></script>
@@ -31,13 +32,23 @@
             <main id="main">
                 <section>
                     <h2>NPC</h2>
-                    <p class="page-lead">PSNOVAではストーリー進行や各種施設に関わるNPCをパーティーメンバーとして同行させられ、キャラクターごとに種族、クラス、特徴、補正が異なる。加入条件には物語上のネタバレを含むものがあるため、該当箇所は開閉表示にしている。ここではストーリーキャラクターの基本情報に加え、ゲストキャラクターと友好度の仕組みをまとめている。</p>
+                    <p class="page-lead">PSNOVAではストーリー進行や各種施設に関わるNPCをパーティーメンバーとして同行させられ、キャラクターごとに種族、クラス、特徴、補正が異なる。ストーリーキャラクターは加入条件や固有の効果・補正まで含めて比較できる。ここではストーリーキャラクターの基本情報に加え、ゲストキャラクターと友好度の仕組みをまとめている。</p>
 
                     <h3>ストーリーキャラクター</h3>
-                    <p>加入条件や種族そのものがネタバレになる項目は「ネタバレを表示」から確認できる。原典で未記入だった項目は推測で補わず、そのまま「未記入」または「-」としている。</p>
+                    <p>確認できない項目は推測で補わず、「未記入」または「-」としている。</p>
 
                     <div class="table-scroll">
-                        <table>
+                        <table class="npc-table">
+                            <colgroup>
+                                <col class="npc-col-name">
+                                <col class="npc-col-species">
+                                <col class="npc-col-sex">
+                                <col class="npc-col-class">
+                                <col class="npc-col-style">
+                                <col class="npc-col-feature">
+                                <col class="npc-col-join">
+                                <col class="npc-col-effect">
+                            </colgroup>
                             <thead>
                                 <tr>
                                     <th scope="col">名前</th>
@@ -66,7 +77,7 @@
                                 <tr>
                                     <td>フィルディア</td><td>ヒューマン</td><td>♀</td><td>ハンター</td><td>暁紅の英雄</td>
                                     <td>暁紅のアークス<br>打撃自慢<br>リーダー気質<br>ピンチに強い<br>人気者<br>ハンター好き<br>熱血漢<br>打たれ強い</td>
-                                    <td>ストーリー進行（一時加入）<details><summary>ネタバレを表示</summary>クリア後コールドスリープ</details></td>
+                                    <td>ストーリー進行（一時加入）<br>クリア後コールドスリープ</td>
                                     <td>打撃力+80<br>打撃防御+30<br>防御力アップ+5%<br>HP低下で攻撃力アップ<br>ハンターがいると有利<br>レベル+10</td>
                                 </tr>
                                 <tr>
@@ -81,7 +92,7 @@
                                 <tr>
                                     <td>レイヴァン</td><td>ニューマン</td><td>♂</td><td>フォース</td><td>あくなき研究者</td>
                                     <td>エリートアークス<br>探究心<br>法撃マスター<br>ポーカーフェイス<br>影が薄い<br>兵器マニア<br>不屈の精神</td>
-                                    <td><details><summary>ネタバレを表示</summary>クリア後コールドスリープ</details></td>
+                                    <td>クリア後コールドスリープ</td>
                                     <td>法撃力+50<br>法撃防御+30<br>打撃耐性<br>ギガンテスに有利<br>HP低下で防御力アップ<br>レアドロップ+5%<br>ヘイト上昇率ダウン<br>レベル+4</td>
                                 </tr>
                                 <tr>
@@ -128,7 +139,7 @@
                                 </tr>
                                 <tr>
                                     <td>ユノ</td>
-                                    <td><details><summary>ネタバレを表示</summary>ギガンテス</details></td>
+                                    <td>ギガンテス</td>
                                     <td>♀</td><td>-</td><td>運命託されし姫</td><td>-</td><td>-</td><td>-</td>
                                 </tr>
                                 <tr>
@@ -158,7 +169,7 @@
                     <p>NPCとの友好度は<strong>他人 → 知人 → 友人 → 仲間 → 親友</strong>の順に上昇する。</p>
                     <ul>
                         <li><strong>プロミスオーダーを達成する：</strong>繰り返し受注できるオーダーも、達成するたびに友好度が上昇する。</li>
-                        <li><strong>パーティーメンバーに入れてクエストをクリアする：</strong>同行してクエストを達成すると友好度が上昇する。原典にはレスタでHPを回復すると上昇しやすい可能性があるとの記載もあるが、未確認情報として扱う。</li>
+                        <li><strong>パーティーメンバーに入れてクエストをクリアする：</strong>同行してクエストを達成すると友好度が上昇する。レスタでHPを回復すると上昇しやすい可能性もあるが、未確認情報として扱う。</li>
                     </ul>
                     <p>メインクルーの友好度が「友人」「仲間」「親友」に到達すると、赤い吹き出しアイコンが表示され、固有イベントが発生する。これに伴って★付きの特殊なプロミスオーダーやクエストが追加される。「親友」時のイベントをクリアしてトロフィーを入手したNPCは、エンディングで追加の会話を聞ける。</p>
                 </section>
