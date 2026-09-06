@@ -3,7 +3,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 STYLE = ROOT / "docs" / "css" / "style.css"
-BANNER = ROOT / "docs" / "js" / "affiliate-banner.js"
+BANNER = ROOT / "docs" / "js" / "menubar.js"
 
 
 def affiliate_css():
