@@ -1,0 +1,66 @@
+name: one-time retired script cleanup
+
+on:
+  push:
+    branches:
+      - master
+
+permissions:
+  contents: write
+
+jobs:
+  cleanup:
+    if: github.event.head_commit.message == 'chore: run retired script reference cleanup'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout triggering commit
+        uses: actions/checkout@v4
+      - name: Remove retired script references
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+
+          retired = '    <script defer src="/PSNOVA/js/fixmenu_pagetop.js"></script>\n'
+          changed = []
+          candidates = [Path('docs/index.html')]
+          candidates.extend(Path('docs/pages').rglob('*.html'))
+
+          for path in candidates:
+              if '分類中' in path.parts:
+                  continue
+              text = path.read_text(encoding='utf-8')
+              if retired not in text:
+                  continue
+              updated = text.replace(retired, '')
+              path.write_text(updated, encoding='utf-8', newline='\n')
+              changed.append(str(path))
+
+          compat = Path('docs/fixmenu-pagetop-compat.txt')
+          if compat.exists():
+              compat.unlink()
+              changed.append(str(compat))
+
+          remaining = []
+          for path in candidates:
+              if '分類中' in path.parts:
+                  continue
+              if 'fixmenu_pagetop.js' in path.read_text(encoding='utf-8'):
+                  remaining.append(str(path))
+
+          if remaining:
+              raise SystemExit('retired script references remain: ' + ', '.join(remaining))
+
+          print(f'changed {len(changed)} files')
+          for path in changed:
+              print(path)
+          PY
+      - name: Remove one-time workflow
+        run: rm .github/workflows/cleanup-retired-script.yml
+      - name: Commit cleanup
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add docs .github/workflows/cleanup-retired-script.yml
+          git diff --cached --check
+          git commit -m "fix: remove retired page-top script references"
+          git push origin HEAD:master
