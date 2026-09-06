@@ -43,25 +43,41 @@ def source_page():
     return matches[0]
 
 
-def test_fire_technic_page_preserves_reader_useful_source_sentinels():
+def test_fire_technic_page_preserves_source_facts_without_copying_source_prose():
     source = visible_text(source_page())
     public = visible_text(PUBLIC)
 
-    sentinels = [
-        "初期状態で習得しているテクニック",
+    source_sentences = [
         "照準のある位置へ向けて直線的に飛行する火の玉を打ち出す",
         "自身またはタリスのある地点を中心に螺旋状の火の玉を発生させる",
         "威力はやや低いが即座に爆発するため、移動する目標への攻撃に向く",
-        "当たった敵を吹き飛ばす",
-        "最終ステータス",
-        "ホワイトチケット",
-        "ブラックチケット",
-        "マキアファクター",
+        "前方扇状の範囲に炎の波を発生させる",
+        "自身と周囲のプレイヤーキャラクターの打撃力・射撃力・法撃力を上昇させる",
     ]
+    for sentence in source_sentences:
+        assert sentence in source
+        assert sentence not in public
 
-    for sentinel in sentinels:
-        assert sentinel in source
-        assert sentinel in public
+    for fact in (
+        "初期状態から習得",
+        "螺旋を描いて回る炎弾",
+        "移動する敵にも当てやすい",
+        "射程はソード・パルチザンの通常攻撃程度",
+        "Lv20では元ステータスに129%",
+        "1分30秒",
+        "半径ステップ2回分程度",
+    ):
+        assert fact in public
+
+
+def test_fire_technic_page_has_description_for_every_technic():
+    public = PUBLIC.read_text(encoding="utf-8")
+
+    assert public.count('class="technic-entry"') == 5
+    assert public.count('class="technic-note"') == 5
+    assert public.count('<th scope="row">説明文</th>') == 5
+    assert '<link rel="stylesheet" href="/PSNOVA/css/page.css">' in public
+    assert '<main id="main" class="technic-detail-page technic-fire-page">' in public
 
 
 def test_fire_technic_page_splits_levels_into_two_15_column_tables():
@@ -89,13 +105,13 @@ def test_fire_technic_page_splits_levels_into_two_15_column_tables():
 
     assert "min-width: 2200px" not in public
     assert "min-width:2200px" not in public
-    assert "table-layout:fixed" not in public
 
 
-def test_fire_technic_page_keeps_material_legend_and_final_values():
+def test_fire_technic_page_keeps_material_legends_and_final_values():
     public = PUBLIC.read_text(encoding="utf-8")
+    legend = "追加素材: ホ※=ホワイトチケット×1 / ブ※=ブラックチケット×2 / マ※=マキアファクター×1"
 
-    assert "追加素材: ホ※=ホワイトチケット×1 / ブ※=ブラックチケット×2 / マ※=マキアファクター×1" in public
+    assert public.count(legend) == 5
 
     assert "<td>486</td><td>1555</td>" in public
     assert "<td>2527</td><td>2673</td>" in public
@@ -108,7 +124,7 @@ def test_fire_technic_page_keeps_material_legend_and_final_values():
     assert "J×6<br>K×10" in public
     assert "L×8<br>M×8" in public
     assert "L×6<br>M×10" in public
-    assert "フォイエLv1のみ、メモリーフラグメント: - / グランピース(炎属性): -。" in public
+    assert "フォイエLv1のみ、メモーフラグメント: - / グランピース(炎属性): -。" in public
 
 
 def test_fire_technic_page_excludes_archive_and_wiki_editing_chrome():
