@@ -272,6 +272,7 @@ def build_page(config: PageConfig) -> tuple[str, int]:
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="/PSNOVA/img/logo.png" type="image/png">
     <link rel="stylesheet" href="/PSNOVA/css/style.css">
+    <link rel="stylesheet" href="/PSNOVA/css/page.css">
     <script defer src="/PSNOVA/js/openclose.js"></script>
     <script defer src="/PSNOVA/js/fixmenu_pagetop.js"></script>
     <script defer src="/PSNOVA/js/menubar.js"></script>
