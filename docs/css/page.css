@@ -284,7 +284,14 @@
     content: "氷属性";
 }
 
-#main.technic-detail-page .technic-note,
+#main.technic-detail-page .technic-note {
+    color: #344054;
+    background: var(--surface-subtle);
+    border: 1px solid #e5e8ef;
+    border-left: 4px solid #98a2b3;
+    border-radius: var(--radius-sm);
+}
+
 #main.technic-detail-page .technic-material-note {
     color: #614714;
     background: #fff9ec;
