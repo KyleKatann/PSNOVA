@@ -3,7 +3,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 STYLE = ROOT / "docs" / "css" / "style.css"
-TABLE_JS = ROOT / "docs" / "js" / "table-enhancements.js"
+TABLE_JS = ROOT / "docs" / "js" / "menubar.js"
 
 
 class DataTableStyleTests(unittest.TestCase):
