@@ -11,6 +11,7 @@ var html =`
     <li><a href="/PSNOVA/pages/novafactor.html">ノヴァファクター集め</a></li>
     <li><a href="/PSNOVA/pages/download.html">ダウンロードコンテンツ</a></li>
     <li><a href="/PSNOVA/pages/base.html">拠点</a></li>
+    <li><a href="/PSNOVA/pages/food.html">食事</a></li>
 
     <li><p>各種データ</p></li>
     <li><a href="/PSNOVA/pages/enemy.html">エネミー</a></li>
