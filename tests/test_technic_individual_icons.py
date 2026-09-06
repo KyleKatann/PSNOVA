@@ -29,6 +29,46 @@ TECHNICS = {
             "デバンド",
         ),
     ),
+    "technic-thunder-page": (
+        "thunder.html",
+        (
+            "ゾンデ",
+            "ギ・ゾンデ",
+            "ラ・ゾンデ",
+            "サ・ゾンデ",
+            "ゾンディール",
+        ),
+    ),
+    "technic-wind-page": (
+        "wind.html",
+        (
+            "ザン",
+            "ギ・ザン",
+            "ラ・ザン",
+            "サ・ザン",
+            "ナ・ザン",
+        ),
+    ),
+    "technic-light-page": (
+        "light.html",
+        (
+            "グランツ",
+            "ギ・グランツ",
+            "ラ・グランツ",
+            "レスタ",
+            "アンティ",
+        ),
+    ),
+    "technic-dark-page": (
+        "dark.html",
+        (
+            "メギド",
+            "ギ・メギド",
+            "ラ・メギド",
+            "メギバース",
+            "サ・メギド",
+        ),
+    ),
 }
 
 
@@ -60,5 +100,5 @@ def test_published_technic_entries_use_visible_individual_icons():
 def test_published_technic_entries_do_not_use_attribute_common_heading_icons():
     css = PAGE_CSS.read_text(encoding="utf-8")
 
-    assert '#main.technic-fire-page .technic-entry-title::before' not in css
-    assert '#main.technic-ice-page .technic-entry-title::before' not in css
+    for page_class in TECHNICS:
+        assert f"#main.{page_class} .technic-entry-title::before" not in css
