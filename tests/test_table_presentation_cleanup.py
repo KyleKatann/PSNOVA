@@ -3,7 +3,7 @@ import unittest
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-TABLE_ENHANCEMENTS_JS = ROOT / "docs" / "js" / "table-enhancements.js"
+TABLE_ENHANCEMENTS_JS = ROOT / "docs" / "js" / "menubar.js"
 
 
 class TablePresentationCleanupTests(unittest.TestCase):
