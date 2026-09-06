@@ -62,6 +62,7 @@ var html =`
 
     <li><p>クエスト</p></li>
     <li><a href="/PSNOVA/pages/difficulty.html">難易度</a></li>
+    <li><a href="/PSNOVA/pages/promise-order.html">プロミスオーダー</a></li>
     <li><a href="/PSNOVA/pages/quest/steel-wilderness.html">鋼の荒野</a></li>
     <li><a href="/PSNOVA/pages/quest/gran-water-source.html">グラン水源</a></li>
     <li><a href="/PSNOVA/pages/quest/flame-highlands.html">炎の高地</a></li>
