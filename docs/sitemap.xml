@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url><loc>https://kylekatann.github.io/PSNOVA/</loc></url>
-  <url><loc>https://kylekatann.github.io/PSNOVA/index.html</loc></url>
   <url><loc>https://kylekatann.github.io/PSNOVA/pages/faq.html</loc></url>
+  <url><loc>https://kylekatann.github.io/PSNOVA/pages/walkthrough.html</loc></url>
+  <url><loc>https://kylekatann.github.io/PSNOVA/pages/tips-bugs.html</loc></url>
   <url><loc>https://kylekatann.github.io/PSNOVA/pages/novafactor.html</loc></url>
   <url><loc>https://kylekatann.github.io/PSNOVA/pages/download.html</loc></url>
   <url><loc>https://kylekatann.github.io/PSNOVA/pages/base.html</loc></url>
@@ -66,6 +67,7 @@
   <url><loc>https://kylekatann.github.io/PSNOVA/pages/npc.html</loc></url>
   <url><loc>https://kylekatann.github.io/PSNOVA/pages/npc-password.html</loc></url>
   <url><loc>https://kylekatann.github.io/PSNOVA/pages/npc-coldsleep.html</loc></url>
+  <url><loc>https://kylekatann.github.io/PSNOVA/pages/traits.html</loc></url>
   <url><loc>https://kylekatann.github.io/PSNOVA/pages/appearance.html</loc></url>
   <url><loc>https://kylekatann.github.io/PSNOVA/pages/trophy.html</loc></url>
   <url><loc>https://kylekatann.github.io/PSNOVA/pages/class.html</loc></url>
