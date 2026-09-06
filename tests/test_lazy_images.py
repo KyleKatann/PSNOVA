@@ -2,7 +2,7 @@ import unittest
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-IMAGE_LAYOUT = ROOT / "docs" / "js" / "image-layout.js"
+IMAGE_LAYOUT = ROOT / "docs" / "js" / "menubar.js"
 
 
 class LazyImageTests(unittest.TestCase):
