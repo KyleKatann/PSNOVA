@@ -2,7 +2,7 @@ import unittest
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-TABLE_JS = ROOT / "docs" / "js" / "table-enhancements.js"
+TABLE_JS = ROOT / "docs" / "js" / "menubar.js"
 STYLE = ROOT / "docs" / "css" / "style.css"
 PAGE_CSS = ROOT / "docs" / "css" / "page.css"
 
