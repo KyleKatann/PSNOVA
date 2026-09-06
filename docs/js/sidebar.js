@@ -9,6 +9,7 @@ var html =`
     <li><p>攻略情報</p></li>
     <li><a href="/PSNOVA/pages/faq.html">初心者Q&amp;A</a></li>
     <li><a href="/PSNOVA/pages/novafactor.html">ノヴァファクター集め</a></li>
+    <li><a href="/PSNOVA/pages/download.html">ダウンロードコンテンツ</a></li>
 
     <li><p>各種データ</p></li>
     <li><a href="/PSNOVA/pages/enemy.html">エネミー</a></li>
