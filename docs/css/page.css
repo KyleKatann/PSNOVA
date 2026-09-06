@@ -549,17 +549,14 @@
 /* === QUEST PAGES WITH MATCHING SIX-COLUMN TABLES === */
 
 @media screen and (min-width: 801px) {
-    html:has(link[rel="canonical"]:is(
-        [href$="/PSNOVA/pages/quest/great-spire.html"],
-        [href$="/PSNOVA/pages/quest/steel-wilderness.html"]
-    )) #main table {
+    html:has(link[rel="canonical"][href*="/PSNOVA/pages/quest/"]) #main table {
         table-layout: fixed;
     }
 
-    html:has(link[rel="canonical"]:is([href$="/PSNOVA/pages/quest/great-spire.html"], [href$="/PSNOVA/pages/quest/steel-wilderness.html"])) #main table tr > :nth-child(1) { width: 18%; }
-    html:has(link[rel="canonical"]:is([href$="/PSNOVA/pages/quest/great-spire.html"], [href$="/PSNOVA/pages/quest/steel-wilderness.html"])) #main table tr > :nth-child(2) { width: 11%; }
-    html:has(link[rel="canonical"]:is([href$="/PSNOVA/pages/quest/great-spire.html"], [href$="/PSNOVA/pages/quest/steel-wilderness.html"])) #main table tr > :nth-child(3) { width: 16%; }
-    html:has(link[rel="canonical"]:is([href$="/PSNOVA/pages/quest/great-spire.html"], [href$="/PSNOVA/pages/quest/steel-wilderness.html"])) #main table tr > :nth-child(4) { width: 15%; }
-    html:has(link[rel="canonical"]:is([href$="/PSNOVA/pages/quest/great-spire.html"], [href$="/PSNOVA/pages/quest/steel-wilderness.html"])) #main table tr > :nth-child(5) { width: 20%; }
-    html:has(link[rel="canonical"]:is([href$="/PSNOVA/pages/quest/great-spire.html"], [href$="/PSNOVA/pages/quest/steel-wilderness.html"])) #main table tr > :nth-child(6) { width: 20%; }
+    html:has(link[rel="canonical"][href*="/PSNOVA/pages/quest/"]) #main table tr > :nth-child(1) { width: 18%; }
+    html:has(link[rel="canonical"][href*="/PSNOVA/pages/quest/"]) #main table tr > :nth-child(2) { width: 11%; }
+    html:has(link[rel="canonical"][href*="/PSNOVA/pages/quest/"]) #main table tr > :nth-child(3) { width: 16%; }
+    html:has(link[rel="canonical"][href*="/PSNOVA/pages/quest/"]) #main table tr > :nth-child(4) { width: 15%; }
+    html:has(link[rel="canonical"][href*="/PSNOVA/pages/quest/"]) #main table tr > :nth-child(5) { width: 20%; }
+    html:has(link[rel="canonical"][href*="/PSNOVA/pages/quest/"]) #main table tr > :nth-child(6) { width: 20%; }
 }
