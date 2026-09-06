@@ -37,6 +37,8 @@ def test_nova_factor_guide_keeps_reader_facing_copy():
     assert "内部テーブル" not in html
     assert "なぜ" not in html
     assert "→" not in html
+    assert "周回先の選び方" not in html
+    assert "難：ギュゲンテ撃破任務 XH" not in html
 
 
 def test_death_date_spawn_order_matches_last_date_pattern():
@@ -58,7 +60,7 @@ def test_death_date_spawn_order_matches_last_date_pattern():
     )
 
     last_date = html.split("<h4>3. 難：★ラスト・デート XH</h4>", 1)[1].split(
-        "<h4>4. 難：ギュゲンテ撃破任務 XH</h4>", 1
+        "<h4>4. 難：リベルゲンテ決戦 XH</h4>", 1
     )[0]
     assert_in_order(
         last_date,
