@@ -253,125 +253,36 @@
 
 /* Technique icons are static page content. Map them directly from the fixed
  * public entry order rather than relying on :has() to activate the image. */
-#main.technic-fire-page > .technic-entry:nth-of-type(2) > .technic-entry-title::before {
-    background-image: url("/PSNOVA/img/tech/フォイエ.png");
-}
-
-#main.technic-fire-page > .technic-entry:nth-of-type(3) > .technic-entry-title::before {
-    background-image: url("/PSNOVA/img/tech/ギ・フォイエ.png");
-}
-
-#main.technic-fire-page > .technic-entry:nth-of-type(4) > .technic-entry-title::before {
-    background-image: url("/PSNOVA/img/tech/ラ・フォイエ.png");
-}
-
-#main.technic-fire-page > .technic-entry:nth-of-type(5) > .technic-entry-title::before {
-    background-image: url("/PSNOVA/img/tech/サ・フォイエ.png");
-}
-
-#main.technic-fire-page > .technic-entry:nth-of-type(6) > .technic-entry-title::before {
-    background-image: url("/PSNOVA/img/tech/シフタ.png");
-}
-
-#main.technic-ice-page > .technic-entry:nth-of-type(2) > .technic-entry-title::before {
-    background-image: url("/PSNOVA/img/tech/バータ.png");
-}
-
-#main.technic-ice-page > .technic-entry:nth-of-type(3) > .technic-entry-title::before {
-    background-image: url("/PSNOVA/img/tech/ギ・バータ.png");
-}
-
-#main.technic-ice-page > .technic-entry:nth-of-type(4) > .technic-entry-title::before {
-    background-image: url("/PSNOVA/img/tech/ラ・バータ.png");
-}
-
-#main.technic-ice-page > .technic-entry:nth-of-type(5) > .technic-entry-title::before {
-    background-image: url("/PSNOVA/img/tech/サ・バータ.png");
-}
-
-#main.technic-ice-page > .technic-entry:nth-of-type(6) > .technic-entry-title::before {
-    background-image: url("/PSNOVA/img/tech/デバンド.png");
-}
-
-#main.technic-thunder-page > .technic-entry:nth-of-type(2) > .technic-entry-title::before {
-    background-image: url("/PSNOVA/img/tech/ゾンデ.png");
-}
-
-#main.technic-thunder-page > .technic-entry:nth-of-type(3) > .technic-entry-title::before {
-    background-image: url("/PSNOVA/img/tech/ギ・ゾンデ.png");
-}
-
-#main.technic-thunder-page > .technic-entry:nth-of-type(4) > .technic-entry-title::before {
-    background-image: url("/PSNOVA/img/tech/ラ・ゾンデ.png");
-}
-
-#main.technic-thunder-page > .technic-entry:nth-of-type(5) > .technic-entry-title::before {
-    background-image: url("/PSNOVA/img/tech/サ・ゾンデ.png");
-}
-
-#main.technic-thunder-page > .technic-entry:nth-of-type(6) > .technic-entry-title::before {
-    background-image: url("/PSNOVA/img/tech/ゾンディール.png");
-}
-
-#main.technic-wind-page > .technic-entry:nth-of-type(2) > .technic-entry-title::before {
-    background-image: url("/PSNOVA/img/tech/ザン.png");
-}
-
-#main.technic-wind-page > .technic-entry:nth-of-type(3) > .technic-entry-title::before {
-    background-image: url("/PSNOVA/img/tech/ギ・ザン.png");
-}
-
-#main.technic-wind-page > .technic-entry:nth-of-type(4) > .technic-entry-title::before {
-    background-image: url("/PSNOVA/img/tech/ラ・ザン.png");
-}
-
-#main.technic-wind-page > .technic-entry:nth-of-type(5) > .technic-entry-title::before {
-    background-image: url("/PSNOVA/img/tech/サ・ザン.png");
-}
-
-#main.technic-wind-page > .technic-entry:nth-of-type(6) > .technic-entry-title::before {
-    background-image: url("/PSNOVA/img/tech/ナ・ザン.png");
-}
-
-#main.technic-light-page > .technic-entry:nth-of-type(2) > .technic-entry-title::before {
-    background-image: url("/PSNOVA/img/tech/グランツ.png");
-}
-
-#main.technic-light-page > .technic-entry:nth-of-type(3) > .technic-entry-title::before {
-    background-image: url("/PSNOVA/img/tech/ギ・グランツ.png");
-}
-
-#main.technic-light-page > .technic-entry:nth-of-type(4) > .technic-entry-title::before {
-    background-image: url("/PSNOVA/img/tech/ラ・グランツ.png");
-}
-
-#main.technic-light-page > .technic-entry:nth-of-type(5) > .technic-entry-title::before {
-    background-image: url("/PSNOVA/img/tech/レスタ.png");
-}
-
-#main.technic-light-page > .technic-entry:nth-of-type(6) > .technic-entry-title::before {
-    background-image: url("/PSNOVA/img/tech/アンティ.png");
-}
-
-#main.technic-dark-page > .technic-entry:nth-of-type(2) > .technic-entry-title::before {
-    background-image: url("/PSNOVA/img/tech/メギド.png");
-}
-
-#main.technic-dark-page > .technic-entry:nth-of-type(3) > .technic-entry-title::before {
-    background-image: url("/PSNOVA/img/tech/ギ・メギド.png");
-}
-
-#main.technic-dark-page > .technic-entry:nth-of-type(4) > .technic-entry-title::before {
-    background-image: url("/PSNOVA/img/tech/ラ・メギド.png");
-}
-
-#main.technic-dark-page > .technic-entry:nth-of-type(5) > .technic-entry-title::before {
-    background-image: url("/PSNOVA/img/tech/メギバース.png");
-}
-
-#main.technic-dark-page > .technic-entry:nth-of-type(6) > .technic-entry-title::before {
-    background-image: url("/PSNOVA/img/tech/サ・メギド.png");
-}
+#main.technic-fire-page > .technic-entry:nth-of-type(2) > .technic-entry-title::before { background-image: url("/PSNOVA/img/tech/フォイエ.png"); }
+#main.technic-fire-page > .technic-entry:nth-of-type(3) > .technic-entry-title::before { background-image: url("/PSNOVA/img/tech/ギ・フォイエ.png"); }
+#main.technic-fire-page > .technic-entry:nth-of-type(4) > .technic-entry-title::before { background-image: url("/PSNOVA/img/tech/ラ・フォイエ.png"); }
+#main.technic-fire-page > .technic-entry:nth-of-type(5) > .technic-entry-title::before { background-image: url("/PSNOVA/img/tech/サ・フォイエ.png"); }
+#main.technic-fire-page > .technic-entry:nth-of-type(6) > .technic-entry-title::before { background-image: url("/PSNOVA/img/tech/シフタ.png"); }
+#main.technic-ice-page > .technic-entry:nth-of-type(2) > .technic-entry-title::before { background-image: url("/PSNOVA/img/tech/バータ.png"); }
+#main.technic-ice-page > .technic-entry:nth-of-type(3) > .technic-entry-title::before { background-image: url("/PSNOVA/img/tech/ギ・バータ.png"); }
+#main.technic-ice-page > .technic-entry:nth-of-type(4) > .technic-entry-title::before { background-image: url("/PSNOVA/img/tech/ラ・バータ.png"); }
+#main.technic-ice-page > .technic-entry:nth-of-type(5) > .technic-entry-title::before { background-image: url("/PSNOVA/img/tech/サ・バータ.png"); }
+#main.technic-ice-page > .technic-entry:nth-of-type(6) > .technic-entry-title::before { background-image: url("/PSNOVA/img/tech/デバンド.png"); }
+#main.technic-thunder-page > .technic-entry:nth-of-type(2) > .technic-entry-title::before { background-image: url("/PSNOVA/img/tech/ゾンデ.png"); }
+#main.technic-thunder-page > .technic-entry:nth-of-type(3) > .technic-entry-title::before { background-image: url("/PSNOVA/img/tech/ギ・ゾンデ.png"); }
+#main.technic-thunder-page > .technic-entry:nth-of-type(4) > .technic-entry-title::before { background-image: url("/PSNOVA/img/tech/ラ・ゾンデ.png"); }
+#main.technic-thunder-page > .technic-entry:nth-of-type(5) > .technic-entry-title::before { background-image: url("/PSNOVA/img/tech/サ・ゾンデ.png"); }
+#main.technic-thunder-page > .technic-entry:nth-of-type(6) > .technic-entry-title::before { background-image: url("/PSNOVA/img/tech/ゾンディール.png"); }
+#main.technic-wind-page > .technic-entry:nth-of-type(2) > .technic-entry-title::before { background-image: url("/PSNOVA/img/tech/ザン.png"); }
+#main.technic-wind-page > .technic-entry:nth-of-type(3) > .technic-entry-title::before { background-image: url("/PSNOVA/img/tech/ギ・ザン.png"); }
+#main.technic-wind-page > .technic-entry:nth-of-type(4) > .technic-entry-title::before { background-image: url("/PSNOVA/img/tech/ラ・ザン.png"); }
+#main.technic-wind-page > .technic-entry:nth-of-type(5) > .technic-entry-title::before { background-image: url("/PSNOVA/img/tech/サ・ザン.png"); }
+#main.technic-wind-page > .technic-entry:nth-of-type(6) > .technic-entry-title::before { background-image: url("/PSNOVA/img/tech/ナ・ザン.png"); }
+#main.technic-light-page > .technic-entry:nth-of-type(2) > .technic-entry-title::before { background-image: url("/PSNOVA/img/tech/グランツ.png"); }
+#main.technic-light-page > .technic-entry:nth-of-type(3) > .technic-entry-title::before { background-image: url("/PSNOVA/img/tech/ギ・グランツ.png"); }
+#main.technic-light-page > .technic-entry:nth-of-type(4) > .technic-entry-title::before { background-image: url("/PSNOVA/img/tech/ラ・グランツ.png"); }
+#main.technic-light-page > .technic-entry:nth-of-type(5) > .technic-entry-title::before { background-image: url("/PSNOVA/img/tech/レスタ.png"); }
+#main.technic-light-page > .technic-entry:nth-of-type(6) > .technic-entry-title::before { background-image: url("/PSNOVA/img/tech/アンティ.png"); }
+#main.technic-dark-page > .technic-entry:nth-of-type(2) > .technic-entry-title::before { background-image: url("/PSNOVA/img/tech/メギド.png"); }
+#main.technic-dark-page > .technic-entry:nth-of-type(3) > .technic-entry-title::before { background-image: url("/PSNOVA/img/tech/ギ・メギド.png"); }
+#main.technic-dark-page > .technic-entry:nth-of-type(4) > .technic-entry-title::before { background-image: url("/PSNOVA/img/tech/ラ・メギド.png"); }
+#main.technic-dark-page > .technic-entry:nth-of-type(5) > .technic-entry-title::before { background-image: url("/PSNOVA/img/tech/メギバース.png"); }
+#main.technic-dark-page > .technic-entry:nth-of-type(6) > .technic-entry-title::before { background-image: url("/PSNOVA/img/tech/サ・メギド.png"); }
 
 #main.technic-detail-page .technic-note {
     color: #344054;
@@ -399,14 +310,8 @@
     color: inherit;
 }
 
-#main.technic-detail-page .technic-note > p:last-child {
-    margin-bottom: 0;
-}
-
-#main.technic-detail-page .technic-note > ul {
-    margin: 0;
-    padding-left: 22px;
-}
+#main.technic-detail-page .technic-note > p:last-child { margin-bottom: 0; }
+#main.technic-detail-page .technic-note > ul { margin: 0; padding-left: 22px; }
 
 #main.technic-detail-page .technic-summary-table {
     margin: 12px 0 22px;
@@ -476,8 +381,6 @@
     line-height: 1.55;
 }
 
-/* Smartphone desktop-site mode keeps Technic Lv tables inside the main column.
- * Compact the row-label column so the 15 level columns can use the freed width. */
 @media screen and (min-width: 801px) and (pointer: coarse) {
     #main.technic-detail-page .technic-level-scroll > .technic-level-table {
         width: 100%;
@@ -487,9 +390,7 @@
     }
 
     #main.technic-detail-page .technic-level-table th,
-    #main.technic-detail-page .technic-level-table td {
-        white-space: normal;
-    }
+    #main.technic-detail-page .technic-level-table td { white-space: normal; }
 
     #main.technic-detail-page .technic-level-table tr > :first-child {
         width: 120px;
@@ -504,9 +405,7 @@
         padding-top: 24px;
     }
 
-    #main.technic-detail-page .technic-entry-title {
-        gap: 8px;
-    }
+    #main.technic-detail-page .technic-entry-title { gap: 8px; }
 
     #main.technic-detail-page .technic-entry-title::before {
         width: 26px;
@@ -519,9 +418,7 @@
         min-width: 960px;
     }
 
-    #main.technic-detail-page .technic-level-table caption {
-        padding: 7px 9px;
-    }
+    #main.technic-detail-page .technic-level-table caption { padding: 7px 9px; }
 }
 
 /* === NPC PAGE === */
@@ -542,6 +439,19 @@
 #main .npc-table .npc-col-effect { width: 242px; }
 
 #main .npc-table th,
-#main .npc-table td {
-    white-space: nowrap;
+#main .npc-table td { white-space: nowrap; }
+
+/* === GREAT SPIRE QUEST PAGE === */
+
+@media screen and (min-width: 801px) {
+    html:has(link[rel="canonical"][href$="/PSNOVA/pages/quest/great-spire.html"]) #main table {
+        table-layout: fixed;
+    }
+
+    html:has(link[rel="canonical"][href$="/PSNOVA/pages/quest/great-spire.html"]) #main table tr > :nth-child(1) { width: 18%; }
+    html:has(link[rel="canonical"][href$="/PSNOVA/pages/quest/great-spire.html"]) #main table tr > :nth-child(2) { width: 11%; }
+    html:has(link[rel="canonical"][href$="/PSNOVA/pages/quest/great-spire.html"]) #main table tr > :nth-child(3) { width: 16%; }
+    html:has(link[rel="canonical"][href$="/PSNOVA/pages/quest/great-spire.html"]) #main table tr > :nth-child(4) { width: 15%; }
+    html:has(link[rel="canonical"][href$="/PSNOVA/pages/quest/great-spire.html"]) #main table tr > :nth-child(5) { width: 20%; }
+    html:has(link[rel="canonical"][href$="/PSNOVA/pages/quest/great-spire.html"]) #main table tr > :nth-child(6) { width: 20%; }
 }
