@@ -1,3 +1,21 @@
+function normalizeLogoHeading(){
+    var logoHeading = document.querySelector("header h1#logo");
+    if (!logoHeading) {
+        return;
+    }
+
+    var replacement = document.createElement("div");
+    Array.prototype.slice.call(logoHeading.attributes).forEach(function(attribute){
+        replacement.setAttribute(attribute.name, attribute.value);
+    });
+
+    while (logoHeading.firstChild) {
+        replacement.appendChild(logoHeading.firstChild);
+    }
+
+    logoHeading.parentNode.replaceChild(replacement, logoHeading);
+}
+
 function side(){
 var html =`
 <aside id="sub">
@@ -152,6 +170,7 @@ function markCurrentSidebarLink(){
 }
 
 function initSidebar() {
+    normalizeLogoHeading();
     side();
 
     if (typeof initResponsiveContentsMenu === "function") {
