@@ -32,8 +32,8 @@ class WeaponIconOwnershipTests(unittest.TestCase):
                 )
 
     def test_runtime_weapon_icon_injection_is_removed(self):
-        image_layout = (DOCS / "js" / "image-layout.js").read_text(encoding="utf-8")
-        menubar = (DOCS / "js" / "menubar.js").read_text(encoding="utf-8")
+        image_layout = (DOCS / "js" / "menubar.js").read_text(encoding="utf-8")
+        menubar = image_layout
         shared_css = (DOCS / "css" / "style.css").read_text(encoding="utf-8")
 
         self.assertFalse((DOCS / "js" / "weapon-icons.js").exists())
