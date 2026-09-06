@@ -48,6 +48,24 @@ def test_technic_tables_use_square_fixed_shared_column_geometry():
     assert "box-shadow: none;" in css
 
 
+def test_technic_tables_fit_coarse_pointer_desktop_layout_without_horizontal_growth():
+    css = PAGE_CSS.read_text(encoding="utf-8")
+    coarse = css.split(
+        "/* Smartphone desktop-site mode keeps Technic Lv tables inside the main column.", 1
+    )[1].split("@media screen and (max-width: 800px)", 1)[0]
+
+    assert "@media screen and (min-width: 801px) and (pointer: coarse)" in coarse
+    assert "#main.technic-detail-page .technic-level-scroll > .technic-level-table" in coarse
+    assert "width: 100%;" in coarse
+    assert "min-width: 100%;" in coarse
+    assert "max-width: 100%;" in coarse
+    assert "white-space: normal;" in coarse
+    assert "width: 120px;" in coarse
+    assert "min-width: 120px;" in coarse
+    assert "overflow-wrap: anywhere;" in coarse
+    assert "max-content" not in coarse
+
+
 def test_technic_descriptions_match_gray_blue_accent_pattern_and_material_legends_are_yellow():
     css = PAGE_CSS.read_text(encoding="utf-8")
 
