@@ -1,38 +1,54 @@
+import re
 from pathlib import Path
 
 
 ROOT = Path(__file__).resolve().parents[1]
 PAGE_CSS = ROOT / "docs" / "css" / "page.css"
 TECH_IMG = ROOT / "docs" / "img" / "tech"
+TECHNIC_PAGES = ROOT / "docs" / "pages" / "technic"
 
 
 TECHNICS = {
     "technic-fire-page": (
-        "フォイエ",
-        "ギ・フォイエ",
-        "ラ・フォイエ",
-        "サ・フォイエ",
-        "シフタ",
+        "fire.html",
+        (
+            "フォイエ",
+            "ギ・フォイエ",
+            "ラ・フォイエ",
+            "サ・フォイエ",
+            "シフタ",
+        ),
     ),
     "technic-ice-page": (
-        "バータ",
-        "ギ・バータ",
-        "ラ・バータ",
-        "サ・バータ",
-        "デバンド",
+        "ice.html",
+        (
+            "バータ",
+            "ギ・バータ",
+            "ラ・バータ",
+            "サ・バータ",
+            "デバンド",
+        ),
     ),
 }
 
 
-def test_published_technic_entries_use_individual_icons():
+def test_published_technic_entries_use_visible_individual_icons():
     css = PAGE_CSS.read_text(encoding="utf-8")
 
-    for page_class, names in TECHNICS.items():
-        for name in names:
+    assert "background: transparent no-repeat center / contain;" in css
+    assert ":has(" not in css
+
+    for page_class, (filename, names) in TECHNICS.items():
+        html = (TECHNIC_PAGES / filename).read_text(encoding="utf-8")
+        headings = tuple(
+            re.findall(r'<h2 class="technic-entry-title">([^<]+)</h2>', html)
+        )
+        assert headings == names
+
+        for section_index, name in enumerate(names, start=2):
             selector = (
-                f'#main.{page_class} .technic-entry:has('
-                f'.technic-level-scroll[aria-label^="{name} "]) '
-                '.technic-entry-title::before'
+                f"#main.{page_class} > .technic-entry:nth-of-type({section_index}) "
+                "> .technic-entry-title::before"
             )
             asset = f'background-image: url("/PSNOVA/img/tech/{name}.png");'
 
