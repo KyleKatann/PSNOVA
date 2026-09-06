@@ -1,0 +1,193 @@
+<!doctype html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>PSNOVA攻略サイト - 拠点</title>
+    <meta name="description" content="PSNOVAの拠点編集、施設解放条件、ショップ・施設・インテリア・床のサイズ、コスト、レアリティ、価格、効果を一覧で確認できます。">
+    <link rel="canonical" href="https://kylekatann.github.io/PSNOVA/pages/base.html">
+    <meta property="og:title" content="PSNOVA攻略サイト - 拠点">
+    <meta property="og:description" content="PSNOVAの拠点編集、施設解放条件、ショップ・施設・インテリア・床のサイズ、コスト、レアリティ、価格、効果を一覧で確認できます。">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://kylekatann.github.io/PSNOVA/pages/base.html">
+    <meta property="og:image" content="https://kylekatann.github.io/PSNOVA/img/logo.png">
+    <meta property="og:image:alt" content="PSNOVA 攻略サイト">
+    <meta property="og:site_name" content="PSNOVA攻略サイト">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="/PSNOVA/img/logo.png" type="image/png">
+    <link rel="stylesheet" href="/PSNOVA/css/style.css">
+    <script defer src="/PSNOVA/js/openclose.js"></script>
+    <script defer src="/PSNOVA/js/fixmenu_pagetop.js"></script>
+    <script defer src="/PSNOVA/js/menubar.js"></script>
+    <script defer src="/PSNOVA/js/sidebar.js"></script>
+</head>
+<body>
+    <a class="skip-link" href="#main">本文へスキップ</a>
+    <div id="container">
+        <header>
+            <h1 id="logo"><a href="/PSNOVA/"><img src="/PSNOVA/img/logo.png" alt="PSNOVA 攻略サイト" width="676" height="100"></a></h1>
+        </header>
+
+        <div id="contents">
+            <main id="main">
+                <section>
+                    <h2>拠点</h2>
+                    <p class="page-lead">拠点ではショップや各種施設を設置し、施設効果やクルー配置による支援を受けられる。ACT Iではフィルディアのプロミスオーダーで基本施設Lv.2まで、ACT IIでは拠点編集が解放され、基本施設Lv.3までと一部の非必須施設を設置できる。各施設のサイズ、コスト、価格、効果と、インテリア・床の配置データをまとめて確認できる。</p>
+                    <p>ショップや施設には<a href="/PSNOVA/pages/npc-coldsleep.html">コールドスリープ</a>から目覚めさせたキャラクターを配置できる。緑アイコンの特徴を持ったキャラクターを配置すると性能が向上する。</p>
+                    <h3>拠点施設の解放条件</h3>
+                    <ul>
+                        <li>Lv.4: メインストーリークリア直後に解放。</li>
+                        <li>Lv.5: SH解放までに出現する全クエストのクリアで解放。難易度・クリアランクは問わず、追加クエストは除く。</li>
+                    </ul>
+
+                    <h3>ショップ</h3>
+                    <p>ショップの種類は通常のものに加え、B・O・Wの計4種類。各施設の効果は重複せず、一番レベルの高いものが優先される。例えば武器ショップLv.3とLv.4を配置した場合、発生するのは攻撃力アップ+10%のみ。</p>
+                    <table>
+                        <thead><tr><th scope="col">名前</th><th scope="col">サイズ</th><th scope="col">コスト</th><th scope="col">レアリティ</th><th scope="col">機能</th><th scope="col">価格</th><th scope="col">種類・備考</th></tr></thead>
+                        <tbody>
+                            <tr><td>クラスカウンター Lv.1</td><td>2×3</td><td>5</td><td>1</td><td>クラス変更<br>スキル習得<br>グランアーツ・テクニック習得</td><td>500</td><td>B/O/W<br>B:ベース<br>O:オリエント<br>W:ウェスタン</td></tr>
+                            <tr><td>クラスカウンター Lv.2</td><td>4×3</td><td>6</td><td>3</td><td></td><td>1000</td><td></td></tr>
+                            <tr><td>クラスカウンター Lv.3</td><td>4×3</td><td>6</td><td>5</td><td></td><td>2500</td><td></td></tr>
+                            <tr><td>クラスカウンター Lv.4</td><td>4×4</td><td>7</td><td>7</td><td></td><td>5000</td><td></td></tr>
+                            <tr><td>クラスカウンター Lv.5</td><td>4×4</td><td>7</td><td>10</td><td></td><td>10000</td><td></td></tr>
+                            <tr><td>食堂 Lv.1</td><td>2×3</td><td>5</td><td>1</td><td>料理の作成</td><td>500</td><td></td></tr>
+                            <tr><td>食堂 Lv.2</td><td>4×3</td><td>6</td><td>3</td><td>レシピ追加</td><td>1000</td><td></td></tr>
+                            <tr><td>食堂 Lv.3</td><td>4×3</td><td>6</td><td>5</td><td></td><td>2500</td><td></td></tr>
+                            <tr><td>食堂 Lv.4</td><td>4×4</td><td>6</td><td>7</td><td></td><td>5000</td><td></td></tr>
+                            <tr><td>食堂 Lv.5</td><td>4×4</td><td>6</td><td>10</td><td></td><td>10000</td><td></td></tr>
+                            <tr><td>武器ショップ Lv.1</td><td>2×3</td><td>6</td><td>1</td><td>武器の製作<br>アタッチパーツ製作と配置</td><td>500</td><td>攻撃力アップ+2%</td></tr>
+                            <tr><td>武器ショップ Lv.2</td><td>4×3</td><td>5</td><td>3</td><td></td><td>1000</td><td>攻撃力アップ+5%</td></tr>
+                            <tr><td>武器ショップ Lv.3</td><td>4×3</td><td>5</td><td>5</td><td></td><td>2500</td><td>攻撃力アップ+7%</td></tr>
+                            <tr><td>武器ショップ Lv.4</td><td>4×4</td><td>6</td><td>7</td><td></td><td>5000</td><td>攻撃力アップ+10%</td></tr>
+                            <tr><td>武器ショップ Lv.5</td><td>4×4</td><td>6</td><td>10</td><td></td><td>10000</td><td>攻撃力アップ+15%</td></tr>
+                            <tr><td>防具ショップ Lv.1</td><td>2×3</td><td>5</td><td>1</td><td>シールドユニット製作</td><td>500</td><td>防御力アップ+2%</td></tr>
+                            <tr><td>防具ショップ Lv.2</td><td>4×3</td><td>5</td><td>3</td><td></td><td>1000</td><td>防御力アップ+5%</td></tr>
+                            <tr><td>防具ショップ Lv.3</td><td>4×3</td><td>5</td><td>5</td><td></td><td>2500</td><td>防御力アップ+7%</td></tr>
+                            <tr><td>防具ショップ Lv.4</td><td>4×4</td><td>5</td><td>7</td><td></td><td>5000</td><td>防御力アップ+10%</td></tr>
+                            <tr><td>防具ショップ Lv.5</td><td>4×4</td><td>5</td><td>10</td><td></td><td>10000</td><td>防御力アップ+15%</td></tr>
+                            <tr><td>アイテムショップ Lv.1</td><td>2×3</td><td>6</td><td>1</td><td>消費アイテム製作</td><td>500</td><td>アイテム回復量アップ+2%</td></tr>
+                            <tr><td>アイテムショップ Lv.2</td><td>4×3</td><td>7</td><td>3</td><td></td><td>1000</td><td>アイテム回復量アップ+5%</td></tr>
+                            <tr><td>アイテムショップ Lv.3</td><td>4×3</td><td>7</td><td>5</td><td></td><td>2500</td><td>アイテム回復量アップ+7%</td></tr>
+                            <tr><td>アイテムショップ Lv.4</td><td>4×4</td><td>8</td><td>7</td><td></td><td>5000</td><td>アイテム回復量アップ+10%</td></tr>
+                            <tr><td>アイテムショップ Lv.5</td><td>4×4</td><td>8</td><td>10</td><td></td><td>10000</td><td>アイテム回復量アップ+15%</td></tr>
+                            <tr><td>コスチュームS(ショップ) Lv.1</td><td>2×3</td><td>6</td><td>1</td><td>コスチューム製作</td><td>500</td><td></td></tr>
+                            <tr><td>コスチュームS(ショップ) Lv.2</td><td>4×3</td><td>7</td><td>3</td><td></td><td>1000</td><td></td></tr>
+                            <tr><td>コスチュームS(ショップ) Lv.3</td><td>4×3</td><td>7</td><td>5</td><td></td><td>2500</td><td></td></tr>
+                            <tr><td>コスチュームS(ショップ) Lv.4</td><td>4×4</td><td>7</td><td>7</td><td></td><td>5000</td><td></td></tr>
+                            <tr><td>コスチュームS(ショップ) Lv.5</td><td>4×4</td><td>7</td><td>10</td><td></td><td>10000</td><td></td></tr>
+                            <tr><td>エステ Lv.1</td><td>2×3</td><td>6</td><td>1</td><td>外見・ボイス・特徴・スタイルの変更</td><td>500</td><td>特徴設定数4</td></tr>
+                            <tr><td>エステ Lv.2</td><td>4×3</td><td>7</td><td>3</td><td>顔・瞳の編集機能を追加</td><td>1000</td><td>特徴設定数5</td></tr>
+                            <tr><td>エステ Lv.3</td><td>4×3</td><td>7</td><td>5</td><td>コスチュームカラー・体型編集を追加</td><td>2500</td><td>特徴設定数6</td></tr>
+                            <tr><td>エステ Lv.4</td><td>4×4</td><td>8</td><td>7</td><td>ランダム編集機能を追加</td><td>5000</td><td>特徴指定数7</td></tr>
+                            <tr><td>エステ Lv.5</td><td>4×4</td><td>8</td><td>10</td><td></td><td>10000</td><td>特徴指定数8</td></tr>
+                        </tbody>
+                    </table>
+
+                    <h3>施設</h3>
+                    <table>
+                        <thead><tr><th scope="col">名前</th><th scope="col">サイズ</th><th scope="col">コスト</th><th scope="col">レアリティ</th><th scope="col">機能</th><th scope="col">価格</th><th scope="col">備考</th></tr></thead>
+                        <tbody>
+                            <tr><td>探索隊司令部 Lv.1</td><td>5×5</td><td>4</td><td>1</td><td>探索隊の派遣</td><td>500</td><td>派遣には一人以上のクルー配属が必要</td></tr>
+                            <tr><td>探索隊司令部 Lv.2</td><td>5×5</td><td>4</td><td>3</td><td></td><td>1000</td><td></td></tr>
+                            <tr><td>探索隊司令部 Lv.3</td><td>5×5</td><td>4</td><td>5</td><td></td><td>2500</td><td></td></tr>
+                            <tr><td>探索隊司令部 Lv.4</td><td>5×5</td><td>4</td><td>7</td><td></td><td>5000</td><td></td></tr>
+                            <tr><td>探索隊司令部 Lv.5</td><td>5×5</td><td>4</td><td>10</td><td></td><td>10000</td><td></td></tr>
+                            <tr><td>グランブースター Lv.1</td><td>4×4</td><td>4</td><td>1</td><td>GP消費量減<br>クエスト終了時の獲得グランエナジー量アップ</td><td>500</td><td>特徴【グラン予報士】のクルーを配属することで、GP消費量減・獲得グランエナジー量がさらにアップ</td></tr>
+                            <tr><td>グランブースター Lv.2</td><td>4×4</td><td>4</td><td>3</td><td></td><td>1000</td><td></td></tr>
+                            <tr><td>グランブースター Lv.3</td><td>4×4</td><td>4</td><td>5</td><td></td><td>2500</td><td></td></tr>
+                            <tr><td>グランブースター Lv.4</td><td>4×4</td><td>4</td><td>7</td><td></td><td>5000</td><td></td></tr>
+                            <tr><td>グランブースター Lv.5</td><td>4×4</td><td>4</td><td>10</td><td></td><td>10000</td><td></td></tr>
+                            <tr><td>アイテム探知機能 Lv.1</td><td>6×4</td><td>3</td><td>1</td><td>アイテムドロップ率アップ</td><td>500</td><td>特徴【ダウジンンガー】【ラッキーライザー】のクルーを配属することで、各アイテムドロップ率がさらにアップ</td></tr>
+                            <tr><td>アイテム探知機能 Lv.2</td><td>6×4</td><td>3</td><td>3</td><td></td><td>1000</td><td></td></tr>
+                            <tr><td>アイテム探知機能 Lv.3</td><td>6×4</td><td>3</td><td>5</td><td></td><td>2500</td><td></td></tr>
+                            <tr><td>アイテム探知機能 Lv.4</td><td>6×4</td><td>3</td><td>7</td><td></td><td>5000</td><td></td></tr>
+                            <tr><td>アイテム探知機能 Lv.5</td><td>6×4</td><td>3</td><td>10</td><td></td><td>10000</td><td></td></tr>
+                            <tr><td>エネミーレーダー Lv.1</td><td>4×3</td><td>3</td><td>1</td><td>レアエネミー<br>ブーストエネミーの出現率アップ</td><td>500</td><td>特徴【野生の勘】のクルーを配属することで、出現率がさらにアップ</td></tr>
+                            <tr><td>エネミーレーダー Lv.2</td><td>4×3</td><td>3</td><td>3</td><td></td><td>1000</td><td></td></tr>
+                            <tr><td>エネミーレーダー Lv.3</td><td>4×3</td><td>3</td><td>5</td><td></td><td>2500</td><td></td></tr>
+                            <tr><td>エネミーレーダー Lv.4</td><td>4×3</td><td>3</td><td>7</td><td></td><td>5000</td><td></td></tr>
+                            <tr><td>エネミーレーダー Lv.5</td><td>4×3</td><td>3</td><td>10</td><td></td><td>10000</td><td></td></tr>
+                            <tr><td>バースト加速装置 Lv.1</td><td>4×3</td><td>2</td><td>1</td><td>クルーを配属することでバースト効果を追加</td><td>500</td><td>特徴【BURST:○○○】のクルーを配属することでバースト効果を追加(最大5種)</td></tr>
+                            <tr><td>バースト加速装置 Lv.2</td><td>4×3</td><td>2</td><td>3</td><td></td><td>1000</td><td></td></tr>
+                            <tr><td>バースト加速装置 Lv.3</td><td>4×3</td><td>2</td><td>5</td><td></td><td>2500</td><td></td></tr>
+                            <tr><td>バースト加速装置 Lv.4</td><td>4×3</td><td>2</td><td>7</td><td></td><td>5000</td><td></td></tr>
+                            <tr><td>バースト加速装置 Lv.5</td><td>4×3</td><td>2</td><td>10</td><td></td><td>10000</td><td></td></tr>
+                            <tr><td>コア精錬所 Lv.5</td><td>4×3</td><td>2</td><td>10</td><td>アタッチパーツの特殊能力を変更<br>コアの特殊能力強化</td><td>54000</td><td>特徴【コア工作士】のクルーを配属することで消費グランエナジーを軽減可能</td></tr>
+                            <tr><td>シアタースコープ</td><td>4×6</td><td>7</td><td>1</td><td></td><td>500</td><td>1度見たイベントを見ることが出来る</td></tr>
+                            <tr><td>倉庫</td><td>1×1</td><td>2</td><td>1</td><td></td><td>20</td><td>複数個設置可能</td></tr>
+                            <tr><td>ショップ端末</td><td>1×1</td><td>2</td><td>1</td><td></td><td>20</td><td>複数個設置可能</td></tr>
+                        </tbody>
+                    </table>
+
+                    <h3>インテリア</h3>
+                    <p>拠点を彩る配置物で、最も項目数が多い。椅子に座る、ベッドで横になるなどのアクションが用意されているものもある。「基本四種」「高級五種」「小物」「一点物」という分類は便宜上の分類で、ゲーム内や公式の呼称ではない。</p>
+
+                    <h4>基本四種</h4>
+                    <p>ベース・オリエント・ウェスタンの3種類と、説明文に「応急使用」とある無印の計4種類。サイズ、コスト、価格は4種類共通。一部は種類やカラーバリエーションによってレアリティに差がある。以下は代表として無印のみを記載する。</p>
+                    <table>
+                        <thead><tr><th scope="col">名前</th><th scope="col">サイズ</th><th scope="col">コスト</th><th scope="col">レアリティ</th><th scope="col">価格</th><th scope="col">カラーバリエーション B / O / W / 無</th><th scope="col">レアリティの差 B / O / W / 無</th><th scope="col">備考</th></tr></thead>
+                        <tbody>
+                            <tr><td>ボード</td><td>1×1</td><td>2</td><td>1</td><td>100</td><td>黒 / 赤 / 赤 / 黒</td><td>カラーバリエーションは2</td><td></td></tr>
+                            <tr><td>ラージボード</td><td>1×1</td><td>2</td><td>1</td><td>160</td><td>黒 / 赤 / 赤 / 黒</td><td>カラーバリエーションは2</td><td></td></tr>
+                            <tr><td>ゲート</td><td>4×1</td><td>2</td><td>1</td><td>400</td><td>-</td><td>1 / 2 / 2 / 1</td><td></td></tr>
+                            <tr><td>フェンスS</td><td>2×1</td><td>2</td><td>1</td><td>400</td><td>-</td><td>1 / 2 / 2 / 1</td><td></td></tr>
+                            <tr><td>フェンスM</td><td>4×1</td><td>2</td><td>1</td><td>800</td><td>-</td><td>1 / 2 / 2 / 1</td><td></td></tr>
+                            <tr><td>ウォールS</td><td>18×1</td><td>2</td><td>1</td><td>1200</td><td>-</td><td>1 / 2 / 2 / 1</td><td></td></tr>
+                            <tr><td>ウォールM</td><td>22×1</td><td>2</td><td>1</td><td>1600</td><td>-</td><td>1 / 2 / 2 / 1</td><td></td></tr>
+                            <tr><td>ウォールL</td><td>30×1</td><td>2</td><td>1</td><td>2400</td><td>-</td><td>1 / 2 / 2 / 1</td><td></td></tr>
+                            <tr><td>テント</td><td>2×3</td><td>2</td><td>3</td><td>200</td><td>青 / 緑 / 青 / 黒</td><td>-</td><td></td></tr>
+                            <tr><td>テーブルチェア</td><td>2×1</td><td>2</td><td>3</td><td>300</td><td>緑 / 茶 / 茶 / 緑</td><td>-</td><td>ベース・オリエント・ウェスタンは「Tチェア」と表記される。</td></tr>
+                            <tr><td>ベッド</td><td>2×1</td><td>2</td><td>2</td><td>300</td><td>青 / 緑 / 茶 / 青</td><td>-</td><td></td></tr>
+                            <tr><td>シンプルシェルフ</td><td>1×1</td><td>3</td><td>2</td><td>400</td><td>緑 / 茶 / 茶 / 緑</td><td>-</td><td>ベース・オリエント・ウェスタンは「Sシェルフ」と表記される。</td></tr>
+                            <tr><td>ライト</td><td>1×1</td><td>3</td><td>2</td><td>500</td><td>緑 / 茶 / 茶 / 青</td><td>-</td><td></td></tr>
+                            <tr><td>シート</td><td>2×2</td><td>2</td><td>3</td><td>200</td><td>青 / 緑 / 青 / 青</td><td>-</td><td></td></tr>
+                        </tbody>
+                    </table>
+
+                    <h4>高級五種</h4>
+                    <p>ベーシック・モダン・クラシック・ゴシック・オリエントの5種。同じ種類の家具でもシリーズによって価格や構成が異なる。カラーバリエーションによる価格やレアリティの差はない。</p>
+                    <table>
+                        <thead><tr><th scope="col">名前</th><th scope="col">サイズ</th><th scope="col">コスト</th><th scope="col">レアリティ</th><th scope="col">価格</th><th scope="col">カラーバリエーション</th><th scope="col">備考</th></tr></thead>
+                        <tbody>
+                            <tr><td>ベーシックチェア</td><td>1×1</td><td>2</td><td>3</td><td>600</td><td>青・桃</td><td></td></tr><tr><td>ベーシックベッド</td><td>2×2</td><td>2</td><td>3</td><td>1000</td><td>青・桃</td><td></td></tr><tr><td>ベーシックローテーブル</td><td>2×2</td><td>2</td><td>3</td><td>1600</td><td>青・桃</td><td></td></tr><tr><td>スタンドライト</td><td>1×1</td><td>2</td><td>3</td><td>400</td><td>青・桃</td><td></td></tr>
+                            <tr><td>モダンベッド</td><td>2×2</td><td>2</td><td>3</td><td>1000</td><td>橙・黒</td><td></td></tr><tr><td>モダンローテーブル</td><td>2×2</td><td>3</td><td>3</td><td>1600</td><td>橙・黒</td><td></td></tr><tr><td>ミニモダンシェルフ</td><td>1×1</td><td>2</td><td>3</td><td>1200</td><td>橙・黒</td><td></td></tr>
+                            <tr><td>クラシックソファ</td><td>2×1</td><td>2</td><td>3</td><td>800</td><td>桃・茶</td><td></td></tr><tr><td>クラシックベッド</td><td>2×2</td><td>2</td><td>3</td><td>1400</td><td>桃・茶</td><td></td></tr><tr><td>クラシックテーブル</td><td>1×2</td><td>2</td><td>3</td><td>2000</td><td>桃・茶</td><td></td></tr><tr><td>クラシックナイトスタンド</td><td>1×1</td><td>2</td><td>3</td><td>800</td><td>桃・茶</td><td>カラーバリエーションは「Nスタンド」と表記される。</td></tr><tr><td>クラシックキャビネット</td><td>1×1</td><td>2</td><td>3</td><td>1600</td><td>-</td><td></td></tr>
+                            <tr><td>ゴシックソファ</td><td>2×1</td><td>2</td><td>3</td><td>800</td><td>赤・黒</td><td></td></tr><tr><td>ゴシックベッド</td><td>2×2</td><td>2</td><td>3</td><td>1400</td><td>赤・黒</td><td></td></tr><tr><td>ゴシックテーブル</td><td>1×2</td><td>2</td><td>3</td><td>2000</td><td>赤・黒</td><td></td></tr><tr><td>ゴシックスタンド</td><td>1×1</td><td>2</td><td>3</td><td>800</td><td>赤・黒</td><td></td></tr><tr><td>ゴシックキャビネット</td><td>1×1</td><td>2</td><td>3</td><td>1600</td><td>-</td><td></td></tr>
+                            <tr><td>フトン</td><td>2×2</td><td>2</td><td>2</td><td>1600</td><td>-</td><td></td></tr><tr><td>モダンフトン</td><td>2×2</td><td>2</td><td>2</td><td>1600</td><td>-</td><td></td></tr><tr><td>クラシックフトン</td><td>2×2</td><td>2</td><td>2</td><td>1600</td><td>-</td><td></td></tr>
+                            <tr><td>オリエントローテーブル</td><td>1×2</td><td>3</td><td>3</td><td>800</td><td>黒・赤</td><td></td></tr><tr><td>オリエントスタンドライト</td><td>1×1</td><td>2</td><td>3</td><td>800</td><td>-</td><td></td></tr><tr><td>オリエントシェルフ</td><td>2×1</td><td>2</td><td>3</td><td>1600</td><td>-</td><td></td></tr>
+                        </tbody>
+                    </table>
+
+                    <h4>小物</h4>
+                    <p>3、4色ほどのカラーバリエーションが存在する配置物。</p>
+                    <table><thead><tr><th scope="col">名前</th><th scope="col">サイズ</th><th scope="col">コスト</th><th scope="col">レアリティ</th><th scope="col">価格</th><th scope="col">カラーバリエーション</th><th scope="col">備考</th></tr></thead><tbody>
+                        <tr><td>プランター</td><td>1×1</td><td>2</td><td>2</td><td>300</td><td>白・黒</td><td></td></tr><tr><td>トイレ</td><td>2×2</td><td>3</td><td>2</td><td>400</td><td>緑・黒</td><td></td></tr><tr><td>ドラムバスタブ</td><td>2×1</td><td>2</td><td>2</td><td>2000</td><td>黒・橙</td><td></td></tr><tr><td>サインボード</td><td>1×1</td><td>2</td><td>2</td><td>500</td><td>黒・白</td><td></td></tr><tr><td>コンテナ</td><td>1×1</td><td>2</td><td>2</td><td>1200</td><td>橙・白・黒</td><td></td></tr><tr><td>コンテナユニット</td><td>2×2</td><td>2</td><td>2</td><td>1600</td><td>橙・白・黒</td><td></td></tr>
+                    </tbody></table>
+
+                    <h4>一点物</h4>
+                    <p>カラーバリエーションが存在しない配置物。価格が高いものが多い。</p>
+                    <table><thead><tr><th scope="col">名前</th><th scope="col">サイズ</th><th scope="col">コスト</th><th scope="col">レアリティ</th><th scope="col">価格</th><th scope="col">備考</th></tr></thead><tbody>
+                        <tr><td>キャンプファイアー</td><td>2×2</td><td>2</td><td>5</td><td>2000</td><td>三個まで所持可能</td></tr><tr><td>ウォーターサーバー</td><td>1×1</td><td>2</td><td>2</td><td>600</td><td></td></tr><tr><td>ミニスパ</td><td>6×6</td><td>6</td><td>4</td><td>50000</td><td></td></tr><tr><td>スパ</td><td>6×6</td><td>6</td><td>4</td><td>60000</td><td></td></tr><tr><td>慰霊碑</td><td>1×1</td><td>2</td><td>2</td><td>3000</td><td></td></tr><tr><td>トークステージ</td><td>2×2</td><td>2</td><td>2</td><td>4000</td><td></td></tr><tr><td>見張り台</td><td>2×2</td><td>2</td><td>2</td><td>5000</td><td></td></tr><tr><td>ミニガーデン</td><td>4×4</td><td>5</td><td>2</td><td>12000</td><td></td></tr><tr><td>モニュメント金</td><td>1×1</td><td>2</td><td>2</td><td>30000</td><td></td></tr><tr><td>モニュメント銀</td><td>1×1</td><td>2</td><td>2</td><td>10000</td><td></td></tr>
+                        <tr><td>チェリーレッドテーブル</td><td>2×1</td><td>2</td><td>3</td><td>2000</td><td></td></tr><tr><td>ソルトブルーテーブル</td><td>2×1</td><td>2</td><td>3</td><td>2000</td><td></td></tr><tr><td>ハーブグリーンテーブル</td><td>2×1</td><td>2</td><td>3</td><td>2000</td><td></td></tr><tr><td>ハニーイエローテーブル</td><td>2×1</td><td>2</td><td>3</td><td>2000</td><td></td></tr><tr><td>チェリーレッドミニデスク</td><td>1×1</td><td>2</td><td>3</td><td>1400</td><td></td></tr><tr><td>ソルトブルーミニデスク</td><td>1×1</td><td>2</td><td>3</td><td>1400</td><td></td></tr><tr><td>ハーブグリーンミニデスク</td><td>1×1</td><td>2</td><td>3</td><td>1400</td><td></td></tr><tr><td>ハニーイエローミニデスク</td><td>1×1</td><td>2</td><td>3</td><td>1400</td><td></td></tr><tr><td>ストレートシェルフ</td><td>1×1</td><td>2</td><td>3</td><td>1600</td><td></td></tr><tr><td>ベンチ</td><td>2×1</td><td>2</td><td>3</td><td>1400</td><td></td></tr><tr><td>エレガントバスタブ</td><td>1×2</td><td>2</td><td>3</td><td>2400</td><td></td></tr><tr><td>セン・タク・キー</td><td>1×1</td><td>2</td><td>3</td><td>2000</td><td></td></tr><tr><td>バーカウンター</td><td>1×1</td><td>3</td><td>3</td><td>4000</td><td></td></tr><tr><td>ロッカー</td><td>1×1</td><td>2</td><td>3</td><td>3600</td><td></td></tr><tr><td>プライベートプール</td><td>2×2</td><td>2</td><td>3</td><td>5000</td><td></td></tr><tr><td>シーベイジングセット</td><td>2×1</td><td>2</td><td>3</td><td>3000</td><td></td></tr><tr><td>シャボテイン</td><td>1×1</td><td>2</td><td>3</td><td>5000</td><td></td></tr>
+                    </tbody></table>
+
+                    <h3>床</h3>
+                    <table><thead><tr><th scope="col">名前</th><th scope="col">サイズ</th><th scope="col">コスト</th><th scope="col">レアリティ</th><th scope="col">価格</th><th scope="col">備考</th></tr></thead><tbody>
+                        <tr><td>ベースカーペット</td><td>30×18</td><td>0</td><td>8</td><td>5000</td><td></td></tr>
+                        <tr><td>オリエントカーペット</td><td>8</td><td>5000</td><td></td><td></td><td></td></tr>
+                        <tr><td>ウェスタンカーペット</td><td>8</td><td>5000</td><td></td><td></td><td></td></tr>
+                        <tr><td>カーペット</td><td>8</td><td>2500</td><td></td><td></td><td></td></tr>
+                        <tr><td>オルターカーペット</td><td>8</td><td>10000</td><td></td><td></td><td></td></tr>
+                        <tr><td>ビーチカーペット</td><td>8</td><td>10000</td><td></td><td></td><td></td></tr>
+                    </tbody></table>
+                </section>
+            </main>
+        </div>
+
+        <footer>
+            <small>Copyright&copy; <a href="/PSNOVA/">PSNOVA 攻略サイト</a> All Rights Reserved.</small>
+        </footer>
+    </div>
+    <p class="nav-fix-pos-pagetop"><a href="#">↑</a></p>
+    <button type="button" id="menubar_hdr" class="close"></button>
+</body>
+</html>
