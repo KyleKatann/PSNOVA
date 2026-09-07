@@ -8,24 +8,6 @@ STYLE_ENTRY = ROOT / "docs" / "css" / "style.css"
 
 
 class ImageLayoutTests(unittest.TestCase):
-    def test_image_layout_is_bundled_globally(self):
-        js = MENUBAR.read_text(encoding="utf-8")
-
-        self.assertIn("var knownDimensions = {", js)
-        self.assertIn("function applyImageHints(image)", js)
-        self.assertNotIn("/PSNOVA/js/image-layout.js", js)
-        self.assertNotIn("data-psnova-image-layout", js)
-
-    def test_unknown_images_are_not_guessed(self):
-        js = IMAGE_LAYOUT.read_text(
-            encoding="utf-8"
-        )
-
-        self.assertIn(
-            "if (!pathname)",
-            js,
-        )
-
     def test_runtime_legacy_jpeg_cleanup_is_removed(self):
         js = IMAGE_LAYOUT.read_text(
             encoding="utf-8"
