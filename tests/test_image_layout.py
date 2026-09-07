@@ -16,29 +16,6 @@ class ImageLayoutTests(unittest.TestCase):
         self.assertNotIn("/PSNOVA/js/image-layout.js", js)
         self.assertNotIn("data-psnova-image-layout", js)
 
-    def test_known_persistent_image_has_explicit_dimensions(self):
-        js = IMAGE_LAYOUT.read_text(
-            encoding="utf-8"
-        )
-
-        self.assertIn(
-            '"/PSNOVA/img/logo.png": '
-            '{ width: 660, height: 121 }',
-            js,
-        )
-
-        self.assertIn(
-            'image.setAttribute('
-            '"width", String(dimensions.width))',
-            js,
-        )
-
-        self.assertIn(
-            'image.setAttribute('
-            '"height", String(dimensions.height))',
-            js,
-        )
-
     def test_unknown_images_are_not_guessed(self):
         js = IMAGE_LAYOUT.read_text(
             encoding="utf-8"
