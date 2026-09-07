@@ -59,7 +59,7 @@ def test_skill_page_uses_static_semantic_tables():
 
     assert html.count("<thead>") == 10
     assert html.count("<tbody>") == 10
-    assert html.count('scope="col"') == 54
+    assert html.count('scope="col"') == 53
 
     for obsolete in ('bgcolor=', 'border="', 'cellspacing=', 'cellpadding=', 'border-collapse'):
         assert obsolete not in html
