@@ -1,0 +1,104 @@
+name: one-time tips detail restoration
+
+on:
+  push:
+    branches:
+      - master
+
+permissions:
+  contents: write
+
+jobs:
+  restore:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Restore omitted reader-useful details
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          python3 - <<'PY'
+          from pathlib import Path
+
+          path = Path('docs/pages/tips-bugs.html')
+          text = path.read_text(encoding='utf-8')
+          replacements = {
+              '<li>時間内殲滅系クエストでは、一定数撃破後にラッピー系のみが出現する「ラッピータイム」が発生するため、アルマラッピー・オナー狙いにも向く。</li>':
+              '<li>時間内殲滅系クエストでは、一定数撃破後にラッピー系のみが出現する「ラッピータイム」が発生する。約6体分の出現抽選があるため、アルマラッピー・オナー狙いにも向く。</li>',
+              '<li>Lv70~80以降は「難:グラン水源殲滅任務」でクリトロクィーンを打ち止めまで倒す方法が有効。個体レベルにばらつきがあり非常にタフだが、1体あたり数万単位の経験値を得られる。</li>':
+              '<li>Lv70~80以降は「難:グラン水源殲滅任務」でクリトロクィーンを打ち止めまで倒す方法が有効。個体レベルにばらつきがあり非常にタフで、舌攻撃は即死級の威力があるが、1体あたり数万単位の経験値を得られる。Lv196では約33000が目安。</li>',
+              '<li>「リーティアのお願い」は1周約2分が目安。Sランク報酬の目安はノーマル:グランエナジー1000~/経験値5000~、ハード:1300~/7000~、ベリーハード:1500~/10000~。</li>':
+              '<li>「リーティアのお願い」は1周約2分が目安。Sランク報酬の目安は、ノーマルがグランエナジー1000~/経験値5000~/凍った葉・グランピース、ハードが1300~/7000~/青い鉱石・グランピース、ベリーハードが1500~/10000~/青い鉱石・グランピース。</li>',
+              '<li>序盤体験版では「雪辱の新兵器」を繰り返し、アグリオスを倒す方法で経験値を稼げる。</li>':
+              '<li>序盤体験版では「雪辱の新兵器」を繰り返し、アグリオスを倒す方法で経験値を稼げる。出現時の突進を避け、ヘイロウで足場を作って横の砲台や発光部位を攻撃し、一度ダウンさせてから頭へ大技を集中させると倒しやすい。</li>',
+              '''<table><thead><tr><th>種類</th><th>推奨クエスト</th></tr></thead><tbody>
+                        <tr><td>A</td><td>鋼の荒野殲滅任務 N</td></tr>
+                        <tr><td>B</td><td>拠点防衛 N</td></tr>
+                        <tr><td>C</td><td>鋼の荒野殲滅任務 H</td></tr>
+                        <tr><td>D</td><td>炎の脅威 H</td></tr>
+                        <tr><td>E</td><td>拠点防衛 H</td></tr>
+                        <tr><td>F</td><td>静かなる都市 H / 食材確保任務 H / 注文の多い料理人 VH / 難:古代都市殲滅任務</td></tr>
+                        <tr><td>G</td><td>拠点防衛 VH / 鋼の荒野殲滅任務 VH</td></tr>
+                        <tr><td>H</td><td>難:○○殲滅任務 VH</td></tr>
+                        <tr><td>I</td><td>難:○○殲滅任務 VH</td></tr>
+                    </tbody></table>''':
+              '''<table><thead><tr><th>種類</th><th>推奨クエスト</th><th>理由・補足</th></tr></thead><tbody>
+                        <tr><td>A</td><td>鋼の荒野殲滅任務 N</td><td>殲滅任務系は時間あたりに倒せる敵が多い。</td></tr>
+                        <tr><td>B</td><td>拠点防衛 N</td><td>ギュゲンテのドロップ数が多い。部位破壊報酬には含まれない。</td></tr>
+                        <tr><td>C</td><td>鋼の荒野殲滅任務 H</td><td>-</td></tr>
+                        <tr><td>D</td><td>炎の脅威 H</td><td>アルキュオネとクリア報酬を狙える。</td></tr>
+                        <tr><td>E</td><td>拠点防衛 H</td><td>-</td></tr>
+                        <tr><td>F</td><td>静かなる都市 H / 食材確保任務 H / 注文の多い料理人 VH / 難:古代都市殲滅任務</td><td>静かなる都市・食材確保任務はクリア報酬、注文の多い料理人は敵が多め。難:古代都市殲滅任務ではHも出る。</td></tr>
+                        <tr><td>G</td><td>拠点防衛 VH / 鋼の荒野殲滅任務 VH</td><td>-</td></tr>
+                        <tr><td>H</td><td>難:○○殲滅任務 VH</td><td>-</td></tr>
+                        <tr><td>I</td><td>難:○○殲滅任務 VH</td><td>-</td></tr>
+                    </tbody></table>''',
+              '<h4>状態異常の詳細</h4>\n                    <table>':
+              '<h4>状態異常の詳細</h4>\n                    <p>状態異常の説明は、ゲーム中の「設定/ヘルプ」→「ヘルプ」→「役立つ情報」からも確認できる。</p>\n                    <table>',
+              '「ユノの宝石」上部の文字はオラクル文字。解読すると「test test test 11」となり、特別な隠しメッセージではない。ルティナが入手直後に持つシーンでは宝石自体を逆さまに持っているため、文字も逆さまになっている。':
+              '「ユノの宝石」上部の文字はオラクル文字。解読すると「test test test 11」となり、特別な隠しメッセージではない。ルティナが入手直後に持つシーンでは宝石自体を逆さまに持っているため、文字も逆さまになっている。青い宝石部分の発光エフェクトにも文字のような模様が見えるが、こちらはオラクル文字ではない。',
+              '異常が見えた場合は高負荷エリアへ進まず拠点へ戻ってセーブし、ゲームを再起動する。予防として、こまめにセーブし、区切りごとにゲームを再起動するとよい。':
+              '異常が見えた場合は高負荷エリアへ進まず拠点へ戻り、マップの読み込みが終わってからセーブしてゲームを再起動する。予防として、こまめにセーブし、区切りごとにゲームを再起動するとよい。',
+          }
+
+          for old, new in replacements.items():
+              count = text.count(old)
+              if count != 1:
+                  raise SystemExit(f'expected exactly one match, got {count}: {old[:80]!r}')
+              text = text.replace(old, new)
+
+          path.write_text(text, encoding='utf-8')
+          PY
+          git add docs/pages/tips-bugs.html
+          git commit -m "fix: restore omitted tips details"
+      - name: Verify restored details
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          text=Path('docs/pages/tips-bugs.html').read_text(encoding='utf-8')
+          required=(
+              '約6体分の出現抽選', '舌攻撃は即死級', 'Lv196では約33000',
+              '凍った葉・グランピース', '横の砲台や発光部位',
+              '<th>理由・補足</th>', 'ギュゲンテのドロップ数が多い',
+              '設定/ヘルプ', '青い宝石部分の発光エフェクト',
+              'マップの読み込みが終わってからセーブ',
+          )
+          missing=[x for x in required if x not in text]
+          if missing: raise SystemExit(f'missing restored details: {missing}')
+          if text.count('<h4>経験値稼ぎ</h4>') != 1: raise SystemExit('experience section changed unexpectedly')
+          print('tips detail restoration: pass')
+          PY
+          python3 - <<'PY'
+          from tests.test_public_copy_source_provenance import test_public_copy_does_not_expose_source_provenance
+          test_public_copy_does_not_expose_source_provenance()
+          print('source-neutrality regression: pass')
+          PY
+      - name: Remove workflow and push
+        shell: bash
+        run: |
+          rm .github/workflows/restore-tips-details.yml
+          git add .github/workflows/restore-tips-details.yml
+          git commit -m "chore: remove tips detail restoration workflow"
+          git push origin HEAD:master
