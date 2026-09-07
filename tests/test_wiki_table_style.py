@@ -3,8 +3,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 STYLE = ROOT / "docs" / "css" / "style.css"
-IMAGE_LAYOUT = ROOT / "docs" / "js" / "image-layout.js"
-TABLE_ENHANCEMENTS = ROOT / "docs" / "js" / "table-enhancements.js"
+MENUBAR = ROOT / "docs" / "js" / "menubar.js"
 
 
 class WikiTableStyleTests(unittest.TestCase):
@@ -58,7 +57,7 @@ class WikiTableStyleTests(unittest.TestCase):
         self.assertIn('background: #e7e9ee;', css)
 
     def test_weapon_runtime_native_icon_layer_is_removed(self):
-        js = IMAGE_LAYOUT.read_text(encoding="utf-8")
+        js = MENUBAR.read_text(encoding="utf-8")
         css = STYLE.read_text(encoding="utf-8")
         self.assertNotIn('details.classList.add("native-icon-table")', js)
         self.assertNotIn('details.style.setProperty("--native-table-icon"', js)
@@ -66,7 +65,7 @@ class WikiTableStyleTests(unittest.TestCase):
         self.assertNotIn('details.native-icon-table', css)
 
     def test_shared_table_enhancer_only_decorates_existing_semantic_tables(self):
-        js = TABLE_ENHANCEMENTS.read_text(encoding="utf-8")
+        js = MENUBAR.read_text(encoding="utf-8")
         self.assertIn('function decorateSemanticDataTable(table)', js)
         self.assertIn('if (!table || !table.tHead || !table.tBodies.length) return;', js)
         self.assertIn('classList.add("rarity-cell")', js)
