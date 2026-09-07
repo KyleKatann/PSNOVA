@@ -103,28 +103,14 @@ def test_public_data_table_headers_use_thead_and_scope_col():
                         f"table {index}: header is not TH"
                     )
 
-                scope = re.search(
-                    r'\bscope\s*=\s*["\'](col|colgroup)["\']',
+                if not re.search(
+                    r'\bscope\s*=\s*["\']col["\']',
                     cell.group("attrs"),
                     re.I,
-                )
-
-                if not scope:
-                    failures.append(
-                        f"{path.relative_to(ROOT)} "
-                        f"table {index}: TH lacks column scope"
-                    )
-                elif (
-                    scope.group(1).lower() == "colgroup"
-                    and not re.search(
-                        r'\bcolspan\s*=\s*["\']?[2-9]\d*["\']?',
-                        cell.group("attrs"),
-                        re.I,
-                    )
                 ):
                     failures.append(
                         f"{path.relative_to(ROOT)} "
-                        f"table {index}: colgroup header lacks colspan>1"
+                        f"table {index}: TH lacks scope=col"
                     )
 
                 if re.search(
