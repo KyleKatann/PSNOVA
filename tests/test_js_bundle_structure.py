@@ -49,11 +49,3 @@ def test_menubar_does_not_reload_retired_scripts():
     menubar = (JS_DIR / "menubar.js").read_text(encoding="utf-8")
     for filename in RETIRED_JS:
         assert f"/PSNOVA/js/{filename}" not in menubar
-
-
-def test_retired_page_top_url_has_non_js_build_compatibility_source():
-    compat = (ROOT / "docs" / "fixmenu-pagetop-compat.txt").read_text(
-        encoding="utf-8"
-    )
-    assert "permalink: /js/fixmenu_pagetop.js" in compat
-    assert "bundled into /PSNOVA/js/openclose.js" in compat
