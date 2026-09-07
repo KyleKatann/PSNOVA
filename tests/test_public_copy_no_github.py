@@ -7,10 +7,11 @@ AGENT = ROOT / "Agent.md"
 
 
 def public_html_files():
-    files = [DOCS / "index.html", DOCS / "copyright.html", DOCS / "issue.html"]
-    files.extend(sorted((DOCS / "pages").glob("*.html")))
-    files.extend(sorted((DOCS / "pages" / "weapon").glob("*.html")))
-    return files
+    return [
+        path
+        for path in sorted(DOCS.rglob("*.html"))
+        if "分類中" not in path.parts
+    ]
 
 
 def test_public_copy_does_not_advertise_github_contribution_channels():
@@ -33,12 +34,11 @@ def test_public_copy_does_not_advertise_github_contribution_channels():
 def test_known_legacy_github_notices_are_removed():
     homepage = (DOCS / "index.html").read_text(encoding="utf-8")
     material = (DOCS / "pages" / "material.html").read_text(encoding="utf-8")
-    issue = (DOCS / "issue.html").read_text(encoding="utf-8")
 
     assert "データの修正はgithub" not in homepage
     assert "githubの方でissue" not in material
-    issue_body = issue.lower().split("</head>", 1)[1]
-    assert "github" not in issue_body
+    assert not (DOCS / "issue.html").exists()
+    assert not (DOCS / "copyright.html").exists()
 
 
 def test_public_copy_rule_is_recorded_in_agent_guide():
