@@ -1,4 +1,5 @@
 from pathlib import Path
+import re
 import unittest
 
 
@@ -27,10 +28,12 @@ class WeaponCatalogIconTests(unittest.TestCase):
         html = WEAPON_PAGE.read_text(encoding="utf-8")
         self.assertEqual(11, html.count('class="weapon-card"'))
         for label, filename in ICONS.items():
-            self.assertIn(
-                f'<img src="/PSNOVA/img/weapon/{filename}" alt="" width="48" height="48"><span>{label}</span>',
-                html,
+            pattern = (
+                rf'<img src="/PSNOVA/img/weapon/{re.escape(filename)}" '
+                rf'alt="" width="48" height="48"(?: loading="lazy")?>'
+                rf'<span>{re.escape(label)}</span>'
             )
+            self.assertRegex(html, pattern)
 
     def test_weapon_card_icons_are_forced_visible_by_page_css(self):
         css = PAGE_STYLE.read_text(encoding="utf-8")
