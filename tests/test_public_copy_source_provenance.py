@@ -6,8 +6,9 @@ DOCS = ROOT / "docs"
 
 PROHIBITED_SOURCE_PROVENANCE = (
     "原典",
-    "旧Wikiでは",
-    "旧wikiでは",
+    "旧PSNOVA攻略Wiki",
+    "旧Wiki",
+    "旧wiki",
     "アーカイブでは",
     "参考元では",
     "移植元では",
