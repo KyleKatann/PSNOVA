@@ -4,7 +4,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 INDEX = ROOT / "docs" / "index.html"
 STYLE = ROOT / "docs" / "css" / "style.css"
-AFFILIATE_JS = ROOT / "docs" / "js" / "affiliate-banner.js"
+MENUBAR_JS = ROOT / "docs" / "js" / "menubar.js"
 AGENT = ROOT / "Agent.md"
 
 
@@ -26,7 +26,7 @@ def test_all_public_pages_use_full_main_column_without_internal_page_image_suppr
 
 def test_affiliate_banner_is_two_equal_columns_on_desktop():
     css = STYLE.read_text(encoding="utf-8")
-    js = AFFILIATE_JS.read_text(encoding="utf-8")
+    js = MENUBAR_JS.read_text(encoding="utf-8")
 
     assert "grid-template-columns: repeat(2, minmax(0, 1fr));" in css
     assert ".affiliate-banner-item" in css
