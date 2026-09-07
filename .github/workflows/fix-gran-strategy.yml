@@ -1,0 +1,46 @@
+name: one-time Gran strategy repair
+
+on:
+  push:
+    branches:
+      - master
+
+permissions:
+  contents: write
+
+jobs:
+  repair:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Restore missing strategy prefix
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+
+          path = Path('docs/pages/quest/gran-water-source.html')
+          text = path.read_text(encoding='utf-8')
+          old = '<p><strong>攻略:</strong> 」クエスト。 クエストの説明文にある通り、攻撃属性炎・防御属性氷の用意は必須と言っても過言ではない。'
+          new = '<p><strong>攻略:</strong> 一番初めの「超：」クエスト。 クエストの説明文にある通り、攻撃属性炎・防御属性氷の用意は必須と言っても過言ではない。'
+
+          if text.count(old) != 1:
+              raise SystemExit(f'expected exactly one malformed strategy, found {text.count(old)}')
+          updated = text.replace(old, new, 1)
+          if not updated.strip():
+              raise SystemExit('page became empty')
+          if old in updated or updated.count(new) != 1:
+              raise SystemExit('strategy replacement verification failed')
+          path.write_text(updated, encoding='utf-8', newline='\n')
+          PY
+      - name: Commit repair and remove workflow
+        shell: bash
+        run: |
+          rm .github/workflows/fix-gran-strategy.yml
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add docs/pages/quest/gran-water-source.html .github/workflows/fix-gran-strategy.yml
+          git diff --cached --check
+          git diff --cached --stat
+          git commit -m "fix: restore Gran Water Source strategy text"
+          git push origin HEAD:master
