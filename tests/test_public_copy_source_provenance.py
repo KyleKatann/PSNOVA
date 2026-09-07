@@ -15,6 +15,10 @@ PROHIBITED_SOURCE_PROVENANCE = (
     "元ページでは",
     "出典では",
     "Tipsでは",
+    "reference原本",
+    "移植",
+    "記録されている",
+    "記録されていた",
 )
 
 
