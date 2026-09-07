@@ -32,6 +32,10 @@
 
 **このリポジトリのGitHub上のファイルを取得・閲覧する場合は、接続済みGitHubコネクタの `fetch_file`、`fetch_blob`、`fetch` などGitHub用read操作だけを使う。** `container.download`、汎用download tool、外部HTTP downloader、raw URLを別ツールへ渡す方法、その他GitHubコネクタ外の経路へ迂回してはならない。GitHubコネクタで取得できるファイルについて、別経路を試すためのprobe、tool-health check、事前URL閲覧、download workaroundを行ってはならない。GitHubコネクタのreadが実際に失敗した場合は最優先の即時停止ルールに従って停止し、ユーザーの新しい指示なしに別取得手段へ切り替えない。
 
+## 最優先ルール：GitHubへの直接HTTP接続・Code Search・ブラウザ経由取得を禁止する
+
+**このリポジトリのコードやrepository contentへアクセスするために、`curl`、`Invoke-WebRequest`、その他のHTTP clientからGitHub API、`raw.githubusercontent.com`、GitHub raw URLへ直接接続してはならない。** GitHub Code Searchも使用してはならず、検索結果、0件、件数、index状態をcurrent repository stateの確認や探索に使ってはならない。Web検索、Webブラウザ、通常のWeb fetchを使ってGitHubページやraw URLからrepository contentを取得・確認することも禁止する。ただし、**ユーザーがその特定作業でGitHubのブラウザ/Web経由アクセスを明示的に指定した場合に限り、Web検索・ブラウザ経由のGitHub閲覧だけを例外として許可する。** この例外は `curl`、`Invoke-WebRequest`、GitHub Code Searchの使用許可を意味しない。通常は接続済みGitHubコネクタのread操作、または既存local worktreeの直接ファイル読取を使用する。
+
 ## 目的
 
 このリポジトリは、GitHub Pagesで公開するPSNOVA攻略サイトのソースである。
