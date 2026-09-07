@@ -1,0 +1,48 @@
+name: one-time Agent JS invariant update
+
+on:
+  push:
+    branches:
+      - master
+
+permissions:
+  contents: write
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Update retired-script and page-style invariants
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+
+          path = Path('Agent.md')
+          text = path.read_text(encoding='utf-8')
+          replacements = {
+              'Public pages load the three shared JavaScript bundles (`openclose.js`, `menubar.js`, `sidebar.js`) with `defer`. Public HTML must not contain inline initialization scripts; shared components initialize themselves from external JS after parsing while preserving document-order execution. The retired `/PSNOVA/js/fixmenu_pagetop.js` URL may exist only as a no-logic non-JavaScript build-compatibility output for older raw HTML that has not yet had that script tag removed; new or regenerated public HTML must emit only the three bundles.':
+              'Public pages load the three shared JavaScript bundles (`openclose.js`, `menubar.js`, `sidebar.js`) with `defer`. Public HTML must not contain inline initialization scripts; shared components initialize themselves from external JS after parsing while preserving document-order execution. The retired `/PSNOVA/js/fixmenu_pagetop.js` URL and compatibility output are fully removed and must not be recreated or referenced; public HTML and generators must emit only the three bundles.',
+              'Repository-owned public runtime JavaScript source is exactly three files: `docs/js/openclose.js`, `docs/js/menubar.js`, and `docs/js/sidebar.js`. `openclose.js` owns responsive-menu and page-top behavior; `menubar.js` owns page-style loading, image hints/class icons, table enhancements, and affiliate-banner behavior; `sidebar.js` owns sidebar/current-link behavior and site search. Retired standalone files such as `fixmenu_pagetop.js`, `image-layout.js`, `table-enhancements.js`, `affiliate-banner.js`, `site-search.js`, and `weapon-tools.js` must not be recreated or dynamically loaded unless the user explicitly reverses the three-bundle decision and the JavaScript freeze.':
+              'Repository-owned public runtime JavaScript source is exactly three files: `docs/js/openclose.js`, `docs/js/menubar.js`, and `docs/js/sidebar.js`. `openclose.js` owns responsive-menu and page-top behavior; `menubar.js` owns image hints/class icons, table enhancements, and affiliate-banner behavior; `sidebar.js` owns sidebar/current-link behavior and site search. `menubar.js` still contains a frozen legacy page-style loader, but affected pages must declare `page.css` statically with `data-psnova-page-style="true"` so that loader remains dormant; runtime stylesheet injection is not an approved responsibility. Retired standalone files such as `fixmenu_pagetop.js`, `image-layout.js`, `table-enhancements.js`, `affiliate-banner.js`, `site-search.js`, and `weapon-tools.js` must not be recreated or dynamically loaded unless the user explicitly reverses the three-bundle decision and the JavaScript freeze.'
+          }
+
+          updated = text
+          for old, new in replacements.items():
+              if updated.count(old) != 1:
+                  raise SystemExit(f'expected exactly one Agent invariant match, found {updated.count(old)}')
+              updated = updated.replace(old, new, 1)
+
+          path.write_text(updated, encoding='utf-8', newline='\n')
+          PY
+      - name: Commit update and remove workflow
+        shell: bash
+        run: |
+          rm .github/workflows/update-agent-js-invariants.yml
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add Agent.md .github/workflows/update-agent-js-invariants.yml
+          git diff --cached --check
+          git commit -m "docs: align JavaScript invariants with static ownership"
+          git push origin HEAD:master
