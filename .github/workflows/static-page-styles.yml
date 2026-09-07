@@ -1,0 +1,65 @@
+name: one-time static page style migration
+
+on:
+  push:
+    branches:
+      - master
+
+permissions:
+  contents: write
+
+jobs:
+  migrate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Add static page stylesheet one page at a time
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          python3 - <<'PY'
+          from pathlib import Path
+          import subprocess
+
+          pages = [
+              ('docs/pages/weapon.html', 'weapon catalog'),
+              ('docs/pages/weapon/doublesaber.html', 'double saber'),
+              ('docs/pages/weapon/halo.html', 'halo'),
+              ('docs/pages/weapon/knuckle.html', 'knuckle'),
+              ('docs/pages/weapon/partizan.html', 'partizan'),
+              ('docs/pages/weapon/pile.html', 'pile'),
+              ('docs/pages/weapon/rifle.html', 'rifle'),
+              ('docs/pages/weapon/rod.html', 'rod'),
+              ('docs/pages/weapon/sword.html', 'sword'),
+              ('docs/pages/weapon/talis.html', 'talis'),
+              ('docs/pages/weapon/tmachinegun.html', 'twin machinegun'),
+              ('docs/pages/weapon/wand.html', 'wand'),
+              ('docs/pages/gigantes.html', 'Gigantes'),
+          ]
+          old = '<link rel="stylesheet" href="/PSNOVA/css/style.css">'
+          new = old + '\n    <link rel="stylesheet" href="/PSNOVA/css/page.css" data-psnova-page-style="true">'
+
+          for raw_path, label in pages:
+              path = Path(raw_path)
+              text = path.read_text(encoding='utf-8')
+              if '/PSNOVA/css/page.css' in text:
+                  raise SystemExit(f'{path}: page.css already present; inspect manually')
+              if text.count(old) != 1:
+                  raise SystemExit(f'{path}: expected one style.css link, found {text.count(old)}')
+              updated = text.replace(old, new, 1)
+              if updated.count('data-psnova-page-style="true"') != 1:
+                  raise SystemExit(f'{path}: static page-style marker verification failed')
+              path.write_text(updated, encoding='utf-8', newline='\n')
+              subprocess.run(['git', 'add', str(path)], check=True)
+              subprocess.run(['git', 'diff', '--cached', '--check'], check=True)
+              subprocess.run(['git', 'commit', '-m', f'fix: load {label} page styles statically'], check=True)
+          PY
+      - name: Remove one-time workflow and push
+        shell: bash
+        run: |
+          rm .github/workflows/static-page-styles.yml
+          git add .github/workflows/static-page-styles.yml
+          git diff --cached --check
+          git commit -m "chore: remove static page style migration workflow"
+          git push origin HEAD:master
