@@ -2,7 +2,7 @@ from pathlib import Path
 
 
 ROOT = Path(__file__).resolve().parents[1]
-TABLE_JS = ROOT / "docs" / "js" / "table-enhancements.js"
+MENUBAR_JS = ROOT / "docs" / "js" / "menubar.js"
 SIDEBAR_JS = ROOT / "docs" / "js" / "sidebar.js"
 TECHNIC_DIR = ROOT / "docs" / "pages" / "technic"
 NOTE = (
@@ -26,7 +26,7 @@ def test_each_technic_keeps_static_material_legend_after_second_level_table():
 
 
 def test_runtime_javascript_does_not_repair_technic_static_content():
-    table_js = TABLE_JS.read_text(encoding="utf-8")
+    menubar_js = MENUBAR_JS.read_text(encoding="utf-8")
     sidebar_js = SIDEBAR_JS.read_text(encoding="utf-8")
 
     for forbidden in (
@@ -35,7 +35,7 @@ def test_runtime_javascript_does_not_repair_technic_static_content():
         "pageNote.remove",
         "technic-material-note",
     ):
-        assert forbidden not in table_js
+        assert forbidden not in menubar_js
 
     for forbidden in (
         "ensurePageStylesheet",
