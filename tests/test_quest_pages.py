@@ -117,7 +117,7 @@ def test_quest_pages_use_fullwidth_colons_in_visible_text():
 
 def test_quest_pages_omit_empty_strategy_placeholders():
     for filename in QUEST_PAGES:
-        assert "<strong>攻略:</strong> -" not in page_text(filename)
+        assert "<strong>攻略：</strong> -" not in page_text(filename)
 
 
 def test_quest_pages_match_source_migration_content():
