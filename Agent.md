@@ -4,6 +4,10 @@
 
 **Do not edit JavaScript in this repository.** Do not create, modify, delete, rename, move, regenerate, replace, or otherwise change any `.js` file, and do not add or alter inline JavaScript. Existing JavaScript is frozen after the current audit. If a requested change appears to require JavaScript, solve it with static HTML/CSS or repository tooling that does not change JavaScript. Do not use JavaScript as a workaround for incorrect static markup, data, metadata, styles, or assets. JavaScript may be changed only when the user explicitly reverses this rule and directly authorizes JavaScript editing.
 
+## Highest-priority rule: Do not search for alternate edit methods when a workable method is already available
+
+**If an available repository operation can complete the requested change, do not search for a different editing method merely because the available operation is inconvenient, large, or requires full-file replacement.** In particular, when a tool requires replacing the complete contents of a large text file, use that known workable method directly and preserve all unrelated content exactly. Do not spend time investigating patch APIs, Git data/tree APIs, workflows, temporary branches, local clone workarounds, or other alternate mechanisms unless the known method actually fails or cannot safely complete the requested change. Method exploration itself is prohibited once a workable implementation path is known; execution and verification take priority.
+
 ## Purpose
 
 This repository is the source for the PSNOVA攻略サイト published with GitHub Pages.
