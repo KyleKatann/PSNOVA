@@ -1,0 +1,44 @@
+name: one-time public source-provenance audit
+
+on:
+  push:
+    branches:
+      - master
+
+permissions:
+  contents: write
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Audit public source-provenance wording
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          import re
+
+          root = Path('docs')
+          patterns = re.compile(r'旧PSNOVA攻略Wiki|旧Wiki|旧wiki|原典|アーカイブでは|参考元では|移植元では|元ページでは|出典では')
+          hits = []
+          for path in root.rglob('*.html'):
+              if '分類中' in path.parts:
+                  continue
+              for lineno, line in enumerate(path.read_text(encoding='utf-8').splitlines(), 1):
+                  if patterns.search(line):
+                      hits.append((str(path), lineno, line.strip()))
+          print(f'HIT_COUNT={len(hits)}')
+          for path, lineno, line in hits:
+              print(f'{path}:{lineno}: {line}')
+          PY
+      - name: Remove audit workflow
+        shell: bash
+        run: |
+          rm .github/workflows/audit-source-provenance.yml
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add .github/workflows/audit-source-provenance.yml
+          git commit -m "chore: remove one-time provenance audit workflow"
+          git push origin HEAD:master
