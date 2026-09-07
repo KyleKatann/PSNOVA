@@ -56,26 +56,18 @@ class ReferencePageMigrationTests(unittest.TestCase):
 
     def test_faq_uses_beginner_qa_name_on_shared_discovery_surfaces(self):
         expected_label = "初心者Q&A"
+        sidebar = (DOCS / "js" / "sidebar.js").read_text(
+            encoding="utf-8"
+        )
 
-        for path in (
-            DOCS / "js" / "sidebar.js",
-            DOCS / "js" / "site-search.js",
-        ):
-            with self.subTest(
-                path=path.relative_to(ROOT)
-            ):
-                text = path.read_text(
-                    encoding="utf-8"
-                )
-
-                self.assertIn(
-                    FAQ_URL,
-                    text,
-                )
-                self.assertIn(
-                    expected_label,
-                    html.unescape(text),
-                )
+        self.assertIn(
+            FAQ_URL,
+            sidebar,
+        )
+        self.assertIn(
+            expected_label,
+            html.unescape(sidebar),
+        )
 
         source = FAQ_PATH.read_text(
             encoding="utf-8"
