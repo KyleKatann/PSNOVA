@@ -20,6 +20,7 @@ jobs:
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           python3 - <<'PY'
           from pathlib import Path
+          import re
 
           path = Path('docs/pages/tips-bugs.html')
           text = path.read_text(encoding='utf-8')
@@ -32,28 +33,6 @@ jobs:
               '<li>「リーティアのお願い」は1周約2分が目安。Sランク報酬の目安は、ノーマルがグランエナジー1000~/経験値5000~/凍った葉・グランピース、ハードが1300~/7000~/青い鉱石・グランピース、ベリーハードが1500~/10000~/青い鉱石・グランピース。</li>',
               '<li>序盤体験版では「雪辱の新兵器」を繰り返し、アグリオスを倒す方法で経験値を稼げる。</li>':
               '<li>序盤体験版では「雪辱の新兵器」を繰り返し、アグリオスを倒す方法で経験値を稼げる。出現時の突進を避け、ヘイロウで足場を作って横の砲台や発光部位を攻撃し、一度ダウンさせてから頭へ大技を集中させると倒しやすい。</li>',
-              '''<table><thead><tr><th>種類</th><th>推奨クエスト</th></tr></thead><tbody>
-                        <tr><td>A</td><td>鋼の荒野殲滅任務 N</td></tr>
-                        <tr><td>B</td><td>拠点防衛 N</td></tr>
-                        <tr><td>C</td><td>鋼の荒野殲滅任務 H</td></tr>
-                        <tr><td>D</td><td>炎の脅威 H</td></tr>
-                        <tr><td>E</td><td>拠点防衛 H</td></tr>
-                        <tr><td>F</td><td>静かなる都市 H / 食材確保任務 H / 注文の多い料理人 VH / 難:古代都市殲滅任務</td></tr>
-                        <tr><td>G</td><td>拠点防衛 VH / 鋼の荒野殲滅任務 VH</td></tr>
-                        <tr><td>H</td><td>難:○○殲滅任務 VH</td></tr>
-                        <tr><td>I</td><td>難:○○殲滅任務 VH</td></tr>
-                    </tbody></table>''':
-              '''<table><thead><tr><th>種類</th><th>推奨クエスト</th><th>理由・補足</th></tr></thead><tbody>
-                        <tr><td>A</td><td>鋼の荒野殲滅任務 N</td><td>殲滅任務系は時間あたりに倒せる敵が多い。</td></tr>
-                        <tr><td>B</td><td>拠点防衛 N</td><td>ギュゲンテのドロップ数が多い。部位破壊報酬には含まれない。</td></tr>
-                        <tr><td>C</td><td>鋼の荒野殲滅任務 H</td><td>-</td></tr>
-                        <tr><td>D</td><td>炎の脅威 H</td><td>アルキュオネとクリア報酬を狙える。</td></tr>
-                        <tr><td>E</td><td>拠点防衛 H</td><td>-</td></tr>
-                        <tr><td>F</td><td>静かなる都市 H / 食材確保任務 H / 注文の多い料理人 VH / 難:古代都市殲滅任務</td><td>静かなる都市・食材確保任務はクリア報酬、注文の多い料理人は敵が多め。難:古代都市殲滅任務ではHも出る。</td></tr>
-                        <tr><td>G</td><td>拠点防衛 VH / 鋼の荒野殲滅任務 VH</td><td>-</td></tr>
-                        <tr><td>H</td><td>難:○○殲滅任務 VH</td><td>-</td></tr>
-                        <tr><td>I</td><td>難:○○殲滅任務 VH</td><td>-</td></tr>
-                    </tbody></table>''',
               '<h4>状態異常の詳細</h4>\n                    <table>':
               '<h4>状態異常の詳細</h4>\n                    <p>状態異常の説明は、ゲーム中の「設定/ヘルプ」→「ヘルプ」→「役立つ情報」からも確認できる。</p>\n                    <table>',
               '「ユノの宝石」上部の文字はオラクル文字。解読すると「test test test 11」となり、特別な隠しメッセージではない。ルティナが入手直後に持つシーンでは宝石自体を逆さまに持っているため、文字も逆さまになっている。':
@@ -67,6 +46,26 @@ jobs:
               if count != 1:
                   raise SystemExit(f'expected exactly one match, got {count}: {old[:80]!r}')
               text = text.replace(old, new)
+
+          table_pattern = re.compile(
+              r'<table><thead><tr><th>種類</th><th>推奨クエスト</th></tr></thead><tbody>.*?</tbody></table>',
+              re.S,
+          )
+          table_matches = table_pattern.findall(text)
+          if len(table_matches) != 1:
+              raise SystemExit(f'expected exactly one memory-fragment table, got {len(table_matches)}')
+          new_table = '''<table><thead><tr><th>種類</th><th>推奨クエスト</th><th>理由・補足</th></tr></thead><tbody>
+                        <tr><td>A</td><td>鋼の荒野殲滅任務 N</td><td>殲滅任務系は時間あたりに倒せる敵が多い。</td></tr>
+                        <tr><td>B</td><td>拠点防衛 N</td><td>ギュゲンテのドロップ数が多い。部位破壊報酬には含まれない。</td></tr>
+                        <tr><td>C</td><td>鋼の荒野殲滅任務 H</td><td>-</td></tr>
+                        <tr><td>D</td><td>炎の脅威 H</td><td>アルキュオネとクリア報酬を狙える。</td></tr>
+                        <tr><td>E</td><td>拠点防衛 H</td><td>-</td></tr>
+                        <tr><td>F</td><td>静かなる都市 H / 食材確保任務 H / 注文の多い料理人 VH / 難:古代都市殲滅任務</td><td>静かなる都市・食材確保任務はクリア報酬、注文の多い料理人は敵が多め。難:古代都市殲滅任務ではHも出る。</td></tr>
+                        <tr><td>G</td><td>拠点防衛 VH / 鋼の荒野殲滅任務 VH</td><td>-</td></tr>
+                        <tr><td>H</td><td>難:○○殲滅任務 VH</td><td>-</td></tr>
+                        <tr><td>I</td><td>難:○○殲滅任務 VH</td><td>-</td></tr>
+                    </tbody></table>'''
+          text = table_pattern.sub(new_table, text, count=1)
 
           path.write_text(text, encoding='utf-8')
           PY
