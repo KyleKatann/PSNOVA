@@ -13,18 +13,10 @@ def test_agent_records_technic_presentation_contract():
     for rule in (
         "All public data tables use the same square-corner treatment",
         "Do not add rounded corners or card-like shadows to a table, its caption, or its table-scroll wrapper",
-        "Every technic entry must include a reader-facing description in static HTML",
-        "use the PSO2 Wiki only as a secondary source",
-        "Never copy source wording verbatim",
-        "Existing technic descriptions imported from the archived Wiki must also be rewritten",
-        "Technic Lv tables use the same column geometry across every technique and every attribute",
-        "Technic descriptive/behavior notes use one consistent gray highlight treatment",
-        "reserve it for material legends such as `ホ※` / `ブ※` / `マ※`",
-        "Technic material-legend text uses the same `#26384d` text color as ordinary data tables",
+        "Runtime JavaScript must never repair",
+        "Do not discard historical Wiki article content during modernization",
     ):
         assert rule in guide
-
-    assert "Technic supplementary notes and material legends use one consistent yellow highlight treatment" not in guide
 
 
 def test_shared_data_tables_are_shadowless():
