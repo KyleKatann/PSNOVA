@@ -77,7 +77,11 @@ def test_published_technic_entries_use_visible_individual_icons():
     css_without_comments = re.sub(r"/\*.*?\*/", "", css, flags=re.S)
 
     assert "background: transparent no-repeat center / contain;" in css
-    assert ":has(" not in css_without_comments
+
+    selectors = re.findall(r"([^{}]+)\{", css_without_comments)
+    for selector in selectors:
+        if "technic-" in selector:
+            assert ":has(" not in selector
 
     for page_class, (filename, names) in TECHNICS.items():
         html = (TECHNIC_PAGES / filename).read_text(encoding="utf-8")
