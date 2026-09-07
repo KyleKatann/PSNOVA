@@ -1,0 +1,124 @@
+name: one-time technic note restoration
+
+on:
+  push:
+    branches:
+      - master
+
+permissions:
+  contents: write
+
+jobs:
+  restore:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Configure commits
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+      - name: Restore Shifta details
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          p=Path('docs/pages/technic/fire.html'); s=p.read_text(encoding='utf-8')
+          old='自身と周囲の味方の打撃・射撃・法撃を一定時間強化する補助テクニック。効果量はキャラクター本来のステータスを基準に計算される。'
+          new='自身と周囲の味方の打撃力・射撃力・法撃力を一定時間強化する補助テクニック。効果はキャラクター本来のステータスに乗算され、Lv20では129%。武器・スキル・特殊能力には乗らない。持続時間は1分30秒で、効果範囲は発動地点から半径ステップ2回分程度。最終ステータスは「元ステータス×シフタ×(拠点効果＋食事効果)＋武器＋スキル＋特殊能力」で計算される。'
+          if s.count(old)!=1: raise SystemExit(f'Shifta match={s.count(old)}')
+          p.write_text(s.replace(old,new),encoding='utf-8')
+          PY
+          git add docs/pages/technic/fire.html
+          git commit -m "fix: restore Shifta usage details"
+      - name: Restore Deband details
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          p=Path('docs/pages/technic/ice.html'); s=p.read_text(encoding='utf-8')
+          old='自身と周囲の味方の打撃・射撃・法撃防御を強化する補助テクニック。効果量はキャラクター本来のステータスを基準に計算される。'
+          new='自身と周囲の味方の打撃防御力・射撃防御力・法撃防御力を強化する補助テクニック。効果はキャラクター本来のステータスに乗算され、Lv20では129%。防具・スキル・特殊能力には乗らない。効果範囲は発動地点から半径ステップ2回分程度。最終ステータスは「元ステータス×デバンド×(拠点効果＋食事効果)＋防具＋スキル＋特殊能力」で計算される。'
+          if s.count(old)!=1: raise SystemExit(f'Deband match={s.count(old)}')
+          p.write_text(s.replace(old,new),encoding='utf-8')
+          PY
+          git add docs/pages/technic/ice.html
+          git commit -m "fix: restore Deband usage details"
+      - name: Restore Sa Zonde details
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          p=Path('docs/pages/technic/thunder.html'); s=p.read_text(encoding='utf-8')
+          old='雷球を命中させた対象を一定時間帯電させ、別の雷属性攻撃を当てると4回の放電を起こす。放電自体でも次のサ・ゾンデを誘発でき、表示威力は総ダメージの4分の1。一部の大型エネミーとは帯電部位の関係で相性が悪い。'
+          new='雷球を命中させた対象を一定時間帯電させ、別の雷属性攻撃を当てると4回の放電を起こす。放電自体でも次のサ・ゾンデを誘発でき、表示威力は総ダメージの4分の1。一部の大型エネミーでは帯電部位の関係で相性が悪く、エウリュードなどが該当する。複合連牙やテックアーツJAボーナスを狙う場合はサ・ゾンデ自体をJAすればよく、起爆用の雷テクニックをJAする必要はない。起爆用テクニックからサ・ゾンデの順で攻撃した扱いになっている可能性がある。'
+          if s.count(old)!=1: raise SystemExit(f'Sa Zonde match={s.count(old)}')
+          p.write_text(s.replace(old,new),encoding='utf-8')
+          PY
+          git add docs/pages/technic/thunder.html
+          git commit -m "fix: restore Sa Zonde usage details"
+      - name: Restore Zan difference
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          p=Path('docs/pages/technic/wind.html'); s=p.read_text(encoding='utf-8')
+          old='前方へ放ったかまいたちが一定距離で戻ってくる。戻り弾は術者に触れると消え、縦方向の判定が狭いためジャンプでかわして残存時間を延ばせる。'
+          new='前方へ放ったかまいたちが一定距離で戻ってくる。戻り弾は術者に触れると消え、縦方向の判定が狭いためジャンプでかわして残存時間を延ばせる。PSO2と異なり、PSNOVAではノンチャージ版のようにかまいたちが1つずつ飛ぶ。'
+          if s.count(old)!=1: raise SystemExit(f'Zan match={s.count(old)}')
+          p.write_text(s.replace(old,new),encoding='utf-8')
+          PY
+          git add docs/pages/technic/wind.html
+          git commit -m "fix: restore Zan behavior difference"
+      - name: Restore Resta range
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          p=Path('docs/pages/technic/light.html'); s=p.read_text(encoding='utf-8')
+          old='初期状態から習得している回復テクニック。自身またはタリスを中心に、周囲のキャラクターのHPを回復する。'
+          new='初期状態から習得している回復テクニック。自身またはタリスを中心に、周囲のキャラクターのHPを回復する。効果範囲は発動地点から半径ステップ2回分程度。'
+          if s.count(old)!=1: raise SystemExit(f'Resta match={s.count(old)}')
+          p.write_text(s.replace(old,new),encoding='utf-8')
+          PY
+          git add docs/pages/technic/light.html
+          git commit -m "fix: restore Resta effect range"
+      - name: Restore Megiverse recovery details
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          p=Path('docs/pages/technic/dark.html'); s=p.read_text(encoding='utf-8')
+          old='非常に短いチャージで濃縮グランの領域を展開する補助テクニック。レベルを上げるほど消費GPが減少する。'
+          new='非常に短いチャージで濃縮グランの領域を展開する補助テクニック。領域内で与えたダメージの1/4だけHPを回復し、効果範囲はシフタやデバンドと同程度。レベルを上げるほど消費GPが減少する。'
+          if s.count(old)!=1: raise SystemExit(f'Megiverse match={s.count(old)}')
+          p.write_text(s.replace(old,new),encoding='utf-8')
+          PY
+          git add docs/pages/technic/dark.html
+          git commit -m "fix: restore Megiverse recovery details"
+      - name: Verify restored facts
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          required={
+            'fire.html':['Lv20では129%','1分30秒','元ステータス×シフタ'],
+            'ice.html':['Lv20では129%','元ステータス×デバンド','半径ステップ2回分程度'],
+            'thunder.html':['エウリュード','テックアーツJAボーナス','起爆用の雷テクニックをJAする必要はない'],
+            'wind.html':['PSO2と異なり','かまいたちが1つずつ飛ぶ'],
+            'light.html':['レスタ','半径ステップ2回分程度'],
+            'dark.html':['与えたダメージの1/4だけHPを回復','シフタやデバンドと同程度'],
+          }
+          base=Path('docs/pages/technic')
+          for filename, phrases in required.items():
+              text=(base/filename).read_text(encoding='utf-8')
+              for phrase in phrases:
+                  if phrase not in text: raise SystemExit(f'{filename}: missing {phrase}')
+          print('technic restored facts: pass')
+          PY
+      - name: Remove workflow and push
+        shell: bash
+        run: |
+          rm .github/workflows/restore-technic-notes.yml
+          git add .github/workflows/restore-technic-notes.yml
+          git commit -m "chore: remove technic note restoration workflow"
+          git push origin HEAD:master
