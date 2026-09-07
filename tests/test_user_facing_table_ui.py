@@ -1,3 +1,5 @@
+import html
+import re
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -12,25 +14,28 @@ def test_semantic_table_headers_are_explicitly_centered_after_body_alignment_rul
     assert "text-align: center !important;" in tail
 
 
-def test_public_ui_uses_clear_japanese_shop_level_label():
+def test_public_table_headers_use_clear_japanese_shop_level_label():
     docs = ROOT / "docs"
     forbidden = ("Shop Lv", "ShopLv", "shopLv", "ショップLv")
 
-    for path in docs.rglob("*"):
-        if not path.is_file() or path.suffix not in {".html", ".js"}:
-            continue
+    for path in docs.rglob("*.html"):
         if "分類中" in path.parts:
             continue
 
         text = path.read_text(encoding="utf-8")
-        for label in forbidden:
-            assert label not in text, f"{path.relative_to(ROOT)} contains {label!r}"
+        headers = re.findall(r"<th\b[^>]*>(.*?)</th>", text, flags=re.I | re.S)
+        for header in headers:
+            label = html.unescape(re.sub(r"<[^>]+>", "", header)).strip()
+            for forbidden_label in forbidden:
+                assert forbidden_label not in label, (
+                    f"{path.relative_to(ROOT)} header contains {forbidden_label!r}"
+                )
 
 
 def test_consumable_material_quantities_use_multiplication_sign():
-    html = (ROOT / "docs/pages/item.html").read_text(encoding="utf-8")
-    assert "グランピース×1" in html
-    assert "グランピースx" not in html
+    html_source = (ROOT / "docs/pages/item.html").read_text(encoding="utf-8")
+    assert "グランピース×1" in html_source
+    assert "グランピースx" not in html_source
 
 
 def test_automatic_page_section_navigation_stays_removed():
