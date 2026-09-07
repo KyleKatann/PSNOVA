@@ -1,0 +1,136 @@
+name: one-time technic source section inspection
+
+on:
+  push:
+    branches:
+      - master
+
+permissions:
+  contents: write
+
+jobs:
+  inspect:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install parser
+        run: python -m pip install beautifulsoup4
+      - name: Print source sections by technique
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          from bs4 import BeautifulSoup, Tag, NavigableString
+          from pathlib import Path
+          import re
+
+          specs = {
+              '炎': ['フォイエ','ギ・フォイエ','ラ・フォイエ','サ・フォイエ','シフタ'],
+              '氷': ['バータ','ギ・バータ','ラ・バータ','サ・バータ','デバンド'],
+              '雷': ['ゾンデ','ギ・ゾンデ','ラ・ゾンデ','サ・ゾンデ','ゾンディール'],
+              '風': ['ザン','ギ・ザン','ラ・ザン','サ・ザン','ナ・ザン'],
+              '光': ['グランツ','ギ・グランツ','ラ・グランツ','レスタ','アンティ'],
+              '闇': ['メギド','ギ・メギド','ラ・メギド','サ・メギド','メギバース'],
+          }
+          source_dir = Path('reference/psnovanet/psnova/!technic工事中excelが土方')
+          public_dir = Path('docs/pages/technic')
+          public_files = {'炎':'fire.html','氷':'ice.html','雷':'thunder.html','風':'wind.html','光':'light.html','闇':'dark.html'}
+
+          def norm(s):
+              return re.sub(r'\s+', ' ', s).strip()
+
+          def heading_name(h):
+              text = norm(h.get_text(' ', strip=True))
+              text = re.sub(r'^添付\s*', '', text)
+              return text
+
+          def top_level_tables_between(start_h, end_h):
+              tables = []
+              notes = []
+              node = start_h.next_sibling
+              while node is not None and node is not end_h:
+                  if isinstance(node, NavigableString):
+                      node = node.next_sibling
+                      continue
+                  if isinstance(node, Tag):
+                      # Source tables can be wrapped; collect descendant tables only once.
+                      found = [node] if node.name == 'table' else node.find_all('table', recursive=True)
+                      for t in found:
+                          if not any(parent is not node and parent.name == 'table' for parent in t.parents if parent is not start_h.parent):
+                              if t not in tables:
+                                  tables.append(t)
+                      if node.name not in ('table','script','style') and not node.find('table'):
+                          text = norm(node.get_text(' ', strip=True))
+                          if text and '最新の10件を表示しています' not in text and 'コメントページを参照' not in text:
+                              notes.append(text)
+                  node = node.next_sibling
+              return tables, notes
+
+          def row_texts(table):
+              rows=[]
+              for tr in table.find_all('tr'):
+                  vals=[]
+                  for c in tr.find_all(['th','td'], recursive=False):
+                      text=norm(c.get_text(' ', strip=True))
+                      # Source edit control cells are empty after image stripping.
+                      if text:
+                          vals.append(text)
+                  if vals:
+                      rows.append(vals)
+              return rows
+
+          for attr, expected_names in specs.items():
+              candidates=list(source_dir.glob(f'テクニック_{attr}属性 - *.html'))
+              if len(candidates)!=1:
+                  raise SystemExit(f'{attr}: source candidates={candidates}')
+              soup=BeautifulSoup(candidates[0].read_text(encoding='utf-8'),'html.parser')
+              headings=[]
+              for h in soup.find_all('h2'):
+                  name=heading_name(h)
+                  if name in expected_names:
+                      headings.append((name,h))
+              # Preserve document order, verify exact technique set/order.
+              names=[n for n,_ in headings]
+              if names != expected_names:
+                  raise SystemExit(f'{attr}: source heading order {names}, expected {expected_names}')
+
+              public=BeautifulSoup((public_dir/public_files[attr]).read_text(encoding='utf-8'),'html.parser')
+              pub_sections=public.select('section.technic-entry')
+              pub_by_name={norm(s.find('h2').get_text(' ',strip=True)):s for s in pub_sections}
+
+              print('\n'+'='*100)
+              print(f'{attr} SOURCE/PUBLIC MANUAL REVIEW')
+              for i,(name,h) in enumerate(headings):
+                  next_h=headings[i+1][1] if i+1<len(headings) else None
+                  tables,notes=top_level_tables_between(h,next_h)
+                  psec=pub_by_name.get(name)
+                  if psec is None:
+                      print(f'!! PUBLIC MISSING SECTION {name}')
+                      continue
+                  ptables=psec.find_all('table')
+                  pnote=psec.find('p',class_='technic-note')
+                  print(f'\n[{name}]')
+                  print('SOURCE NOTES:')
+                  if notes:
+                      for n in notes:
+                          print('  -',n)
+                  else:
+                      print('  (none outside tables)')
+                  print('PUBLIC NOTE:')
+                  print('  ', norm(pnote.get_text(' ',strip=True)) if pnote else '(none)')
+                  print(f'TABLE_COUNT source={len(tables)} public={len(ptables)}')
+                  for label,ts in [('SOURCE',tables),('PUBLIC',ptables)]:
+                      print(label+' TABLE SUMMARIES:')
+                      for j,t in enumerate(ts,1):
+                          rows=row_texts(t)
+                          print(f'  #{j} rows={len(rows)} first={rows[0] if rows else []}')
+                          print(f'     last={rows[-1] if rows else []}')
+          PY
+      - name: Remove inspection workflow
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          rm .github/workflows/inspect-technic-source.yml
+          git add .github/workflows/inspect-technic-source.yml
+          git commit -m "chore: remove technic source inspection workflow"
+          git push origin HEAD:master
