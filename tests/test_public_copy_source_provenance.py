@@ -5,7 +5,7 @@ ROOT = Path(__file__).resolve().parents[1]
 DOCS = ROOT / "docs"
 
 PROHIBITED_SOURCE_PROVENANCE = (
-    "原典では",
+    "原典",
     "旧Wikiでは",
     "旧wikiでは",
     "アーカイブでは",
