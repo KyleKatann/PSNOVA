@@ -136,10 +136,9 @@ def strategy_after(table: Tag) -> str:
         if isinstance(node, Tag) and node.name in {"ul", "p"}:
             text = plain_text(node)
             if text.startswith("攻略"):
-                if "：" in text:
-                    return text.split("：", 1)[1].strip()
-                if ":" in text:
-                    return text.split(":", 1)[1].strip()
+                strategy = text[len("攻略"):].lstrip()
+                if strategy.startswith(("：", ":")):
+                    return strategy[1:].strip()
                 return ""
         node = node.next_sibling
     return ""
