@@ -3,7 +3,7 @@ import unittest
 
 
 ROOT = Path(__file__).resolve().parents[1]
-SCRIPT = ROOT / "docs" / "js" / "table-enhancements.js"
+SCRIPT = ROOT / "docs" / "js" / "menubar.js"
 MATERIAL = ROOT / "docs" / "pages" / "material.html"
 
 
