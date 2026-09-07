@@ -31,7 +31,18 @@ class VisualSystemTests(unittest.TestCase):
         js = SIDEBAR_JS.read_text(encoding="utf-8")
         self.assertIn("function markCurrentSidebarLink", js)
         self.assertIn('classList.toggle("is-current", exactCurrent)', js)
-        self.assertIn('classList.toggle("is-parent-current", weaponParentCurrent)', js)
+        self.assertRegex(
+            js,
+            r'classList\.toggle\(\s*"is-parent-current"\s*,',
+        )
+        for condition in (
+            "weaponParentCurrent",
+            "granartsParentCurrent",
+            "technicParentCurrent",
+            "questParentCurrent",
+            "promiseOrderParentCurrent",
+        ):
+            self.assertIn(condition, js)
         self.assertIn('setAttribute("aria-current", "page")', js)
 
 
