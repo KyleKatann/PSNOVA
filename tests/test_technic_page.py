@@ -68,10 +68,22 @@ def test_technic_overview_uses_weapon_catalog_pattern_for_attributes():
             "/PSNOVA/pages/technic/ice.html",
             "/PSNOVA/img/tech/ice.png",
         ),
-        "雷属性": ("#attribute-thunder", "/PSNOVA/img/tech/thunder.png"),
-        "風属性": ("#attribute-wind", "/PSNOVA/img/tech/wind.png"),
-        "光属性": ("#attribute-light", "/PSNOVA/img/tech/light.png"),
-        "闇属性": ("#attribute-dark", "/PSNOVA/img/tech/dark.png"),
+        "雷属性": (
+            "/PSNOVA/pages/technic/thunder.html",
+            "/PSNOVA/img/tech/thunder.png",
+        ),
+        "風属性": (
+            "/PSNOVA/pages/technic/wind.html",
+            "/PSNOVA/img/tech/wind.png",
+        ),
+        "光属性": (
+            "/PSNOVA/pages/technic/light.html",
+            "/PSNOVA/img/tech/light.png",
+        ),
+        "闇属性": (
+            "/PSNOVA/pages/technic/dark.html",
+            "/PSNOVA/img/tech/dark.png",
+        ),
     }
 
     for label, (href, image) in cards.items():
@@ -80,16 +92,18 @@ def test_technic_overview_uses_weapon_catalog_pattern_for_attributes():
         assert f'<span>{label}</span>' in html
 
 
-def test_technic_overview_does_not_publish_unmigrated_detail_routes():
+def test_technic_overview_publishes_all_six_detail_routes():
     html = PAGE.read_text(encoding="utf-8")
 
     for route in (
-        "/PSNOVA/pages/technic/lightning.html",
+        "/PSNOVA/pages/technic/fire.html",
+        "/PSNOVA/pages/technic/ice.html",
+        "/PSNOVA/pages/technic/thunder.html",
         "/PSNOVA/pages/technic/wind.html",
         "/PSNOVA/pages/technic/light.html",
         "/PSNOVA/pages/technic/dark.html",
     ):
-        assert route not in html
+        assert route in html
 
 
 def test_technic_overview_lists_all_six_attributes():
