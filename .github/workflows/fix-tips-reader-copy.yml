@@ -1,0 +1,71 @@
+name: one-time tips reader-copy cleanup
+
+on:
+  push:
+    branches:
+      - master
+
+permissions:
+  contents: write
+
+jobs:
+  fix:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Make tips copy reader-facing
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          python3 - <<'PY'
+          from pathlib import Path
+
+          path = Path('docs/pages/tips-bugs.html')
+          text = path.read_text(encoding='utf-8')
+          replacements = {
+              '「リーティアのお願い」は1周約2分とされ、Sランク報酬の目安はノーマル:グランエナジー1000~/経験値5000~、ハード:1300~/7000~、ベリーハード:1500~/10000~。':
+              '「リーティアのお願い」は1周約2分が目安。Sランク報酬の目安はノーマル:グランエナジー1000~/経験値5000~、ハード:1300~/7000~、ベリーハード:1500~/10000~。',
+              'Ver.1.05頃から、名称末尾に「◆」が付くDLCアイテムを生産可能になったため、DLCコスチュームではそちらを使う方法も案内されている。':
+              'Ver.1.05頃から、名称末尾に「◆」が付くDLCアイテムを生産可能になったため、DLCコスチュームではそちらを使う方法もある。',
+              '「ユノの宝石」上部の文字はオラクル文字。解読結果は「test test test 11」で、特別な隠しメッセージではないとされる。ルティナが入手直後に持つシーンでは宝石自体を逆さまに持っているため、文字も逆さまになっている。':
+              '「ユノの宝石」上部の文字はオラクル文字。解読すると「test test test 11」となり、特別な隠しメッセージではない。ルティナが入手直後に持つシーンでは宝石自体を逆さまに持っているため、文字も逆さまになっている。',
+              '異常が見えた場合は高負荷エリアへ進まず拠点へ戻ってセーブし、ゲームを再起動する。予防策として、こまめなセーブと区切りごとの再起動が推奨されている。':
+              '異常が見えた場合は高負荷エリアへ進まず拠点へ戻ってセーブし、ゲームを再起動する。予防として、こまめにセーブし、区切りごとにゲームを再起動するとよい。',
+          }
+          for old, new in replacements.items():
+              count = text.count(old)
+              if count != 1:
+                  raise SystemExit(f'expected one match, got {count}: {old}')
+              text = text.replace(old, new)
+          path.write_text(text, encoding='utf-8')
+          PY
+          git add docs/pages/tips-bugs.html
+          git commit -m "fix: make tips guidance reader-facing"
+      - name: Verify targeted cleanup
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          text = Path('docs/pages/tips-bugs.html').read_text(encoding='utf-8')
+          old_phrases = (
+              '1周約2分とされ',
+              '方法も案内されている',
+              '特別な隠しメッセージではないとされる',
+              '再起動が推奨されている',
+          )
+          remaining = [phrase for phrase in old_phrases if phrase in text]
+          if remaining:
+              raise SystemExit(f'old reader-copy remains: {remaining}')
+          for required in ('1周約2分が目安', 'そちらを使う方法もある', '解読すると「test test test 11」', '区切りごとにゲームを再起動するとよい'):
+              if required not in text:
+                  raise SystemExit(f'missing revised copy: {required}')
+          print('tips reader-copy cleanup: pass')
+          PY
+      - name: Remove workflow and push
+        shell: bash
+        run: |
+          rm .github/workflows/fix-tips-reader-copy.yml
+          git add .github/workflows/fix-tips-reader-copy.yml
+          git commit -m "chore: remove tips reader-copy cleanup workflow"
+          git push origin HEAD:master
