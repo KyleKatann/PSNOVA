@@ -1,0 +1,137 @@
+name: one-time walkthrough content inspection
+
+on:
+  push:
+    branches:
+      - master
+
+permissions:
+  contents: write
+
+jobs:
+  inspect:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install parser
+        run: python -m pip install beautifulsoup4
+      - name: Print source and public walkthrough sections for manual review
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          from bs4 import BeautifulSoup, Tag, NavigableString
+          from pathlib import Path
+          import re
+
+          source_path = Path('reference/psnovanet/psnova/攻略チャート - ファンタシースターノヴァ PSNOVA 攻略Wiki.html')
+          public_path = Path('docs/pages/walkthrough.html')
+
+          def norm(text):
+              return re.sub(r'\s+', ' ', text).strip()
+
+          def is_edit_chrome(tag):
+              if not isinstance(tag, Tag):
+                  return False
+              if tag.name in ('script', 'style'):
+                  return True
+              classes = set(tag.get('class', []))
+              return bool(classes & {'paraedit', 'edit', 'jumpmenu'})
+
+          def source_heading_text(h):
+              text = norm(h.get_text(' ', strip=True))
+              text = re.sub(r'^添付\s*', '', text)
+              return text
+
+          def clean_payload(node):
+              if isinstance(node, NavigableString):
+                  text = norm(str(node))
+                  return text or None
+              if not isinstance(node, Tag) or is_edit_chrome(node):
+                  return None
+              if node.name in ('a',):
+                  return None
+              # Ignore edit images/controls but keep visible reader text.
+              clone = BeautifulSoup(str(node), 'html.parser')
+              for bad in clone.find_all(['script','style','img']):
+                  bad.decompose()
+              for a in clone.find_all('a'):
+                  a.unwrap()
+              text = norm(clone.get_text(' ', strip=True))
+              if not text:
+                  return None
+              if text in ('編集', '添付') or text.startswith('最新の10件を表示しています'):
+                  return None
+              return text
+
+          def print_public():
+              soup = BeautifulSoup(public_path.read_text(encoding='utf-8'), 'html.parser')
+              main = soup.find('main', id='main')
+              print('=' * 100)
+              print('PUBLIC WALKTHROUGH')
+              for h in main.find_all(['h2','h3','h4']):
+                  title = norm(h.get_text(' ', strip=True))
+                  print(f'\n{h.name.upper()} {title}')
+                  payload=[]
+                  node=h.next_sibling
+                  while node is not None:
+                      if isinstance(node, Tag) and node.name in ('h2','h3','h4'):
+                          break
+                      if isinstance(node, Tag):
+                          if node.name in ('p','ul','ol','table','div'):
+                              text=clean_payload(node)
+                              if text:
+                                  payload.append(text)
+                      node=node.next_sibling
+                  if payload:
+                      for item in payload:
+                          print('  ->', item)
+                  else:
+                      print('  -> (no direct body)')
+
+          def print_source():
+              soup = BeautifulSoup(source_path.read_text(encoding='utf-8'), 'html.parser')
+              # PukiWiki article is inside #content_1_0; if absent, use content div.
+              anchor = soup.find(id='content_1_0')
+              root = anchor.parent if anchor else soup.find(id='content') or soup
+              headings=[]
+              started=False
+              for h in root.find_all(['h2','h3','h4']):
+                  title=source_heading_text(h)
+                  if title.startswith('コメント'):
+                      break
+                  if title.startswith('攻略チャート') or started:
+                      started=True
+                      headings.append(h)
+              print('\n' + '=' * 100)
+              print('SOURCE WALKTHROUGH')
+              for h in headings:
+                  title=source_heading_text(h)
+                  print(f'\n{h.name.upper()} {title}')
+                  payload=[]
+                  node=h.next_sibling
+                  while node is not None:
+                      if isinstance(node, Tag) and node.name in ('h2','h3','h4'):
+                          break
+                      if isinstance(node, Tag) and node.name in ('p','ul','ol','table','div'):
+                          text=clean_payload(node)
+                          if text:
+                              payload.append(text)
+                      node=node.next_sibling
+                  if payload:
+                      for item in payload:
+                          print('  ->', item)
+                  else:
+                      print('  -> (no direct body)')
+
+          print_public()
+          print_source()
+          PY
+      - name: Remove inspection workflow
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          rm .github/workflows/inspect-walkthrough-content.yml
+          git add .github/workflows/inspect-walkthrough-content.yml
+          git commit -m "chore: remove walkthrough content inspection workflow"
+          git push origin HEAD:master
