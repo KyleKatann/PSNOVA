@@ -51,17 +51,17 @@ def test_page_specific_css_has_one_owner_file():
     page = PAGE.read_text(encoding="utf-8")
 
     assert ".weapon-catalog {" in page
-    assert ".data-toolbar {" in page
     assert ".product-table .product-image-cell" in page
+    assert ".data-toolbar {" not in page
+    assert ".data-toolbar {" not in style
     assert ".weapon-catalog {" not in style
     assert ".product-table .product-image-cell" not in style
 
 
-def test_weapon_filter_grid_does_not_duplicate_single_type_selectors():
+def test_retired_weapon_filter_grid_stays_removed():
     page = PAGE.read_text(encoding="utf-8")
 
-    assert ".data-filter-grid.is-single-type" not in page
-    assert page.count(".data-filter-grid { grid-template-columns: 1fr; }") == 1
+    assert ".data-filter-grid" not in page
 
 
 def test_shop_level_presentation_has_one_sitewide_owner():
@@ -104,9 +104,9 @@ def test_home_cells_inherit_shared_table_presentation():
     style = STYLE.read_text(encoding="utf-8")
     page = PAGE.read_text(encoding="utf-8")
 
-    shared_cells = block(style, "#main table th,\n#main table td")
+    shared_selector = "#main table th,\n#main table td"
+    shared_cells = block(style, shared_selector)
 
     assert "background: var(--surface-subtle);" in shared_cells
     assert "vertical-align: middle;" in shared_cells
-    assert "background: var(--surface-subtle);" not in page
-    assert "vertical-align: middle;" not in page
+    assert shared_selector not in page
