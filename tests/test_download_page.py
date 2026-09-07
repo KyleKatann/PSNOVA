@@ -96,7 +96,6 @@ class DownloadPageTests(unittest.TestCase):
 
         for script in (
             "openclose.js",
-            "fixmenu_pagetop.js",
             "menubar.js",
             "sidebar.js",
         ):
@@ -105,6 +104,8 @@ class DownloadPageTests(unittest.TestCase):
                     f'<script defer src="/PSNOVA/js/{script}"></script>',
                     source,
                 )
+
+        self.assertNotIn("/PSNOVA/js/fixmenu_pagetop.js", source)
 
         sidebar = (DOCS / "js" / "sidebar.js").read_text(encoding="utf-8")
         self.assertIn(DOWNLOAD_URL, sidebar)
