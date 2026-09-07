@@ -1,3 +1,4 @@
+import re
 from pathlib import Path
 
 
@@ -56,10 +57,23 @@ def test_skill_page_contains_all_class_skill_sections_and_reference_sentinels():
 
 def test_skill_page_uses_static_semantic_tables():
     html = (PAGES / "skill.html").read_text(encoding="utf-8")
+    tables = re.findall(r"<table\b[^>]*>.*?</table>", html, flags=re.I | re.S)
 
-    assert html.count("<thead>") == 10
-    assert html.count("<tbody>") == 10
-    assert html.count('scope="col"') == 53
+    assert tables
+
+    for table in tables:
+        assert "<thead>" in table
+        assert "<tbody>" in table
+
+        headers = re.findall(r"<th\b([^>]*)>", table, flags=re.I)
+        assert headers
+
+        for attrs in headers:
+            assert re.search(
+                r'\bscope\s*=\s*["\']col["\']',
+                attrs,
+                flags=re.I,
+            )
 
     for obsolete in ('bgcolor=', 'border="', 'cellspacing=', 'cellpadding=', 'border-collapse'):
         assert obsolete not in html
