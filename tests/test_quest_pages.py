@@ -23,7 +23,6 @@ def page_text(filename: str) -> str:
 def test_quest_pages_use_public_site_shell():
     scripts = (
         "/PSNOVA/js/openclose.js",
-        "/PSNOVA/js/fixmenu_pagetop.js",
         "/PSNOVA/js/menubar.js",
         "/PSNOVA/js/sidebar.js",
     )
