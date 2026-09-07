@@ -20,9 +20,6 @@
     var knownDimensions = {
         "/PSNOVA/img/logo.png": { width: 660, height: 121 }
     };
-    var eagerPaths = {
-        "/PSNOVA/img/logo.png": true
-    };
     var classIcons = {
         "ハンター": "/PSNOVA/img/job/hunter.png",
         "レンジャー": "/PSNOVA/img/job/ranger.png",
@@ -67,10 +64,6 @@
             if (!image.hasAttribute("height")) {
                 image.setAttribute("height", String(dimensions.height));
             }
-        }
-
-        if (!eagerPaths[pathname] && !image.hasAttribute("loading")) {
-            image.setAttribute("loading", "lazy");
         }
     }
 
