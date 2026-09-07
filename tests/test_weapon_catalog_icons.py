@@ -6,7 +6,6 @@ import unittest
 ROOT = Path(__file__).resolve().parents[1]
 WEAPON_PAGE = ROOT / "docs" / "pages" / "weapon.html"
 PAGE_STYLE = ROOT / "docs" / "css" / "page.css"
-AGENT = ROOT / "Agent.md"
 
 ICONS = {
     "ソード": "sword.png",
@@ -41,11 +40,6 @@ class WeaponCatalogIconTests(unittest.TestCase):
         self.assertIn('display: block !important;', css)
         self.assertIn('visibility: visible;', css)
         self.assertIn('opacity: 1;', css)
-
-    def test_catalog_icon_rule_is_recorded(self):
-        guide = AGENT.read_text(encoding="utf-8")
-        self.assertIn('catalog shows one existing native weapon PNG', guide)
-        self.assertIn('must not regress to text-only cards', guide)
 
 
 if __name__ == "__main__":

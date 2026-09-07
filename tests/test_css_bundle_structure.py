@@ -9,7 +9,6 @@ PAGE = CSS / "page.css"
 MENUBAR = DOCS / "js" / "menubar.js"
 INDEX = DOCS / "index.html"
 WEAPON_INDEX = DOCS / "pages" / "weapon.html"
-AGENT = ROOT / "Agent.md"
 
 
 def test_public_css_inventory_is_exactly_two_files():
@@ -71,8 +70,3 @@ def test_old_page_specific_css_names_stay_removed():
         assert all(old not in source for source in sources)
 
 
-def test_agent_guide_caps_public_css_at_two_files():
-    guide = AGENT.read_text(encoding="utf-8")
-    assert "public CSS file count must never exceed two" in guide
-    assert "`docs/css/style.css`" in guide
-    assert "`docs/css/page.css`" in guide

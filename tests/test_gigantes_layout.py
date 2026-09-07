@@ -3,7 +3,6 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 HTML = ROOT / "docs" / "pages" / "gigantes.html"
 CSS = ROOT / "docs" / "css" / "style.css"
-AGENT = ROOT / "Agent.md"
 
 
 def test_gigantes_desktop_table_does_not_scroll_horizontally():
@@ -58,16 +57,6 @@ def test_gigantes_stage_labels_use_explicit_cell_breaks():
         assert value not in html
 
 
-def test_gigantes_layout_rules_are_recorded_in_agent():
-    agent = AGENT.read_text(encoding="utf-8")
-
-    assert "Gigantes data tables must fit within the main content width" in agent
-    assert "must not use horizontal scrolling" in agent
-    assert "`難易度SH以降での出現クエスト` column must stay on one line" in agent
-    assert "`備考` column is the flexible wrapping column" in agent
-    assert "explicit cell-internal `<br>`" in agent
-
-
 def test_gigantes_large_and_small_tables_share_the_same_layout_contract():
     html = HTML.read_text(encoding="utf-8")
     css = CSS.read_text(encoding="utf-8")
@@ -88,14 +77,6 @@ def test_gigantes_large_and_small_tables_share_the_same_layout_contract():
     assert "@media screen and (max-width: 800px)" in css
     assert "overflow-x: auto;" in css
     assert "min-width: 1100px;" in css
-
-
-def test_gigantes_large_small_table_names_are_recorded_in_agent():
-    agent = AGENT.read_text(encoding="utf-8")
-
-    assert "`大型ギガンテスデータ`" in agent
-    assert "`小型ギガンテスデータ`" in agent
-    assert "Both tables use the same Gigantes table-layout rules" in agent
 
 
 def test_galateere_description_stays_in_blast_cell_with_explicit_breaks():

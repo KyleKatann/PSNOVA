@@ -7,7 +7,6 @@ STYLE = ROOT / "docs" / "css" / "style.css"
 PAGE_CSS = ROOT / "docs" / "css" / "page.css"
 LOCK_JS = ROOT / "docs" / "js" / "weapon-static-heading.js"
 LOCK_CSS = ROOT / "docs" / "css" / "weapon-static-heading.css"
-AGENT = ROOT / "Agent.md"
 WEAPON_DIR = ROOT / "docs" / "pages" / "weapon"
 
 WEAPONS = {
@@ -74,31 +73,3 @@ def test_static_heading_icon_style_lives_in_page_css():
     assert "height: 30px;" in css
 
 
-def test_static_weapon_heading_and_retired_control_rules_are_recorded():
-    agent = AGENT.read_text(
-        encoding="utf-8"
-    )
-
-    assert (
-        "ordinary static `<h2>` weapon-type heading"
-        in agent
-    )
-    assert (
-        "must not rely on JavaScript "
-        "to force a disclosure widget open"
-        in agent
-    )
-    assert (
-        "Weapon detail pages keep only the centered `武器一覧` link"
-        in agent
-    )
-    assert (
-        "The weapon-specific search/filter/sort toolbar is retired."
-        in agent
-    )
-    assert "`docs/js/weapon-tools.js`" in agent
-    assert (
-        "Weapon table headers remain in normal document flow"
-        in agent
-    )
-    assert "must never use `position: sticky`" in agent

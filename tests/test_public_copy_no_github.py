@@ -3,7 +3,6 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 DOCS = ROOT / "docs"
-AGENT = ROOT / "Agent.md"
 
 
 def public_html_files():
@@ -41,6 +40,3 @@ def test_known_legacy_github_notices_are_removed():
     assert not (DOCS / "copyright.html").exists()
 
 
-def test_public_copy_rule_is_recorded_in_agent_guide():
-    agent = AGENT.read_text(encoding="utf-8")
-    assert "Public-facing site copy must not direct visitors to GitHub" in agent

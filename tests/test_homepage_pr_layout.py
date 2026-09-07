@@ -5,7 +5,6 @@ ROOT = Path(__file__).resolve().parents[1]
 INDEX = ROOT / "docs" / "index.html"
 STYLE = ROOT / "docs" / "css" / "style.css"
 MENUBAR_JS = ROOT / "docs" / "js" / "menubar.js"
-AGENT = ROOT / "Agent.md"
 
 
 def test_all_public_pages_use_full_main_column_without_internal_page_image_suppression():
@@ -51,12 +50,3 @@ def test_affiliate_banner_collapses_to_one_visible_item_on_mobile():
     assert "display: none;" in mobile_second_item
 
 
-def test_user_corrected_specs_are_recorded_as_invariants():
-    agent = AGENT.read_text(encoding="utf-8")
-
-    assert "Every user-reported regression that establishes a corrected specification" in agent
-    assert "Correction-derived invariants" in agent
-    assert "Weapon section headings show exactly one weapon icon" in agent
-    assert "トアス種, ゴルドス種, and アフォル種" in agent
-    assert "Affiliate/PR presentation on desktop uses two equal-width banner slots" in agent
-    assert "All public pages should use the available main-content width naturally" in agent

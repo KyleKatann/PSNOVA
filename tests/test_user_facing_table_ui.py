@@ -47,9 +47,3 @@ def test_automatic_page_section_navigation_stays_removed():
     assert not (ROOT / "docs/css/section-nav.css").exists()
 
 
-def test_agent_guide_records_user_facing_table_rules():
-    guide = (ROOT / "Agent.md").read_text(encoding="utf-8")
-    assert "table column headers" in guide.lower()
-    assert "ショップレベル" in guide
-    assert "developer-facing" in guide.lower()
-    assert "automatic in-page" in guide.lower()

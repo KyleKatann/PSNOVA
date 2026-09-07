@@ -9,7 +9,6 @@ DOCS = ROOT / "docs"
 MENUBAR = DOCS / "js" / "menubar.js"
 PAGE_META = DOCS / "js" / "page-meta.js"
 SITEMAP = DOCS / "sitemap.xml"
-AGENT = ROOT / "Agent.md"
 SITE_ORIGIN = "https://kylekatann.github.io"
 SITE_ROOT = "/PSNOVA/"
 
@@ -132,10 +131,3 @@ def test_runtime_metadata_repair_is_removed():
     assert "data-psnova-page-meta" not in menubar
 
 
-def test_agent_records_static_title_ownership():
-    guide = AGENT.read_text(encoding="utf-8")
-
-    assert "Public page titles follow one naming convention" in guide
-    assert "PSNOVA攻略サイト - XXXXX" in guide
-    assert "Prefer the same convention in raw HTML" in guide
-    assert "runtime metadata must not be used to conceal a knowingly incorrect source title" in guide

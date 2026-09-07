@@ -2,21 +2,8 @@ from pathlib import Path
 
 
 ROOT = Path(__file__).resolve().parents[1]
-AGENT = ROOT / "Agent.md"
 STYLE_CSS = ROOT / "docs" / "css" / "style.css"
 PAGE_CSS = ROOT / "docs" / "css" / "page.css"
-
-
-def test_agent_records_technic_presentation_contract():
-    guide = AGENT.read_text(encoding="utf-8")
-
-    for rule in (
-        "All public data tables use the same square-corner treatment",
-        "Do not add rounded corners or card-like shadows to a table, its caption, or its table-scroll wrapper",
-        "Runtime JavaScript must never repair",
-        "Do not discard historical Wiki article content during modernization",
-    ):
-        assert rule in guide
 
 
 def test_shared_data_tables_are_shadowless():

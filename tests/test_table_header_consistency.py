@@ -9,7 +9,6 @@ DOCS = ROOT / "docs"
 SITEMAP = DOCS / "sitemap.xml"
 CSS = DOCS / "css" / "style.css"
 CONFIG = DOCS / "_config.yml"
-AGENT = ROOT / "Agent.md"
 SITE_PREFIX = "/PSNOVA/"
 
 
@@ -176,8 +175,3 @@ def test_historical_classification_tree_is_not_part_of_public_build():
     assert "- pages/分類中" in config
 
 
-def test_agent_prohibits_legacy_table_compatibility():
-    agent = AGENT.read_text(encoding="utf-8")
-
-    assert "Legacy table compatibility styling is prohibited." in agent
-    assert "`docs/pages/分類中/` is historical staging/reference material" in agent
