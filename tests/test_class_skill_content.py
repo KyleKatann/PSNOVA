@@ -57,9 +57,9 @@ def test_skill_page_contains_all_class_skill_sections_and_reference_sentinels():
 def test_skill_page_uses_static_semantic_tables():
     html = (PAGES / "skill.html").read_text(encoding="utf-8")
 
-    assert html.count("<thead>") == 4
-    assert html.count("<tbody>") == 4
-    assert html.count('scope="col"') == 16
+    assert html.count("<thead>") == 10
+    assert html.count("<tbody>") == 10
+    assert html.count('scope="col"') == 54
 
     for obsolete in ('bgcolor=', 'border="', 'cellspacing=', 'cellpadding=', 'border-collapse'):
         assert obsolete not in html
