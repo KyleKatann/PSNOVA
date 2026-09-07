@@ -49,7 +49,8 @@ def test_page_bundle_owns_home_and_weapon_specific_styles():
     assert ".product-table .product-image-cell" in css
     assert "/* === WEAPON PAGES === */" in css
     assert ".weapon-catalog {" in css
-    assert ".data-toolbar {" in css
+    assert ".data-toolbar {" not in css
+    assert ".data-filter-grid" not in css
 
 
 def test_page_bundle_is_loaded_statically_for_homepage_and_weapon_routes():
