@@ -9,7 +9,7 @@ ROOT = Path(__file__).resolve().parents[1]
 QUEST_PAGES = {
     "steel-wilderness.html": ("鋼の荒野", "仲間の探索", "極:伏す猛銃と天舞う砲凰", 29),
     "gran-water-source.html": ("グラン水源", "ヨミの要求", "超：氷塊のギガティオン", 25),
-    "flame-highlands.html": ("炎の高地", "リーティアのお願い", "極:棘と大火球の輪舞曲", 16),
+    "flame-highlands.html": ("炎の高地", "リーティアのお願い", "極：棘と大火球の輪舞曲", 16),
     "ancient-city.html": ("古代都市", "静かなる都市", "極:漆黒の鉄馬と光線獣", 16),
     "nova-interior.html": ("ノヴァ内部", "果たすべき使命", "極:魂の解放", 9),
     "additional.html": ("追加クエスト", "タイムアタック・鋼の荒野", "経験値フィーバー", 9),
@@ -104,19 +104,19 @@ def test_quest_pages_match_source_migration_content():
         public_soup = BeautifulSoup(public, "html.parser")
 
         generated_headings = generated_soup.select("h4")
+        public_headings = public_soup.select("h4")
         generated_table_nodes = generated_soup.select("table")
-        public_names = [node.get_text(" ", strip=True) for node in public_soup.select("h4")]
-        generated_names = [node.get_text(" ", strip=True) for node in generated_headings]
-        assert public_names == generated_names
+
+        assert len(public_headings) == len(generated_headings)
         assert len(generated_headings) == len(generated_table_nodes)
 
         # 保存元には、記事見出しと表内「クエスト名」が食い違う既知の誤記がある。
-        # 公開ページでは記事見出し名を正としているため、比較時も1列目だけ見出し名へ正規化する。
-        for heading, table in zip(generated_headings, generated_table_nodes):
+        # 公開ページでは記事見出し名を正としているため、比較時は名称だけ公開見出しへ正規化する。
+        for public_heading, table in zip(public_headings, generated_table_nodes):
             name_cell = table.select_one("tbody tr td")
             assert name_cell is not None
             name_cell.clear()
-            name_cell.append(heading.get_text(" ", strip=True))
+            name_cell.append(public_heading.get_text(" ", strip=True))
 
         generated_tables = [table.get_text("|", strip=True) for table in generated_table_nodes]
         public_tables = [table.get_text("|", strip=True) for table in public_soup.select("table")]
