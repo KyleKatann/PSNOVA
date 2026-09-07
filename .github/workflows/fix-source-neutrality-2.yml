@@ -1,0 +1,94 @@
+name: one-time source-neutrality cleanup 2
+
+on:
+  push:
+    branches:
+      - master
+
+permissions:
+  contents: write
+
+jobs:
+  fix:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Fix tips wording
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          python3 - <<'PY'
+          from pathlib import Path
+          p = Path('docs/pages/tips-bugs.html')
+          s = p.read_text(encoding='utf-8')
+          old = '序盤体験版では「雪辱の新兵器」を繰り返し、アグリオスを倒す方法が記録されている。'
+          new = '序盤体験版では「雪辱の新兵器」を繰り返し、アグリオスを倒す方法で経験値を稼げる。'
+          if s.count(old) != 1:
+              raise SystemExit(f'expected exactly one tips match, got {s.count(old)}')
+          p.write_text(s.replace(old, new), encoding='utf-8')
+          PY
+          git add docs/pages/tips-bugs.html
+          git commit -m "fix: remove residual provenance from tips"
+      - name: Fix skill wording
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          p = Path('docs/pages/skill.html')
+          s = p.read_text(encoding='utf-8')
+          old = '複数のスキルを組み合わせることで、HP・GP・各種攻撃力や防御力の上位スキルなどを発動できる。組み合わせ表はreference原本に多数存在するため、基本スキル一覧とは分けて移植する。'
+          new = '複数のスキルを組み合わせることで、HP・GP・各種攻撃力や防御力を高める上位スキルなどを発動できる。コンボスキルは必要な組み合わせがそれぞれ異なる。'
+          if s.count(old) != 1:
+              raise SystemExit(f'expected exactly one skill match, got {s.count(old)}')
+          p.write_text(s.replace(old, new), encoding='utf-8')
+          PY
+          git add docs/pages/skill.html
+          git commit -m "fix: remove source workflow copy from skills"
+      - name: Strengthen provenance regression test
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          p = Path('tests/test_public_copy_source_provenance.py')
+          s = p.read_text(encoding='utf-8')
+          marker = '    "Tipsでは",\n'
+          insert = '    "Tipsでは",\n    "reference原本",\n    "移植",\n    "記録されている",\n    "記録されていた",\n'
+          if s.count(marker) != 1:
+              raise SystemExit('expected Tips marker exactly once')
+          p.write_text(s.replace(marker, insert), encoding='utf-8')
+          PY
+          git add tests/test_public_copy_source_provenance.py
+          git commit -m "test: reject broader source provenance wording"
+      - name: Verify source neutrality
+        shell: bash
+        run: |
+          python3 -m unittest tests.test_public_copy_source_provenance
+          python3 - <<'PY'
+          from pathlib import Path
+          import re
+          patterns = [
+              r'Wiki', r'wiki', r'攻略Wiki', r'原典', r'原文', r'原本', r'reference', r'転載', r'移植',
+              r'アーカイブ', r'参考元', r'参考資料', r'出典', r'元ページ', r'元データ', r'データ元',
+              r'Tipsでは', r'記録されている', r'記録されていた', r'記録として',
+              r'記載されている', r'記載されていた', r'資料では', r'情報源',
+          ]
+          pattern = re.compile('|'.join(patterns))
+          hits = []
+          for path in Path('docs').rglob('*.html'):
+              if '分類中' in path.parts:
+                  continue
+              for lineno, line in enumerate(path.read_text(encoding='utf-8').splitlines(), 1):
+                  if pattern.search(line):
+                      hits.append(f'{path}:{lineno}: {line.strip()}')
+          if hits:
+              raise SystemExit('source-dependent wording remains:\n' + '\n'.join(hits))
+          print('source-dependent wording hits: 0')
+          PY
+      - name: Remove workflow and push
+        shell: bash
+        run: |
+          rm .github/workflows/fix-source-neutrality-2.yml
+          git add .github/workflows/fix-source-neutrality-2.yml
+          git commit -m "chore: remove second source-neutrality cleanup workflow"
+          git push origin HEAD:master
