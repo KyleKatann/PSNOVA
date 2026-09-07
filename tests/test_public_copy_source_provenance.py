@@ -14,6 +14,7 @@ PROHIBITED_SOURCE_PROVENANCE = (
     "移植元では",
     "元ページでは",
     "出典では",
+    "Tipsでは",
 )
 
 
