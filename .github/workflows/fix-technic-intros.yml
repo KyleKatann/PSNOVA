@@ -1,0 +1,57 @@
+name: one-time technic intro cleanup
+
+on:
+  push:
+    branches:
+      - master
+
+permissions:
+  contents: write
+
+jobs:
+  repair:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Replace source-provenance wording one page at a time
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          python3 - <<'PY'
+          from pathlib import Path
+          import subprocess
+
+          pages = [
+              ('fire.html', 'Fire'),
+              ('ice.html', 'Ice'),
+              ('thunder.html', 'Thunder'),
+              ('wind.html', 'Wind'),
+              ('light.html', 'Light'),
+              ('dark.html', 'Dark'),
+          ]
+          old = 'を原典のレベル別データのまま掲載する。'
+          new = 'を確認できる。レベルごとの性能や強化素材を比較し、育成や強化計画を立てる際に利用できる。'
+
+          for filename, label in pages:
+              path = Path('docs/pages/technic') / filename
+              text = path.read_text(encoding='utf-8')
+              count = text.count(old)
+              if count != 1:
+                  raise SystemExit(f'{path}: expected one provenance phrase, found {count}')
+              updated = text.replace(old, new, 1)
+              if not updated.strip() or old in updated:
+                  raise SystemExit(f'{path}: replacement verification failed')
+              path.write_text(updated, encoding='utf-8', newline='\n')
+              subprocess.run(['git', 'add', str(path)], check=True)
+              subprocess.run(['git', 'diff', '--cached', '--check'], check=True)
+              subprocess.run(['git', 'commit', '-m', f'fix: make {label} technic introduction source-neutral'], check=True)
+          PY
+      - name: Remove one-time workflow and push
+        shell: bash
+        run: |
+          rm .github/workflows/fix-technic-intros.yml
+          git add .github/workflows/fix-technic-intros.yml
+          git diff --cached --check
+          git commit -m "chore: remove technic intro cleanup workflow"
+          git push origin HEAD:master
