@@ -8,6 +8,7 @@ STYLE = CSS / "style.css"
 PAGE = CSS / "page.css"
 MENUBAR = DOCS / "js" / "menubar.js"
 INDEX = DOCS / "index.html"
+WEAPON_INDEX = DOCS / "pages" / "weapon.html"
 AGENT = ROOT / "Agent.md"
 
 
@@ -51,14 +52,12 @@ def test_page_bundle_owns_home_and_weapon_specific_styles():
     assert ".data-toolbar {" in css
 
 
-def test_page_bundle_is_loaded_for_homepage_and_weapon_routes():
-    js = MENUBAR.read_text(encoding="utf-8")
-    html = INDEX.read_text(encoding="utf-8")
+def test_page_bundle_is_loaded_statically_for_homepage_and_weapon_routes():
+    homepage = INDEX.read_text(encoding="utf-8")
+    weapon = WEAPON_INDEX.read_text(encoding="utf-8")
 
-    assert "/PSNOVA/css/page.css" in html
-    assert "/PSNOVA/css/page.css" in js
-    assert "data-psnova-page-style" in js
-    assert r"weapon(?:\.html|\/[^/]+\.html)$" in js
+    assert '<link rel="stylesheet" href="/PSNOVA/css/page.css">' in homepage
+    assert '<link rel="stylesheet" href="/PSNOVA/css/page.css" data-psnova-page-style="true">' in weapon
 
 
 def test_old_page_specific_css_names_stay_removed():
