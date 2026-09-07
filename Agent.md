@@ -28,6 +28,10 @@
 
 **すべてのtool callは、現在実行中の実装または検証手順を完了するために直接必要でなければならない。** `master` 上のfile直接編集が現在の目的である場合、その作業に具体的に必要でないPR、issue、workflow、branch、release、artifact、その他のAPIを呼び出してはならない。利用可能なツールを試すこと自体を目的に呼び出したり、現在の作業と関係のないresourceを探索してはならない。必要性を説明できないtool callは実行しない。
 
+## 最優先ルール：GitHubファイルはGitHubコネクタで取得する
+
+**このリポジトリのGitHub上のファイルを取得・閲覧する場合は、接続済みGitHubコネクタの `fetch_file`、`fetch_blob`、`fetch` などGitHub用read操作だけを使う。** `container.download`、汎用download tool、外部HTTP downloader、raw URLを別ツールへ渡す方法、その他GitHubコネクタ外の経路へ迂回してはならない。GitHubコネクタで取得できるファイルについて、別経路を試すためのprobe、tool-health check、事前URL閲覧、download workaroundを行ってはならない。GitHubコネクタのreadが実際に失敗した場合は最優先の即時停止ルールに従って停止し、ユーザーの新しい指示なしに別取得手段へ切り替えない。
+
 ## 目的
 
 このリポジトリは、GitHub Pagesで公開するPSNOVA攻略サイトのソースである。
