@@ -97,6 +97,8 @@
 
 ## 修正から確定した不変条件
 
+- クエストページの利用者向け可視テキストでは、コロンは全角 `：`（U+FF1A）を使用する。半角 `:`（U+003A）は使用してはならない。クエスト名、表内のクエスト名、攻略・追記などのラベルを含めてこの規則を適用する。URL、HTML属性、コード等の技術文字列は対象外とする。
+
 - 公開reader-facing copyは自己完結したPSNOVA guide proseとし、情報が別source、site、archive、Wiki、migration target、reference documentから来たことを記載または示唆してはならない。`原典では`、`旧Wikiでは`、`アーカイブでは`、`参考元では`、`移植元では`、`元ページでは`、`出典では`、または同等のsource-provenance wordingをpublic HTMLで禁止する。provenanceとverification noteは、ユーザーがpublic pageでcitationを明示要求しない限り、repository documentation、test、code comment、internal work logにだけ記録する。
 
 - 公開PSNOVA pageではspoiler-protection UXまたはspoiler warningを適用しない。plot detailを含む可能性があるという理由だけで、story/gameplay informationをspoiler専用の `<details>` / `<summary>`、`ネタバレを表示` control、masking、blur、spoiler caution、その他同様の処理で隠してはならない。ユーザーが特定の例外を明示要求しない限り、関連情報は直接表示する。

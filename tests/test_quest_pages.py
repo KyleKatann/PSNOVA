@@ -7,11 +7,11 @@ from tools import quest_migrate
 
 ROOT = Path(__file__).resolve().parents[1]
 QUEST_PAGES = {
-    "steel-wilderness.html": ("鋼の荒野", "仲間の探索", "極:伏す猛銃と天舞う砲凰", 29),
+    "steel-wilderness.html": ("鋼の荒野", "仲間の探索", "極：伏す猛銃と天舞う砲凰", 29),
     "gran-water-source.html": ("グラン水源", "ヨミの要求", "超：氷塊のギガティオン", 25),
     "flame-highlands.html": ("炎の高地", "リーティアのお願い", "極：棘と大火球の輪舞曲", 16),
-    "ancient-city.html": ("古代都市", "静かなる都市", "極:漆黒の鉄馬と光線獣", 16),
-    "nova-interior.html": ("ノヴァ内部", "果たすべき使命", "極:魂の解放", 9),
+    "ancient-city.html": ("古代都市", "静かなる都市", "極：漆黒の鉄馬と光線獣", 16),
+    "nova-interior.html": ("ノヴァ内部", "果たすべき使命", "極：魂の解放", 9),
     "additional.html": ("追加クエスト", "タイムアタック・鋼の荒野", "経験値フィーバー", 9),
 }
 
@@ -86,6 +86,35 @@ def test_quest_pages_preserve_full_detail_fields_and_counts():
     assert total == 104
 
 
+
+def test_quest_pages_use_fullwidth_colons_in_visible_text():
+    quest_dir = ROOT / "docs" / "pages" / "quest"
+
+    for path in sorted(quest_dir.glob("*.html")):
+        visible = BeautifulSoup(
+            path.read_text(encoding="utf-8"),
+            "html.parser",
+        ).get_text(" ", strip=True)
+
+        assert ":" not in visible, (
+            f"{path.relative_to(ROOT)} の利用者向け可視テキストに"
+            "半角コロン ':' が残っている"
+        )
+
+    for config in quest_migrate.PAGES:
+        generated, _ = quest_migrate.build_page(config)
+        visible = BeautifulSoup(
+            generated,
+            "html.parser",
+        ).get_text(" ", strip=True)
+
+        assert ":" not in visible, (
+            f"{config.dest} のmigration生成結果に"
+            "半角コロン ':' が残っている"
+        )
+
+
+
 def test_quest_pages_omit_empty_strategy_placeholders():
     for filename in QUEST_PAGES:
         assert "<strong>攻略:</strong> -" not in page_text(filename)
@@ -126,13 +155,13 @@ def test_quest_pages_match_source_migration_content():
             paragraph.get_text(" ", strip=True)
             for paragraph in generated_soup.select("p")
             if paragraph.find("strong")
-            and paragraph.find("strong").get_text(strip=True) == "攻略:"
+            and paragraph.find("strong").get_text(strip=True) == "攻略："
         ]
         public_strategy = {
             paragraph.get_text(" ", strip=True)
             for paragraph in public_soup.select("p")
             if paragraph.find("strong")
-            and paragraph.find("strong").get_text(strip=True) == "攻略:"
+            and paragraph.find("strong").get_text(strip=True) == "攻略："
         }
         for strategy in generated_strategy:
             assert strategy in public_strategy
@@ -146,13 +175,13 @@ def test_quest_name_mismatches_use_article_heading_names():
 
     sentinels = (
         (steel, "<h4>グラン安定供給の為に</h4>"),
-        (steel, "<h4>超:狂風の暴君</h4>"),
-        (steel, "<h4>超:棘の嵐</h4>"),
-        (steel, "<h4>難:鋼の荒野殲滅任務</h4>"),
+        (steel, "<h4>超：狂風の暴君</h4>"),
+        (steel, "<h4>超：棘の嵐</h4>"),
+        (steel, "<h4>難：鋼の荒野殲滅任務</h4>"),
         (gran, "<h4>超：氷塊のギガティオン</h4>"),
         (ancient, "<h4>★スイーツ･メルヘン</h4>"),
         (additional, "<h4>PTアタック・グラン水源</h4>"),
-        (additional, "<h4>難:炎の支配者</h4>"),
+        (additional, "<h4>難：炎の支配者</h4>"),
         (additional, "<h4>サンシャウト編 第1話：疑惑の捜査官</h4>"),
         (additional, "<h4>ガーネット編 第1話：無敵艦隊、発進</h4>"),
     )

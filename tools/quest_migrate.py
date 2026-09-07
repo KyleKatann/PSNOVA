@@ -3,8 +3,21 @@ from __future__ import annotations
 from dataclasses import dataclass
 from html import escape
 from pathlib import Path
+import re
 
 from bs4 import BeautifulSoup, Tag
+
+
+VISIBLE_TEXT_SPLIT_RE = re.compile(r"(<[^>]+>)", re.S)
+
+
+def normalize_visible_colons(source: str) -> str:
+    parts = VISIBLE_TEXT_SPLIT_RE.split(source)
+
+    for index in range(0, len(parts), 2):
+        parts[index] = parts[index].replace(":", "：")
+
+    return "".join(parts)
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -301,7 +314,7 @@ def build_page(config: PageConfig) -> tuple[str, int]:
 </body>
 </html>
 '''
-    return page, quest_count
+    return normalize_visible_colons(page), quest_count
 
 
 def main() -> None:
