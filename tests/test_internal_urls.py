@@ -4,7 +4,6 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 MENUBAR = ROOT / "docs" / "js" / "menubar.js"
 SIDEBAR = ROOT / "docs" / "js" / "sidebar.js"
-BANNER = ROOT / "docs" / "js" / "affiliate-banner.js"
 STYLE = ROOT / "docs" / "css" / "style.css"
 
 
@@ -21,27 +20,27 @@ class InternalUrlTests(unittest.TestCase):
                 self.assertIn("/PSNOVA/", text)
 
     def test_affiliate_destination_remains_external(self):
-        banner = BANNER.read_text(encoding="utf-8")
+        menubar = MENUBAR.read_text(encoding="utf-8")
 
         self.assertIn(
             "https://hb.afl.rakuten.co.jp/",
-            banner,
+            menubar,
         )
         self.assertIn(
             'rel="nofollow sponsored noopener"',
-            banner,
+            menubar,
         )
 
-    def test_shared_asset_loaders_use_site_root_paths(self):
+    def test_retired_shared_script_loaders_stay_removed(self):
         menubar = MENUBAR.read_text(encoding="utf-8")
         style = STYLE.read_text(encoding="utf-8")
 
-        for asset in (
+        for retired in (
             "/PSNOVA/js/site-search.js",
             "/PSNOVA/js/table-enhancements.js",
         ):
-            with self.subTest(asset=asset):
-                self.assertIn(asset, menubar)
+            with self.subTest(retired=retired):
+                self.assertNotIn(retired, menubar)
 
         self.assertIn(
             "/PSNOVA/css/page.css",
