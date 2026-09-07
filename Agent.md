@@ -36,6 +36,11 @@
 
 **このリポジトリのコードやrepository contentへアクセスするために、`curl`、`Invoke-WebRequest`、その他のHTTP clientからGitHub API、`raw.githubusercontent.com`、GitHub raw URLへ直接接続してはならない。** GitHub Code Searchも使用してはならず、検索結果、0件、件数、index状態をcurrent repository stateの確認や探索に使ってはならない。Web検索、Webブラウザ、通常のWeb fetchを使ってGitHubページやraw URLからrepository contentを取得・確認することも禁止する。ただし、**ユーザーがその特定作業でGitHubのブラウザ/Web経由アクセスを明示的に指定した場合に限り、Web検索・ブラウザ経由のGitHub閲覧だけを例外として許可する。** この例外は `curl`、`Invoke-WebRequest`、GitHub Code Searchの使用許可を意味しない。通常は接続済みGitHubコネクタのread操作、または既存local worktreeの直接ファイル読取を使用する。
 
+
+## 最優先ルール：画像の遅延読み込みを使用しない
+
+**このサイトの公開画像では遅延読み込みを使用してはならない。** 公開HTMLの `<img>` に `loading="lazy"` または同等のlazy loading指定を追加してはならず、JavaScriptから `loading` propertyまたはattributeを `lazy` に設定してはならない。画像は通常の即時読み込みを使用する。性能改善を理由として一括migration、generator、runtime JavaScript、個別page修正からlazy loadingを再導入してはならない。ユーザーがこの方針を明示的に撤回した場合だけ例外とする。
+
 ## 目的
 
 このリポジトリは、GitHub Pagesで公開するPSNOVA攻略サイトのソースである。
