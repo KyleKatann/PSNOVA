@@ -120,10 +120,12 @@ class DownloadPageTests(unittest.TestCase):
         self.assertGreaterEqual(source.count("<table>"), 5)
         self.assertEqual(source.count("<thead>"), source.count("<table>"))
         self.assertNotIn("<thead><tr><td", source)
-        self.assertIn('scope="colgroup" colspan="5">推奨レベル</th>', source)
-        self.assertIn('scope="rowgroup" colspan="10">有料</th>', source)
-        self.assertIn('scope="rowgroup" colspan="10">無料</th>', source)
-        self.assertIn('scope="rowgroup" colspan="10">ストーリー(有料)</th>', source)
+        self.assertIn('scope="col" colspan="5">推奨レベル</th>', source)
+        self.assertIn('<td colspan="10"><strong>有料</strong></td>', source)
+        self.assertIn('<td colspan="10"><strong>無料</strong></td>', source)
+        self.assertIn('<td colspan="10"><strong>ストーリー(有料)</strong></td>', source)
+        self.assertNotIn('scope="colgroup"', source)
+        self.assertNotIn('scope="rowgroup"', source)
 
 
 if __name__ == "__main__":
