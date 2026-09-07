@@ -63,7 +63,11 @@ jobs:
       - name: Verify source neutrality
         shell: bash
         run: |
-          python3 -m unittest tests.test_public_copy_source_provenance
+          python3 - <<'PY'
+          from tests.test_public_copy_source_provenance import test_public_copy_does_not_expose_source_provenance
+          test_public_copy_does_not_expose_source_provenance()
+          print('provenance regression test: pass')
+          PY
           python3 - <<'PY'
           from pathlib import Path
           import re
