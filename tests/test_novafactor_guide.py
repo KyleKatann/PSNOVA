@@ -45,8 +45,8 @@ def test_nova_factor_guide_keeps_reader_facing_copy():
 def test_death_date_spawn_order_matches_last_date_pattern():
     html = PAGE.read_text(encoding="utf-8")
 
-    death_date = html.split("<h4>1. 超：デス・デート XH</h4>", 1)[1].split(
-        "<h4>2. 超：城壁のヴィヴリュード XH</h4>", 1
+    death_date = html.split("<h3>1. 超：デス・デート XH</h3>", 1)[1].split(
+        "<h3>2. 超：城壁のヴィヴリュード XH</h3>", 1
     )[0]
     assert_in_order(
         death_date,
@@ -60,7 +60,7 @@ def test_death_date_spawn_order_matches_last_date_pattern():
         ],
     )
 
-    last_date = html.split("<h4>3. 難：★ラスト・デート XH</h4>", 1)[1].split(
+    last_date = html.split("<h3>3. 難：★ラスト・デート XH</h3>", 1)[1].split(
         "</section>", 1
     )[0]
     assert_in_order(
