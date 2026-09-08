@@ -26,7 +26,7 @@ def test_all_six_technic_attribute_pages_share_the_published_format():
 
         assert f"<title>PSNOVA攻略サイト - {label}属性テクニック</title>" in html
         assert f'<main id="main" class="technic-detail-page technic-{slug}-page">' in html
-        assert f"<h2>{label}属性テクニック</h2>" in html
+        assert f"<h1>{label}属性テクニック</h1>" in html
         assert html.count('class="technic-entry"') == 5
         assert html.count('class="technic-entry-title"') == 5
         assert html.count('class="technic-note"') == 5

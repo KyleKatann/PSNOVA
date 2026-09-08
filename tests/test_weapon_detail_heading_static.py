@@ -31,10 +31,10 @@ def test_weapon_detail_headings_are_static_source_markup():
         ).read_text(encoding="utf-8")
 
         assert (
-            f'<h2><img class="weapon-type-icon" '
+            f'<h1><img class="weapon-type-icon" '
             f'src="/PSNOVA/img/weapon/{icon}" '
             f'alt="" width="30" height="30">'
-            f'{label} 武器データ</h2>'
+            f'{label} 武器データ</h1>'
             in html
         )
 
@@ -65,7 +65,7 @@ def test_static_heading_icon_style_lives_in_page_css():
 
     assert (
         "#main.weapon-detail-page "
-        "h2 .weapon-type-icon {"
+        "h1 .weapon-type-icon,"
         in css
     )
 

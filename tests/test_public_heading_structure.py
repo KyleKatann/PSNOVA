@@ -73,9 +73,6 @@ class PublicHeadingStructureTests(unittest.TestCase):
                     f"{rel}: h1は1個でなければならない（検出: {h1_count}個）"
                 )
 
-            if not any(level == 2 for level, _ in headings):
-                violations.append(f"{rel}: ページ本文のh2見出しがない")
-
             for index, (level, name) in enumerate(headings):
                 if not name:
                     violations.append(
