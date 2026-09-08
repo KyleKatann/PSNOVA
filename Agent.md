@@ -52,6 +52,10 @@
 
 **このリポジトリのGitHub上のファイルを取得・閲覧する場合は、接続済みGitHubコネクタの `fetch_file`、`fetch_blob`、`fetch` などGitHub用read操作だけを使う。** `container.download`、汎用download tool、外部HTTP downloader、raw URLを別ツールへ渡す方法、その他GitHubコネクタ外の経路へ迂回してはならない。GitHubコネクタで取得できるファイルについて、別経路を試すためのprobe、tool-health check、事前URL閲覧、download workaroundを行ってはならない。GitHubコネクタのreadが実際に失敗した場合は最優先の即時停止ルールに従って停止し、ユーザーの新しい指示なしに別取得手段へ切り替えない。
 
+## 最優先ルール：未対応のGitHub REST endpointを自作URLで代用しない
+
+**接続済みGitHubコネクタに目的のresourceを取得・操作する専用actionが提供されていない場合、その不足を補うためにGitHub REST endpointのURLを推測・組み立てて `fetch` その他の汎用GitHub readへ渡してはならない。** 利用可能な専用action、またはすでに仕様上対応が確認できているrepository/file/commit/branch等のread操作だけを使用する。必要なread経路が提供されていない場合は、その状態を未確認として扱い、別endpointを順番に試したりallowlistの境界を探るprobeを行わず、最優先の即時停止ルールに従う。
+
 ## 最優先ルール：GitHubへの直接HTTP接続・Code Search・ブラウザ経由取得を禁止する
 
 **このリポジトリのコードやrepository contentへアクセスするために、`curl`、`Invoke-WebRequest`、その他のHTTP clientからGitHub API、`raw.githubusercontent.com`、GitHub raw URLへ直接接続してはならない。** GitHub Code Searchも使用してはならず、検索結果、0件、件数、index状態をcurrent repository stateの確認や探索に使ってはならない。Web検索、Webブラウザ、通常のWeb fetchを使ってGitHubページやraw URLからrepository contentを取得・確認することも禁止する。ただし、**ユーザーがその特定作業でGitHubのブラウザ/Web経由アクセスを明示的に指定した場合に限り、Web検索・ブラウザ経由のGitHub閲覧だけを例外として許可する。** この例外は `curl`、`Invoke-WebRequest`、GitHub Code Searchの使用許可を意味しない。通常は接続済みGitHubコネクタのread操作、または既存local worktreeの直接ファイル読取を使用する。
