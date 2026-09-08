@@ -171,7 +171,7 @@
 - former `ページ内` barのようなautomatic in-page navigation stripは意図的に使用しないため、復元してはならない。
 - weapon section headingはweapon iconを厳密に1つだけ表示する。同一headingでCSS background weapon iconとinjected `<img>` を併用してはならない。意図的に別用途のrow/category iconは維持してよい。
 - weapon landing-page catalogでは、11種類のweapon-type labelそれぞれの横に既存native weapon PNGを1つ表示する。selector cardをtext-onlyへ退行させず、icon visibilityをruntime JavaScriptへ依存させてはならない。
-- 個別weapon detail pageは、1つのstatic weapon tableの上に通常のstatic `<h2>` weapon-type headingを置く。tableを `<details>` / `<summary>` で囲まず、disclosure widgetを強制openするためJavaScriptへ依存してはならない。
+- 個別weapon detail pageは、1つのstatic weapon tableの上に通常のstatic `<h1>` weapon-type headingを置く。tableを `<details>` / `<summary>` で囲まず、disclosure widgetを強制openするためJavaScriptへ依存してはならない。
 - weapon detail pageではtable上部に中央揃えの `武器一覧` linkだけを残す。previous/next weapon-type linkは廃止済みであり、復元してはならない。
 - weapon-specific search/filter/sort toolbarは廃止済みである。ユーザーがこのdecisionとJavaScript freezeを明示撤回しない限り、`docs/js/weapon-tools.js` とそのloaderは存在しない状態を維持する。weapon table headerは全viewportでnormal document flowを維持し、`position: sticky` を使ってはならない。table columnをfixedまたはhorizontally stickyにしてはならない。
 - `class.html` は4class（Hunter、Ranger、Force、Buster）のguideでありweapon dataではない。`skill.html` はskill dataでありarmor dataではない。他data pageからcopyしたcontentでこれらpageを上書きしてはならない。
