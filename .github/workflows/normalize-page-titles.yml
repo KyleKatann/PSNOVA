@@ -54,7 +54,6 @@ jobs:
           from pathlib import Path
           from urllib.parse import urlparse
 
-          SITE_NAME = 'PSNOVA攻略サイト'
           SITE_PREFIX = '/PSNOVA/'
           sitemap = Path('docs/sitemap.xml')
           root = ET.fromstring(sitemap.read_text(encoding='utf-8'))
@@ -128,16 +127,16 @@ jobs:
           style = Path('docs/css/style.css')
           text = style.read_text(encoding='utf-8')
           replacements = [
-              ('#main h2 {', '#main h1,\n#main h2 {', 1),
-              ('#main h2 + p,\n#main h3 + p {', '#main h1 + p,\n#main h2 + p,\n#main h3 + p {', 1),
-              ('    #main h2 {\n        font-size: 27px;', '    #main h1,\n    #main h2 {\n        font-size: 27px;', 1),
-              ('    #main h2 {\n        font-size: 24px;', '    #main h1,\n    #main h2 {\n        font-size: 24px;', 1),
+              ('#main h2 {\n    clear: both;', '#main h1,\n#main h2 {\n    clear: both;'),
+              ('#main h2 + p,\n#main h3 + p {', '#main h1 + p,\n#main h2 + p,\n#main h3 + p {'),
+              ('    #main h2 {\n        font-size: 27px;', '    #main h1,\n    #main h2 {\n        font-size: 27px;'),
+              ('    #main h2 {\n        font-size: 24px;', '    #main h1,\n    #main h2 {\n        font-size: 24px;'),
           ]
-          for old, new, expected in replacements:
+          for old, new in replacements:
               count = text.count(old)
-              if count != expected:
+              if count != 1:
                   raise SystemExit(f'style.cssの対象が{count}件のため停止: {old!r}')
-              text = text.replace(old, new, expected)
+              text = text.replace(old, new, 1)
           with style.open('w', encoding='utf-8', newline='\n') as handle:
               handle.write(text)
 
