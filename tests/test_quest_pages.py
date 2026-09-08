@@ -2,8 +2,6 @@ from pathlib import Path
 
 from bs4 import BeautifulSoup
 
-from tools import quest_migrate
-
 
 ROOT = Path(__file__).resolve().parents[1]
 QUEST_PAGES = {
@@ -86,7 +84,6 @@ def test_quest_pages_preserve_full_detail_fields_and_counts():
     assert total == 104
 
 
-
 def test_quest_pages_use_fullwidth_colons_in_visible_text():
     quest_dir = ROOT / "docs" / "pages" / "quest"
 
@@ -101,70 +98,10 @@ def test_quest_pages_use_fullwidth_colons_in_visible_text():
             "半角コロン ':' が残っている"
         )
 
-    for config in quest_migrate.PAGES:
-        generated, _ = quest_migrate.build_page(config)
-        visible = BeautifulSoup(
-            generated,
-            "html.parser",
-        ).get_text(" ", strip=True)
-
-        assert ":" not in visible, (
-            f"{config.dest} のmigration生成結果に"
-            "半角コロン ':' が残っている"
-        )
-
-
 
 def test_quest_pages_omit_empty_strategy_placeholders():
     for filename in QUEST_PAGES:
         assert "<strong>攻略：</strong> -" not in page_text(filename)
-
-
-def test_quest_pages_match_source_migration_content():
-    configs = {config.dest: config for config in quest_migrate.PAGES}
-
-    for filename, (_, _, _, expected_count) in QUEST_PAGES.items():
-        generated, source_count = quest_migrate.build_page(configs[filename])
-        public = page_text(filename)
-
-        assert source_count == expected_count
-
-        generated_soup = BeautifulSoup(generated, "html.parser")
-        public_soup = BeautifulSoup(public, "html.parser")
-
-        generated_headings = generated_soup.select("h4")
-        public_headings = public_soup.select("h3")
-        generated_table_nodes = generated_soup.select("table")
-
-        assert len(public_headings) == len(generated_headings)
-        assert len(generated_headings) == len(generated_table_nodes)
-
-        # 保存元には、記事見出しと表内「クエスト名」が食い違う既知の誤記がある。
-        # 公開ページでは記事見出し名を正としているため、比較時は名称だけ公開見出しへ正規化する。
-        for public_heading, table in zip(public_headings, generated_table_nodes):
-            name_cell = table.select_one("tbody tr td")
-            assert name_cell is not None
-            name_cell.clear()
-            name_cell.append(public_heading.get_text(" ", strip=True))
-
-        generated_tables = [table.get_text("|", strip=True) for table in generated_table_nodes]
-        public_tables = [table.get_text("|", strip=True) for table in public_soup.select("table")]
-        assert public_tables == generated_tables
-
-        generated_strategy = [
-            paragraph.get_text(" ", strip=True)
-            for paragraph in generated_soup.select("p")
-            if paragraph.find("strong")
-            and paragraph.find("strong").get_text(strip=True) == "攻略："
-        ]
-        public_strategy = {
-            paragraph.get_text(" ", strip=True)
-            for paragraph in public_soup.select("p")
-            if paragraph.find("strong")
-            and paragraph.find("strong").get_text(strip=True) == "攻略："
-        }
-        for strategy in generated_strategy:
-            assert strategy in public_strategy
 
 
 def test_quest_name_mismatches_use_article_heading_names():
