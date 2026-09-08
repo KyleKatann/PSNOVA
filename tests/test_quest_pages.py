@@ -32,7 +32,7 @@ def test_quest_pages_use_public_site_shell():
         assert html.count('<main id="main">') == 1
         assert '<a class="skip-link" href="#main">本文へスキップ</a>' in html
         assert f"<title>PSNOVA攻略サイト - {title}</title>" in html
-        assert f"<h2>{title}</h2>" in html
+        assert f"<h1>{title}</h1>" in html
         assert '<p class="page-lead">' in html
         assert '/PSNOVA/img/logo.png' in html
         for script in scripts:
@@ -77,7 +77,7 @@ def test_quest_pages_preserve_full_detail_fields_and_counts():
     total = 0
     for filename, (_, _, _, expected_count) in QUEST_PAGES.items():
         html = page_text(filename)
-        assert html.count("<h4>") == expected_count
+        assert html.count("<h3>") == expected_count
         assert html.count("<table>") == expected_count
         for header in required_headers:
             assert header in html
@@ -133,7 +133,7 @@ def test_quest_pages_match_source_migration_content():
         public_soup = BeautifulSoup(public, "html.parser")
 
         generated_headings = generated_soup.select("h4")
-        public_headings = public_soup.select("h4")
+        public_headings = public_soup.select("h3")
         generated_table_nodes = generated_soup.select("table")
 
         assert len(public_headings) == len(generated_headings)
@@ -174,16 +174,16 @@ def test_quest_name_mismatches_use_article_heading_names():
     additional = page_text("additional.html")
 
     sentinels = (
-        (steel, "<h4>グラン安定供給の為に</h4>"),
-        (steel, "<h4>超：狂風の暴君</h4>"),
-        (steel, "<h4>超：棘の嵐</h4>"),
-        (steel, "<h4>難：鋼の荒野殲滅任務</h4>"),
-        (gran, "<h4>超：氷塊のギガティオン</h4>"),
-        (ancient, "<h4>★スイーツ･メルヘン</h4>"),
-        (additional, "<h4>PTアタック・グラン水源</h4>"),
-        (additional, "<h4>難：炎の支配者</h4>"),
-        (additional, "<h4>サンシャウト編 第1話：疑惑の捜査官</h4>"),
-        (additional, "<h4>ガーネット編 第1話：無敵艦隊、発進</h4>"),
+        (steel, "<h3>グラン安定供給の為に</h3>"),
+        (steel, "<h3>超：狂風の暴君</h3>"),
+        (steel, "<h3>超：棘の嵐</h3>"),
+        (steel, "<h3>難：鋼の荒野殲滅任務</h3>"),
+        (gran, "<h3>超：氷塊のギガティオン</h3>"),
+        (ancient, "<h3>★スイーツ･メルヘン</h3>"),
+        (additional, "<h3>PTアタック・グラン水源</h3>"),
+        (additional, "<h3>難：炎の支配者</h3>"),
+        (additional, "<h3>サンシャウト編 第1話：疑惑の捜査官</h3>"),
+        (additional, "<h3>ガーネット編 第1話：無敵艦隊、発進</h3>"),
     )
 
     for html, sentinel in sentinels:
