@@ -22,7 +22,15 @@
 
 ## 最優先ルール：Agent.mdの自然言語をテスト契約にしない
 
-**テストコードから `Agent.md` を読み込み、その自然言語、見出し、語順、翻訳表現、特定の部分文字列が存在することをテスト契約としてはならない。** テストはHTML、CSS、JavaScript、生成結果、ファイル構成、実行結果、その他の実装状態そのものを検証する。ルールの存在確認を目的として `Agent.md` の特定文言を `assert`、完全一致、部分一致、正規表現等で固定してはならない。`Agent.md` の翻訳、表現改善、文章整理だけで実装テストがFAILする構造を禁止する。既存の `tests/test_no_agent_text_contracts.py` による再発防止を維持する。
+**テストコードから `Agent.md` を読み込み、その自然言語、見出し、語順、翻訳表現、特定の部分文字列が存在することをテスト契約としてはならない。** テストはHTML、CSS、JavaScript、生成結果、ファイル構成、実行結果、その他の実装状態そのものを検証する。ルールの存在確認を目的として `Agent.md` の特定文言を `assert`、完全一致、部分一致、正規表現等で固定してはならない。`Agent.md` の翻訳、表現改善、文章整理だけで実装テストがFAILする構造を禁止する。既存の `tests/test_no_agent_text_contracts.py` による再発防止を維持する。ただし、ファイルのbyte数や行数など自然言語の内容に依存しない構造的な破損検知は許可する。
+
+## 最優先ルール：Agent.mdを破壊的に全文置換しない
+
+**`Agent.md` を編集するときは、現在の全文を正として無関係な内容を保持し、要約や再構成による全文置換を行ってはならない。** 書き込み前にcurrent `master`のblobをread-onlyで取得し、変更対象の箇所と置換内容を確定する。全文置換型APIを使う場合でも、取得したcurrent全文を基礎に対象箇所だけを変更し、記憶や要約からファイル全体を再生成してはならない。
+
+- ユーザーが`Agent.md`全体の再設計・大幅整理を明示要求していない限り、予定差分が20行を超える削除、または変更前比10%以上のbyte数減少になる場合は書き込まず、最優先の即時停止ルールに従う。
+- `Agent.md`変更をcommitした直後は、次の実装項目へ進む前に親commitとの差分をread-onlyで確認する。想定外のsection削除、説明不能な大量差分、意図しない全文整形を検知した場合は、既知の正常HEADへ戻すための最小復旧だけを行って停止する。
+- `Agent.md`の安全性確認を省略する理由として、documentation-only変更、単純な表現修正、全文置換APIしかないことを使ってはならない。
 
 ## 最優先ルール：人が読む文章は日本語で記述する
 
@@ -77,12 +85,12 @@
 3. 自動確認できる変更では、可能な限りテストを追加または拡張する。
 4. 完了した実装項目ごとに、内容が分かるコミットメッセージで別々にコミットする。
 5. 機能変更と無関係なリファクタリングを混在させない。
-6. 別途migration方針を決定しない限り、`/PSNOVA/` 配下の既存公開URLを維持する。
+6. ユーザーが明示的にURL変更を指示しない限り、`/PSNOVA/` 配下の既存公開URLを維持する。
 7. 変更によって回帰が発生した、または検証中にその他の問題が見つかった場合は、最優先の即時停止ルールに従って直ちに停止する。問題を報告し、ユーザーが新しい指示を出すまで別項目へ進んだり追加修正を試みてはならない。
 8. GitHub Actionsのテストは手動実行のみとする。各コミット後には実行しない。予定した実装バッチを完了してから、最終検証として `workflow_dispatch` で `tests` workflowを1回だけ実行する。
 9. このプロジェクトでは画像生成ツールを使用しない。視覚的変更は、リポジトリ内のHTML/CSSと既存の承認済みアセットだけで実装する。JavaScriptは上記最優先ルールにより凍結されている。
-10. リポジトリルートの `reference/` アーカイブを保持する。これは設計・データ検証に使う歴史的PSNOVA/Wiki資料であり、legacy code整理時に削除してはならない。
-11. 歴史的参照ページは1ページずつmigrationする。ゲームプレイ上の事実と有用なガイド内容を保持し、保存Wiki/Waybackの外枠、analytics、広告、編集UI、アーカイブ専用の死んだリンクを除去する。そのうえで同一実装項目内に、sidebar、page metadata、site search、sitemapへの公開ページ登録を含める。
+10. リポジトリルートの `reference/` は廃止済みであり、再作成、復元、依存してはならない。過去資料の確認が必要な場合は、現存するrepository contentまたはユーザーが明示的に提供した資料を使用する。
+11. migration専用のprogram、workflow、request file、testを再導入してはならない。公開ページの保守はcurrent public sourceと通常の回帰テストを直接更新して行う。
 12. **実行時JavaScriptで、誤ったページ固有の静的HTMLまたはゲームデータを修復、正規化、sanitize、再解釈、追加、削除、移動、複製、非表示、その他補正してはならない。これは絶対禁止である。** 決定的なリンク、注記、見出し、表値、アセット参照、stylesheet参照、その他ページ固有の静的要素が存在すべき、または削除すべき場合は、生HTMLソースまたはそのgeneratorを直接編集する。JavaScriptでsemantic table構造（`thead`、`tbody`、`tr`、`th`、`td`）を作成、移動、置換、変換したり、廃止済みpresentation属性・styleを除去したり、壊れたmarkupを修復したり、source text/dataを掃除したり、望ましい表示内容を得るために既知の誤った静的ソースとrendered DOMを異ならせてはならない。既存JavaScriptは、search、filtering、sorting、navigation state、state class、visual category class、scroll wrapperなど本質的にruntimeの動作を引き続き提供してよいが、この既存動作の説明は最優先の凍結ルール下でJavaScript編集を許可するものではない。sitewide sidebarなど明示的に共通化された既存runtime componentはページ固有contentとは別物であり、page HTML編集の回避策として使用してはならない。
 13. **data tableのalignmentは任意の列位置ではなく内容の意味に従う。** 名称、code、数値、rarity、stat、material、その他compact dataは原則中央揃えとする。説明文、注記、文章形式のeffect、入手方法、location、quest-name listは左揃えとする。source-awareなshared CSSまたは明示的static markupで実装し、JavaScriptでruntimeにalignmentの意味を推論・修復してはならない。
 14. **ユーザーが報告した回帰によって修正仕様が確定した場合、その仕様を同一実装項目でこのガイドへ記録する。** 実用的ならregression testも追加する。ユーザーが明示的に誤りとした挙動を後から再導入してはならない。
@@ -96,8 +104,8 @@
 22. **site表示用assetを外部websiteからhotlinkしてはならない。** 公開siteで使うimage、font、CSS、JavaScript、その他visual/runtime assetはこのrepository内に保存し、local `/PSNOVA/...` pathで参照する。remote image URL、CDN asset URL、その他外部site asset referenceを使ってはならない。承認済みaffiliate linkなど、読者を外部へ移動させる意図的navigationはasset hotlinkとは別扱いとする。
 23. **公開CSS fileの数を増やしてはならない。** 公開CSSは最大2fileとする。`docs/css/style.css` がshared/sitewide styleを所有し、`docs/css/page.css` がhomepageやweapon UIなどpage-specific styleを所有する。新しいstylesheetを追加せず既存ownerへ拡張・統合する。さらに統合してfile数を減らすことは可能だが、stylesheet増殖は禁止する。
 24. **active developmentおよびpublishing branchは `master` のみとする。ユーザーがこのルールを明示的に撤回しない限り、feature branch、work branch、temporary implementation branch、PR branchを作成、切替、使用してはならない。通常の実装、commit、pushは `master` へ直接行う。既存backup/archive branchはread-onlyな歴史的recovery pointとして残してよいが、active workには使用しない。**
-25. **近代化の過程で歴史的Wiki記事内容を捨ててはならない。** `reference/psnovanet/psnova` または `docs/pages/分類中/` からmigrationする際は、完全な重複、保存Wiki/Waybackの外枠、analytics/ads/edit/comment UI、または別途根拠がある事実訂正を除き、読者に有用なgameplay fact、table row/value、note、requirement、exception、acquisition condition、password/code、quest detail、explanatory guide pointをすべて保持する。有用なsource contentに新layout上の明確な置き場所がない場合は、省略せず適切なsectionを作る。可能ならsource-vs-public regressionまたはsentinel coverageを追加し、意図しない欠落を自動検知する。
-26. **`reference/`、`docs/pages/分類中/`、保存Wiki/Wayback page、その他legacy pageを実質的migrationの代わりとして表示するために、`iframe`、`object`、`embed`、その他framed/embedded-document手法を使ってはならない。** migration済みpublic pageは、読者に有用なgameplay contentを現在siteのstatic HTMLへ直接含め、通常のsemantic heading、table、note、link、responsive structureを使う。保存navigation、search box、edit control、ads、analytics、Wayback外枠、legacy page shellはembedded document内へ隠すのではなくsource conversion時に除去する。iframe用にlegacy pageのpublic mirrorを作ってはならない。sourceが大きい場合はofflineまたはrepository toolingで抽出・変換を自動化し、その結果のstatic public HTMLとregression coverageをcommitする。source sizeはこのルールの例外にならない。
+25. **保存資料から現在の公開ページを検証する場合は、読者に有用なgameplay fact、table row/value、note、requirement、exception、acquisition condition、password/code、quest detail、explanatory guide pointを意図せず捨ててはならない。** 完全な重複、保存Wiki/Waybackの外枠、analytics/ads/edit/comment UI、または別途根拠がある事実訂正を除き、有用な内容を保持する。可能ならcurrent public regressionまたはsentinel coverageを追加し、意図しない欠落を自動検知する。
+26. **`docs/pages/分類中/`、保存Wiki/Wayback page、その他legacy pageを公開ページの代わりとして表示するために、`iframe`、`object`、`embed`、その他framed/embedded-document手法を使ってはならない。** public pageは、読者に有用なgameplay contentを現在siteのstatic HTMLへ直接含め、通常のsemantic heading、table、note、link、responsive structureを使う。保存navigation、search box、edit control、ads、analytics、Wayback外枠、legacy page shellをembedded document内へ隠してはならない。
 27. **同一page上で同じcolumn structureを持つtableは、原則として対応columnが縦に揃うよう同じcolumn widthを使う。** 各tableを個別に自動配分させるのではなく、そのpage周辺のtableをvisual referenceとする。ただし、同じwidthにすると重大なwrapping、clipping、読めないほど狭いcell、不要なhorizontal overflowが発生して明確にtableを壊す場合だけ、このconsistency requirementよりreadabilityを優先する。例外が必要なら、readabilityを保持し、実用的な範囲でpage-specific reasonを文書化またはtestする。width consistencyはstatic markupまたはCSSで実装し、runtime JavaScript repairでは実装しない。
 28. **信頼できる範囲では効率的な実行を優先するが、batching、bulk automation、optimizationによって長時間停止したり進捗が不透明になってはならない。長時間かかりそうなtaskは停止する前にstrict sequential executionへ切り替え、1file/itemを確認し、その1変更を行い、検証し、必要に応じてcommitしてから次へ進む。実際に処理が停止した、またはbulk automationが信頼できなくなった場合、それは問題であり、方法を切り替えて継続するのではなく最優先の即時停止ルールに従って直ちに停止する。**
 
@@ -149,7 +157,7 @@
 
 - 通常のpost-fix quality gateには `python tools/psnova_quality.py finish` を使う。このcommandは各fix後に `git diff --check` と完全pytest suiteを実行し、完了fixが5件ごとの場合だけfull Playwright UI-health suiteも自動実行する。browser UI behaviorへ直接影響する変更だけ `targeted` を使い、残存static audit candidate一覧には `inventory` を使う。
 
-- active repository text fileは `.gitattributes`（`* text=auto eol=lf`）により全platformでLF line endingを使う。`reference/` と `docs/pages/分類中/` 配下のhistorical materialはnewline normalization対象外とし、byte-preservedのまま保持する。
+- active repository text fileは `.gitattributes`（`* text=auto eol=lf`）により全platformでLF line endingを使う。`docs/pages/分類中/` 配下のhistorical materialはnewline normalization対象外とし、byte-preservedのまま保持する。
 
 - public HTMLはmodern HTML shellを使う。obsolete `X-UA-Compatible` metadataまたはclassic script上の冗長な `type="text/javascript"` attributeを復元してはならない。
 
