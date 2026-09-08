@@ -32,6 +32,18 @@
 
 **API、リポジトリツール、外部ツールに、推測、仮置き、ダミー、合成、その他未検証の識別子や引数を渡してはならない。** `0`、`1` など実在確認していないPR/issue/commit/job/run ID、推測したファイルパス、branch名、SHA、URL、resource identifierを使ってはならない。既存resourceの識別子が必要な場合は、ユーザーが明示した値、または直前までの成功したread/search/list結果から取得した値だけを使う。必要な識別子が不明なら、現在の作業に本当に必要な場合だけ適切なdiscovery/read操作で取得し、不要なら呼び出し自体を行わない。tool health check、probe call、dummy request、動作確認だけを目的とした無関係なAPI callは、ユーザーがtool/API diagnosticsを明示要求した場合を除き禁止する。
 
+## 最優先ルール：GitHub書き込み操作を試行・プローブに使わない
+
+**GitHubへの書き込み系操作は、実際に適用することが確定したリポジトリ変更のためにだけ使用し、動作確認、疎通確認、試行、プローブ、API仕様確認、エラー確認、tool health checkその他の実験目的で実行してはならない。** `update_file`、`create_file`、`delete_file`、`create_blob`、`create_tree`、`create_commit`、`update_ref` その他のwrite操作を、実際の修正以外の目的で呼び出してはならない。
+
+- `x`、空文字、`dummy`、`test`、`placeholder`、仮ファイル、仮データ、その他実際に適用しない内容を書き込んではならない。
+- 存在確認されていないSHA、推測したSHA、仮のSHA、未検証のbranch、path、resource identifierをwrite操作へ渡してはならない。必要な識別子は、ユーザーが明示した値または直前の成功したread/list/fetch結果から取得した実在値だけを使う。
+- branchまたは実際に適用するcommitから参照されない孤立blob、孤立tree、孤立commitを意図的に作成してはならない。`create_blob` を単独で使用することを禁止する。`create_blob` は、同一実装項目として直後に `create_tree`、`create_commit`、`update_ref` まで適用することが事前に確定し、必要なtree・parent・target refをread-only操作で確認済みの場合に限り使用できる。
+- APIのschema、引数仕様、利用可能なoperation、resourceの存在、現在状態を確認する場合は、`list_resources`、`fetch`、`fetch_file`、`fetch_blob`、`compare_commits` その他のread-only操作だけを使う。write操作の失敗結果から仕様を推測するためのprobeを禁止する。
+- 実際のrepository変更を行う前に、変更対象、変更内容、current `master` HEAD、必要なfile/blob SHAその他writeに必要な識別子をread-only操作で確認する。実際に適用する変更内容が確定するまでwrite操作を呼び出してはならない。
+- 安全な編集方法が確認できない、または既知の編集経路で正しさを保証できない場合は、repositoryへ実験的なwriteを行ったり別write APIを順番に試したりせず、最優先の即時停止ルールに従って停止して報告する。
+- 本番repositoryをAPI実験、tool diagnostics、疎通試験、エラー再現の場として使用してはならない。ユーザーがdiagnosticsを明示要求した場合でも、read-onlyで完結できない診断を本番repositoryへwriteして実施してはならない。
+
 ## 最優先ルール：現在の作業に直接必要なツールだけを使う
 
 **すべてのtool callは、現在実行中の実装または検証手順を完了するために直接必要でなければならない。** `master` 上のfile直接編集が現在の目的である場合、その作業に具体的に必要でないPR、issue、workflow、branch、release、artifact、その他のAPIを呼び出してはならない。利用可能なツールを試すこと自体を目的に呼び出したり、現在の作業と関係のないresourceを探索してはならない。必要性を説明できないtool callは実行しない。
