@@ -100,6 +100,7 @@
     flex: 0 0 48px;
 }
 
+#main.weapon-detail-page h1 .weapon-type-icon,
 #main.weapon-detail-page h2 .weapon-type-icon {
     width: 30px;
     height: 30px;

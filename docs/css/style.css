@@ -250,6 +250,7 @@ nav#menubar ul li a span {
     color: var(--text);
 }
 
+#main h1,
 #main h2 {
     clear: both;
     margin: 0 0 20px;
@@ -281,6 +282,7 @@ nav#menubar ul li a span {
     line-height: 1.45;
 }
 
+#main h1 + p,
 #main h2 + p,
 #main h3 + p {
     margin-top: 0;
@@ -535,6 +537,7 @@ footer a {
         padding: 20px 16px 26px;
     }
 
+    #main h1,
     #main h2 {
         font-size: 27px;
     }
@@ -558,6 +561,7 @@ footer a {
         padding: 18px 13px 24px;
     }
 
+    #main h1,
     #main h2 {
         font-size: 24px;
     }
