@@ -1,0 +1,314 @@
+name: 全ページタイトル正規化
+
+on:
+  push:
+    branches:
+      - master
+    paths:
+      - .github/page-title-migration-request.json
+
+permissions:
+  contents: write
+  pages: write
+
+concurrency:
+  group: page-title-migration-master
+  cancel-in-progress: false
+
+jobs:
+  normalize-page-titles:
+    runs-on: ubuntu-latest
+    steps:
+      - name: リポジトリを取得
+        uses: actions/checkout@v4
+        with:
+          ref: master
+          fetch-depth: 0
+
+      - name: masterとリクエストを確認
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$(git branch --show-current)" = "master"
+          test -z "$(git status --porcelain)"
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          request_path = Path('.github/page-title-migration-request.json')
+          if not request_path.is_file():
+              raise SystemExit('全ページタイトル修正リクエストが存在しないため停止')
+          request = json.loads(request_path.read_text(encoding='utf-8'))
+          if request != {'scope': 'sitemap-html'}:
+              raise SystemExit('全ページタイトル修正リクエストの内容が不正なため停止')
+          PY
+
+      - name: 対象全ページを事前検証
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import html
+          import re
+          import xml.etree.ElementTree as ET
+          from pathlib import Path
+          from urllib.parse import urlparse
+
+          SITE_NAME = 'PSNOVA攻略サイト'
+          SITE_PREFIX = '/PSNOVA/'
+          sitemap = Path('docs/sitemap.xml')
+          root = ET.fromstring(sitemap.read_text(encoding='utf-8'))
+          ns = {'s': 'http://www.sitemaps.org/schemas/sitemap/0.9'}
+          urls = [node.text for node in root.findall('s:url/s:loc', ns)]
+          if not urls:
+              raise SystemExit('sitemapに対象URLがないため停止')
+
+          paths = []
+          for url in urls:
+              parsed = urlparse(url)
+              if parsed.scheme != 'https' or parsed.netloc != 'kylekatann.github.io':
+                  raise SystemExit(f'sitemapに想定外ドメインがあるため停止: {url}')
+              if not parsed.path.startswith(SITE_PREFIX):
+                  raise SystemExit(f'sitemapに想定外パスがあるため停止: {url}')
+              relative = parsed.path[len(SITE_PREFIX):]
+              path = Path('docs/index.html') if relative == '' else Path('docs') / relative
+              if path.suffix != '.html' or not path.is_file():
+                  raise SystemExit(f'sitemap対象HTMLが存在しないため停止: {path}')
+              paths.append(path)
+
+          if len(paths) != len(set(paths)):
+              raise SystemExit('sitemapにHTMLの重複があるため停止')
+
+          logo_re = re.compile(r'<h1 id="logo">.*?</h1>', re.S)
+          title_re = re.compile(r'<title>(.*?)</title>', re.S)
+          og_re = re.compile(r'<meta\s+property="og:title"\s+content="([^"]*)"\s*/?>', re.S)
+          main_re = re.compile(r'<main\b[^>]*>.*?</main>', re.S)
+          h2_re = re.compile(r'<h2\b[^>]*>(.*?)</h2>', re.S)
+
+          for path in paths:
+              text = path.read_text(encoding='utf-8')
+              if len(logo_re.findall(text)) != 1:
+                  raise SystemExit(f'ロゴH1が1件ではないため停止: {path}')
+              if len(title_re.findall(text)) != 1:
+                  raise SystemExit(f'titleが1件ではないため停止: {path}')
+              if len(og_re.findall(text)) != 1:
+                  raise SystemExit(f'og:titleが1件ではないため停止: {path}')
+              mains = main_re.findall(text)
+              if len(mains) != 1:
+                  raise SystemExit(f'mainが1件ではないため停止: {path}')
+              main = mains[0]
+              if re.search(r'<h1\b', main):
+                  raise SystemExit(f'本文main内に既存H1があるため停止: {path}')
+              heading = h2_re.search(main)
+              if not heading:
+                  raise SystemExit(f'本文main内にページ見出しH2がないため停止: {path}')
+              heading_text = re.sub(r'<[^>]+>', ' ', heading.group(1))
+              heading_text = ' '.join(html.unescape(heading_text).split())
+              if not heading_text:
+                  raise SystemExit(f'ページ見出しが空のため停止: {path}')
+
+          print(f'事前検証完了: {len(paths)}ページ')
+          PY
+
+      - name: Gitのコミット設定
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          echo "MIGRATION_BASE=$(git rev-parse HEAD)" >> "$GITHUB_ENV"
+
+      - name: H1表示互換CSSを追加してコミット
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          from pathlib import Path
+
+          style = Path('docs/css/style.css')
+          text = style.read_text(encoding='utf-8')
+          replacements = [
+              ('#main h2 {', '#main h1,\n#main h2 {', 1),
+              ('#main h2 + p,\n#main h3 + p {', '#main h1 + p,\n#main h2 + p,\n#main h3 + p {', 1),
+              ('    #main h2 {\n        font-size: 27px;', '    #main h1,\n    #main h2 {\n        font-size: 27px;', 1),
+              ('    #main h2 {\n        font-size: 24px;', '    #main h1,\n    #main h2 {\n        font-size: 24px;', 1),
+          ]
+          for old, new, expected in replacements:
+              count = text.count(old)
+              if count != expected:
+                  raise SystemExit(f'style.cssの対象が{count}件のため停止: {old!r}')
+              text = text.replace(old, new, expected)
+          with style.open('w', encoding='utf-8', newline='\n') as handle:
+              handle.write(text)
+
+          page = Path('docs/css/page.css')
+          text = page.read_text(encoding='utf-8')
+          old = '#main.weapon-detail-page h2 .weapon-type-icon {'
+          new = '#main.weapon-detail-page h1 .weapon-type-icon,\n#main.weapon-detail-page h2 .weapon-type-icon {'
+          count = text.count(old)
+          if count != 1:
+              raise SystemExit(f'page.cssの武器アイコン対象が{count}件のため停止')
+          text = text.replace(old, new, 1)
+          with page.open('w', encoding='utf-8', newline='\n') as handle:
+              handle.write(text)
+          PY
+          git diff --check
+          test "$(git diff --name-only | sort)" = $'docs/css/page.css\ndocs/css/style.css'
+          git add docs/css/page.css docs/css/style.css
+          git diff --cached --check
+          git commit -m "本文H1の表示スタイルを追加"
+
+      - name: sitemap掲載HTMLを1ページずつ修正してコミット
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import html
+          import re
+          import subprocess
+          import xml.etree.ElementTree as ET
+          from pathlib import Path
+          from urllib.parse import urlparse
+
+          SITE_NAME = 'PSNOVA攻略サイト'
+          SITE_PREFIX = '/PSNOVA/'
+          root = ET.fromstring(Path('docs/sitemap.xml').read_text(encoding='utf-8'))
+          ns = {'s': 'http://www.sitemaps.org/schemas/sitemap/0.9'}
+          urls = [node.text for node in root.findall('s:url/s:loc', ns)]
+
+          logo_re = re.compile(r'<h1 id="logo">(.*?)</h1>', re.S)
+          title_re = re.compile(r'<title>(.*?)</title>', re.S)
+          og_re = re.compile(r'<meta\s+property="og:title"\s+content="([^"]*)"\s*/?>', re.S)
+          main_re = re.compile(r'<main\b[^>]*>.*?</main>', re.S)
+          h2_re = re.compile(r'<h2(?P<attrs>\b[^>]*)>(?P<body>.*?)</h2>', re.S)
+
+          for url in urls:
+              relative = urlparse(url).path[len(SITE_PREFIX):]
+              path = Path('docs/index.html') if relative == '' else Path('docs') / relative
+              text = path.read_text(encoding='utf-8')
+
+              main_match = main_re.search(text)
+              if not main_match:
+                  raise SystemExit(f'mainを再取得できないため停止: {path}')
+              main = main_match.group(0)
+              heading = h2_re.search(main)
+              if not heading:
+                  raise SystemExit(f'ページ見出しH2を再取得できないため停止: {path}')
+
+              heading_text = re.sub(r'<[^>]+>', ' ', heading.group('body'))
+              heading_text = ' '.join(html.unescape(heading_text).split())
+              desired_title = SITE_NAME if path == Path('docs/index.html') else f'{heading_text} | {SITE_NAME}'
+
+              if len(logo_re.findall(text)) != 1:
+                  raise SystemExit(f'ロゴH1の再検証に失敗したため停止: {path}')
+              text = logo_re.sub(lambda m: f'<div id="logo">{m.group(1)}</div>', text, count=1)
+
+              main_match = main_re.search(text)
+              main = main_match.group(0)
+              heading = h2_re.search(main)
+              new_heading = f'<h1{heading.group("attrs")}>{heading.group("body")}</h1>'
+              new_main = main[:heading.start()] + new_heading + main[heading.end():]
+              text = text[:main_match.start()] + new_main + text[main_match.end():]
+
+              if len(title_re.findall(text)) != 1:
+                  raise SystemExit(f'titleの再検証に失敗したため停止: {path}')
+              escaped_title = html.escape(desired_title, quote=False)
+              text = title_re.sub(f'<title>{escaped_title}</title>', text, count=1)
+
+              if len(og_re.findall(text)) != 1:
+                  raise SystemExit(f'og:titleの再検証に失敗したため停止: {path}')
+              escaped_og = html.escape(desired_title, quote=True)
+              text = og_re.sub(f'<meta property="og:title" content="{escaped_og}">', text, count=1)
+
+              if '<h1 id="logo">' in text or text.count('<div id="logo">') != 1:
+                  raise SystemExit(f'ロゴ見出し変換の検証に失敗したため停止: {path}')
+              updated_main = main_re.search(text).group(0)
+              if len(re.findall(r'<h1\b', updated_main)) != 1:
+                  raise SystemExit(f'本文H1が1件ではないため停止: {path}')
+              if f'<title>{escaped_title}</title>' not in text:
+                  raise SystemExit(f'title更新の検証に失敗したため停止: {path}')
+              if f'<meta property="og:title" content="{escaped_og}">' not in text:
+                  raise SystemExit(f'og:title更新の検証に失敗したため停止: {path}')
+
+              with path.open('w', encoding='utf-8', newline='\n') as handle:
+                  handle.write(text)
+
+              subprocess.run(['git', 'diff', '--check'], check=True)
+              changed = subprocess.check_output(['git', 'diff', '--name-only'], text=True).splitlines()
+              if changed != [str(path)]:
+                  raise SystemExit(f'想定外の変更ファイルを検知したため停止: {changed}')
+
+              subprocess.run(['git', 'add', str(path)], check=True)
+              subprocess.run(['git', 'diff', '--cached', '--check'], check=True)
+              staged = subprocess.check_output(['git', 'diff', '--cached', '--name-only'], text=True).splitlines()
+              if staged != [str(path)]:
+                  raise SystemExit(f'想定外のステージ済みファイルを検知したため停止: {staged}')
+
+              message = f'{heading_text}ページの見出しとタイトル構造を修正'
+              subprocess.run(['git', 'commit', '-m', message], check=True)
+          PY
+
+      - name: 全体を再検証
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import html
+          import re
+          import xml.etree.ElementTree as ET
+          from pathlib import Path
+          from urllib.parse import urlparse
+
+          SITE_NAME = 'PSNOVA攻略サイト'
+          SITE_PREFIX = '/PSNOVA/'
+          root = ET.fromstring(Path('docs/sitemap.xml').read_text(encoding='utf-8'))
+          ns = {'s': 'http://www.sitemaps.org/schemas/sitemap/0.9'}
+          urls = [node.text for node in root.findall('s:url/s:loc', ns)]
+
+          for url in urls:
+              relative = urlparse(url).path[len(SITE_PREFIX):]
+              path = Path('docs/index.html') if relative == '' else Path('docs') / relative
+              text = path.read_text(encoding='utf-8')
+              if '<h1 id="logo">' in text:
+                  raise SystemExit(f'ロゴH1が残っているため停止: {path}')
+              if text.count('<div id="logo">') != 1:
+                  raise SystemExit(f'ロゴdivが1件ではないため停止: {path}')
+              main_match = re.search(r'<main\b[^>]*>.*?</main>', text, re.S)
+              if not main_match or len(re.findall(r'<h1\b', main_match.group(0))) != 1:
+                  raise SystemExit(f'本文H1が1件ではないため停止: {path}')
+              title_match = re.search(r'<title>(.*?)</title>', text, re.S)
+              og_match = re.search(r'<meta\s+property="og:title"\s+content="([^"]*)"\s*/?>', text, re.S)
+              if not title_match or not og_match:
+                  raise SystemExit(f'タイトルメタ情報が不足しているため停止: {path}')
+              title = html.unescape(title_match.group(1)).strip()
+              og_title = html.unescape(og_match.group(1)).strip()
+              if title != og_title:
+                  raise SystemExit(f'titleとog:titleが一致しないため停止: {path}')
+              if path == Path('docs/index.html'):
+                  if title != SITE_NAME:
+                      raise SystemExit('トップページtitleがサイト名と一致しないため停止')
+              elif not title.endswith(f' | {SITE_NAME}'):
+                  raise SystemExit(f'ページtitleにサイト名suffixがないため停止: {path}')
+          PY
+
+          test -z "$(git status --porcelain)"
+          git diff --check "$MIGRATION_BASE"..HEAD
+          changed="$(git diff --name-only "$MIGRATION_BASE"..HEAD)"
+          if printf '%s\n' "$changed" | grep -E '\.js$'; then
+            echo 'JavaScript変更を検知したため停止' >&2
+            exit 1
+          fi
+
+      - name: masterへpush
+        shell: bash
+        run: |
+          set -euo pipefail
+          git push origin HEAD:master
+
+      - name: GitHub Pagesのbuildを要求
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          gh api --method POST "repos/${{ github.repository }}/pages/builds"
