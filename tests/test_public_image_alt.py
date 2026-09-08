@@ -71,7 +71,7 @@ class PublicImageAltTests(unittest.TestCase):
                 if not image["has_alt"]:
                     violations.append(
                         f"{path.relative_to(ROOT)} -> "
-                        f"{image['src']} (missing alt)"
+                        f"{image['src']} (alt属性がない)"
                     )
                     continue
 
@@ -79,13 +79,13 @@ class PublicImageAltTests(unittest.TestCase):
                 if alt is not None and alt != "" and not alt.strip():
                     violations.append(
                         f"{path.relative_to(ROOT)} -> "
-                        f"{image['src']} (whitespace-only alt)"
+                        f"{image['src']} (altが空白のみ)"
                     )
 
         self.assertEqual(
             [],
             violations,
-            "Invalid image alt attributes:\n" + "\n".join(violations),
+            "不正な画像alt属性:\n" + "\n".join(violations),
         )
 
     def test_image_only_links_have_nonempty_image_alt(self):
@@ -116,13 +116,13 @@ class PublicImageAltTests(unittest.TestCase):
                     violations.append(
                         f"{path.relative_to(ROOT)} -> "
                         f"{anchor['href']} "
-                        f"(image-only link has no accessible image alt)"
+                        f"(画像のみのリンクに利用可能なaltがない)"
                     )
 
         self.assertEqual(
             [],
             violations,
-            "Image-only links without usable alternative text:\n"
+            "利用可能な代替テキストがない画像のみのリンク:\n"
             + "\n".join(violations),
         )
 

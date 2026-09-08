@@ -42,7 +42,7 @@ class PublicExternalLinkTests(unittest.TestCase):
         self.assertEqual(
             [],
             violations,
-            "Plain HTTP external links found:\n" + "\n".join(violations),
+            "HTTPの外部リンクが見つかった:\n" + "\n".join(violations),
         )
 
     def test_blank_external_links_explicitly_use_noopener(self):
@@ -70,7 +70,7 @@ class PublicExternalLinkTests(unittest.TestCase):
         self.assertEqual(
             [],
             violations,
-            "target=_blank links missing explicit noopener:\n"
+            "target=_blank のリンクに明示的な noopener がない:\n"
             + "\n".join(violations),
         )
 

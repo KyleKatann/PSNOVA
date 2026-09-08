@@ -86,7 +86,7 @@ class PublicPageVisualAuditTests(unittest.TestCase):
                 with self.subTest(path=path.relative_to(DOCS), table=table_index):
                     self.assertIsNone(
                         legacy_td_header.search(first_row.group(1)),
-                        "Table headers must use th cells.",
+                        "テーブルヘッダーにはthセルを使用しなければならない。",
                     )
 
     def test_primary_public_table_cells_stay_inside_explicit_rows(self):
@@ -106,13 +106,13 @@ class PublicPageVisualAuditTests(unittest.TestCase):
                     self.assertEqual(
                         len(row_start_pattern.findall(table_html)),
                         len(row_end_pattern.findall(table_html)),
-                        "Every table row must have an explicit closing </tr>.",
+                        "すべてのテーブル行に明示的な終了タグ </tr> が必要である。",
                     )
 
                     outside_rows = row_pattern.sub("", table_html)
                     self.assertIsNone(
                         cell_pattern.search(outside_rows),
-                        "Table cells must stay inside explicit rows.",
+                        "テーブルセルは明示的な行の内側に配置しなければならない。",
                     )
 
     def test_weapon_submenu_styles_have_one_owner(self):

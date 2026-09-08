@@ -21,7 +21,7 @@ def test_tests_do_not_treat_agent_md_prose_as_a_contract():
             )
 
     assert not violations, (
-        "Tests must validate implementation behavior/state, "
-        "not Agent.md natural-language prose:\n"
+        "テストはAgent.mdの自然言語ではなく、"
+        "実装の動作・状態を検証しなければならない:\n"
         + "\n".join(violations)
     )

@@ -30,18 +30,18 @@ class SkipLinkTests(unittest.TestCase):
             if len(matches) != 1:
                 violations.append(
                     f"{path.relative_to(ROOT)}: "
-                    f"expected 1 skip link, found {len(matches)}"
+                    f"スキップリンクは1個でなければならない（検出: {len(matches)}個）"
                 )
 
             if 'id="main"' not in text:
                 violations.append(
-                    f"{path.relative_to(ROOT)}: #main target missing"
+                    f"{path.relative_to(ROOT)}: #mainのリンク先がない"
                 )
 
         self.assertEqual(
             [],
             violations,
-            "Invalid skip-link contract:\n" + "\n".join(violations),
+            "スキップリンク規約の違反:\n" + "\n".join(violations),
         )
 
     def test_skip_link_is_first_body_content(self):

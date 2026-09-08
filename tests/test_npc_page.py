@@ -92,7 +92,7 @@ EXPECTED_ROWS = {
 
 def row_text(page, name):
     match = re.search(rf"<tr>\s*<td>{re.escape(name)}</td>(.*?)</tr>", page, re.S)
-    assert match, f"missing NPC row: {name}"
+    assert match, f"NPC行がない: {name}"
     text = re.sub(r"<br\s*/?>", " ", match.group(0))
     text = re.sub(r"<[^>]+>", " ", text)
     return " ".join(html.unescape(text).split())
@@ -106,7 +106,7 @@ def test_npc_story_table_preserves_archived_text_data():
     for name, expected_tokens in EXPECTED_ROWS.items():
         text = row_text(page, name)
         for token in expected_tokens:
-            assert token in text, f"{name}: missing {token}"
+            assert token in text, f"{name}: {token} がない"
 
 
 def test_npc_page_preserves_guest_and_friendship_mechanics():

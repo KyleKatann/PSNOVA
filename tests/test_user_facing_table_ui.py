@@ -28,7 +28,7 @@ def test_public_table_headers_use_clear_japanese_shop_level_label():
             label = html.unescape(re.sub(r"<[^>]+>", "", header)).strip()
             for forbidden_label in forbidden:
                 assert forbidden_label not in label, (
-                    f"{path.relative_to(ROOT)} header contains {forbidden_label!r}"
+                    f"{path.relative_to(ROOT)} のheaderに {forbidden_label!r} が含まれている"
                 )
 
 

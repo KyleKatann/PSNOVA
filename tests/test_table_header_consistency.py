@@ -82,7 +82,7 @@ def test_public_data_table_headers_use_thead_and_scope_col():
 
             assert "<tbody" in table.lower(), (
                 f"{path.relative_to(ROOT)} "
-                f"table {index}: tbody missing"
+                f"table {index}: tbodyがない"
             )
 
             thead = re.search(
@@ -99,7 +99,7 @@ def test_public_data_table_headers_use_thead_and_scope_col():
                 if cell.group("tag").lower() != "th":
                     failures.append(
                         f"{path.relative_to(ROOT)} "
-                        f"table {index}: header is not TH"
+                        f"table {index}: headerがTHではない"
                     )
 
                 if not re.search(
@@ -109,7 +109,7 @@ def test_public_data_table_headers_use_thead_and_scope_col():
                 ):
                     failures.append(
                         f"{path.relative_to(ROOT)} "
-                        f"table {index}: TH lacks scope=col"
+                        f"table {index}: THにscope=colがない"
                     )
 
                 if re.search(
@@ -119,7 +119,7 @@ def test_public_data_table_headers_use_thead_and_scope_col():
                 ):
                     failures.append(
                         f"{path.relative_to(ROOT)} "
-                        f"table {index}: header bgcolor remains"
+                        f"table {index}: headerにbgcolorが残っている"
                     )
 
     assert not failures, "\n".join(failures)
@@ -152,7 +152,7 @@ def test_public_semantic_table_body_does_not_use_all_th_rows():
                 ):
                     failures.append(
                         f"{path.relative_to(ROOT)} "
-                        f"table {index}: all-TH body row"
+                        f"table {index}: body行がすべてTHになっている"
                     )
 
     assert not failures, "\n".join(failures)

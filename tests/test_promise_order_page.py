@@ -35,7 +35,7 @@ EXPECTED_HEADERS = (
 
 def tbody_row_count(page):
     tbody = re.search(r"<tbody>(.*?)</tbody>", page, re.S)
-    assert tbody, "missing tbody"
+    assert tbody, "tbodyがない"
     return len(re.findall(r"<tr>", tbody.group(1)))
 
 
@@ -74,7 +74,7 @@ def test_promise_order_detail_pages_preserve_all_224_rows():
         assert "[image]" not in page
 
         count = tbody_row_count(page)
-        assert count == expected_count, f"{name}: expected {expected_count}, got {count}"
+        assert count == expected_count, f"{name}: {expected_count}件を期待したが{count}件だった"
         total += count
 
     assert total == 224

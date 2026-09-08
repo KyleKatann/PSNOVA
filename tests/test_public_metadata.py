@@ -76,18 +76,18 @@ class PublicMetadataTests(unittest.TestCase):
             rel = path.relative_to(ROOT)
 
             if not parser.title:
-                violations.append(f"{rel}: missing or empty title")
+                violations.append(f"{rel}: titleが存在しない、または空")
 
             if len(parser.descriptions) != 1:
                 violations.append(
-                    f"{rel}: expected 1 description, "
-                    f"found {len(parser.descriptions)}"
+                    f"{rel}: descriptionは1個でなければならない（検出: "
+                    f"{len(parser.descriptions)}個）"
                 )
 
             if len(parser.canonicals) != 1:
                 violations.append(
-                    f"{rel}: expected 1 canonical, "
-                    f"found {len(parser.canonicals)}"
+                    f"{rel}: canonicalは1個でなければならない（検出: "
+                    f"{len(parser.canonicals)}個）"
                 )
 
             required_og = (
@@ -105,10 +105,10 @@ class PublicMetadataTests(unittest.TestCase):
 
                 if len(values) != 1:
                     violations.append(
-                        f"{rel}: expected 1 {prop}, found {len(values)}"
+                        f"{rel}: {prop}は1個でなければならない（検出: {len(values)}個）"
                     )
                 elif not (values[0] or "").strip():
-                    violations.append(f"{rel}: empty {prop}")
+                    violations.append(f"{rel}: {prop}が空")
 
             description = (
                 (parser.descriptions[0] or "").strip()
@@ -141,18 +141,18 @@ class PublicMetadataTests(unittest.TestCase):
 
                 if image_parts.scheme != "https":
                     violations.append(
-                        f"{rel}: og:image must use HTTPS ({og_image})"
+                        f"{rel}: og:imageはHTTPSを使用しなければならない ({og_image})"
                     )
 
                 if image_parts.netloc != SITE_HOST:
                     violations.append(
-                        f"{rel}: unexpected og:image host ({og_image})"
+                        f"{rel}: og:imageのhostが想定外 ({og_image})"
                     )
 
                 image_prefix = SITE_PREFIX + "img/"
                 if not image_parts.path.startswith(image_prefix):
                     violations.append(
-                        f"{rel}: og:image outside site image directory ({og_image})"
+                        f"{rel}: og:imageがサイトの画像ディレクトリ外を指している ({og_image})"
                     )
                 else:
                     image_relative = image_parts.path[len(SITE_PREFIX):]
@@ -160,17 +160,17 @@ class PublicMetadataTests(unittest.TestCase):
 
                     if not image_path.is_file():
                         violations.append(
-                            f"{rel}: og:image file does not exist ({og_image})"
+                            f"{rel}: og:imageのファイルが存在しない ({og_image})"
                         )
 
             if og_image is not None and not og_image_alt:
                 violations.append(
-                    f"{rel}: og:image requires nonempty og:image:alt"
+                    f"{rel}: og:imageには空でないog:image:altが必要"
                 )
 
             if og_title is not None and parser.title != og_title:
                 violations.append(
-                    f"{rel}: title != og:title "
+                    f"{rel}: titleとog:titleが一致しない "
                     f"({parser.title!r} != {og_title!r})"
                 )
 
@@ -180,43 +180,43 @@ class PublicMetadataTests(unittest.TestCase):
                 and description != og_description
             ):
                 violations.append(
-                    f"{rel}: description != og:description"
+                    f"{rel}: descriptionとog:descriptionが一致しない"
                 )
 
             if canonical is not None and og_url is not None:
                 if canonical != og_url:
                     violations.append(
-                        f"{rel}: canonical != og:url "
+                        f"{rel}: canonicalとog:urlが一致しない "
                         f"({canonical!r} != {og_url!r})"
                     )
 
             if og_site_name is not None and og_site_name != SITE_NAME:
                 violations.append(
-                    f"{rel}: unexpected og:site_name={og_site_name!r}"
+                    f"{rel}: og:site_nameが想定外: {og_site_name!r}"
                 )
 
             if path == DOCS / "index.html":
                 if parser.title != SITE_NAME:
                     violations.append(
-                        f"{rel}: homepage title must be {SITE_NAME!r}"
+                        f"{rel}: ホームページのtitleは{SITE_NAME!r}でなければならない"
                     )
 
                 if og_type is not None and og_type != "website":
                     violations.append(
-                        f"{rel}: homepage og:type must be 'website'"
+                        f"{rel}: ホームページのog:typeは 'website' でなければならない"
                     )
             else:
                 if parser.title and not parser.title.startswith(
                     SITE_NAME + " - "
                 ):
                     violations.append(
-                        f"{rel}: unexpected page title format "
+                        f"{rel}: ページtitleの形式が想定外 "
                         f"({parser.title!r})"
                     )
 
                 if og_type is not None and og_type != "article":
                     violations.append(
-                        f"{rel}: content page og:type must be 'article'"
+                        f"{rel}: コンテンツページのog:typeは 'article' でなければならない"
                     )
 
             if canonical:
@@ -224,23 +224,23 @@ class PublicMetadataTests(unittest.TestCase):
 
                 if parts.scheme != "https":
                     violations.append(
-                        f"{rel}: canonical must use HTTPS ({canonical})"
+                        f"{rel}: canonicalはHTTPSを使用しなければならない ({canonical})"
                     )
 
                 if parts.netloc != SITE_HOST:
                     violations.append(
-                        f"{rel}: unexpected canonical host ({canonical})"
+                        f"{rel}: canonicalのhostが想定外 ({canonical})"
                     )
 
                 if not parts.path.startswith(SITE_PREFIX):
                     violations.append(
-                        f"{rel}: canonical outside /PSNOVA/ ({canonical})"
+                        f"{rel}: canonicalが /PSNOVA/ の外を指している ({canonical})"
                     )
 
         self.assertEqual(
             [],
             violations,
-            "Metadata violations:\n" + "\n".join(violations),
+            "メタデータの違反:\n" + "\n".join(violations),
         )
 
 

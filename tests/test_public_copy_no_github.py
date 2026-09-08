@@ -27,7 +27,7 @@ def test_public_copy_does_not_advertise_github_contribution_channels():
         text = path.read_text(encoding="utf-8").lower()
         for phrase in banned:
             with __import__("contextlib").nullcontext():
-                assert phrase.lower() not in text, f"{path.relative_to(ROOT)} contains {phrase!r}"
+                assert phrase.lower() not in text, f"{path.relative_to(ROOT)} に {phrase!r} が含まれている"
 
 
 def test_known_legacy_github_notices_are_removed():
@@ -38,5 +38,3 @@ def test_known_legacy_github_notices_are_removed():
     assert "githubの方でissue" not in material
     assert not (DOCS / "issue.html").exists()
     assert not (DOCS / "copyright.html").exists()
-
-

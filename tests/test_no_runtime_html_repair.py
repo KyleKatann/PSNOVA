@@ -13,7 +13,7 @@ class NoRuntimeHtmlRepairTests(unittest.TestCase):
     def test_runtime_table_normalizer_is_removed(self):
         self.assertFalse(
             OLD_NORMALIZER.exists(),
-            "Do not repair source HTML at runtime; fix the raw HTML or its generator instead.",
+            "実行時にソースHTMLを修復してはならない。生HTMLまたは生成元を修正すること。",
         )
 
     def test_shared_bundle_contains_enhancement_only_table_logic(self):
@@ -45,7 +45,7 @@ class NoRuntimeHtmlRepairTests(unittest.TestCase):
                 self.assertNotIn(
                     token,
                     script,
-                    "Table enhancement JavaScript must not repair or normalize source HTML.",
+                    "テーブル拡張JavaScriptでソースHTMLを修復または正規化してはならない。",
                 )
 
         removed_attributes = set(
@@ -57,8 +57,8 @@ class NoRuntimeHtmlRepairTests(unittest.TestCase):
         self.assertLessEqual(
             removed_attributes,
             {"aria-label", "aria-labelledby"},
-            "Runtime may only switch accessibility naming attributes; "
-            "it must not strip source HTML attributes.",
+            "実行時に切り替えてよいのはアクセシビリティ上の命名属性だけであり、"
+            "ソースHTMLの属性を削除してはならない。",
         )
 
         self.assertIn("decorateSemanticDataTable", script)

@@ -50,4 +50,4 @@ def test_weapon_detail_pages_have_no_search_filter_sort_controls():
     for filename in WEAPON_PAGES:
         html = (WEAPON_DIR / filename).read_text(encoding="utf-8")
         for token in forbidden:
-            assert token not in html, f"{filename} contains retired control {token}"
+            assert token not in html, f"{filename} に廃止済みcontrol {token} が含まれている"

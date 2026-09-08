@@ -70,16 +70,16 @@ class PublicHeadingStructureTests(unittest.TestCase):
             h1_count = sum(level == 1 for level, _ in headings)
             if h1_count != 1:
                 violations.append(
-                    f"{rel}: expected exactly one h1, found {h1_count}"
+                    f"{rel}: h1は1個でなければならない（検出: {h1_count}個）"
                 )
 
             if not any(level == 2 for level, _ in headings):
-                violations.append(f"{rel}: missing h2 page-content heading")
+                violations.append(f"{rel}: ページ本文のh2見出しがない")
 
             for index, (level, name) in enumerate(headings):
                 if not name:
                     violations.append(
-                        f"{rel}: empty h{level} at heading #{index + 1}"
+                        f"{rel}: {index + 1}番目のh{level}見出しが空"
                     )
 
             for previous, current in zip(headings, headings[1:]):
@@ -88,14 +88,14 @@ class PublicHeadingStructureTests(unittest.TestCase):
 
                 if current_level > previous_level + 1:
                     violations.append(
-                        f"{rel}: heading level skips "
-                        f"h{previous_level} -> h{current_level}"
+                        f"{rel}: 見出しレベルが "
+                        f"h{previous_level} から h{current_level} へ飛んでいる"
                     )
 
         self.assertEqual(
             [],
             violations,
-            "Heading structure violations:\n" + "\n".join(violations),
+            "見出し構造の違反:\n" + "\n".join(violations),
         )
 
 

@@ -110,7 +110,7 @@ class PublicInternalLinkTests(unittest.TestCase):
                 if not target.is_file():
                     missing.append(
                         f"{source_path.relative_to(ROOT)} -> {href} "
-                        f"(missing {target.relative_to(ROOT)})"
+                        f"({target.relative_to(ROOT)} が存在しない)"
                     )
                     continue
 
@@ -121,13 +121,13 @@ class PublicInternalLinkTests(unittest.TestCase):
                     if fragment not in fragment_cache[target]:
                         missing.append(
                             f"{source_path.relative_to(ROOT)} -> {href} "
-                            f"(missing fragment #{fragment})"
+                            f"(フラグメント #{fragment} が存在しない)"
                         )
 
         self.assertEqual(
             [],
             missing,
-            "Broken internal links found:\n" + "\n".join(missing),
+            "壊れた内部リンクが見つかった:\n" + "\n".join(missing),
         )
 
 

@@ -39,4 +39,4 @@ def test_public_copy_does_not_expose_source_provenance():
             if phrase in text:
                 violations.append(f"{path.relative_to(ROOT)}: {phrase}")
 
-    assert not violations, "public copy must be source-neutral:\n" + "\n".join(violations)
+    assert not violations, "公開文言は情報源を示唆しない表現でなければならない:\n" + "\n".join(violations)

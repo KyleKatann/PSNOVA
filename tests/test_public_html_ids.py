@@ -38,7 +38,7 @@ class PublicHtmlIdTests(unittest.TestCase):
             empty_ids = [value for value in parser.ids if not value.strip()]
             if empty_ids:
                 violations.append(
-                    f"{path.relative_to(ROOT)}: empty id attribute"
+                    f"{path.relative_to(ROOT)}: 空のid属性"
                 )
 
             counts = Counter(parser.ids)
@@ -50,14 +50,14 @@ class PublicHtmlIdTests(unittest.TestCase):
 
             for element_id in duplicates:
                 violations.append(
-                    f"{path.relative_to(ROOT)}: duplicate id={element_id!r} "
-                    f"x{counts[element_id]}"
+                    f"{path.relative_to(ROOT)}: 重複id={element_id!r} "
+                    f"（{counts[element_id]}件）"
                 )
 
         self.assertEqual(
             [],
             violations,
-            "Invalid public HTML IDs found:\n" + "\n".join(violations),
+            "公開HTMLで不正なidが見つかった:\n" + "\n".join(violations),
         )
 
 

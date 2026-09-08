@@ -29,7 +29,7 @@ class PublicMainLandmarkTests(unittest.TestCase):
             if len(mains) != 1:
                 violations.append(
                     f"{path.relative_to(ROOT)}: "
-                    f"expected 1 main#main, found {len(mains)}"
+                    f"main#mainは1個でなければならない（検出: {len(mains)}個）"
                 )
 
             if re.search(
@@ -38,19 +38,19 @@ class PublicMainLandmarkTests(unittest.TestCase):
                 re.IGNORECASE,
             ):
                 violations.append(
-                    f"{path.relative_to(ROOT)}: legacy div#main remains"
+                    f"{path.relative_to(ROOT)}: 旧式のdiv#mainが残っている"
                 )
 
             if text.count("</main>") != 1:
                 violations.append(
                     f"{path.relative_to(ROOT)}: "
-                    f"expected 1 </main>, found {text.count('</main>')}"
+                    f"</main>は1個でなければならない（検出: {text.count('</main>')}個）"
                 )
 
         self.assertEqual(
             [],
             violations,
-            "Invalid main landmark structure:\n"
+            "不正なmainランドマーク構造:\n"
             + "\n".join(violations),
         )
 
@@ -62,7 +62,7 @@ class PublicMainLandmarkTests(unittest.TestCase):
 
             if 'href="#main"' not in text:
                 violations.append(
-                    f"{path.relative_to(ROOT)}: skip link missing"
+                    f"{path.relative_to(ROOT)}: スキップリンクがない"
                 )
 
             if not re.search(
@@ -71,7 +71,7 @@ class PublicMainLandmarkTests(unittest.TestCase):
                 re.IGNORECASE,
             ):
                 violations.append(
-                    f"{path.relative_to(ROOT)}: native #main missing"
+                    f"{path.relative_to(ROOT)}: main要素の#mainがない"
                 )
 
         self.assertEqual([], violations)

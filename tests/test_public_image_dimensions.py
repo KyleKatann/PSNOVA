@@ -47,20 +47,20 @@ class PublicImageDimensionTests(unittest.TestCase):
                 if not width.isdigit() or not height.isdigit():
                     violations.append(
                         f"{path.relative_to(ROOT)} -> "
-                        f"{src}: nonnumeric dimensions"
+                        f"{src}: width/heightが数値ではない"
                     )
                     continue
 
                 if int(width) <= 0 or int(height) <= 0:
                     violations.append(
                         f"{path.relative_to(ROOT)} -> "
-                        f"{src}: nonpositive dimensions"
+                        f"{src}: width/heightが正の値ではない"
                     )
 
         self.assertEqual(
             [],
             violations,
-            "Images without valid width/height:\n"
+            "有効なwidth/heightを持たない画像:\n"
             + "\n".join(violations),
         )
 

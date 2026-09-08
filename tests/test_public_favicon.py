@@ -33,13 +33,13 @@ class PublicFaviconTests(unittest.TestCase):
             if text.count(expected) != 1:
                 violations.append(
                     f"{path.relative_to(ROOT)}: "
-                    f"expected exactly one favicon declaration"
+                    f"favicon宣言は1個でなければならない"
                 )
 
         self.assertEqual(
             [],
             violations,
-            "Invalid favicon declarations:\n"
+            "不正なfavicon宣言:\n"
             + "\n".join(violations),
         )
 

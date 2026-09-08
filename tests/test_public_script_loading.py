@@ -46,7 +46,7 @@ class PublicScriptLoadingTests(unittest.TestCase):
         self.assertEqual(
             [],
             violations,
-            "Shared scripts must be deferred:\n"
+            "共通scriptにはdeferが必要:\n"
             + "\n".join(violations),
         )
 
@@ -62,7 +62,7 @@ class PublicScriptLoadingTests(unittest.TestCase):
         self.assertEqual(
             [],
             violations,
-            "Retired page-top script references remain:\n"
+            "廃止済みpage-top scriptへの参照が残っている:\n"
             + "\n".join(violations),
         )
 
@@ -87,7 +87,7 @@ class PublicScriptLoadingTests(unittest.TestCase):
         self.assertEqual(
             [],
             violations,
-            "Public inline scripts remain:\n"
+            "公開HTMLにinline scriptが残っている:\n"
             + "\n".join(violations),
         )
 
@@ -121,7 +121,7 @@ class PublicScriptLoadingTests(unittest.TestCase):
         self.assertLess(
             side_call,
             menu_bind,
-            "Mobile menu must bind after #sub is generated.",
+            "モバイルメニューは#sub生成後にbindしなければならない。",
         )
         self.assertIn(
             '"DOMContentLoaded"',

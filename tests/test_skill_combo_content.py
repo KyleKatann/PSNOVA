@@ -43,7 +43,7 @@ class SkillComboContentTests(unittest.TestCase):
         targets = set(re.findall(r'\sid="([A-Za-z0-9_-]+)"', section))
         links = set(re.findall(r'href="#([A-Za-z0-9_-]+)"', section))
         self.assertTrue(links)
-        self.assertFalse(links - targets, f"missing combo-skill link targets: {sorted(links - targets)}")
+        self.assertFalse(links - targets, f"コンボスキルのリンク先がない: {sorted(links - targets)}")
 
 
 if __name__ == "__main__":

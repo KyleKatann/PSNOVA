@@ -120,8 +120,8 @@ for (const routePath of publicRoutes()) {
     });
 
     const response = await page.goto(routePath, { waitUntil: 'load' });
-    expect(response, 'navigation should return a response').not.toBeNull();
-    expect(response.ok(), `navigation failed: ${routePath}`).toBeTruthy();
+    expect(response, 'navigationはresponseを返さなければならない').not.toBeNull();
+    expect(response.ok(), `navigationに失敗: ${routePath}`).toBeTruthy();
 
     await expect(page.locator('header')).toBeVisible();
     await expect(page.locator('#main')).toBeVisible();
@@ -130,7 +130,7 @@ for (const routePath of publicRoutes()) {
     const viewport = page.viewportSize();
     const mainRect = await page.locator('#main').boundingBox();
     expect(viewport).not.toBeNull();
-    expect(mainRect, '#main should have a rendered box').not.toBeNull();
+    expect(mainRect, '#mainには描画領域が必要').not.toBeNull();
     expect(mainRect.width).toBeGreaterThan(100);
     expect(mainRect.x).toBeGreaterThanOrEqual(-1);
     expect(mainRect.x + mainRect.width).toBeLessThanOrEqual(viewport.width + 1);
@@ -142,7 +142,7 @@ for (const routePath of publicRoutes()) {
         .filter((image) => image.complete && image.naturalWidth === 0)
         .map((image) => image.getAttribute('src'))
     );
-    expect(brokenImages, 'broken images detected').toEqual([]);
+    expect(brokenImages, '壊れた画像を検出した').toEqual([]);
 
     const pageOverflow = await page.evaluate(() => ({
       scrollWidth: document.documentElement.scrollWidth,
@@ -150,7 +150,7 @@ for (const routePath of publicRoutes()) {
     }));
     expect(
       pageOverflow.scrollWidth,
-      `page-level horizontal overflow: ${JSON.stringify(pageOverflow)}`
+      `ページ全体で横方向overflowを検出: ${JSON.stringify(pageOverflow)}`
     ).toBeLessThanOrEqual(pageOverflow.clientWidth + 1);
 
     const cssPaths = await page.evaluate(() =>
@@ -161,7 +161,7 @@ for (const routePath of publicRoutes()) {
         .filter((pathname) => pathname.startsWith('/PSNOVA/css/'))
     );
     expect(cssPaths).toContain('/PSNOVA/css/style.css');
-    expect(new Set(cssPaths).size, `unexpected stylesheets: ${cssPaths.join(', ')}`).toBeLessThanOrEqual(2);
+    expect(new Set(cssPaths).size, `想定外のstylesheet: ${cssPaths.join(', ')}`).toBeLessThanOrEqual(2);
     for (const cssPath of cssPaths) {
       expect(['/PSNOVA/css/style.css', '/PSNOVA/css/page.css']).toContain(cssPath);
     }
@@ -190,13 +190,13 @@ for (const routePath of publicRoutes()) {
     );
 
     for (const regionName of tableRegionNames) {
-      expect(regionName, 'table scroll region must have an accessible name').not.toBe('');
+      expect(regionName, 'テーブルのscroll regionにはaccessible nameが必要').not.toBe('');
     }
 
     if (tableRegionNames.length > 1) {
       expect(
         new Set(tableRegionNames).size,
-        `duplicate table region names: ${tableRegionNames.join(' | ')}`
+        `テーブルregion名が重複している: ${tableRegionNames.join(' | ')}`
       ).toBe(tableRegionNames.length);
     }
 
@@ -209,7 +209,7 @@ for (const routePath of publicRoutes()) {
         const vertical = Math.min(main.bottom, sub.bottom) - Math.max(main.top, sub.top);
         return horizontal > 1 && vertical > 1;
       });
-      expect(overlaps, '#main and #sub should not overlap on desktop').toBe(false);
+      expect(overlaps, 'desktopでは#mainと#subが重なってはならない').toBe(false);
     }
 
     if (testInfo.project.name === 'mobile-chromium') {
@@ -233,12 +233,12 @@ for (const routePath of publicRoutes()) {
       const rowBox = await firstRow.boundingBox();
       const headerPosition = await header.evaluate((cell) => getComputedStyle(cell).position);
 
-      expect(headerBox, 'weapon header should render').not.toBeNull();
-      expect(rowBox, 'first weapon row should render').not.toBeNull();
-      expect(headerPosition, 'weapon header must stay in normal flow').not.toBe('sticky');
+      expect(headerBox, '武器headerは描画されなければならない').not.toBeNull();
+      expect(rowBox, '武器の先頭行は描画されなければならない').not.toBeNull();
+      expect(headerPosition, '武器headerは通常flowを維持しなければならない').not.toBe('sticky');
       expect(
         headerBox.y + headerBox.height,
-        'weapon header must remain above the first data row'
+        '武器headerは先頭data行より上に維持しなければならない'
       ).toBeLessThanOrEqual(rowBox.y + 1);
     }
 
@@ -247,8 +247,8 @@ for (const routePath of publicRoutes()) {
         coarse: window.matchMedia('(pointer: coarse)').matches,
         fine: window.matchMedia('(pointer: fine)').matches,
       }));
-      expect(pointerMode.coarse, 'desktop-site touch project must emulate a coarse pointer').toBe(true);
-      expect(pointerMode.fine, 'desktop-site touch project must not emulate a fine primary pointer').toBe(false);
+      expect(pointerMode.coarse, 'desktop-site touch projectはcoarse pointerをemulateしなければならない').toBe(true);
+      expect(pointerMode.fine, 'desktop-site touch projectはfine primary pointerをemulateしてはならない').toBe(false);
 
       if (routePath === '/PSNOVA/pages/gigantes.html') {
         const gigantesTables = page.locator('.gigantes-table');
@@ -278,7 +278,7 @@ for (const routePath of publicRoutes()) {
       }
     }
 
-    expect(failedResources, 'critical local resources failed').toEqual([]);
-    expect(browserErrors, 'browser errors detected').toEqual([]);
+    expect(failedResources, '重要なlocal resourceの読み込みに失敗した').toEqual([]);
+    expect(browserErrors, 'browser errorを検出した').toEqual([]);
   });
 }

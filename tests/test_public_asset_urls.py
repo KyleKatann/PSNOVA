@@ -62,9 +62,9 @@ class PublicAssetUrlTests(unittest.TestCase):
         self.assertEqual(
             [],
             violations,
-            "Loaded repository-owned CSS/JS/image assets must use "
-            "local /PSNOVA/... paths. Absolute metadata URLs such as "
-            "og:image are intentionally outside this rule.",
+            "読み込むリポジトリ管理下のCSS・JS・画像アセットはローカルの "
+            "/PSNOVA/... パスを使用しなければならない。og:image などの"
+            "メタデータ用絶対URLはこの規則の対象外である。",
         )
 
 

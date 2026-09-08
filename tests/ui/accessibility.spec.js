@@ -82,7 +82,7 @@ test.describe('axe WCAG A/AA excluding color contrast', () => {
 
       expect(
         results.violations,
-        summary || `No axe violations on ${route}`
+        summary || `${route} でaxe違反は検出されなかった`
       ).toEqual([]);
     });
   }

@@ -89,7 +89,7 @@ class QualityGateTests(unittest.TestCase):
         )
         self.assertFalse(
             COLOR_CONTRACT.exists(),
-            "Dedicated automated color-contract test must remain removed",
+            "専用の自動color-contractテストは削除済みの状態を維持しなければならない",
         )
 
     def test_targeted_supports_project_and_grep(self):

@@ -37,7 +37,7 @@ class LazyImageTests(unittest.TestCase):
         self.assertEqual(
             [],
             violations,
-            "Public images must not use loading=lazy:\n"
+            "公開画像では loading=lazy を使用してはならない:\n"
             + "\n".join(violations),
         )
 
