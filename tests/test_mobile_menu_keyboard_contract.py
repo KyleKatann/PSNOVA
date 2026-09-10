@@ -1,3 +1,4 @@
+import re
 from pathlib import Path
 
 
@@ -21,6 +22,16 @@ def test_mobile_menu_moves_focus_into_drawer_and_back_on_escape():
     assert "firstLink.focus();" in source
     assert 'event.key === "Escape"' in source
     assert "button.focus();" in source
+
+
+def test_mobile_menu_does_not_use_positive_tabindex():
+    source = OPEN_CLOSE.read_text(encoding="utf-8")
+
+    positive_tabindex = re.compile(
+        r'(?:tabIndex\s*=\s*[1-9]\d*|'
+        r'setAttribute\(\s*["\']tabindex["\']\s*,\s*["\']?[1-9]\d*)'
+    )
+    assert positive_tabindex.search(source) is None
 
 
 def test_browser_keyboard_regression_exists():
