@@ -1,8 +1,8 @@
-# Tools
+# ツール
 
-Repository maintenance and local verification utilities live here and are not part of the GitHub Pages public tree.
+リポジトリの保守とローカル検証用ユーティリティを配置する。これらはGitHub Pagesの公開ツリーには含まれない。
 
-- `psnova_quality.py` runs the repository quality gates.
-- `serve_psnova.py` serves the public site locally for verification.
+- `psnova_quality.py` はリポジトリの品質ゲートを実行する。
+- `serve_psnova.py` は検証用に公開サイトをローカル配信する。
 
-Do not place generated or published public HTML here. Published output belongs under `docs/`.
+生成済みまたは公開用のHTMLをここに置かない。公開物は `docs/` 配下に配置する。

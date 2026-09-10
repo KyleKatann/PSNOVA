@@ -1,10 +1,10 @@
-# Data
+# データ
 
-This directory is reserved for authoritative structured PSNOVA game data.
+このディレクトリは、正規の構造化PSNOVAゲームデータ用に予約する。
 
-Rules:
+ルール:
 
-- `docs/` contains published GitHub Pages output only.
-- `tools/` contains repository maintenance and local verification utilities.
-- `data/` is the source-of-truth location for structured game data when such datasets are maintained.
-- Keep published gameplay values and authoritative structured data consistent.
+- `docs/` には公開用のGitHub Pages出力だけを配置する。
+- `tools/` にはリポジトリの保守とローカル検証用ユーティリティを配置する。
+- 構造化ゲームデータを維持する場合、`data/` をsource-of-truthとして扱う。
+- 公開されるゲーム内数値と正規の構造化データの整合性を保つ。

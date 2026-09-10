@@ -1,5 +1,2 @@
 # Normalize active repository text files to LF on every platform.
 * text=auto eol=lf
-
-# Historical material is byte-preserved and must not be normalized.
-docs/pages/分類中/** -text

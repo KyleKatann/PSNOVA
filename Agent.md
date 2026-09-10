@@ -114,7 +114,7 @@
 23. **公開CSS fileの数を増やしてはならない。** 公開CSSは最大2fileとする。`docs/css/style.css` がshared/sitewide styleを所有し、`docs/css/page.css` がhomepageやweapon UIなどpage-specific styleを所有する。新しいstylesheetを追加せず既存ownerへ拡張・統合する。さらに統合してfile数を減らすことは可能だが、stylesheet増殖は禁止する。
 24. **active developmentおよびpublishing branchは `master` のみとする。ユーザーがこのルールを明示的に撤回しない限り、feature branch、work branch、temporary implementation branch、PR branchを作成、切替、使用してはならない。通常の実装、commit、pushは `master` へ直接行う。既存backup/archive branchはread-onlyな歴史的recovery pointとして残してよいが、active workには使用しない。**
 25. **保存資料から現在の公開ページを検証する場合は、読者に有用なgameplay fact、table row/value、note、requirement、exception、acquisition condition、password/code、quest detail、explanatory guide pointを意図せず捨ててはならない。** 完全な重複、保存Wiki/Waybackの外枠、analytics/ads/edit/comment UI、または別途根拠がある事実訂正を除き、有用な内容を保持する。可能ならcurrent public regressionまたはsentinel coverageを追加し、意図しない欠落を自動検知する。
-26. **`docs/pages/分類中/`、保存Wiki/Wayback page、その他legacy pageを公開ページの代わりとして表示するために、`iframe`、`object`、`embed`、その他framed/embedded-document手法を使ってはならない。** public pageは、読者に有用なgameplay contentを現在siteのstatic HTMLへ直接含め、通常のsemantic heading、table、note、link、responsive structureを使う。保存navigation、search box、edit control、ads、analytics、Wayback外枠、legacy page shellをembedded document内へ隠してはならない。
+26. **保存Wiki/Wayback pageやその他legacy pageを公開ページの代わりとして表示するために、`iframe`、`object`、`embed`、その他framed/embedded-document手法を使ってはならない。** public pageは、読者に有用なgameplay contentを現在siteのstatic HTMLへ直接含め、通常のsemantic heading、table、note、link、responsive structureを使う。保存navigation、search box、edit control、ads、analytics、Wayback外枠、legacy page shellをembedded document内へ隠してはならない。
 27. **同一page上で同じcolumn structureを持つtableは、原則として対応columnが縦に揃うよう同じcolumn widthを使う。** 各tableを個別に自動配分させるのではなく、そのpage周辺のtableをvisual referenceとする。ただし、同じwidthにすると重大なwrapping、clipping、読めないほど狭いcell、不要なhorizontal overflowが発生して明確にtableを壊す場合だけ、このconsistency requirementよりreadabilityを優先する。例外が必要なら、readabilityを保持し、実用的な範囲でpage-specific reasonを文書化またはtestする。width consistencyはstatic markupまたはCSSで実装し、runtime JavaScript repairでは実装しない。
 28. **信頼できる範囲では効率的な実行を優先するが、batching、bulk automation、optimizationによって長時間停止したり進捗が不透明になってはならない。長時間かかりそうなtaskは停止する前にstrict sequential executionへ切り替え、1file/itemを確認し、その1変更を行い、検証し、必要に応じてcommitしてから次へ進む。実際に処理が停止した、またはbulk automationが信頼できなくなった場合、それは問題であり、方法を切り替えて継続するのではなく最優先の即時停止ルールに従って直ちに停止する。**
 
@@ -166,7 +166,7 @@
 
 - 通常のpost-fix quality gateには `python tools/psnova_quality.py finish` を使う。このcommandは各fix後に `git diff --check` と完全pytest suiteを実行し、完了fixが5件ごとの場合だけfull Playwright UI-health suiteも自動実行する。browser UI behaviorへ直接影響する変更だけ `targeted` を使い、残存static audit candidate一覧には `inventory` を使う。
 
-- active repository text fileは `.gitattributes`（`* text=auto eol=lf`）により全platformでLF line endingを使う。`docs/pages/分類中/` 配下のhistorical materialはnewline normalization対象外とし、byte-preservedのまま保持する。
+- active repository text fileは `.gitattributes`（`* text=auto eol=lf`）により全platformでLF line endingを使う。
 
 - public HTMLはmodern HTML shellを使う。obsolete `X-UA-Compatible` metadataまたはclassic script上の冗長な `type="text/javascript"` attributeを復元してはならない。
 
@@ -183,7 +183,6 @@
 - table column headerは常に中央揃えとし、static semantic source markupとして `<thead>` と `<th scope="col">` を使う。semantic left alignmentはnote、explanation、location、acquisition method、quest listなどbody contentだけに適用する。
 - 同一page上で同じcolumn structureを持つtableは、readabilityを損なわない限り対応column widthをpage全体で視覚的に揃える。per-table auto-sizingよりwidth consistencyを優先するが、重大なwrapping、clipping、読めないほど狭いcolumn、回避可能なhorizontal overflowを生じる場合は無理に揃えない。
 - legacy table compatibility stylingは禁止する。shared CSSでobsolete `bgcolor`、all-`th` body row、missing `<thead>`、first-row positionを条件分岐に使い、historical Wiki markupを推論してはならない。current public source HTMLをstaticに修正する。
-- `docs/pages/分類中/` はhistorical staging/reference materialでありlive public-site sourceではない。public-page modernization中に書き換えず、GitHub Pages build対象外を維持する。
 - public labelは自然なreader-facing日本語を使う。`Shop Lv`、`shopLv`、`ショップLv` などdeveloper-facingまたは説明のないlabelは禁止し、`ショップレベル` を表示する。
 - former `ページ内` barのようなautomatic in-page navigation stripは意図的に使用しないため、復元してはならない。
 - weapon section headingはweapon iconを厳密に1つだけ表示する。同一headingでCSS background weapon iconとinjected `<img>` を併用してはならない。意図的に別用途のrow/category iconは維持してよい。
