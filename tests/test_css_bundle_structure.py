@@ -9,6 +9,12 @@ PAGE = CSS / "page.css"
 MENUBAR = DOCS / "js" / "menubar.js"
 INDEX = DOCS / "index.html"
 WEAPON_INDEX = DOCS / "pages" / "weapon.html"
+WEAPON_DIR = DOCS / "pages" / "weapon"
+GIGANTES = DOCS / "pages" / "gigantes.html"
+PAGE_STYLE_MARKER = (
+    '<link rel="stylesheet" href="/PSNOVA/css/page.css" '
+    'data-psnova-page-style="true">'
+)
 
 
 def test_public_css_inventory_is_exactly_two_files():
@@ -58,6 +64,19 @@ def test_page_bundle_is_loaded_statically_for_homepage_and_weapon_routes():
 
     assert '<link rel="stylesheet" href="/PSNOVA/css/page.css">' in homepage
     assert '<link rel="stylesheet" href="/PSNOVA/css/page.css" data-psnova-page-style="true">' in weapon
+
+
+def test_legacy_page_style_loader_targets_load_page_css_statically():
+    targets = [
+        WEAPON_INDEX,
+        GIGANTES,
+        *sorted(WEAPON_DIR.glob("*.html")),
+    ]
+
+    assert list(WEAPON_DIR.glob("*.html"))
+    for path in targets:
+        html = path.read_text(encoding="utf-8")
+        assert PAGE_STYLE_MARKER in html, path.relative_to(ROOT)
 
 
 def test_old_page_specific_css_names_stay_removed():
