@@ -70,6 +70,18 @@
 - schemaを未確認のままwriteを試して `argument_binding` やvalidation errorから正しい引数形式を推測してはならない。schema確認はwrite前のread-only discoveryで完了させる。
 - `argument_binding` が発生した場合、そのwriteは適用されていないものとして扱うが、引数を推測修正して連続再試行してはならない。原因となったfield名・型・構造をread-only schemaと照合して確定し、ユーザーの指示または既存の停止ルールに従う。
 
+## 最優先ルール：GitHub write gateを必ず通過する
+
+**GitHubへのwrite操作は、実行直前に次の4条件をすべて満たした場合だけ実行する。1つでも満たさない場合はwrite actionを呼び出してはならない。**
+
+1. 使用するwrite actionが、現在の実装項目で事前に確定したwrite allowlistに含まれていること。既存file更新で `update_file` が利用可能かつ要件を満たす場合、その実装項目のwrite allowlistは `update_file` のみとし、途中で `create_blob`、`create_tree`、`create_commit`、`update_ref` その他のwrite経路へ切り替えてはならない。
+2. writeへ渡すrepository、branch、path、SHA、IDその他の識別子が、ユーザーの明示値または直前の成功したread-only結果から取得した実在値であり、推測値、ダミー値、仮値を1つも含まないこと。
+3. 使用するwrite actionの現在のschemaをread-onlyで確認済みであり、正式なfield名、必須field、型、nest構造と完全に一致すること。
+4. 現在の目的を満たす既知のより単純なwrite経路を迂回していないこと。schema確認、疎通確認、tool動作確認、失敗再現だけを目的とするwriteではないこと。
+
+- gate判定のためにwriteを実行してはならない。4条件の確認はread-only情報だけで完了させる。
+- 4条件のどれかを確認できない場合、別write actionを試さず、最優先の即時停止ルールに従う。
+
 ## 最優先ルール：現在の作業に直接必要なツールだけを使う
 
 **すべてのtool callは、現在実行中の実装または検証手順を完了するために直接必要でなければならない。** `master` 上のfile直接編集が現在の目的である場合、その作業に具体的に必要でないPR、issue、workflow、branch、release、artifact、その他のAPIを呼び出してはならない。利用可能なツールを試すこと自体を目的に呼び出したり、現在の作業と関係のないresourceを探索してはならない。必要性を説明できないtool callは実行しない。
