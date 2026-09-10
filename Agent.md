@@ -156,6 +156,7 @@
 - `/PSNOVA/copyright.html` と `/PSNOVA/issue.html` は廃止済みpublic pageである。ユーザーがこのretirement decisionを明示的に撤回しない限り、public HTML、sitemap、metadata、footer、navigation、site search、その他public routing/indexingへ復元してはならない。
 
 - すべてのpublic HTML pageは、shared sidebarが供給するlinkを含むpublic internal linkを通じて `/PSNOVA/` から到達可能でなければならない。`tests/test_public_navigation_reachability.py` でorphan public pageを防止する。
+
 - public `<img>` elementは、source imageのintrinsic dimensionに基づくnumeric `width` と `height` の両方を宣言する。responsiveなrendered sizingはCSSが担い、HTML dimensionはimage load前に正しいaspect ratioを予約してlayout shiftを減らす。
 
 - public pageは3つのshared JavaScript bundle（`openclose.js`、`menubar.js`、`sidebar.js`）を `defer` 付きで読み込む。public HTMLにinline initialization scriptを含めてはならない。shared componentはparse後にexternal JSから自己初期化し、document-order executionを保持する。廃止済み `/PSNOVA/js/fixmenu_pagetop.js` URLとcompatibility outputは完全削除済みであり、再作成・再参照してはならない。public HTMLとgeneratorは3bundleだけを出力する。
