@@ -151,5 +151,4 @@
 
 以下はユーザーreviewにより確定した仕様であり、regression constraintとして扱う。
 
-- data tableはcompactなoriginal-Wiki treatmentを維持する。pale blue header/emphasis surface、compact padding、控えめな1px separation、modern scrolling/search/sort behaviorを保持する。runtime HTML repairを除去してもこのvisual treatmentを失ってはならない。
 - すべてのpublic data tableはcanonical weapon tableと同じsquare-corner treatmentを使う。table、caption、table-scroll wrapperへrounded cornerまたはcard-like shadowを追加してはならない。page-specific table stylingでもこれらsurfaceをsquareに保つ。
