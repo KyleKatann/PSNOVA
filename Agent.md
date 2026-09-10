@@ -148,7 +148,3 @@
 - 通常のpost-fix quality gateには `python tools/psnova_quality.py finish` を使う。このcommandは各fix後に `git diff --check` と完全pytest suiteを実行し、完了fixが5件ごとの場合だけfull Playwright UI-health suiteも自動実行する。browser UI behaviorへ直接影響する変更だけ `targeted` を使い、残存static audit candidate一覧には `inventory` を使う。
 
 - local Playwright UI health testはfull logical-CPU parallelism向けに設計されている。`fullyParallel: true` と `workers: '100%'` を使う。local test serverは最大OS socket backlog、threaded request handling、HTTP/1.1 persistent connectionを使う。公開済み `kylekatann.github.io/PSNOVA/` assetはlocalhost server経由で再fetchせずrepository fileから直接提供する。connection-refusal failureの回避策としてworker countを減らしてはならず、shared test infrastructure側を修正する。
-
-以下はユーザーreviewにより確定した仕様であり、regression constraintとして扱う。
-
-- すべてのpublic data tableはcanonical weapon tableと同じsquare-corner treatmentを使う。table、caption、table-scroll wrapperへrounded cornerまたはcard-like shadowを追加してはならない。page-specific table stylingでもこれらsurfaceをsquareに保つ。
