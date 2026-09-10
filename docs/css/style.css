@@ -606,7 +606,6 @@ footer a {
     border: 1px solid var(--border);
     border-collapse: separate;
     border-spacing: 0;
-    border-radius: 2px;
     box-shadow: none;
     overflow: visible;
     font-family: inherit;
@@ -757,7 +756,6 @@ footer a {
 #main table .rarity-cell[data-rarity="12"]::before {
     color: var(--rarity-orange);
 }
-
 #main table .rarity-cell[data-rarity="13"],
 #main table .rarity-cell[data-rarity="13"]::before,
 #main table .rarity-cell[data-rarity="14"],
@@ -1237,7 +1235,6 @@ body.is-fixed-pagetop .nav-fix-pos-pagetop a {
     line-height: 1.4;
     letter-spacing: 0.04em;
 }
-
 @media (max-width: 800px) {
     .affiliate-banner {
         margin: 14px 0 20px;
@@ -1498,7 +1495,6 @@ body.is-fixed-pagetop .nav-fix-pos-pagetop a {
         left: 10px;
     }
 }
-
 
 footer .footer-links {
     display: flex;
