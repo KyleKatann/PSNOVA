@@ -61,6 +61,15 @@
 - 安全な編集方法が確認できない、または既知の編集経路で正しさを保証できない場合は、repositoryへ実験的なwriteを行ったり別write APIを順番に試したりせず、最優先の即時停止ルールに従って停止して報告する。
 - 本番repositoryをAPI実験、tool diagnostics、疎通試験、エラー再現の場として使用してはならない。ユーザーがdiagnosticsを明示要求した場合でも、read-onlyで完結できない診断を本番repositoryへwriteして実施してはならない。
 
+## 最優先ルール：GitHub `update_file` は取得済みschemaどおりに呼び出す
+
+**既存UTF-8 text fileをGitHubコネクタの `update_file` で更新する場合は、実行直前に利用可能なaction schemaをread-onlyで確認し、その正式なfield名と型だけを使って1回で呼び出す。** 現在の `update_file` では必須fieldとして `repository_full_name`、`path`、`content`、`message`、`sha` を渡し、このrepositoryでは対象branchを明示する場合は `branch: "master"` を使う。`repository_full_name` を `repo_full_name` など別actionのfield名へ置換してはならず、必須fieldの欠落、schema外fieldの追加、field名の推測、型の不一致、引数objectの余分なnest、object全体のJSON文字列化を禁止する。
+
+- `content` にはpatch、diff、部分断片ではなく、直前に取得したcurrent fileを基礎とする完全なUTF-8 replacement textを渡す。
+- `sha` には同じ対象fileを直前の `fetch_file` で取得したcurrent blob SHAを使い、古いSHA、commit SHA、tree SHA、推測値を渡してはならない。
+- schemaを未確認のままwriteを試して `argument_binding` やvalidation errorから正しい引数形式を推測してはならない。schema確認はwrite前のread-only discoveryで完了させる。
+- `argument_binding` が発生した場合、そのwriteは適用されていないものとして扱うが、引数を推測修正して連続再試行してはならない。原因となったfield名・型・構造をread-only schemaと照合して確定し、ユーザーの指示または既存の停止ルールに従う。
+
 ## 最優先ルール：現在の作業に直接必要なツールだけを使う
 
 **すべてのtool callは、現在実行中の実装または検証手順を完了するために直接必要でなければならない。** `master` 上のfile直接編集が現在の目的である場合、その作業に具体的に必要でないPR、issue、workflow、branch、release、artifact、その他のAPIを呼び出してはならない。利用可能なツールを試すこと自体を目的に呼び出したり、現在の作業と関係のないresourceを探索してはならない。必要性を説明できないtool callは実行しない。
@@ -147,7 +156,6 @@
 - `/PSNOVA/copyright.html` と `/PSNOVA/issue.html` は廃止済みpublic pageである。ユーザーがこのretirement decisionを明示的に撤回しない限り、public HTML、sitemap、metadata、footer、navigation、site search、その他public routing/indexingへ復元してはならない。
 
 - すべてのpublic HTML pageは、shared sidebarが供給するlinkを含むpublic internal linkを通じて `/PSNOVA/` から到達可能でなければならない。`tests/test_public_navigation_reachability.py` でorphan public pageを防止する。
-
 - public `<img>` elementは、source imageのintrinsic dimensionに基づくnumeric `width` と `height` の両方を宣言する。responsiveなrendered sizingはCSSが担い、HTML dimensionはimage load前に正しいaspect ratioを予約してlayout shiftを減らす。
 
 - public pageは3つのshared JavaScript bundle（`openclose.js`、`menubar.js`、`sidebar.js`）を `defer` 付きで読み込む。public HTMLにinline initialization scriptを含めてはならない。shared componentはparse後にexternal JSから自己初期化し、document-order executionを保持する。廃止済み `/PSNOVA/js/fixmenu_pagetop.js` URLとcompatibility outputは完全削除済みであり、再作成・再参照してはならない。public HTMLとgeneratorは3bundleだけを出力する。
