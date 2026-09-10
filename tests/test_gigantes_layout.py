@@ -1,5 +1,7 @@
 from pathlib import Path
 
+from bs4 import BeautifulSoup
+
 ROOT = Path(__file__).resolve().parents[1]
 HTML = ROOT / "docs" / "pages" / "gigantes.html"
 CSS = ROOT / "docs" / "css" / "style.css"
@@ -31,6 +33,29 @@ def test_gigantes_notes_wrap_and_quest_entries_do_not():
     assert "overflow-wrap: anywhere;" in css
     assert "#main .gigantes-table td:last-child" in css
     assert "white-space: nowrap;" in css
+
+
+def test_gigantes_multi_quest_cells_keep_explicit_breaks():
+    soup = BeautifulSoup(HTML.read_text(encoding="utf-8"), "html.parser")
+
+    checked = 0
+    for row in soup.select("table.gigantes-table tbody tr"):
+        cells = row.find_all("td", recursive=False)
+        if not cells:
+            continue
+        quest_cell = cells[-1]
+        quest_entries = [
+            value
+            for value in quest_cell.stripped_strings
+            if value.startswith(("難：", "超：", "極："))
+        ]
+        if len(quest_entries) <= 1:
+            continue
+
+        checked += 1
+        assert len(quest_cell.find_all("br", recursive=False)) == len(quest_entries) - 1
+
+    assert checked > 0
 
 
 def test_gigantes_stage_labels_use_explicit_cell_breaks():
