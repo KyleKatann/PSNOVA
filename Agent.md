@@ -157,6 +157,5 @@
 
 以下はユーザーreviewにより確定した仕様であり、regression constraintとして扱う。
 
-- rarity presentationのCSS ownerは `docs/css/style.css` の1か所だけとし、weapon pageのrarity displayをsite全体のcanonical visual specificationとする。`★` badge treatment、tabular numeral、1-3 blue / 4-6 green / 7-9 red / 10-12 orange / 13-15 violetのcolor scaleを維持する。`page.css` にrarity stylingを含めてはならない。既存shared JavaScriptはsource textを書き換えずにruntimeでrarity class/attributeを付与してよいが、この既存behaviorはJavaScript編集を許可するものではない。source HTMLにvisible `★` が既にある場合は、decorative pseudo-starだけを抑制し `★★` 表示を防ぐ。
 - data tableはcompactなoriginal-Wiki treatmentを維持する。pale blue header/emphasis surface、compact padding、控えめな1px separation、modern scrolling/search/sort behaviorを保持する。runtime HTML repairを除去してもこのvisual treatmentを失ってはならない。
 - すべてのpublic data tableはcanonical weapon tableと同じsquare-corner treatmentを使う。table、caption、table-scroll wrapperへrounded cornerまたはcard-like shadowを追加してはならない。page-specific table stylingでもこれらsurfaceをsquareに保つ。
