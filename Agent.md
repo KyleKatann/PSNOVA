@@ -98,11 +98,6 @@
 
 **このリポジトリのコードやrepository contentへアクセスするために、`curl`、`Invoke-WebRequest`、その他のHTTP clientからGitHub API、`raw.githubusercontent.com`、GitHub raw URLへ直接接続してはならない。** GitHub Code Searchも使用してはならず、検索結果、0件、件数、index状態をcurrent repository stateの確認や探索に使ってはならない。Web検索、Webブラウザ、通常のWeb fetchを使ってGitHubページやraw URLからrepository contentを取得・確認することも禁止する。ただし、**ユーザーがその特定作業でGitHubのブラウザ/Web経由アクセスを明示的に指定した場合に限り、Web検索・ブラウザ経由のGitHub閲覧だけを例外として許可する。** この例外は `curl`、`Invoke-WebRequest`、GitHub Code Searchの使用許可を意味しない。通常は接続済みGitHubコネクタのread操作、または既存local worktreeの直接ファイル読取を使用する。
 
-
-## 最優先ルール：画像の遅延読み込みを使用しない
-
-**このサイトの公開画像では遅延読み込みを使用してはならない。** 公開HTMLの `<img>` に `loading="lazy"` または同等のlazy loading指定を追加してはならず、JavaScriptから `loading` propertyまたはattributeを `lazy` に設定してはならない。画像は通常の即時読み込みを使用する。性能改善を理由として一括migration、generator、runtime JavaScript、個別page修正からlazy loadingを再導入してはならない。ユーザーがこの方針を明示的に撤回した場合だけ例外とする。
-
 ## 目的
 
 このリポジトリは、GitHub Pagesで公開するPSNOVA攻略サイトのソースである。
@@ -122,22 +117,19 @@
 10. リポジトリルートの `reference/` は廃止済みであり、再作成、復元、依存してはならない。過去資料の確認が必要な場合は、現存するrepository contentまたはユーザーが明示的に提供した資料を使用する。
 11. migration専用のprogram、workflow、request file、testを再導入してはならない。公開ページの保守はcurrent public sourceと通常の回帰テストを直接更新して行う。
 12. **実行時JavaScriptで、誤ったページ固有の静的HTMLまたはゲームデータを修復、正規化、sanitize、再解釈、追加、削除、移動、複製、非表示、その他補正してはならない。これは絶対禁止である。** 決定的なリンク、注記、見出し、表値、アセット参照、stylesheet参照、その他ページ固有の静的要素が存在すべき、または削除すべき場合は、生HTMLソースまたはそのgeneratorを直接編集する。JavaScriptでsemantic table構造（`thead`、`tbody`、`tr`、`th`、`td`）を作成、移動、置換、変換したり、廃止済みpresentation属性・styleを除去したり、壊れたmarkupを修復したり、source text/dataを掃除したり、望ましい表示内容を得るために既知の誤った静的ソースとrendered DOMを異ならせてはならない。既存JavaScriptは、search、filtering、sorting、navigation state、state class、visual category class、scroll wrapperなど本質的にruntimeの動作を引き続き提供してよいが、この既存動作の説明は最優先の凍結ルール下でJavaScript編集を許可するものではない。sitewide sidebarなど明示的に共通化された既存runtime componentはページ固有contentとは別物であり、page HTML編集の回避策として使用してはならない。
-13. **data tableのalignmentは任意の列位置ではなく内容の意味に従う。** 名称、code、数値、rarity、stat、material、その他compact dataは原則中央揃えとする。説明文、注記、文章形式のeffect、入手方法、location、quest-name listは左揃えとする。source-awareなshared CSSまたは明示的static markupで実装し、JavaScriptでruntimeにalignmentの意味を推論・修復してはならない。
-14. **ユーザーが報告した回帰によって修正仕様が確定した場合、操作方針またはサイト全体に横断する恒久ルールだけをこのガイドへ記録する。特定ページまたはページ群に固有の仕様は、実装状態を直接検証するregression testへ記録し、`Agent.md`へ重複して蓄積しない。** ユーザーが明示的に誤りとした挙動を後から再導入してはならない。
-15. **公開UI文言には、developer-facingなfield名、camelCase、internal identifier、説明のないmixed-language abbreviationではなく、読者向けの明確な日本語を使う。** `Shop Lv`、`ShopLv`、`shopLv`、`ショップLv` などのlabelはvisible UIで禁止し、`ショップレベル` を使う。HP、GP、DLC、PSNOVAなど一般化したゲーム用語やofficial nameは、文脈上標準的で直ちに理解できる場合は使用してよい。
-16. **すべてのtable column headerは中央揃えにする。** body cellは意味に応じて左揃えの説明、注記、location、quest listなどを維持してよいが、それらのbody ruleが実際のheader rowの中央揃えを上書きしてはならない。
-17. **自動生成のin-page section navigation barを追加してはならない。** 以前の `ページ内` link stripは不要と判断され削除済みであり、復活させてはならない。page structure、heading、sidebar、searchを使い、明確な価値がある場合だけ目的特化navigationを使う。
-18. **guide pageとdata pageは、通常3文程度の簡潔なreader-facing introductionから始める。** pageが扱う範囲、比較・確認できる内容、情報の実用的な使い方を説明する。placeholder的な1行説明やコピーされたWiki断片を避ける。
-19. **data tableで使うすべてのpale-blue UI surfaceには、既存の同一UI token `var(--accent-soft)` を使う。** table headerやblue emphasis cell用にpage固有のpale-blue hex colorを導入してはならない。ゲーム上の意味を伝えるsemantic non-blue status colorは必要に応じて別色を維持してよい。
-20. **data tableはshared border tokenに基づく控えめな1px grid lineを使う。** row/column追跡を助ける一方で視覚的に支配的にならないようにし、太いdark borderや各cell間の1px colored gapへ戻してはならない。
-21. **公開page titleは1つの命名規則に従う。** homepage titleは厳密に `PSNOVA攻略サイト` とする。それ以外の公開page titleは `PSNOVA攻略サイト - XXXXX` とし、`XXXXX` には `武器`、`防具`、`初心者Q&A`、`ナックル` など簡潔なreader-facing page名を入れる。title suffix、main visible page heading、metadata mapping、実際のpage purposeを矛盾させてはならない。`武器 | PSNOVA攻略` のような逆順、冗長なSEO keyword chain、特定content pageでのgenericな `PSNOVA 攻略サイト` titleは禁止する。raw HTMLでも同じ規則を優先し、runtime metadataで既知の誤ったsource titleを隠してはならない。
-22. **site表示用assetを外部websiteからhotlinkしてはならない。** 公開siteで使うimage、font、CSS、JavaScript、その他visual/runtime assetはこのrepository内に保存し、local `/PSNOVA/...` pathで参照する。remote image URL、CDN asset URL、その他外部site asset referenceを使ってはならない。承認済みaffiliate linkなど、読者を外部へ移動させる意図的navigationはasset hotlinkとは別扱いとする。
-23. **公開CSS fileの数を増やしてはならない。** 公開CSSは最大2fileとする。`docs/css/style.css` がshared/sitewide styleを所有し、`docs/css/page.css` がhomepageやweapon UIなどpage-specific styleを所有する。新しいstylesheetを追加せず既存ownerへ拡張・統合する。さらに統合してfile数を減らすことは可能だが、stylesheet増殖は禁止する。
-24. **active developmentおよびpublishing branchは `master` のみとする。ユーザーがこのルールを明示的に撤回しない限り、feature branch、work branch、temporary implementation branch、PR branchを作成、切替、使用してはならない。通常の実装、commit、pushは `master` へ直接行う。既存backup/archive branchはread-onlyな歴史的recovery pointとして残してよいが、active workには使用しない。**
-25. **保存資料から現在の公開ページを検証する場合は、読者に有用なgameplay fact、table row/value、note、requirement、exception、acquisition condition、password/code、quest detail、explanatory guide pointを意図せず捨ててはならない。** 完全な重複、保存Wiki/Waybackの外枠、analytics/ads/edit/comment UI、または別途根拠がある事実訂正を除き、有用な内容を保持する。可能ならcurrent public regressionまたはsentinel coverageを追加し、意図しない欠落を自動検知する。
-26. **保存Wiki/Wayback pageやその他legacy pageを公開ページの代わりとして表示するために、`iframe`、`object`、`embed`、その他framed/embedded-document手法を使ってはならない。** public pageは、読者に有用なgameplay contentを現在siteのstatic HTMLへ直接含め、通常のsemantic heading、table、note、link、responsive structureを使う。保存navigation、search box、edit control、ads、analytics、Wayback外枠、legacy page shellをembedded document内へ隠してはならない。
-27. **同一page上で同じcolumn structureを持つtableは、原則として対応columnが縦に揃うよう同じcolumn widthを使う。** 各tableを個別に自動配分させるのではなく、そのpage周辺のtableをvisual referenceとする。ただし、同じwidthにすると重大なwrapping、clipping、読めないほど狭いcell、不要なhorizontal overflowが発生して明確にtableを壊す場合だけ、このconsistency requirementよりreadabilityを優先する。例外が必要なら、readabilityを保持し、実用的な範囲でpage-specific reasonを文書化またはtestする。width consistencyはstatic markupまたはCSSで実装し、runtime JavaScript repairでは実装しない。
-28. **信頼できる範囲では効率的な実行を優先するが、batching、bulk automation、optimizationによって長時間停止したり進捗が不透明になってはならない。長時間かかりそうなtaskは停止する前にstrict sequential executionへ切り替え、1file/itemを確認し、その1変更を行い、検証し、必要に応じてcommitしてから次へ進む。実際に処理が停止した、またはbulk automationが信頼できなくなった場合、それは問題であり、方法を切り替えて継続するのではなく最優先の即時停止ルールに従って直ちに停止する。**
+13. **ユーザーが報告した回帰によって修正仕様が確定した場合、作業手順・安全策・判断基準としてエージェントが実行時に参照する必要がある恒久ルールだけをこのガイドへ記録する。HTML、CSS、JavaScript、ファイル構成その他の実装状態を自動判定できる仕様は、サイト横断であってもregression testへ記録し、`Agent.md`と二重管理しない。** ユーザーが明示的に誤りとした挙動を後から再導入してはならない。
+14. **公開UI文言には、developer-facingなfield名、camelCase、internal identifier、説明のないmixed-language abbreviationではなく、読者向けの明確な日本語を使う。** `Shop Lv`、`ShopLv`、`shopLv`、`ショップLv` などのlabelはvisible UIで禁止し、`ショップレベル` を使う。HP、GP、DLC、PSNOVAなど一般化したゲーム用語やofficial nameは、文脈上標準的で直ちに理解できる場合は使用してよい。
+15. **自動生成のin-page section navigation barを追加してはならない。** 以前の `ページ内` link stripは不要と判断され削除済みであり、復活させてはならない。page structure、heading、sidebar、searchを使い、明確な価値がある場合だけ目的特化navigationを使う。
+16. **guide pageとdata pageは、通常3文程度の簡潔なreader-facing introductionから始める。** pageが扱う範囲、比較・確認できる内容、情報の実用的な使い方を説明する。placeholder的な1行説明やコピーされたWiki断片を避ける。
+17. **data tableで使うすべてのpale-blue UI surfaceには、既存の同一UI token `var(--accent-soft)` を使う。** table headerやblue emphasis cell用にpage固有のpale-blue hex colorを導入してはならない。ゲーム上の意味を伝えるsemantic non-blue status colorは必要に応じて別色を維持してよい。
+18. **data tableはshared border tokenに基づく控えめな1px grid lineを使う。** row/column追跡を助ける一方で視覚的に支配的にならないようにし、太いdark borderや各cell間の1px colored gapへ戻してはならない。
+19. **公開page titleは1つの命名規則に従う。** homepage titleは厳密に `PSNOVA攻略サイト` とする。それ以外の公開page titleは `PSNOVA攻略サイト - XXXXX` とし、`XXXXX` には `武器`、`防具`、`初心者Q&A`、`ナックル` など簡潔なreader-facing page名を入れる。title suffix、main visible page heading、metadata mapping、実際のpage purposeを矛盾させてはならない。`武器 | PSNOVA攻略` のような逆順、冗長なSEO keyword chain、特定content pageでのgenericな `PSNOVA 攻略サイト` titleは禁止する。raw HTMLでも同じ規則を優先し、runtime metadataで既知の誤ったsource titleを隠してはならない。
+20. **site表示用assetを外部websiteからhotlinkしてはならない。** 公開siteで使うimage、font、CSS、JavaScript、その他visual/runtime assetはこのrepository内に保存し、local `/PSNOVA/...` pathで参照する。remote image URL、CDN asset URL、その他外部site asset referenceを使ってはならない。承認済みaffiliate linkなど、読者を外部へ移動させる意図的navigationはasset hotlinkとは別扱いとする。
+21. **active developmentおよびpublishing branchは `master` のみとする。ユーザーがこのルールを明示的に撤回しない限り、feature branch、work branch、temporary implementation branch、PR branchを作成、切替、使用してはならない。通常の実装、commit、pushは `master` へ直接行う。既存backup/archive branchはread-onlyな歴史的recovery pointとして残してよいが、active workには使用しない。**
+22. **保存資料から現在の公開ページを検証する場合は、読者に有用なgameplay fact、table row/value、note、requirement、exception、acquisition condition、password/code、quest detail、explanatory guide pointを意図せず捨ててはならない。** 完全な重複、保存Wiki/Waybackの外枠、analytics/ads/edit/comment UI、または別途根拠がある事実訂正を除き、有用な内容を保持する。可能ならcurrent public regressionまたはsentinel coverageを追加し、意図しない欠落を自動検知する。
+23. **保存Wiki/Wayback pageやその他legacy pageを公開ページの代わりとして表示するために、`iframe`、`object`、`embed`、その他framed/embedded-document手法を使ってはならない。** public pageは、読者に有用なgameplay contentを現在siteのstatic HTMLへ直接含め、通常のsemantic heading、table、note、link、responsive structureを使う。保存navigation、search box、edit control、ads、analytics、Wayback外枠、legacy page shellをembedded document内へ隠してはならない。
+24. **同一page上で同じcolumn structureを持つtableは、原則として対応columnが縦に揃うよう同じcolumn widthを使う。** 各tableを個別に自動配分させるのではなく、そのpage周辺のtableをvisual referenceとする。ただし、同じwidthにすると重大なwrapping、clipping、読めないほど狭いcell、不要なhorizontal overflowが発生して明確にtableを壊す場合だけ、このconsistency requirementよりreadabilityを優先する。例外が必要なら、readabilityを保持し、実用的な範囲でpage-specific reasonを文書化またはtestする。width consistencyはstatic markupまたはCSSで実装し、runtime JavaScript repairでは実装しない。
+25. **信頼できる範囲では効率的な実行を優先するが、batching、bulk automation、optimizationによって長時間停止したり進捗が不透明になってはならない。長時間かかりそうなtaskは停止する前にstrict sequential executionへ切り替え、1file/itemを確認し、その1変更を行い、検証し、必要に応じてcommitしてから次へ進む。実際に処理が停止した、またはbulk automationが信頼できなくなった場合、それは問題であり、方法を切り替えて継続するのではなく最優先の即時停止ルールに従って直ちに停止する。**
 
 ## セッション実行契約
 
@@ -151,56 +143,20 @@
 
 ## サイト全体の不変条件
 
-- 公開reader-facing copyは自己完結したPSNOVA guide proseとし、情報が別source、site、archive、Wiki、migration target、reference documentから来たことを記載または示唆してはならない。`原典では`、`旧Wikiでは`、`アーカイブでは`、`参考元では`、`移植元では`、`元ページでは`、`出典では`、または同等のsource-provenance wordingをpublic HTMLで禁止する。provenanceとverification noteは、ユーザーがpublic pageでcitationを明示要求しない限り、repository documentation、test、code comment、internal work logにだけ記録する。
-
 - 公開PSNOVA pageではspoiler-protection UXまたはspoiler warningを適用しない。plot detailを含む可能性があるという理由だけで、story/gameplay informationをspoiler専用の `<details>` / `<summary>`、`ネタバレを表示` control、masking、blur、spoiler caution、その他同様の処理で隠してはならない。ユーザーが特定の例外を明示要求しない限り、関連情報は直接表示する。
 
 - ユーザー承認済みPSNOVA color paletteを保持する。automated contrast checkを満たすことだけを理由にsite colorを自動的にdarkenまたはreplaceしてはならない。ユーザーがcolor accessibility enforcementを明示要求しない限り、automated axe auditでは意図的に `color-contrast` を除外する。
 
 - mobile navigationは論理的keyboard focus pathを維持する。shared initializationはinteraction前に `#menubar_hdr` を `#container > header` へ移動し、攻略drawerを開いたときは最初のlinkへfocusを移動し、Escapeでdrawerを閉じてtriggerへfocusを戻す。focus order修復のためpositive `tabindex` を使ってはならない。
 
-- dynamic widgetは有効なaccessible nameとARIA semanticsを提供する。site-data searchは `#site-search-results` を制御するeditable `combobox` とし、rendered affiliate image linkはremote imageがempty altでも判別可能なaccessible nameを持たなければならない。
-
-- すべてのpublic HTML pageは、shared sidebarが供給するlinkを含むpublic internal linkを通じて `/PSNOVA/` から到達可能でなければならない。回帰テストでorphan public pageを防止する。
-
-- public `<img>` elementは、source imageのintrinsic dimensionに基づくnumeric `width` と `height` の両方を宣言する。responsiveなrendered sizingはCSSが担い、HTML dimensionはimage load前に正しいaspect ratioを予約してlayout shiftを減らす。
-
-- public pageは3つのshared JavaScript bundle（`openclose.js`、`menubar.js`、`sidebar.js`）を `defer` 付きで読み込む。public HTMLにinline initialization scriptを含めてはならない。shared componentはparse後にexternal JSから自己初期化し、document-order executionを保持する。廃止済み `/PSNOVA/js/fixmenu_pagetop.js` URLとcompatibility outputは完全削除済みであり、再作成・再参照してはならない。public HTMLとgeneratorは3bundleだけを出力する。
-
 - repository-owned public runtime JavaScript sourceは厳密に3file、`docs/js/openclose.js`、`docs/js/menubar.js`、`docs/js/sidebar.js` とする。`openclose.js` はresponsive-menuとpage-top behavior、`menubar.js` はimage hint/class icon、table enhancement、affiliate-banner behavior、`sidebar.js` はsidebar/current-link behaviorとsite searchを所有する。`menubar.js` には凍結されたlegacy page-style loaderが残っているが、対象pageは `page.css` を `data-psnova-page-style="true"` 付きでstatic宣言し、loaderを休眠状態にする。runtime stylesheet injectionは承認済み責務ではない。`fixmenu_pagetop.js`、`image-layout.js`、`table-enhancements.js`、`affiliate-banner.js`、`site-search.js`、`weapon-tools.js` など廃止済みstandalone fileは、ユーザーが3bundle decisionとJavaScript freezeを明示撤回しない限り再作成・動的loadしてはならない。
 
-- すべてのpublic pageはrepository-owned `/PSNOVA/img/logo.png` をfaviconとして明示宣言する。favicon resourceはrepository内local assetを維持し、external icon hotlinkを導入してはならない。
-
-- shared `#sub` sidebarは `docs/js/sidebar.js` により、名称付き攻略navigationを含むnative `<aside id="sub">` として生成する。complementary sidebar landmarkをgeneric `div` へ戻してはならない。
-
-- すべてのpublic pageはprimary contentにnative `<main id="main">` landmarkを厳密に1つ使用する。sitewide skip linkは `href="#main"` でこのelementをtargetにする。generic `div` へ戻したり、main landmarkを重複させてはならない。
-
-- すべてのpublic pageは `#main` へのkeyboard-accessible skip linkから始める。keyboardおよびassistive-technology userが繰り返しsite navigationを飛ばせるよう、focusされるまではvisually hiddenを維持する。
-
 - 通常のpost-fix quality gateには `python tools/psnova_quality.py finish` を使う。このcommandは各fix後に `git diff --check` と完全pytest suiteを実行し、完了fixが5件ごとの場合だけfull Playwright UI-health suiteも自動実行する。browser UI behaviorへ直接影響する変更だけ `targeted` を使い、残存static audit candidate一覧には `inventory` を使う。
-
-- active repository text fileは `.gitattributes`（`* text=auto eol=lf`）により全platformでLF line endingを使う。
-
-- public HTMLはmodern HTML shellを使う。obsolete `X-UA-Compatible` metadataまたはclassic script上の冗長な `type="text/javascript"` attributeを復元してはならない。
 
 - local Playwright UI health testはfull logical-CPU parallelism向けに設計されている。`fullyParallel: true` と `workers: '100%'` を使う。local test serverは最大OS socket backlog、threaded request handling、HTTP/1.1 persistent connectionを使う。公開済み `kylekatann.github.io/PSNOVA/` assetはlocalhost server経由で再fetchせずrepository fileから直接提供する。connection-refusal failureの回避策としてworker countを減らしてはならず、shared test infrastructure側を修正する。
 
 以下はユーザーreviewにより確定した仕様であり、regression constraintとして扱う。
 
-- public CSSのownerは2つだけとする。`docs/css/style.css` がshared/sitewide style、`docs/css/page.css` がpage-specific styleを所有する。3つ目のpublic stylesheetを作成せず、適切な既存ownerへruleを追加する。
 - rarity presentationのCSS ownerは `docs/css/style.css` の1か所だけとし、weapon pageのrarity displayをsite全体のcanonical visual specificationとする。`★` badge treatment、tabular numeral、1-3 blue / 4-6 green / 7-9 red / 10-12 orange / 13-15 violetのcolor scaleを維持する。`page.css` にrarity stylingを含めてはならない。既存shared JavaScriptはsource textを書き換えずにruntimeでrarity class/attributeを付与してよいが、この既存behaviorはJavaScript編集を許可するものではない。source HTMLにvisible `★` が既にある場合は、decorative pseudo-starだけを抑制し `★★` 表示を防ぐ。
 - data tableはcompactなoriginal-Wiki treatmentを維持する。pale blue header/emphasis surface、compact padding、控えめな1px separation、modern scrolling/search/sort behaviorを保持する。runtime HTML repairを除去してもこのvisual treatmentを失ってはならない。
 - すべてのpublic data tableはcanonical weapon tableと同じsquare-corner treatmentを使う。table、caption、table-scroll wrapperへrounded cornerまたはcard-like shadowを追加してはならない。page-specific table stylingでもこれらsurfaceをsquareに保つ。
-- すべてのtable pale-blue UI surfaceは全pageで同じ `var(--accent-soft)` colorを使う。table body cellは、semantic status colorが意図的に必要な場合を除きneutral surfaceを使う。
-- tableはshared border colorのsubtleな1px grid lineを使い、視覚的に重いborderにせずrow/columnを追いやすくする。
-- table column headerは常に中央揃えとし、static semantic source markupとして `<thead>` と `<th scope="col">` を使う。semantic left alignmentはnote、explanation、location、acquisition method、quest listなどbody contentだけに適用する。
-- 同一page上で同じcolumn structureを持つtableは、readabilityを損なわない限り対応column widthをpage全体で視覚的に揃える。per-table auto-sizingよりwidth consistencyを優先するが、重大なwrapping、clipping、読めないほど狭いcolumn、回避可能なhorizontal overflowを生じる場合は無理に揃えない。
-- legacy table compatibility stylingは禁止する。shared CSSでobsolete `bgcolor`、all-`th` body row、missing `<thead>`、first-row positionを条件分岐に使い、historical Wiki markupを推論してはならない。current public source HTMLをstaticに修正する。
-- public labelは自然なreader-facing日本語を使う。`Shop Lv`、`shopLv`、`ショップLv` などdeveloper-facingまたは説明のないlabelは禁止し、`ショップレベル` を表示する。
-- former `ページ内` barのようなautomatic in-page navigation stripは意図的に使用しないため、復元してはならない。
-- table alignmentはsemanticとする。説明文とquest-name listは左揃え、compact label、name、attribute、rarity、number、status valueは中央揃えとする。
-- すべてのpublic pageは利用可能なmain-content widthを自然に使う。ordinary body copyへ `max-width: 82ch` のようなglobal readable-line-length capを設定し、目立つ未使用right gutterを作ってはならない。意図的にcompactなUI componentは固有widthを設定してよいが、ordinary `#main` paragraphは利用可能columnを使う。
-- public-facing site copyでvisitorをGitHub、GitHub Issues、Pull Requests、repository contribution channel、その他GitHub-based reporting instructionへ誘導してはならない。`kylekatann.github.io` 配下のhosting/infrastructure URLは技術上必要な場合に残してよいが、contributionまたはcorrection workflowとして提示してはならない。
-- reader-facing guide/data pageは通常3文程度の簡潔なintroductory copyを使い、page scope、主要な比較・確認point、情報のpractical useを示す。
-- search/browser page titleはhomepageで厳密に `PSNOVA攻略サイト`、その他すべてのpublic pageで `PSNOVA攻略サイト - XXXXX` を使う。`XXXXX` はlink先page自体を示す。例としてweapon landing pageはgeneric site titleではなく `PSNOVA攻略サイト - 武器` とする。
-- primary navigation textはcompact guide-site densityを維持しつつ、通常のdesktop/mobile viewing sizeですぐ読めなければならない。current baselineはtop/mobile navigationが16px、primary sidebar linkが14px、nested weapon linkが13px、sidebar group labelが12pxであり、明示的design decisionなしにこれらを小さくしてはならない。
