@@ -1,4 +1,5 @@
 from pathlib import Path
+import re
 import unittest
 
 
@@ -35,10 +36,24 @@ class TablePaletteAndGridTests(unittest.TestCase):
 
     def test_table_grid_is_subtle_shared_border(self):
         css = STYLE.read_text(encoding="utf-8")
-        self.assertIn("border: 1px solid var(--border);", css)
-        self.assertIn("border-right: 1px solid var(--border);", css)
-        self.assertIn("border-bottom: 1px solid var(--border);", css)
-        self.assertIn("border-spacing: 0;", css)
+        page_css = PAGE_STYLE.read_text(encoding="utf-8")
+
+        self.assertRegex(
+            css,
+            r"#main table \{[^}]*"
+            r"border: 1px solid var\(--border\);[^}]*"
+            r"border-collapse: separate;[^}]*"
+            r"border-spacing: 0;",
+        )
+        self.assertRegex(
+            css,
+            r"#main table th,\s*#main table td \{[^}]*"
+            r"border: 0;[^}]*"
+            r"border-right: 1px solid var\(--border\);[^}]*"
+            r"border-bottom: 1px solid var\(--border\);",
+        )
+        self.assertNotRegex(css, r"border-spacing:\s*[1-9]")
+        self.assertNotRegex(page_css, r"border-spacing:\s*[1-9]")
 
 
 if __name__ == "__main__":
