@@ -27,6 +27,38 @@ class TableVisualRegressionTests(unittest.TestCase):
         self.assertNotIn("#eef5ff", css.lower())
         self.assertNotIn("#e0e8f0", css.lower())
 
+    def test_public_table_surfaces_remain_square_and_flat(self):
+        css_sources = (
+            STYLE.read_text(encoding="utf-8"),
+            PAGE_STYLE.read_text(encoding="utf-8"),
+        )
+        cell_level = re.compile(r"\b(?:td|th|tr|thead|tbody|tfoot)\b")
+
+        for css in css_sources:
+            css = re.sub(r"/\*.*?\*/", "", css, flags=re.S)
+            for selectors, declarations in re.findall(r"([^{}]+)\{([^{}]*)\}", css):
+                for selector in selectors.split(","):
+                    selector = selector.strip()
+                    is_table_surface = "table" in selector and not cell_level.search(selector)
+                    is_special_scroll_surface = selector in {
+                        "#main.technic-detail-page .technic-level-scroll",
+                    }
+                    if not (is_table_surface or is_special_scroll_surface):
+                        continue
+
+                    for radius in re.findall(r"border-radius:\s*([^;]+)", declarations):
+                        self.assertEqual(
+                            "0",
+                            radius.strip(),
+                            f"rounded table surface: {selector}",
+                        )
+                    for shadow in re.findall(r"box-shadow:\s*([^;]+)", declarations):
+                        self.assertEqual(
+                            "none",
+                            shadow.strip(),
+                            f"card-like table shadow: {selector}",
+                        )
+
     def test_weapon_table_visual_encoding_is_kept_in_shared_table_css(self):
         css = STYLE.read_text(encoding="utf-8")
         self.assertIn('.rarity-cell[data-rarity="1"]', css)
