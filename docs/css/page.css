@@ -406,7 +406,7 @@
 
 #main.technic-detail-page .technic-level-table tbody tr:first-child > th,
 #main.technic-detail-page .technic-level-table tbody tr:first-child > td {
-    background: #f5f6ff;
+    background: var(--accent-soft);
     font-weight: 700;
 }
 
