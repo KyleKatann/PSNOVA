@@ -61,8 +61,8 @@ def test_gigantes_large_and_small_tables_share_the_same_layout_contract():
     html = HTML.read_text(encoding="utf-8")
     css = CSS.read_text(encoding="utf-8")
 
-    assert "<h3>大型ギガンテスデータ</h3>" in html
-    assert "<h3>小型ギガンテスデータ</h3>" in html
+    assert "<h2>大型ギガンテスデータ</h2>" in html
+    assert "<h2>小型ギガンテスデータ</h2>" in html
     assert html.count('class="table-scroll gigantes-table-scroll"') == 2
     assert html.count('class="gigantes-table"') == 2
     assert "#main .gigantes-table-scroll {" in css
