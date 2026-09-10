@@ -123,7 +123,7 @@
 11. migration専用のprogram、workflow、request file、testを再導入してはならない。公開ページの保守はcurrent public sourceと通常の回帰テストを直接更新して行う。
 12. **実行時JavaScriptで、誤ったページ固有の静的HTMLまたはゲームデータを修復、正規化、sanitize、再解釈、追加、削除、移動、複製、非表示、その他補正してはならない。これは絶対禁止である。** 決定的なリンク、注記、見出し、表値、アセット参照、stylesheet参照、その他ページ固有の静的要素が存在すべき、または削除すべき場合は、生HTMLソースまたはそのgeneratorを直接編集する。JavaScriptでsemantic table構造（`thead`、`tbody`、`tr`、`th`、`td`）を作成、移動、置換、変換したり、廃止済みpresentation属性・styleを除去したり、壊れたmarkupを修復したり、source text/dataを掃除したり、望ましい表示内容を得るために既知の誤った静的ソースとrendered DOMを異ならせてはならない。既存JavaScriptは、search、filtering、sorting、navigation state、state class、visual category class、scroll wrapperなど本質的にruntimeの動作を引き続き提供してよいが、この既存動作の説明は最優先の凍結ルール下でJavaScript編集を許可するものではない。sitewide sidebarなど明示的に共通化された既存runtime componentはページ固有contentとは別物であり、page HTML編集の回避策として使用してはならない。
 13. **data tableのalignmentは任意の列位置ではなく内容の意味に従う。** 名称、code、数値、rarity、stat、material、その他compact dataは原則中央揃えとする。説明文、注記、文章形式のeffect、入手方法、location、quest-name listは左揃えとする。source-awareなshared CSSまたは明示的static markupで実装し、JavaScriptでruntimeにalignmentの意味を推論・修復してはならない。
-14. **ユーザーが報告した回帰によって修正仕様が確定した場合、その仕様を同一実装項目でこのガイドへ記録する。** 実用的ならregression testも追加する。ユーザーが明示的に誤りとした挙動を後から再導入してはならない。
+14. **ユーザーが報告した回帰によって修正仕様が確定した場合、操作方針またはサイト全体に横断する恒久ルールだけをこのガイドへ記録する。特定ページまたはページ群に固有の仕様は、実装状態を直接検証するregression testへ記録し、`Agent.md`へ重複して蓄積しない。** ユーザーが明示的に誤りとした挙動を後から再導入してはならない。
 15. **公開UI文言には、developer-facingなfield名、camelCase、internal identifier、説明のないmixed-language abbreviationではなく、読者向けの明確な日本語を使う。** `Shop Lv`、`ShopLv`、`shopLv`、`ショップLv` などのlabelはvisible UIで禁止し、`ショップレベル` を使う。HP、GP、DLC、PSNOVAなど一般化したゲーム用語やofficial nameは、文脈上標準的で直ちに理解できる場合は使用してよい。
 16. **すべてのtable column headerは中央揃えにする。** body cellは意味に応じて左揃えの説明、注記、location、quest listなどを維持してよいが、それらのbody ruleが実際のheader rowの中央揃えを上書きしてはならない。
 17. **自動生成のin-page section navigation barを追加してはならない。** 以前の `ページ内` link stripは不要と判断され削除済みであり、復活させてはならない。page structure、heading、sidebar、searchを使い、明確な価値がある場合だけ目的特化navigationを使う。
@@ -149,15 +149,11 @@
 - objective、このguide、current code、testが十分な判断基準を提供している場合は、問題を検知していない間だけ次のplanned itemへ進む。質問するのは、product decisionが本当に曖昧な場合、irreversible/high-risk actionが必要な場合、利用できないexternal credential/informationが不可欠な場合、または最優先の即時停止ルールが発動した場合だけとする。
 - 一時的なsession handover documentをremote repositoryへ作成・commitしてはならない。永続project ruleは `Agent.md` または別途明示承認されたpermanent documentへ記録し、一時handover noteはremote repository外に置く。
 
-## 修正から確定した不変条件
-
-- クエストページの利用者向け可視テキストでは、コロンは全角 `：`（U+FF1A）を使用する。半角 `:`（U+003A）は使用してはならない。クエスト名、表内のクエスト名、攻略・追記などのラベルを含めてこの規則を適用する。URL、HTML属性、コード等の技術文字列は対象外とする。
+## サイト全体の不変条件
 
 - 公開reader-facing copyは自己完結したPSNOVA guide proseとし、情報が別source、site、archive、Wiki、migration target、reference documentから来たことを記載または示唆してはならない。`原典では`、`旧Wikiでは`、`アーカイブでは`、`参考元では`、`移植元では`、`元ページでは`、`出典では`、または同等のsource-provenance wordingをpublic HTMLで禁止する。provenanceとverification noteは、ユーザーがpublic pageでcitationを明示要求しない限り、repository documentation、test、code comment、internal work logにだけ記録する。
 
 - 公開PSNOVA pageではspoiler-protection UXまたはspoiler warningを適用しない。plot detailを含む可能性があるという理由だけで、story/gameplay informationをspoiler専用の `<details>` / `<summary>`、`ネタバレを表示` control、masking、blur、spoiler caution、その他同様の処理で隠してはならない。ユーザーが特定の例外を明示要求しない限り、関連情報は直接表示する。
-
-- 個別weapon detail pageのintroductionは、tableやpage内容の説明だけでなく、そのweapon自体のhandling、role、range、combat traitを説明する。`武器データを掲載する`、`一覧で確認できる`、`このページでは` のようなboilerplateをこれらleadへ戻してはならない。
 
 - ユーザー承認済みPSNOVA color paletteを保持する。automated contrast checkを満たすことだけを理由にsite colorを自動的にdarkenまたはreplaceしてはならない。ユーザーがcolor accessibility enforcementを明示要求しない限り、automated axe auditでは意図的に `color-contrast` を除外する。
 
@@ -165,9 +161,7 @@
 
 - dynamic widgetは有効なaccessible nameとARIA semanticsを提供する。site-data searchは `#site-search-results` を制御するeditable `combobox` とし、rendered affiliate image linkはremote imageがempty altでも判別可能なaccessible nameを持たなければならない。
 
-- `/PSNOVA/copyright.html` と `/PSNOVA/issue.html` は廃止済みpublic pageである。ユーザーがこのretirement decisionを明示的に撤回しない限り、public HTML、sitemap、metadata、footer、navigation、site search、その他public routing/indexingへ復元してはならない。
-
-- すべてのpublic HTML pageは、shared sidebarが供給するlinkを含むpublic internal linkを通じて `/PSNOVA/` から到達可能でなければならない。`tests/test_public_navigation_reachability.py` でorphan public pageを防止する。
+- すべてのpublic HTML pageは、shared sidebarが供給するlinkを含むpublic internal linkを通じて `/PSNOVA/` から到達可能でなければならない。回帰テストでorphan public pageを防止する。
 
 - public `<img>` elementは、source imageのintrinsic dimensionに基づくnumeric `width` と `height` の両方を宣言する。responsiveなrendered sizingはCSSが担い、HTML dimensionはimage load前に正しいaspect ratioを予約してlayout shiftを減らす。
 
@@ -176,8 +170,6 @@
 - repository-owned public runtime JavaScript sourceは厳密に3file、`docs/js/openclose.js`、`docs/js/menubar.js`、`docs/js/sidebar.js` とする。`openclose.js` はresponsive-menuとpage-top behavior、`menubar.js` はimage hint/class icon、table enhancement、affiliate-banner behavior、`sidebar.js` はsidebar/current-link behaviorとsite searchを所有する。`menubar.js` には凍結されたlegacy page-style loaderが残っているが、対象pageは `page.css` を `data-psnova-page-style="true"` 付きでstatic宣言し、loaderを休眠状態にする。runtime stylesheet injectionは承認済み責務ではない。`fixmenu_pagetop.js`、`image-layout.js`、`table-enhancements.js`、`affiliate-banner.js`、`site-search.js`、`weapon-tools.js` など廃止済みstandalone fileは、ユーザーが3bundle decisionとJavaScript freezeを明示撤回しない限り再作成・動的loadしてはならない。
 
 - すべてのpublic pageはrepository-owned `/PSNOVA/img/logo.png` をfaviconとして明示宣言する。favicon resourceはrepository内local assetを維持し、external icon hotlinkを導入してはならない。
-
-- homepageのdescription tableは明示的row-header semanticsを使う。各 `商品概要` と `公式サイト` rowの先頭label cellは `<th scope="row">` とする。`scope="col"` は実際のcolumn headerだけに使う。
 
 - shared `#sub` sidebarは `docs/js/sidebar.js` により、名称付き攻略navigationを含むnative `<aside id="sub">` として生成する。complementary sidebar landmarkをgeneric `div` へ戻してはならない。
 
@@ -206,24 +198,7 @@
 - legacy table compatibility stylingは禁止する。shared CSSでobsolete `bgcolor`、all-`th` body row、missing `<thead>`、first-row positionを条件分岐に使い、historical Wiki markupを推論してはならない。current public source HTMLをstaticに修正する。
 - public labelは自然なreader-facing日本語を使う。`Shop Lv`、`shopLv`、`ショップLv` などdeveloper-facingまたは説明のないlabelは禁止し、`ショップレベル` を表示する。
 - former `ページ内` barのようなautomatic in-page navigation stripは意図的に使用しないため、復元してはならない。
-- weapon section headingはweapon iconを厳密に1つだけ表示する。同一headingでCSS background weapon iconとinjected `<img>` を併用してはならない。意図的に別用途のrow/category iconは維持してよい。
-- weapon landing-page catalogでは、11種類のweapon-type labelそれぞれの横に既存native weapon PNGを1つ表示する。selector cardをtext-onlyへ退行させず、icon visibilityをruntime JavaScriptへ依存させてはならない。
-- 個別weapon detail pageは、1つのstatic weapon tableの上に通常のstatic `<h1>` weapon-type headingを置く。tableを `<details>` / `<summary>` で囲まず、disclosure widgetを強制openするためJavaScriptへ依存してはならない。
-- weapon detail pageではtable上部に中央揃えの `武器一覧` linkだけを残す。previous/next weapon-type linkは廃止済みであり、復元してはならない。
-- weapon-specific search/filter/sort toolbarは廃止済みである。ユーザーがこのdecisionとJavaScript freezeを明示撤回しない限り、`docs/js/weapon-tools.js` とそのloaderは存在しない状態を維持する。weapon table headerは全viewportでnormal document flowを維持し、`position: sticky` を使ってはならない。table columnをfixedまたはhorizontally stickyにしてはならない。
-- `class.html` は4class（Hunter、Ranger、Force、Buster）のguideでありweapon dataではない。`skill.html` はskill dataでありarmor dataではない。他data pageからcopyしたcontentでこれらpageを上書きしてはならない。
-- Gigantes pageには他のGigantes familyに加えて、トアス種、ゴルドス種、アフォル種を含める。明示的な根拠と承認なしに削除したりordinary enemyへ再分類してはならない。
-- desktop（`min-width: 801px`）ではGigantes data tableをmain content width内に収め、horizontal scrollingを使ってはならない。mobile（`max-width: 800px`）では `.gigantes-table-scroll` のhorizontal scrollingを許可する。
-- Gigantes tableの `難易度SH以降での出現クエスト` columnでは各entryを1行に保ち、quest entry間の既存明示 `<br>` separatorを維持する。隣の `備考` columnをflexible wrapping columnとして、proseをwrapさせwidthを吸収する。
-- multi-stage Gigantes nameはbrowserの任意text wrappingに依存せず、`(第一段階)`、`(第二段階)`、`(第三段階)` などstage label前にcell内部の明示 `<br>` を使う。
-- Gigantes pageではfirst tableを `大型ギガンテスデータ`、second tableを `小型ギガンテスデータ` とlabelする。両tableで同じGigantes table-layout ruleを使い、desktopではhorizontal scrollingなし、mobileではhorizontal scrolling可、`備考` はwrap、各 `難易度SH以降での出現クエスト` entry内部は自動wrapしない。
-- material pageの `コア` tableは保存source Wikiのrarityをvisible star valueとして保持する。例：`スモール・コア = ★1`、`ダーカー・コア = ★2`、`ギガンテス・コア = ★7`。保存Wikiにあるcolored star前後のsame-color numeric padding、例 `02 + ★2 + 00` はpresentation/sorting scaffoldingでありgameplay dataではないため、`200`、`500`、`1400`、`1500` などの値として取り込んではならない。
-- armor pageの `シールドユニット` tableは保存source Wikiのrarityをvisible `★1` から `★15` として保持する。保存されたzero-width/zero-font sorting padding、例 `★ + font-size:0px 0 + 1` はsorting scaffoldingでありgameplay dataではないため、`01` から `09` として取り込んだりvisible `★` markerを除去する根拠にしてはならない。
-- attachment pageの `アタッチパーツ` tableは保存source Wikiのrarityをvisible `★1` から `★10` として保持する。visible `★1` 前の `01` などzero-font numeric prefixはsorting scaffoldingであり、visible star rarityをplain `1` から `10` またはpadded valueへ置換してはならない。
-- weapon pageのrarity value `1` から `9` は `01` から `09` のようにzero-paddingしてはならない。保存Wikiのhidden zero-font prefixはgameplay dataではなくsorting scaffoldingである。
-- Pile weapon sectionは保存Pile datasetを使用し、rarity `3`、打撃力 `579`、射撃力 `529` の `パイル` から始まる。Rod weapon datasetを複製してはならない。
 - table alignmentはsemanticとする。説明文とquest-name listは左揃え、compact label、name、attribute、rarity、number、status valueは中央揃えとする。
-- desktopのAffiliate/PR presentationは同じvisual heightのequal-width banner slotを2つ使い、利用可能content widthをきれいに満たす。mobileではvisible banner columnを1列へcollapseする。PR disclosureは明確にvisibleなまま維持する。
 - すべてのpublic pageは利用可能なmain-content widthを自然に使う。ordinary body copyへ `max-width: 82ch` のようなglobal readable-line-length capを設定し、目立つ未使用right gutterを作ってはならない。意図的にcompactなUI componentは固有widthを設定してよいが、ordinary `#main` paragraphは利用可能columnを使う。
 - public-facing site copyでvisitorをGitHub、GitHub Issues、Pull Requests、repository contribution channel、その他GitHub-based reporting instructionへ誘導してはならない。`kylekatann.github.io` 配下のhosting/infrastructure URLは技術上必要な場合に残してよいが、contributionまたはcorrection workflowとして提示してはならない。
 - reader-facing guide/data pageは通常3文程度の簡潔なintroductory copyを使い、page scope、主要な比較・確認point、情報のpractical useを示す。
