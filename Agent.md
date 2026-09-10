@@ -120,7 +120,6 @@
 13. **ユーザーが報告した回帰によって修正仕様が確定した場合、作業手順・安全策・判断基準としてエージェントが実行時に参照する必要がある恒久ルールだけをこのガイドへ記録する。HTML、CSS、JavaScript、ファイル構成その他の実装状態を自動判定できる仕様は、サイト横断であってもregression testへ記録し、`Agent.md`と二重管理しない。** ユーザーが明示的に誤りとした挙動を後から再導入してはならない。
 14. **公開UI文言には、developer-facingなfield名、camelCase、internal identifier、説明のないmixed-language abbreviationではなく、読者向けの明確な日本語を使う。** `Shop Lv`、`ShopLv`、`shopLv`、`ショップLv` などのlabelはvisible UIで禁止し、`ショップレベル` を使う。HP、GP、DLC、PSNOVAなど一般化したゲーム用語やofficial nameは、文脈上標準的で直ちに理解できる場合は使用してよい。
 16. **guide pageとdata pageは、通常3文程度の簡潔なreader-facing introductionから始める。** pageが扱う範囲、比較・確認できる内容、情報の実用的な使い方を説明する。placeholder的な1行説明やコピーされたWiki断片を避ける。
-17. **data tableで使うすべてのpale-blue UI surfaceには、既存の同一UI token `var(--accent-soft)` を使う。** table headerやblue emphasis cell用にpage固有のpale-blue hex colorを導入してはならない。ゲーム上の意味を伝えるsemantic non-blue status colorは必要に応じて別色を維持してよい。
 18. **data tableはshared border tokenに基づく控えめな1px grid lineを使う。** row/column追跡を助ける一方で視覚的に支配的にならないようにし、太いdark borderや各cell間の1px colored gapへ戻してはならない。
 20. **site表示用assetを外部websiteからhotlinkしてはならない。** 公開siteで使うimage、font、CSS、JavaScript、その他visual/runtime assetはこのrepository内に保存し、local `/PSNOVA/...` pathで参照する。remote image URL、CDN asset URL、その他外部site asset referenceを使ってはならない。承認済みaffiliate linkなど、読者を外部へ移動させる意図的navigationはasset hotlinkとは別扱いとする。
 21. **active developmentおよびpublishing branchは `master` のみとする。ユーザーがこのルールを明示的に撤回しない限り、feature branch、work branch、temporary implementation branch、PR branchを作成、切替、使用してはならない。通常の実装、commit、pushは `master` へ直接行う。既存backup/archive branchはread-onlyな歴史的recovery pointとして残してよいが、active workには使用しない。**
