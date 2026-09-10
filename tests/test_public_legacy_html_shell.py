@@ -16,6 +16,11 @@ SCRIPT_TYPE_RE = re.compile(
     re.IGNORECASE,
 )
 
+EMBEDDED_DOCUMENT_RE = re.compile(
+    r"<(?:iframe|object|embed)\b",
+    re.IGNORECASE,
+)
+
 
 def public_html_files():
     for path in DOCS.rglob("*.html"):
@@ -40,6 +45,16 @@ class PublicLegacyHtmlShellTests(unittest.TestCase):
         for path in public_html_files():
             text = path.read_text(encoding="utf-8")
             if SCRIPT_TYPE_RE.search(text):
+                violations.append(str(path.relative_to(ROOT)))
+
+        self.assertEqual([], violations)
+
+    def test_public_html_does_not_embed_legacy_documents(self):
+        violations = []
+
+        for path in public_html_files():
+            text = path.read_text(encoding="utf-8")
+            if EMBEDDED_DOCUMENT_RE.search(text):
                 violations.append(str(path.relative_to(ROOT)))
 
         self.assertEqual([], violations)
