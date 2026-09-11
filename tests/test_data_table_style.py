@@ -9,7 +9,7 @@ TABLE_JS = ROOT / "docs" / "js" / "menubar.js"
 class DataTableStyleTests(unittest.TestCase):
     def test_tables_are_flat_and_data_oriented(self):
         css = STYLE.read_text(encoding="utf-8")
-        self.assertIn("border-collapse: separate;", css)
+        self.assertIn("border-collapse: collapse;", css)
         self.assertIn("box-shadow: none;", css)
         self.assertIn("font-family: inherit;", css)
 
