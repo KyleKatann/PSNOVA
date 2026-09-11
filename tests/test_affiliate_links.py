@@ -65,7 +65,7 @@ class AffiliateLinkTests(unittest.TestCase):
         self.assertIn('var duplicateCards = products.map(function (product)', js)
         self.assertIn('function normalizeOffset()', js)
         self.assertIn('autoScrollTimer = window.setInterval(autoScrollTick, 16)', js)
-        self.assertIn('var pixelsPerSecond = 30;', js)
+        self.assertIn('var pixelsPerSecond = 15;', js)
         self.assertIn('offset += pixelsPerSecond * elapsed / 1000', js)
         self.assertIn('track.style.transform = "translate3d(" + (-offset) + "px, 0, 0)"', js)
         self.assertIn('startAutoScroll();', js)
