@@ -21,9 +21,7 @@ class IdParser(HTMLParser):
 
 
 def public_html_files():
-    for path in DOCS.rglob("*.html"):
-        if "分類中" not in path.parts:
-            yield path
+    yield from DOCS.rglob("*.html")
 
 
 class PublicHtmlIdTests(unittest.TestCase):
