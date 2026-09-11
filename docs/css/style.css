@@ -67,6 +67,7 @@ body {
 
 a {
     color: var(--link);
+    text-decoration: none;
     text-underline-offset: 0.16em;
 }
 
