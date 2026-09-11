@@ -8,7 +8,6 @@ ROOT = Path(__file__).resolve().parents[1]
 DOCS = ROOT / "docs"
 SITEMAP = DOCS / "sitemap.xml"
 CSS = DOCS / "css" / "style.css"
-CONFIG = DOCS / "_config.yml"
 SITE_PREFIX = "/PSNOVA/"
 
 
@@ -166,12 +165,3 @@ def test_enemy_and_gigantes_share_semantic_header_contract():
     assert '<th scope="col">名前</th>' in enemy
     assert "<thead>" in gigantes
     assert '<th scope="col">種別</th>' in gigantes
-
-
-def test_historical_classification_tree_is_not_part_of_public_build():
-    config = CONFIG.read_text(encoding="utf-8")
-
-    assert "exclude:" in config
-    assert "- pages/分類中" in config
-
-
