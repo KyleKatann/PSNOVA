@@ -207,7 +207,6 @@ if (document.readyState === "loading") {
 
         if (parsed.origin !== window.location.origin) return false;
         if (parsed.pathname.indexOf("/PSNOVA/") !== 0) return false;
-        if (parsed.pathname.indexOf("/分類中/") !== -1) return false;
 
         return parsed.pathname.endsWith("/") || parsed.pathname.endsWith(".html");
     }
