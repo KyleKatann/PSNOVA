@@ -600,7 +600,7 @@
         var autoScrollTimer = null;
         var lastTick = null;
         var offset = 0;
-        var pixelsPerSecond = 30;
+        var pixelsPerSecond = 15;
         track.style.willChange = "transform";
 
         function loopWidth() {
