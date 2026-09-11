@@ -600,7 +600,7 @@
         var autoScrollTimer = null;
         var lastTick = null;
         var offset = 0;
-        var pixelsPerSecond = 60;
+        var pixelsPerSecond = 30;
         track.style.willChange = "transform";
 
         function loopWidth() {
@@ -703,6 +703,7 @@
 
         var section = main.querySelector("section") || main;
         insertAtPrimaryPosition(section, createProductCarousel());
+        main.appendChild(createProductCarousel());
         main.appendChild(createRakutenWidget());
         main.appendChild(createCampaignBanner());
     }
