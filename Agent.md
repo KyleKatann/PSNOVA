@@ -136,6 +136,7 @@
 - FAILまたはその他の問題を検知した場合は、最優先の即時停止ルールに従って直ちに停止する。報告では、その問題がsession開始前から存在したか、current sessionが導入したかを区別し、(1) current itemに直接関係する、(2) 後で明示的に予定されたitemに関係する、(3) current objective外、のいずれかに分類する。分類は報告目的のみであり、作業継続を許可するものではない。
 - すでに導入した変更によってrepositoryを既知の破損状態に残さないため厳密に必要な最小処置を除き、同じrun中に検知した問題を修正、先送り、回避してはならない。問題を報告し、ユーザーの次の指示を待つ。
 - objective、このguide、current code、testが十分な判断基準を提供している場合は、問題を検知していない間だけ次のplanned itemへ進む。質問するのは、product decisionが本当に曖昧な場合、irreversible/high-risk actionが必要な場合、利用できないexternal credential/informationが不可欠な場合、または最優先の即時停止ルールが発動した場合だけとする。
+- **ユーザーから「続けよ」「続行」「進めて」等の継続指示を受けた場合、予定された作業が完了するか、最優先の即時停止ルールが発動するか、ユーザー判断が不可欠な事項に到達するまで自律的に作業を継続する。** 途中経過、次の候補、監査結果、「概ね完了」だけを理由に応答を終了してはならない。問題を検知しておらず、判断基準が十分な次項目がある場合は、そのまま次項目へ進む。
 - 一時的なsession handover documentをremote repositoryへ作成・commitしてはならない。永続project ruleは `Agent.md` または別途明示承認されたpermanent documentへ記録し、一時handover noteはremote repository外に置く。
 
 ## サイト全体の不変条件
