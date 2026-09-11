@@ -275,9 +275,18 @@
         '<a href="https://hb.afl.rakuten.co.jp/hsc/56f6981d.83e8392f.161c2dce.b25f77a4/?link_type=pict&ut=eyJwYWdlIjoic2hvcCIsInR5cGUiOiJwaWN0IiwiY29sIjoxLCJjYXQiOiI0NCIsImJhbiI6Mjc5NDg1OCwiYW1wIjpmYWxzZX0%3D" target="_blank" rel="nofollow sponsored noopener" style="word-wrap:break-word;"><img src="https://hbb.afl.rakuten.co.jp/hsb/56f6981d.83e8392f.161c2dce.b25f77a4/?me_id=1&me_adv_id=2794858&t=pict" border="0" style="margin:2px" alt="" title=""></a>',
         '<a href="https://hb.afl.rakuten.co.jp/hsc/56f699f4.e077cc17.161c2dce.b25f77a4/?link_type=pict&ut=eyJwYWdlIjoic2hvcCIsInR5cGUiOiJwaWN0IiwiY29sIjoxLCJjYXQiOiI5NSIsImJhbiI6MjA1MTk0MiwiYW1wIjpmYWxzZX0%3D" target="_blank" rel="nofollow sponsored noopener" style="word-wrap:break-word;"><img src="https://hbb.afl.rakuten.co.jp/hsb/56f699f4.e077cc17.161c2dce.b25f77a4/?me_id=1&me_adv_id=2051942&t=pict" border="0" style="margin:2px" alt="" title=""></a>',
         '<a href="https://hb.afl.rakuten.co.jp/hsc/301b0604.e2433fa0.161c2dce.b25f77a4/?link_type=pict&ut=eyJwYWdlIjoic2hvcCIsInR5cGUiOiJwaWN0IiwiY29sIjoxLCJjYXQiOiI4MCIsImJhbiI6NDYzNjIsImFtcCI6ZmFsc2V9" target="_blank" rel="nofollow sponsored noopener" style="word-wrap:break-word;"><img src="https://hbb.afl.rakuten.co.jp/hsb/301b0604.e2433fa0.161c2dce.b25f77a4/?me_id=1&me_adv_id=46362&t=pict" border="0" style="margin:2px" alt="" title=""></a>',
-        '<a href="https://hb.afl.rakuten.co.jp/hsc/56f69d54.b499076e.161c2dce.b25f77a4/?link_type=pict&ut=eyJwYWdlIjoic2hvcCIsInR5cGUiOiJwaWN0IiwiY29sIjoxLCJjYXQiOiIxNCIsImJhbiI6Mzg0OTQ1LCJhbXAiOmZhbHNlfQ%3D%3D" target="_blank" rel="nofollow sponsored noopener" style="word-wrap:break-word;"><img src="https://hbb.afl.rakuten.co.jp/hsb/56f69d54.b499076e.161c2dce.b25f77a4/?me_id=1&me_adv_id=384945&t=pict" border="0" style="margin:2px" alt="" title=""></a>',
+        '<a href="https://hb.afl.rakuten.co.jp/hsc/56f69d54.b499076e.161c2dce.b25f77a4/?link_type=pict&ut=eyJwYWdlIjoic2hvcCIsInR5cGUiOiJwaWN0IiwiY29sIjoxLCJjYXQiOiI1NCIsImJhbiI6Mzg0OTQ1LCJhbXAiOmZhbHNlfQ%3D%3D" target="_blank" rel="nofollow sponsored noopener" style="word-wrap:break-word;"><img src="https://hbb.afl.rakuten.co.jp/hsb/56f69d54.b499076e.161c2dce.b25f77a4/?me_id=1&me_adv_id=384945&t=pict" border="0" style="margin:2px" alt="" title=""></a>',
         '<a href="https://hb.afl.rakuten.co.jp/hsc/56f69e04.e1b4b2a6.161c2dce.b25f77a4/?link_type=pict&ut=eyJwYWdlIjoic2hvcCIsInR5cGUiOiJwaWN0IiwiY29sIjoxLCJjYXQiOiI1IiwiYmFuIjozMjgyMDEzLCJhbXAiOmZhbHNlfQ%3D%3D" target="_blank" rel="nofollow sponsored noopener" style="word-wrap:break-word;"><img src="https://hbb.afl.rakuten.co.jp/hsb/56f69e04.e1b4b2a6.161c2dce.b25f77a4/?me_id=1&me_adv_id=3282013&t=pict" border="0" style="margin:2px" alt="" title=""></a>'
     ];
+    var rakutenWidgetDocument = [
+        '<!doctype html><html lang="ja"><head><meta charset="utf-8">',
+        '<meta name="viewport" content="width=device-width, initial-scale=1">',
+        '<style>html,body{margin:0;padding:0;background:transparent;}body{overflow:hidden;text-align:center;}<\/style>',
+        '</head><body>',
+        '<script type="text/javascript">rakuten_design="slide";rakuten_affiliateId="1684437a.b247fdb8.1684437b.b272d4f6";rakuten_items="ranking";rakuten_genreId="566382";rakuten_size="728x200";rakuten_target="_blank";rakuten_theme="gray";rakuten_border="off";rakuten_auto_mode="on";rakuten_genre_title="off";rakuten_recommend="on";rakuten_ts="1789147399706";<\/script>',
+        '<script type="text/javascript" src="https://xml.affiliate.rakuten.co.jp/widget/js/rakuten_widget.js?20230106"><\/script>',
+        '</body></html>'
+    ].join("");
 
     function pathHash(value) {
         var hash = 0;
@@ -314,6 +323,58 @@
         }).join("");
     }
 
+    function createCampaignBanner() {
+        var banner = document.createElement("aside");
+        banner.className = "affiliate-banner affiliate-campaign-banner";
+        banner.setAttribute("aria-label", "楽天市場のPR");
+        banner.innerHTML = '<span class="affiliate-disclosure">PR</span><div class="affiliate-banner-body">' + renderBannerItems() + "</div>";
+        return banner;
+    }
+
+    function createRakutenWidget() {
+        var widget = document.createElement("aside");
+        widget.className = "affiliate-banner rakuten-motion-widget";
+        widget.setAttribute("aria-label", "楽天市場の商品ランキングPR");
+        widget.innerHTML = '<span class="affiliate-disclosure">PR</span>';
+
+        var frame = document.createElement("iframe");
+        frame.className = "rakuten-motion-widget-frame";
+        frame.title = "楽天市場の商品ランキング広告";
+        frame.setAttribute("width", "728");
+        frame.setAttribute("height", "200");
+        frame.setAttribute("sandbox", "allow-scripts allow-forms allow-popups allow-popups-to-escape-sandbox");
+        frame.style.display = "block";
+        frame.style.width = "100%";
+        frame.style.maxWidth = "728px";
+        frame.style.height = "200px";
+        frame.style.margin = "0 auto";
+        frame.style.border = "0";
+        frame.srcdoc = rakutenWidgetDocument;
+        widget.appendChild(frame);
+
+        return widget;
+    }
+
+    function insertAtPrimaryPosition(section, node) {
+        var children = Array.prototype.slice.call(section.children || []);
+        var firstParagraph = children.find(function (child) {
+            return child.tagName && child.tagName.toLowerCase() === "p";
+        });
+
+        if (firstParagraph && firstParagraph.nextSibling) {
+            section.insertBefore(node, firstParagraph.nextSibling);
+        } else if (firstParagraph) {
+            section.appendChild(node);
+        } else {
+            var firstData = section.querySelector("details, table");
+            if (firstData) {
+                section.insertBefore(node, firstData);
+            } else {
+                section.appendChild(node);
+            }
+        }
+    }
+
     function insertBanner() {
         if (document.querySelector(".affiliate-banner")) return;
         if (/\/(copyright|issue)\.html$/.test(window.location.pathname)) return;
@@ -322,28 +383,8 @@
         if (!main) return;
 
         var section = main.querySelector("section") || main;
-        var banner = document.createElement("aside");
-        banner.className = "affiliate-banner";
-        banner.setAttribute("aria-label", "楽天市場のPR");
-        banner.innerHTML = '<span class="affiliate-disclosure">PR</span><div class="affiliate-banner-body">' + renderBannerItems() + "</div>";
-
-        var children = Array.prototype.slice.call(section.children || []);
-        var firstParagraph = children.find(function (child) {
-            return child.tagName && child.tagName.toLowerCase() === "p";
-        });
-
-        if (firstParagraph && firstParagraph.nextSibling) {
-            section.insertBefore(banner, firstParagraph.nextSibling);
-        } else if (firstParagraph) {
-            section.appendChild(banner);
-        } else {
-            var firstData = section.querySelector("details, table");
-            if (firstData) {
-                section.insertBefore(banner, firstData);
-            } else {
-                section.appendChild(banner);
-            }
-        }
+        insertAtPrimaryPosition(section, createRakutenWidget());
+        main.appendChild(createCampaignBanner());
     }
 
     if (document.readyState === "loading") {
