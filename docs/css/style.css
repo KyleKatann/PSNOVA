@@ -1484,3 +1484,16 @@ body.is-fixed-pagetop .nav-fix-pos-pagetop a {
         left: 10px;
     }
 }
+
+
+footer .footer-links {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 6px 16px;
+    margin-bottom: 6px;
+}
+
+footer .footer-links a {
+    color: inherit;
+}
