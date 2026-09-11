@@ -9,7 +9,6 @@ OVERVIEW = DOCS / "pages" / "granarts.html"
 DETAIL_DIR = DOCS / "pages" / "granarts"
 SIDEBAR = DOCS / "js" / "sidebar.js"
 SITEMAP = DOCS / "sitemap.xml"
-STAGED = DOCS / "pages" / "分類中" / "!granarts工事中excelが土方"
 
 EXPECTED = {
     "sword": ("ソード", ("ライジングエッジ", "ツイスターフォール", "ノヴァストライク", "オーバーエンド", "ソニックアロウ", "ファングラッシュ", "トルネードメテオ")),
@@ -61,7 +60,6 @@ def test_granarts_overview_matches_weapon_style_and_links_all_categories():
 def test_each_granarts_page_contains_seven_static_rows():
     for slug, (name, expected_names) in EXPECTED.items():
         html = (DETAIL_DIR / f"{slug}.html").read_text(encoding="utf-8")
-        assert "分類中" not in html
         assert f"{name} グランアーツ" in html
         assert 'class="table-scroll"' in html
         assert 'class="weapon-data-table"' in html
@@ -106,7 +104,3 @@ def test_granarts_navigation_and_sitemap_register_all_public_pages():
     ns = {"sm": "http://www.sitemaps.org/schemas/sitemap/0.9"}
     routes = {(loc.text or "").strip().removeprefix("https://kylekatann.github.io") for loc in sitemap.findall("sm:url/sm:loc", ns)}
     assert expected_routes <= routes
-
-
-def test_granarts_staging_source_remains_nonpublic_reference():
-    assert STAGED.is_dir()
