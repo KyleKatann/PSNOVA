@@ -48,9 +48,7 @@ class LoadedAssetParser(HTMLParser):
 
 
 def public_html_files():
-    for path in DOCS.rglob("*.html"):
-        if "分類中" not in path.parts:
-            yield path
+    yield from DOCS.rglob("*.html")
 
 
 def is_approved_remote_image(url):
