@@ -10,7 +10,7 @@ class AttachmentRarityTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         html = ATTACHMENT.read_text(encoding="utf-8")
-        start = html.index("<h3>アタッチパーツ</h3>")
+        start = html.index("<h2>アタッチパーツ</h2>")
         end = html.index("</table>", start)
         cls.table = html[start:end]
 
