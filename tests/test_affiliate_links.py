@@ -27,6 +27,36 @@ class AffiliateLinkTests(unittest.TestCase):
         self.assertIn('pathHash(window.location.pathname)', js)
         self.assertIn('class=\"affiliate-disclosure\">PR</span>', js)
 
+    def test_rakuten_ranking_widget_uses_requested_configuration(self):
+        js = BANNER.read_text(encoding="utf-8")
+
+        for token in (
+            'rakuten_design=\"slide\"',
+            'rakuten_affiliateId=\"1684437a.b247fdb8.1684437b.b272d4f6\"',
+            'rakuten_items=\"ranking\"',
+            'rakuten_genreId=\"566382\"',
+            'rakuten_size=\"728x200\"',
+            'rakuten_target=\"_blank\"',
+            'rakuten_theme=\"gray\"',
+            'rakuten_border=\"off\"',
+            'rakuten_auto_mode=\"on\"',
+            'rakuten_genre_title=\"off\"',
+            'rakuten_recommend=\"on\"',
+            'rakuten_ts=\"1789147399706\"',
+            'https://xml.affiliate.rakuten.co.jp/widget/js/rakuten_widget.js?20230106',
+        ):
+            with self.subTest(token=token):
+                self.assertIn(token, js)
+
+    def test_ranking_widget_uses_primary_slot_and_campaign_moves_to_main_bottom(self):
+        js = BANNER.read_text(encoding="utf-8")
+
+        primary = 'insertAtPrimaryPosition(section, createRakutenWidget());'
+        bottom = 'main.appendChild(createCampaignBanner());'
+        self.assertIn(primary, js)
+        self.assertIn(bottom, js)
+        self.assertLess(js.index(primary), js.index(bottom))
+
     def test_old_sidebar_text_ad_is_removed(self):
         js = SIDEBAR.read_text(encoding="utf-8")
         self.assertNotIn('class="affiliate-links"', js)
