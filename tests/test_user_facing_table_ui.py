@@ -19,9 +19,6 @@ def test_public_table_headers_use_clear_japanese_shop_level_label():
     forbidden = ("Shop Lv", "ShopLv", "shopLv", "ショップLv")
 
     for path in docs.rglob("*.html"):
-        if "分類中" in path.parts:
-            continue
-
         text = path.read_text(encoding="utf-8")
         headers = re.findall(r"<th\b[^>]*>(.*?)</th>", text, flags=re.I | re.S)
         for header in headers:
