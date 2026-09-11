@@ -34,7 +34,7 @@ class TablePaletteAndGridTests(unittest.TestCase):
             r"[^}]*background: var\(--accent-soft\);",
         )
 
-    def test_table_grid_is_subtle_shared_border(self):
+    def test_table_grid_is_shared_collapsed_border(self):
         css = STYLE.read_text(encoding="utf-8")
         page_css = PAGE_STYLE.read_text(encoding="utf-8")
 
@@ -42,15 +42,13 @@ class TablePaletteAndGridTests(unittest.TestCase):
             css,
             r"#main table \{[^}]*"
             r"border: 1px solid var\(--border\);[^}]*"
-            r"border-collapse: separate;[^}]*"
+            r"border-collapse: collapse;[^}]*"
             r"border-spacing: 0;",
         )
         self.assertRegex(
             css,
             r"#main table th,\s*#main table td \{[^}]*"
-            r"border: 0;[^}]*"
-            r"border-right: 1px solid var\(--border\);[^}]*"
-            r"border-bottom: 1px solid var\(--border\);",
+            r"border: 1px solid var\(--border\);",
         )
         self.assertNotRegex(css, r"border-spacing:\s*[1-9]")
         self.assertNotRegex(page_css, r"border-spacing:\s*[1-9]")
