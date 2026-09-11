@@ -6,11 +6,7 @@ DOCS = ROOT / "docs"
 
 
 def public_html_files():
-    return [
-        path
-        for path in sorted(DOCS.rglob("*.html"))
-        if "分類中" not in path.parts
-    ]
+    return list(sorted(DOCS.rglob("*.html")))
 
 
 def test_public_copy_does_not_advertise_github_contribution_channels():
