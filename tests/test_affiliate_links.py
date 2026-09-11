@@ -65,6 +65,7 @@ class AffiliateLinkTests(unittest.TestCase):
         self.assertIn('var duplicateCards = products.map(function (product)', js)
         self.assertIn('function normalizeOffset()', js)
         self.assertIn('autoScrollTimer = window.setInterval(autoScrollTick, 16)', js)
+        self.assertIn('var pixelsPerSecond = 30;', js)
         self.assertIn('offset += pixelsPerSecond * elapsed / 1000', js)
         self.assertIn('track.style.transform = "translate3d(" + (-offset) + "px, 0, 0)"', js)
         self.assertIn('startAutoScroll();', js)
@@ -73,16 +74,19 @@ class AffiliateLinkTests(unittest.TestCase):
         self.assertIn('previous.setAttribute("aria-label", "前の商品へ")', js)
         self.assertIn('next.setAttribute("aria-label", "次の商品へ")', js)
 
-    def test_custom_carousel_uses_primary_slot_and_old_ads_stack_at_bottom(self):
+    def test_custom_carousel_uses_primary_slot_and_bottom_ad_stack_starts_with_same_carousel(self):
         js = BANNER.read_text(encoding="utf-8")
 
         primary = 'insertAtPrimaryPosition(section, createProductCarousel());'
+        bottom_carousel = 'main.appendChild(createProductCarousel());'
         ranking = 'main.appendChild(createRakutenWidget());'
         campaign = 'main.appendChild(createCampaignBanner());'
         self.assertIn(primary, js)
+        self.assertIn(bottom_carousel, js)
         self.assertIn(ranking, js)
         self.assertIn(campaign, js)
-        self.assertLess(js.index(primary), js.index(ranking))
+        self.assertLess(js.index(primary), js.index(bottom_carousel))
+        self.assertLess(js.index(bottom_carousel), js.index(ranking))
         self.assertLess(js.index(ranking), js.index(campaign))
 
     def test_old_sidebar_text_ad_is_removed(self):
