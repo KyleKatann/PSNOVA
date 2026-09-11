@@ -15,9 +15,6 @@ def test_table_scrollers_allow_native_pinch_zoom():
 
 def test_public_viewports_do_not_disable_user_zoom():
     for path in DOCS.rglob("*.html"):
-        if "分類中" in path.parts:
-            continue
-
         text = path.read_text(encoding="utf-8")
         match = re.search(r'<meta\s+name="viewport"\s+content="([^"]+)"', text)
         if not match:
