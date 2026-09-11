@@ -1348,7 +1348,12 @@ body.is-fixed-pagetop .nav-fix-pos-pagetop a {
 
 /* === GUIDE CONTENT === */
 
-.page-lead {
+#main section > h1 + h2 {
+    display: none;
+}
+
+.page-lead,
+#main section > h1 + h2 + p {
     margin: 0 0 26px !important;
     padding: 14px 16px !important;
     color: #303a49 !important;
@@ -1364,7 +1369,7 @@ body.is-fixed-pagetop .nav-fix-pos-pagetop a {
     margin-bottom: 16px;
 }
 
-.guide-page #main h3 {
+#main h3 {
     margin: 24px 0 8px;
     padding: 9px 12px;
     color: var(--text-strong);
@@ -1461,7 +1466,8 @@ body.is-fixed-pagetop .nav-fix-pos-pagetop a {
 }
 
 @media screen and (max-width: 800px) {
-    .page-lead {
+    .page-lead,
+    #main section > h1 + h2 + p {
         padding: 12px 13px !important;
         line-height: 1.8;
     }
