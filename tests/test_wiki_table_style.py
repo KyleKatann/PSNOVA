@@ -36,12 +36,13 @@ class WikiTableStyleTests(unittest.TestCase):
 
     def test_current_table_density_palette_and_grid_are_preserved(self):
         css = STYLE.read_text(encoding="utf-8")
+        self.assertIn('border-collapse: collapse;', css)
         self.assertIn('border-spacing: 0;', css)
         self.assertIn('padding: 5px;', css)
         self.assertIn('background: var(--accent-soft);', css)
         self.assertIn('border: 1px solid var(--border);', css)
-        self.assertIn('border-right: 1px solid var(--border);', css)
-        self.assertIn('border-bottom: 1px solid var(--border);', css)
+        self.assertNotIn('border-right: 1px solid var(--border);', css)
+        self.assertNotIn('border-bottom: 1px solid var(--border);', css)
         self.assertNotIn('#e0e8f0', css.lower())
         self.assertNotIn('#eef5ff', css.lower())
 
