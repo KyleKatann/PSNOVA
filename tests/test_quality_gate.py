@@ -6,6 +6,7 @@ ROOT = Path(__file__).resolve().parents[1]
 QUALITY = ROOT / "tools" / "psnova_quality.py"
 ACCESSIBILITY = ROOT / "tests" / "ui" / "accessibility.spec.js"
 COLOR_CONTRACT = ROOT / "tests" / "test_accessible_color_contract.py"
+WORKFLOW = ROOT / ".github" / "workflows" / "tests.yml"
 
 
 class QualityGateTests(unittest.TestCase):
@@ -113,6 +114,15 @@ class QualityGateTests(unittest.TestCase):
 
         self.assertNotIn(".write_text(", body)
         self.assertNotIn("subprocess.run(", body)
+
+    def test_actions_tests_workflow_is_manual_dispatch_only(self):
+        source = WORKFLOW.read_text(encoding="utf-8")
+        trigger_section = source.split("\njobs:", 1)[0]
+
+        self.assertIn("on:\n  workflow_dispatch:", trigger_section)
+        for forbidden in ("push:", "pull_request:", "schedule:", "workflow_call:"):
+            with self.subTest(forbidden=forbidden):
+                self.assertNotIn(forbidden, trigger_section)
 
 
 if __name__ == "__main__":
