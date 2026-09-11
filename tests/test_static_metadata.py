@@ -70,8 +70,6 @@ def public_html_routes():
     for path in DOCS.rglob("*.html"):
         if path == DOCS / "index.html":
             continue
-        if "分類中" in path.parts:
-            continue
 
         relative = path.relative_to(DOCS).as_posix()
         routes.add(SITE_ROOT + relative)
