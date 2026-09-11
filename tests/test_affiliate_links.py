@@ -57,15 +57,20 @@ class AffiliateLinkTests(unittest.TestCase):
         self.assertIn('title: "ファンタシースターノヴァ パーフェクトバイブル"', js)
         self.assertIn('title: "ファンタシースター ノヴァ ガイドブック【電子書籍】"', js)
 
-    def test_product_carousel_auto_rotates_and_has_manual_controls(self):
+    def test_product_carousel_starts_continuously_and_loops_without_scrollbar(self):
         js = BANNER.read_text(encoding="utf-8")
 
         self.assertIn('function createProductCarousel()', js)
-        self.assertIn('window.setInterval(function ()', js)
-        self.assertIn('}, 4500);', js)
+        self.assertIn('viewport.style.overflowX = "hidden"', js)
+        self.assertIn('var duplicateCards = products.map(function (product)', js)
+        self.assertIn('function normalizeScrollPosition()', js)
+        self.assertIn('window.requestAnimationFrame(autoScroll)', js)
+        self.assertIn('viewport.scrollLeft += pixelsPerSecond * elapsed / 1000', js)
+        self.assertIn('startAutoScroll();', js)
+        self.assertNotIn('window.setInterval(function ()', js)
+        self.assertNotIn('}, 4500);', js)
         self.assertIn('previous.setAttribute("aria-label", "前の商品へ")', js)
         self.assertIn('next.setAttribute("aria-label", "次の商品へ")', js)
-        self.assertIn('(prefers-reduced-motion: reduce)', js)
 
     def test_custom_carousel_uses_primary_slot_and_old_ads_stack_at_bottom(self):
         js = BANNER.read_text(encoding="utf-8")
