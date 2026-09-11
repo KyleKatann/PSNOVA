@@ -10,6 +10,9 @@ class RepositoryConcernTests(unittest.TestCase):
         self.assertTrue((ROOT / "tools").is_dir())
         self.assertTrue((ROOT / "data").is_dir())
 
+    def test_retired_reference_directory_stays_absent(self):
+        self.assertFalse((ROOT / "reference").exists())
+
     def test_public_docs_do_not_contain_generation_tools(self):
         self.assertFalse((ROOT / "docs" / "pages" / "tools").exists())
 
