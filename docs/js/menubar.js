@@ -597,24 +597,27 @@
         carousel.appendChild(header);
         carousel.appendChild(viewport);
 
-        var animationFrame = null;
-        var lastFrame = null;
-        var pixelsPerSecond = 34;
+        var autoScrollTimer = null;
+        var lastTick = null;
+        var offset = 0;
+        var pixelsPerSecond = 60;
+        track.style.willChange = "transform";
 
         function loopWidth() {
             if (!duplicateCards.length) return 0;
             return duplicateCards[0].offsetLeft - track.offsetLeft;
         }
 
-        function normalizeScrollPosition() {
+        function normalizeOffset() {
             var width = loopWidth();
             if (!width) return;
-            while (viewport.scrollLeft >= width) {
-                viewport.scrollLeft -= width;
+            while (offset >= width) {
+                offset -= width;
             }
-            while (viewport.scrollLeft < 0) {
-                viewport.scrollLeft += width;
+            while (offset < 0) {
+                offset += width;
             }
+            track.style.transform = "translate3d(" + (-offset) + "px, 0, 0)";
         }
 
         function stepSize() {
@@ -622,44 +625,40 @@
             return cards[0].getBoundingClientRect().width + 12;
         }
 
-        function autoScroll(timestamp) {
-            if (lastFrame === null) {
-                lastFrame = timestamp;
+        function autoScrollTick() {
+            var now = Date.now();
+            if (lastTick === null) {
+                lastTick = now;
             } else {
-                var elapsed = Math.min(timestamp - lastFrame, 64);
-                lastFrame = timestamp;
-                viewport.scrollLeft += pixelsPerSecond * elapsed / 1000;
-                normalizeScrollPosition();
+                var elapsed = Math.min(now - lastTick, 100);
+                lastTick = now;
+                offset += pixelsPerSecond * elapsed / 1000;
+                normalizeOffset();
             }
-            animationFrame = window.requestAnimationFrame(autoScroll);
         }
 
         function startAutoScroll() {
-            if (animationFrame !== null) return;
-            lastFrame = null;
-            animationFrame = window.requestAnimationFrame(autoScroll);
+            if (autoScrollTimer !== null) return;
+            lastTick = Date.now();
+            autoScrollTimer = window.setInterval(autoScrollTick, 16);
+            autoScrollTick();
         }
 
         function stopAutoScroll() {
-            if (animationFrame === null) return;
-            window.cancelAnimationFrame(animationFrame);
-            animationFrame = null;
-            lastFrame = null;
+            if (autoScrollTimer === null) return;
+            window.clearInterval(autoScrollTimer);
+            autoScrollTimer = null;
+            lastTick = null;
         }
 
         previous.addEventListener("click", function () {
-            var width = loopWidth();
-            var step = stepSize();
-            if (width && viewport.scrollLeft < step) {
-                viewport.scrollLeft += width;
-            }
-            viewport.scrollLeft -= step;
-            normalizeScrollPosition();
+            offset -= stepSize();
+            normalizeOffset();
         });
 
         next.addEventListener("click", function () {
-            viewport.scrollLeft += stepSize();
-            normalizeScrollPosition();
+            offset += stepSize();
+            normalizeOffset();
         });
 
         document.addEventListener("visibilitychange", function () {
