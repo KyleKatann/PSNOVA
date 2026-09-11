@@ -23,11 +23,7 @@ PROHIBITED_SOURCE_PROVENANCE = (
 
 
 def public_html_files():
-    for path in DOCS.rglob("*.html"):
-        relative = path.relative_to(DOCS)
-        if "分類中" in relative.parts:
-            continue
-        yield path
+    yield from DOCS.rglob("*.html")
 
 
 def test_public_copy_does_not_expose_source_provenance():
