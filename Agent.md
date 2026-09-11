@@ -142,7 +142,7 @@
 
 - 公開PSNOVA pageではspoiler-protection UXまたはspoiler warningを適用しない。plot detailを含む可能性があるという理由だけで、story/gameplay informationをspoiler専用の `<details>` / `<summary>`、`ネタバレを表示` control、masking、blur、spoiler caution、その他同様の処理で隠してはならない。ユーザーが特定の例外を明示要求しない限り、関連情報は直接表示する。
 
-- ユーザー承認済みPSNOVA color paletteを保持する。automated contrast checkを満たすことだけを理由にsite colorを自動的にdarkenまたはreplaceしてはならない。ユーザーがcolor accessibility enforcementを明示要求した場合だけ、その対象について別途扱う。
+- automated contrast checkを満たすことだけを理由にsite colorを自動的にdarkenまたはreplaceしてはならない。ユーザーがcolor accessibility enforcementを明示要求した場合だけ、その対象について別途扱う。
 
 - 通常のpost-fix quality gateには `python tools/psnova_quality.py finish` を使う。browser UI behaviorへ直接影響する変更だけ `targeted` を使い、残存static audit candidate一覧には `inventory` を使う。
 
