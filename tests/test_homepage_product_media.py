@@ -86,12 +86,12 @@ class HomepageProductMediaTests(unittest.TestCase):
         self.assertNotIn("border-right: 1px solid var(--border);", page_css)
         self.assertNotIn("border-bottom: 1px solid var(--border);", page_css)
         self.assertNotIn(".official-links-table tr > :last-child", page_css)
+        self.assertIn("border-collapse: collapse;", shared_css)
         self.assertIn("#main table th,", shared_css)
         self.assertIn("#main table td {", shared_css)
-        self.assertIn("border-right: 1px solid var(--border);", shared_css)
-        self.assertIn("border-bottom: 1px solid var(--border);", shared_css)
-        self.assertIn("#main table tr > :last-child", shared_css)
-        self.assertIn("#main table tbody > tr:last-child > td", shared_css)
+        self.assertIn("border: 1px solid var(--border);", shared_css)
+        self.assertNotIn("#main table tr > :last-child", shared_css)
+        self.assertNotIn("#main table tbody > tr:last-child > td", shared_css)
 
 
 if __name__ == "__main__":
