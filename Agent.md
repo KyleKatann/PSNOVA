@@ -142,6 +142,6 @@
 
 - ユーザー承認済みPSNOVA color paletteを保持する。automated contrast checkを満たすことだけを理由にsite colorを自動的にdarkenまたはreplaceしてはならない。ユーザーがcolor accessibility enforcementを明示要求しない限り、automated axe auditでは意図的に `color-contrast` を除外する。
 
-- 通常のpost-fix quality gateには `python tools/psnova_quality.py finish` を使う。このcommandは各fix後に `git diff --check` と完全pytest suiteを実行し、完了fixが5件ごとの場合だけfull Playwright UI-health suiteも自動実行する。browser UI behaviorへ直接影響する変更だけ `targeted` を使い、残存static audit candidate一覧には `inventory` を使う。
+- 通常のpost-fix quality gateには `python tools/psnova_quality.py finish` を使う。browser UI behaviorへ直接影響する変更だけ `targeted` を使い、残存static audit candidate一覧には `inventory` を使う。
 
 - local Playwright UI health testのconnection-refusal failureをworker数削減で回避してはならず、shared test infrastructure側を修正する。
