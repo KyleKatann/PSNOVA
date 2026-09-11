@@ -566,12 +566,9 @@
         viewport.setAttribute("aria-label", "楽天市場のPSNOVA関連商品一覧");
         viewport.setAttribute("tabindex", "0");
         viewport.style.width = "100%";
-        viewport.style.overflowX = "auto";
+        viewport.style.overflowX = "hidden";
         viewport.style.overflowY = "hidden";
-        viewport.style.scrollSnapType = "x mandatory";
-        viewport.style.scrollBehavior = "smooth";
-        viewport.style.touchAction = "pan-x pan-y";
-        viewport.style.scrollbarWidth = "thin";
+        viewport.style.touchAction = "pan-y";
 
         var track = document.createElement("div");
         track.className = "affiliate-product-carousel-track";
@@ -579,61 +576,104 @@
         track.style.gap = "12px";
         track.style.width = "max-content";
         track.style.minWidth = "100%";
-        track.style.padding = "0 1px 6px";
+        track.style.padding = "0 1px";
 
         var cards = products.map(function (product) {
             var card = createProductCard(product);
             track.appendChild(card);
             return card;
         });
+        var duplicateCards = products.map(function (product) {
+            var card = createProductCard(product);
+            card.setAttribute("aria-hidden", "true");
+            Array.prototype.slice.call(card.querySelectorAll("a")).forEach(function (link) {
+                link.setAttribute("tabindex", "-1");
+            });
+            track.appendChild(card);
+            return card;
+        });
+
         viewport.appendChild(track);
         carousel.appendChild(header);
         carousel.appendChild(viewport);
 
-        var index = 0;
-        var timer = null;
-        var reducedMotion = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+        var animationFrame = null;
+        var lastFrame = null;
+        var pixelsPerSecond = 34;
 
-        function scrollToIndex(nextIndex, behavior) {
-            index = (nextIndex + cards.length) % cards.length;
-            viewport.scrollTo({
-                left: cards[index].offsetLeft - track.offsetLeft,
-                behavior: behavior || "smooth"
-            });
+        function loopWidth() {
+            if (!duplicateCards.length) return 0;
+            return duplicateCards[0].offsetLeft - track.offsetLeft;
         }
 
-        function stopAutoRotate() {
-            if (timer !== null) {
-                window.clearInterval(timer);
-                timer = null;
+        function normalizeScrollPosition() {
+            var width = loopWidth();
+            if (!width) return;
+            while (viewport.scrollLeft >= width) {
+                viewport.scrollLeft -= width;
+            }
+            while (viewport.scrollLeft < 0) {
+                viewport.scrollLeft += width;
             }
         }
 
-        function startAutoRotate() {
-            if (reducedMotion || timer !== null) return;
-            timer = window.setInterval(function () {
-                scrollToIndex(index + 1, "smooth");
-            }, 4500);
+        function stepSize() {
+            if (!cards.length) return 0;
+            return cards[0].getBoundingClientRect().width + 12;
+        }
+
+        function autoScroll(timestamp) {
+            if (lastFrame === null) {
+                lastFrame = timestamp;
+            } else {
+                var elapsed = Math.min(timestamp - lastFrame, 64);
+                lastFrame = timestamp;
+                viewport.scrollLeft += pixelsPerSecond * elapsed / 1000;
+                normalizeScrollPosition();
+            }
+            animationFrame = window.requestAnimationFrame(autoScroll);
+        }
+
+        function startAutoScroll() {
+            if (animationFrame !== null) return;
+            lastFrame = null;
+            animationFrame = window.requestAnimationFrame(autoScroll);
+        }
+
+        function stopAutoScroll() {
+            if (animationFrame === null) return;
+            window.cancelAnimationFrame(animationFrame);
+            animationFrame = null;
+            lastFrame = null;
         }
 
         previous.addEventListener("click", function () {
-            scrollToIndex(index - 1, "smooth");
+            var width = loopWidth();
+            var step = stepSize();
+            if (width && viewport.scrollLeft < step) {
+                viewport.scrollLeft += width;
+            }
+            viewport.scrollLeft -= step;
+            normalizeScrollPosition();
         });
+
         next.addEventListener("click", function () {
-            scrollToIndex(index + 1, "smooth");
+            viewport.scrollLeft += stepSize();
+            normalizeScrollPosition();
         });
-        carousel.addEventListener("mouseenter", stopAutoRotate);
-        carousel.addEventListener("mouseleave", startAutoRotate);
-        carousel.addEventListener("focusin", stopAutoRotate);
-        carousel.addEventListener("focusout", function (event) {
-            if (!carousel.contains(event.relatedTarget)) {
-                startAutoRotate();
+
+        document.addEventListener("visibilitychange", function () {
+            if (document.hidden) {
+                stopAutoScroll();
+            } else {
+                startAutoScroll();
             }
         });
 
-        startAutoRotate();
+        startAutoScroll();
         return carousel;
     }
+
 
     function insertAtPrimaryPosition(section, node) {
         var children = Array.prototype.slice.call(section.children || []);
