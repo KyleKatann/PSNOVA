@@ -604,7 +604,7 @@ footer a {
     color: #26384d;
     background: var(--surface);
     border: 1px solid var(--border);
-    border-collapse: separate;
+    border-collapse: collapse;
     border-spacing: 0;
     box-shadow: none;
     overflow: visible;
@@ -621,22 +621,9 @@ footer a {
 #main table th,
 #main table td {
     padding: 5px;
-    border: 0;
-    border-right: 1px solid var(--border);
-    border-bottom: 1px solid var(--border);
+    border: 1px solid var(--border);
     background: var(--surface-subtle);
     vertical-align: middle;
-}
-
-#main table tr > :last-child {
-    border-right: 0;
-}
-
-#main table tbody > tr:last-child > td,
-#main table tbody > tr:last-child > th,
-#main table > tr:last-child > td,
-#main table > tr:last-child > th {
-    border-bottom: 0;
 }
 
 #main table tbody th {
@@ -1496,17 +1483,4 @@ body.is-fixed-pagetop .nav-fix-pos-pagetop a {
     .faq-page #main h3 + p::before {
         left: 10px;
     }
-}
-
-
-footer .footer-links {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 6px 16px;
-    margin-bottom: 6px;
-}
-
-footer .footer-links a {
-    color: inherit;
 }
