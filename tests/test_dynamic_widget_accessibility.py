@@ -95,6 +95,19 @@ class DynamicWidgetAccessibilityTests(unittest.TestCase):
         self.assertIn('aria-label="楽天市場の商品広告 ', js)
         self.assertIn("(index + 1)", js)
 
+    def test_rakuten_widget_frame_has_accessible_name_and_is_sandboxed(self):
+        js = AFFILIATE.read_text(encoding="utf-8")
+
+        self.assertIn(
+            'widget.setAttribute("aria-label", "楽天市場の商品ランキングPR")',
+            js,
+        )
+        self.assertIn('frame.title = "楽天市場の商品ランキング広告"', js)
+        self.assertIn(
+            'frame.setAttribute("sandbox", "allow-scripts allow-forms allow-popups allow-popups-to-escape-sandbox")',
+            js,
+        )
+
 
 if __name__ == "__main__":
     unittest.main()
