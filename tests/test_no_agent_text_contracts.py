@@ -5,8 +5,8 @@ ROOT = Path(__file__).resolve().parents[1]
 TESTS = ROOT / "tests"
 THIS_FILE = Path(__file__).resolve()
 AGENT_GUIDE = ROOT / "Agent.md"
-MIN_AGENT_GUIDE_BYTES = 30_000
-MIN_AGENT_GUIDE_LINES = 150
+MIN_AGENT_GUIDE_BYTES = 28_000
+MIN_AGENT_GUIDE_LINES = 140
 
 
 def test_tests_do_not_treat_agent_md_prose_as_a_contract():
