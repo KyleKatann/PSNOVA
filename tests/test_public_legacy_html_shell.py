@@ -23,9 +23,7 @@ EMBEDDED_DOCUMENT_RE = re.compile(
 
 
 def public_html_files():
-    for path in DOCS.rglob("*.html"):
-        if "分類中" not in path.parts:
-            yield path
+    yield from DOCS.rglob("*.html")
 
 
 class PublicLegacyHtmlShellTests(unittest.TestCase):
