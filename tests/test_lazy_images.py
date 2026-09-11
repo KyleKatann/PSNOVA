@@ -15,10 +15,7 @@ LAZY_RE = re.compile(
 
 def public_html_files():
     yield DOCS / "index.html"
-
-    for path in (DOCS / "pages").rglob("*.html"):
-        if "分類中" not in path.parts:
-            yield path
+    yield from (DOCS / "pages").rglob("*.html")
 
 
 class LazyImageTests(unittest.TestCase):
