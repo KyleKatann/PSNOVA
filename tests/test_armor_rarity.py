@@ -10,7 +10,7 @@ class ArmorRarityTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         html = ARMOR.read_text(encoding="utf-8")
-        start = html.index("<h3>シールドユニット</h3>")
+        start = html.index("<h2>シールドユニット</h2>")
         end = html.index("</table>", start)
         cls.table = html[start:end]
 
