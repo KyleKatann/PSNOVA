@@ -10,6 +10,7 @@ var html =`
     <li><a href="/PSNOVA/pages/faq.html">初心者Q&amp;A</a></li>
     <li><a href="/PSNOVA/pages/walkthrough.html">攻略チャート</a></li>
     <li><a href="/PSNOVA/pages/tips-bugs.html">小技・バグ</a></li>
+    <li><a href="/PSNOVA/pages/vh-xh.html">VH・XH攻略</a></li>
     <li><a href="/PSNOVA/pages/novafactor.html">ノヴァファクター集め</a></li>
     <li><a href="/PSNOVA/pages/download.html">ダウンロードコンテンツ</a></li>
     <li><a href="/PSNOVA/pages/base.html">拠点</a></li>
