@@ -1353,6 +1353,10 @@ body.is-fixed-pagetop .nav-fix-pos-pagetop a {
     display: none;
 }
 
+.page-lead {
+    max-width: none;
+}
+
 .page-lead,
 #main section > h1 + h2 + p {
     margin: 0 0 26px !important;
