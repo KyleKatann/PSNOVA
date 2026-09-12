@@ -357,7 +357,6 @@
         }
         return Math.abs(hash);
     }
-
     function pickBanners(count) {
         var day = Math.floor(Date.now() / 86400000);
         var start = (day + pathHash(window.location.pathname)) % banners.length;
@@ -696,7 +695,6 @@
 
     function insertBanner() {
         if (document.querySelector(".affiliate-banner")) return;
-        if (/\/(copyright|issue)\.html$/.test(window.location.pathname)) return;
 
         var main = document.getElementById("main");
         if (!main) return;
