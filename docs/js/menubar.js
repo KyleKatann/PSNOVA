@@ -444,7 +444,6 @@
         var image = document.createElement("img");
         image.src = product.image;
         image.alt = product.title;
-        image.loading = "lazy";
         image.style.display = "block";
         image.style.width = "100%";
         image.style.maxWidth = "112px";
