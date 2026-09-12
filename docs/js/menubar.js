@@ -357,6 +357,7 @@
         }
         return Math.abs(hash);
     }
+
     function pickBanners(count) {
         var day = Math.floor(Date.now() / 86400000);
         var start = (day + pathHash(window.location.pathname)) % banners.length;
