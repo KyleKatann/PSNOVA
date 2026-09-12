@@ -2,19 +2,30 @@
 
 /* === HOMEPAGE === */
 
-/* Homepage summary/link tables use one consistent pale-blue label column. */
+/* Homepage summary/link tables share one fixed column grid. */
+.product-table,
+.official-links-table {
+    table-layout: fixed;
+}
+
 .product-table th:first-child,
 .official-links-table th:first-child {
+    width: 39%;
+    box-sizing: border-box;
     background: var(--accent-soft);
 }
 
+.product-table .product-image-cell,
+.official-links-table .official-image-cell {
+    width: 210px;
+    box-sizing: border-box;
+}
+
 .product-table .product-image-cell {
-    width: 170px;
     padding: 10px 12px;
 }
 
 .official-links-table .official-image-cell {
-    width: 210px;
     padding: 8px 10px;
 }
 
@@ -46,13 +57,16 @@
 }
 
 @media screen and (max-width: 640px) {
+    .product-table .product-image-cell,
+    .official-links-table .official-image-cell {
+        width: 150px;
+    }
+
     .product-table .product-image-cell {
-        width: 135px;
         padding: 8px;
     }
 
     .official-links-table .official-image-cell {
-        width: 150px;
         padding: 6px 8px;
     }
 
