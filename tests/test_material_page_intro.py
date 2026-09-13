@@ -11,9 +11,9 @@ class MaterialPageIntroTests(unittest.TestCase):
         html = MATERIAL.read_text(encoding="utf-8")
 
         match = re.search(
-            r"<h2>素材</h2>\s*"
+            r"<h1>素材</h1>\s*"
             r'<p class="page-lead">(.+?)</p>\s*'
-            r"<h3>材料</h3>",
+            r"<h2>材料</h2>",
             html,
             re.S,
         )
@@ -22,7 +22,7 @@ class MaterialPageIntroTests(unittest.TestCase):
         lead = match.group(1)
         self.assertEqual(3, lead.count("。"))
         self.assertIn("入手", lead)
-        self.assertIn("一覧", lead)
+        self.assertIn("種類別", lead)
 
 
 if __name__ == "__main__":
