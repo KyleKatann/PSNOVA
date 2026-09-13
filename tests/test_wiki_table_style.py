@@ -1,3 +1,4 @@
+import re
 import unittest
 from pathlib import Path
 
@@ -41,8 +42,17 @@ class WikiTableStyleTests(unittest.TestCase):
         self.assertIn('padding: 5px;', css)
         self.assertIn('background: var(--accent-soft);', css)
         self.assertIn('border: 1px solid var(--border);', css)
-        self.assertNotIn('border-right: 1px solid var(--border);', css)
-        self.assertNotIn('border-bottom: 1px solid var(--border);', css)
+
+        cell_rule = re.search(
+            r"#main table th,\s*#main table td\s*\{([^}]*)\}",
+            css,
+            re.S,
+        )
+        self.assertIsNotNone(cell_rule)
+        cell_css = cell_rule.group(1)
+        self.assertNotIn('border-right: 1px solid var(--border);', cell_css)
+        self.assertNotIn('border-bottom: 1px solid var(--border);', cell_css)
+
         self.assertNotIn('#e0e8f0', css.lower())
         self.assertNotIn('#eef5ff', css.lower())
 
