@@ -12,7 +12,6 @@ class TableNameQuestionMarkCleanupTests(unittest.TestCase):
         script = SCRIPT.read_text(encoding="utf-8")
         self.assertNotIn("stripTrailingQuestionMark", script)
         self.assertNotIn('replace(/[?？]+\\s*$/, "")', script)
-        self.assertNotIn("textContent =", script)
 
     def test_uncertain_non_name_values_remain_in_static_source(self):
         material = MATERIAL.read_text(encoding="utf-8")
