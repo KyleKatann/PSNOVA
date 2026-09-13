@@ -46,7 +46,7 @@ class PublicPageVisualAuditTests(unittest.TestCase):
             r'<main\b(?=[^>]*\bid="main")[^>]*>',
             re.IGNORECASE,
         )
-        h2_pattern = re.compile(r"<h2\b[^>]*>.*?</h2>", re.IGNORECASE | re.DOTALL)
+        h1_pattern = re.compile(r"<h1\b[^>]*>.*?</h1>", re.IGNORECASE | re.DOTALL)
 
         for path in self.primary_public_pages():
             html = path.read_text(encoding="utf-8")
@@ -58,7 +58,7 @@ class PublicPageVisualAuditTests(unittest.TestCase):
                 self.assertIn("/PSNOVA/js/menubar.js", html)
                 self.assertIn("/PSNOVA/js/sidebar.js", html)
                 self.assertIsNotNone(main_pattern.search(html))
-                self.assertIsNotNone(h2_pattern.search(html))
+                self.assertIsNotNone(h1_pattern.search(html))
 
     def test_primary_public_pages_do_not_define_page_specific_inline_stylesheets(self):
         style_block = re.compile(r"<style\b", re.IGNORECASE)
