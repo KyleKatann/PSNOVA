@@ -70,12 +70,17 @@ class WeaponSidebarTests(unittest.TestCase):
             ),
         )
 
-    def test_rendered_weapon_menu_uses_full_granarts_label_and_two_columns(self):
+    def test_rendered_weapon_menu_uses_full_granarts_label_and_readable_two_columns(self):
         js = OPEN_CLOSE_JS.read_text(encoding="utf-8")
         self.assertIn('parentLink.textContent = "武器・グランアーツ";', js)
         self.assertIn('submenu.setAttribute("aria-label", "武器・グランアーツ");', js)
         self.assertIn('submenu.style.gridTemplateColumns = "repeat(2, minmax(0, 1fr))";', js)
+        self.assertIn('row.style.display = "block";', js)
+        self.assertIn('mainLink.style.whiteSpace = "nowrap";', js)
+        self.assertIn('related.style.display = "block";', js)
+        self.assertIn('related.style.minHeight = "0";', js)
         self.assertIn('related.style.fontSize = "9px";', js)
+        self.assertIn('related.style.whiteSpace = "nowrap";', js)
         self.assertIn('granartsLink.textContent = "グランアーツ";', js)
         self.assertIn("normalizeWeaponGranartsMenu();", js)
 

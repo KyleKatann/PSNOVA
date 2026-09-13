@@ -44,17 +44,28 @@ function normalizeWeaponGranartsMenu() {
             '.weapon-route-related-link[href^="/PSNOVA/pages/granarts/"]'
         );
 
+        row.style.display = "block";
         row.style.minWidth = "0";
+        row.style.padding = "2px 0 3px";
 
         if (mainLink) {
+            mainLink.style.display = "block";
+            mainLink.style.width = "100%";
+            mainLink.style.minHeight = "0";
+            mainLink.style.boxSizing = "border-box";
+            mainLink.style.padding = "2px 4px 1px 18px";
             mainLink.style.fontSize = "12px";
-            mainLink.style.paddingLeft = "18px";
-            mainLink.style.paddingRight = "2px";
+            mainLink.style.lineHeight = "1.25";
+            mainLink.style.whiteSpace = "nowrap";
         }
 
         if (related) {
+            related.style.display = "block";
+            related.style.minHeight = "0";
+            related.style.padding = "0 4px 2px 18px";
             related.style.fontSize = "9px";
-            related.style.paddingRight = "4px";
+            related.style.lineHeight = "1.2";
+            related.style.whiteSpace = "nowrap";
         }
 
         if (granartsLink) {
