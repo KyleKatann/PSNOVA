@@ -52,7 +52,7 @@ class RowParser(HTMLParser):
 def test_granarts_overview_is_merged_into_weapon_parent():
     html = OVERVIEW.read_text(encoding="utf-8")
     assert not RETIRED_OVERVIEW.exists()
-    assert "<h1>武器・GA</h1>" in html
+    assert "<h1>武器・グランアーツ</h1>" in html
     assert "<h2>グランアーツ</h2>" in html
     assert html.count('class="weapon-catalog"') == 2
     for slug, (name, _) in EXPECTED.items():

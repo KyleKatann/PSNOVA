@@ -20,6 +20,49 @@ function placeResponsiveMenuTrigger() {
     }
 }
 
+function normalizeWeaponGranartsMenu() {
+    var submenu = document.querySelector("#sub .weapon-ga-submenu");
+    if (!submenu) return;
+
+    var parentLink = document.querySelector("#sub .weapon-data-link");
+    if (parentLink) {
+        parentLink.textContent = "武器・グランアーツ";
+    }
+
+    submenu.setAttribute("aria-label", "武器・グランアーツ");
+    submenu.style.display = "grid";
+    submenu.style.gridTemplateColumns = "repeat(2, minmax(0, 1fr))";
+    submenu.style.columnGap = "0";
+    submenu.style.rowGap = "0";
+
+    Array.prototype.slice.call(
+        submenu.querySelectorAll(".weapon-route-row")
+    ).forEach(function (row) {
+        var mainLink = row.querySelector(".weapon-route-main");
+        var related = row.querySelector(".weapon-route-related");
+        var granartsLink = row.querySelector(
+            '.weapon-route-related-link[href^="/PSNOVA/pages/granarts/"]'
+        );
+
+        row.style.minWidth = "0";
+
+        if (mainLink) {
+            mainLink.style.fontSize = "12px";
+            mainLink.style.paddingLeft = "18px";
+            mainLink.style.paddingRight = "2px";
+        }
+
+        if (related) {
+            related.style.fontSize = "9px";
+            related.style.paddingRight = "4px";
+        }
+
+        if (granartsLink) {
+            granartsLink.textContent = "グランアーツ";
+        }
+    });
+}
+
 function open_close(buttonId, menuId) {
     var button = document.getElementById(buttonId);
     var menu = resolveNavigationTarget(menuId);
@@ -102,6 +145,7 @@ function open_close(buttonId, menuId) {
 
 function initResponsiveContentsMenu() {
     if (document.getElementById("sub")) {
+        normalizeWeaponGranartsMenu();
         open_close("menubar_hdr", "sub");
     }
 }

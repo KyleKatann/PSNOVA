@@ -3,6 +3,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 SIDEBAR_JS = ROOT / "docs" / "js" / "sidebar.js"
+OPEN_CLOSE_JS = ROOT / "docs" / "js" / "openclose.js"
 STYLE_CSS = ROOT / "docs" / "css" / "style.css"
 MODERN_CSS = ROOT / "docs" / "css" / "modern.css"
 INTERACTION_CSS = ROOT / "docs" / "css" / "interaction.css"
@@ -68,6 +69,15 @@ class WeaponSidebarTests(unittest.TestCase):
                 'class="weapon-route-related-link weapon-route-tech-link" href="/PSNOVA/pages/technic.html">テクニック</a>'
             ),
         )
+
+    def test_rendered_weapon_menu_uses_full_granarts_label_and_two_columns(self):
+        js = OPEN_CLOSE_JS.read_text(encoding="utf-8")
+        self.assertIn('parentLink.textContent = "武器・グランアーツ";', js)
+        self.assertIn('submenu.setAttribute("aria-label", "武器・グランアーツ");', js)
+        self.assertIn('submenu.style.gridTemplateColumns = "repeat(2, minmax(0, 1fr))";', js)
+        self.assertIn('related.style.fontSize = "9px";', js)
+        self.assertIn('granartsLink.textContent = "グランアーツ";', js)
+        self.assertIn("normalizeWeaponGranartsMenu();", js)
 
     def test_existing_technic_menu_remains_separate(self):
         js = SIDEBAR_JS.read_text(encoding="utf-8")
