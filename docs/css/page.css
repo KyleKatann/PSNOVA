@@ -327,11 +327,11 @@
 }
 
 #main.technic-dark-page > .technic-entry:nth-of-type(5) > .technic-entry-title::before {
-    background-image: url("/PSNOVA/img/tech/メギバース.png");
+    background-image: url("/PSNOVA/img/tech/サ・メギド.png");
 }
 
 #main.technic-dark-page > .technic-entry:nth-of-type(6) > .technic-entry-title::before {
-    background-image: url("/PSNOVA/img/tech/サ・メギド.png");
+    background-image: url("/PSNOVA/img/tech/メギバース.png");
 }
 
 #main.technic-detail-page .technic-note {
