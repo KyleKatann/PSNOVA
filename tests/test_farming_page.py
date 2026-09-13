@@ -6,6 +6,7 @@ DOCS = ROOT / "docs"
 FARMING = DOCS / "pages" / "farming.html"
 FAQ = DOCS / "pages" / "faq.html"
 TRIAL = DOCS / "pages" / "trial-version.html"
+TIPS = DOCS / "pages" / "tips-bugs.html"
 
 
 def test_farming_page_keeps_earning_guidance_and_table():
@@ -13,8 +14,11 @@ def test_farming_page_keeps_earning_guidance_and_table():
 
     for token in (
         "<h1>稼ぎ</h1>",
+        "<h2>経験値稼ぎ</h2>",
         "<h2>グランエナジー稼ぎ</h2>",
         "<h2>メモリーフラグメント稼ぎ</h2>",
+        "難:グラン水源殲滅任務",
+        "リーティアのお願い",
         "アルマラッピー・オナー",
         "10000G",
         "ダウジンガー",
@@ -28,7 +32,6 @@ def test_farming_page_keeps_earning_guidance_and_table():
     for kind in "ABCDEFGHI":
         assert f"<tr><td>{kind}</td>" in html
 
-    assert "<h2>経験値稼ぎ</h2>" not in html
     assert "雪辱の新兵器" not in html
 
 
@@ -64,6 +67,24 @@ def test_trial_guidance_is_split_out_of_beginner_qa():
         "体験版ではどこまで遊べる？",
     ):
         assert token not in faq
+
+
+def test_tips_page_does_not_duplicate_farming_guidance():
+    tips = TIPS.read_text(encoding="utf-8")
+
+    for token in (
+        "<h3>経験値稼ぎ</h3>",
+        "<h3>グランエナジー稼ぎ</h3>",
+        "<h3>メモリーフラグメント稼ぎ</h3>",
+        "アルマラッピー・オナー討伐プロミスオーダー",
+        "ダウジンガー持ち",
+        "メモリーフラグメント変換1~5",
+        "雪辱の新兵器",
+    ):
+        assert token not in tips
+
+    assert "小技、小ネタ、稼ぎ、状態異常" not in tips
+    assert "小技や稼ぎ方、状態異常" not in tips
 
 
 def test_farming_page_is_on_public_discovery_surfaces():
