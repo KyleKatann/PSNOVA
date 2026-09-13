@@ -7,7 +7,7 @@ var html =`
     <li><a href="/PSNOVA/">ゲーム紹介</a></li>
 
     <li><p>攻略情報</p></li>
-    <li><a href="/PSNOVA/pages/faq.html">初心者Q&amp;A</a></li>
+    <li><a href="/PSNOVA/pages/faq.html">基本システムとPSO2との関係</a></li>
     <li><a href="/PSNOVA/pages/farming.html">稼ぎ</a></li>
     <li><a href="/PSNOVA/pages/walkthrough.html">攻略チャート</a></li>
     <li><a href="/PSNOVA/pages/tips-bugs.html">小技・バグ</a></li>
