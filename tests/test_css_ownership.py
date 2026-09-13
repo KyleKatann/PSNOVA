@@ -26,10 +26,12 @@ def test_navigation_readability_is_owned_by_sitewide_css():
     assert "font-size: 16px;" in block(css, "nav#menubar ul li a")
     assert "font-size: 16px;" in block(css, "#menubar-s a")
     assert "font-size: 14px;" in block(css, "#sub .submenu a")
-    assert "line-height: 1.45;" in block(css, "#sub .submenu a")
+    assert "line-height: 1.35;" in block(css, "#sub .submenu a")
     assert "font-size: 13px;" in block(css, "#sub .submenu .weapon-submenu a")
-    assert "line-height: 1.4;" in block(css, "#sub .submenu .weapon-submenu a")
+    assert "line-height: 1.3;" in block(css, "#sub .submenu .weapon-submenu a")
     assert "font-size: 12px;" in block(css, "#sub .submenu p")
+    assert "#sub .submenu .weapon-ga-submenu .weapon-route-row {" in css
+    assert "#sub .submenu .weapon-ga-submenu .weapon-route-related-link {" in css
 
 
 def test_semantic_table_header_is_owned_by_sitewide_css():
@@ -60,7 +62,6 @@ def test_page_specific_css_has_one_owner_file():
 
 def test_retired_weapon_filter_grid_stays_removed():
     page = PAGE.read_text(encoding="utf-8")
-
     assert ".data-filter-grid" not in page
 
 

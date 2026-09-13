@@ -5,7 +5,8 @@ from xml.etree import ElementTree
 
 ROOT = Path(__file__).resolve().parents[1]
 DOCS = ROOT / "docs"
-OVERVIEW = DOCS / "pages" / "granarts.html"
+OVERVIEW = DOCS / "pages" / "weapon.html"
+RETIRED_OVERVIEW = DOCS / "pages" / "granarts.html"
 DETAIL_DIR = DOCS / "pages" / "granarts"
 SIDEBAR = DOCS / "js" / "sidebar.js"
 SITEMAP = DOCS / "sitemap.xml"
@@ -48,10 +49,12 @@ class RowParser(HTMLParser):
             self.current_row = None
 
 
-def test_granarts_overview_matches_weapon_style_and_links_all_categories():
+def test_granarts_overview_is_merged_into_weapon_parent():
     html = OVERVIEW.read_text(encoding="utf-8")
-    assert 'class="weapon-catalog"' in html
-    assert html.count('class="weapon-card"') == len(EXPECTED)
+    assert not RETIRED_OVERVIEW.exists()
+    assert "<h1>武器・GA</h1>" in html
+    assert "<h2>グランアーツ</h2>" in html
+    assert html.count('class="weapon-catalog"') == 2
     for slug, (name, _) in EXPECTED.items():
         assert f'href="/PSNOVA/pages/granarts/{slug}.html"' in html
         assert f"<span>{name}</span>" in html
@@ -92,15 +95,20 @@ def test_granarts_sentinels_preserve_staged_final_values():
         assert matching[0][-2:] == list(expected[1:])
 
 
-def test_granarts_navigation_and_sitemap_register_all_public_pages():
+def test_granarts_navigation_and_sitemap_register_detail_pages_only():
     sidebar = SIDEBAR.read_text(encoding="utf-8")
-    assert '<a class="weapon-data-link" href="/PSNOVA/pages/granarts.html">グランアーツ</a>' in sidebar
-    expected_routes = {"/PSNOVA/pages/granarts.html"}
-    for slug, (name, _) in EXPECTED.items():
+    assert '<a class="weapon-data-link" href="/PSNOVA/pages/weapon.html">武器・GA</a>' in sidebar
+    assert 'href="/PSNOVA/pages/granarts.html">グランアーツ</a>' not in sidebar
+
+    expected_routes = set()
+    for slug in EXPECTED:
         route = f"/PSNOVA/pages/granarts/{slug}.html"
         expected_routes.add(route)
-        assert f'href="{route}">{name}</a>' in sidebar
+        assert f'href="{route}">GA</a>' in sidebar
+
     sitemap = ElementTree.parse(SITEMAP).getroot()
     ns = {"sm": "http://www.sitemaps.org/schemas/sitemap/0.9"}
     routes = {(loc.text or "").strip().removeprefix("https://kylekatann.github.io") for loc in sitemap.findall("sm:url/sm:loc", ns)}
     assert expected_routes <= routes
+    assert "/PSNOVA/pages/weapon.html" in routes
+    assert "/PSNOVA/pages/granarts.html" not in routes

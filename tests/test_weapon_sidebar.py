@@ -9,19 +9,23 @@ INTERACTION_CSS = ROOT / "docs" / "css" / "interaction.css"
 
 
 class WeaponSidebarTests(unittest.TestCase):
-    def test_all_weapon_types_are_nested_below_weapon_data(self):
+    def test_weapon_and_granarts_routes_are_compacted_into_one_group(self):
         js = SIDEBAR_JS.read_text(encoding="utf-8")
 
         self.assertIn(
-            'class="weapon-data-link" href="/PSNOVA/pages/weapon.html">武器データ</a>',
+            'class="weapon-data-link" href="/PSNOVA/pages/weapon.html">武器・GA</a>',
             js,
         )
         self.assertIn(
-            'class="weapon-submenu" aria-label="武器種"',
+            'class="weapon-submenu weapon-ga-submenu" aria-label="武器・GA"',
+            js,
+        )
+        self.assertNotIn(
+            'href="/PSNOVA/pages/granarts.html">グランアーツ</a>',
             js,
         )
 
-        expected = {
+        weapons = {
             "sword.html": "ソード",
             "partizan.html": "パルチザン",
             "doublesaber.html": "ダブルセイバー",
@@ -34,33 +38,79 @@ class WeaponSidebarTests(unittest.TestCase):
             "halo.html": "ヘイロウ",
             "pile.html": "パイル",
         }
-
-        for filename, label in expected.items():
+        for filename, label in weapons.items():
             with self.subTest(label=label):
                 self.assertIn(
-                    f'/PSNOVA/pages/weapon/{filename}">{label}</a>',
+                    f'class="weapon-route-main" href="/PSNOVA/pages/weapon/{filename}">{label}</a>',
                     js,
                 )
 
-    def test_weapon_submenu_style_has_one_owner(self):
-        style = STYLE_CSS.read_text(
-            encoding="utf-8"
+        granarts = (
+            "sword",
+            "partizan",
+            "doublesaber",
+            "knuckle",
+            "rifle",
+            "tmachinegun",
+            "halo",
+            "pile",
+        )
+        for slug in granarts:
+            with self.subTest(granarts=slug):
+                self.assertIn(
+                    f'class="weapon-route-related-link" href="/PSNOVA/pages/granarts/{slug}.html">GA</a>',
+                    js,
+                )
+
+        self.assertEqual(
+            3,
+            js.count(
+                'class="weapon-route-related-link weapon-route-tech-link" href="/PSNOVA/pages/technic.html">テクニック</a>'
+            ),
         )
 
+    def test_existing_technic_menu_remains_separate(self):
+        js = SIDEBAR_JS.read_text(encoding="utf-8")
         self.assertIn(
-            "#sub .weapon-submenu {",
-            style,
+            '<a href="/PSNOVA/pages/technic.html">テクニック</a>',
+            js,
         )
         self.assertIn(
-            "list-style: none;",
-            style,
+            'class="weapon-submenu" aria-label="テクニック属性"',
+            js,
         )
+        for slug, label in (
+            ("fire", "炎属性"),
+            ("ice", "氷属性"),
+            ("thunder", "雷属性"),
+            ("wind", "風属性"),
+            ("light", "光属性"),
+            ("dark", "闇属性"),
+        ):
+            self.assertIn(
+                f'href="/PSNOVA/pages/technic/{slug}.html">{label}</a>',
+                js,
+            )
+
+    def test_weapon_submenu_style_has_one_owner(self):
+        style = STYLE_CSS.read_text(encoding="utf-8")
+
+        self.assertIn("#sub .weapon-submenu {", style)
+        self.assertIn("list-style: none;", style)
         self.assertIn(
             "#sub .submenu .weapon-submenu a.is-current",
             style,
         )
         self.assertIn(
             "#sub .submenu a.is-parent-current",
+            style,
+        )
+        self.assertIn(
+            "#sub .submenu .weapon-ga-submenu .weapon-route-row {",
+            style,
+        )
+        self.assertIn(
+            "#sub .submenu .weapon-ga-submenu .weapon-route-related-link {",
             style,
         )
 

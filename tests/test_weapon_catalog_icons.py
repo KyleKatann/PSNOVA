@@ -5,7 +5,6 @@ import unittest
 
 ROOT = Path(__file__).resolve().parents[1]
 WEAPON_PAGE = ROOT / "docs" / "pages" / "weapon.html"
-GRANARTS_PAGE = ROOT / "docs" / "pages" / "granarts.html"
 PAGE_STYLE = ROOT / "docs" / "css" / "page.css"
 
 ICONS = {
@@ -42,23 +41,25 @@ PAGE_STYLE_LINK = (
 class WeaponCatalogIconTests(unittest.TestCase):
     def test_each_weapon_card_has_one_static_native_icon(self):
         html = WEAPON_PAGE.read_text(encoding="utf-8")
-        self.assertEqual(11, html.count('class="weapon-card"'))
+        weapon_section = html.split("<h2>武器データ</h2>", 1)[1].split(
+            "<h2>グランアーツ</h2>", 1
+        )[0]
+        self.assertEqual(11, weapon_section.count('class="weapon-card"'))
         for label, filename in ICONS.items():
             pattern = (
                 rf'<img src="/PSNOVA/img/weapon/{re.escape(filename)}" '
                 rf'alt="" width="48" height="48"(?: loading="lazy")?>'
                 rf'<span>{re.escape(label)}</span>'
             )
-            self.assertRegex(html, pattern)
+            self.assertRegex(weapon_section, pattern)
 
-    def test_granarts_uses_same_catalog_card_contract_as_weapon_page(self):
-        weapon_html = WEAPON_PAGE.read_text(encoding="utf-8")
-        granarts_html = GRANARTS_PAGE.read_text(encoding="utf-8")
+    def test_granarts_uses_same_catalog_card_contract_on_combined_parent(self):
+        html = WEAPON_PAGE.read_text(encoding="utf-8")
+        granarts_section = html.split("<h2>グランアーツ</h2>", 1)[1]
 
-        self.assertEqual(1, weapon_html.count(PAGE_STYLE_LINK))
-        self.assertEqual(1, granarts_html.count(PAGE_STYLE_LINK))
-        self.assertEqual(1, granarts_html.count('class="weapon-catalog"'))
-        self.assertEqual(8, granarts_html.count('class="weapon-card"'))
+        self.assertEqual(1, html.count(PAGE_STYLE_LINK))
+        self.assertEqual(2, html.count('class="weapon-catalog"'))
+        self.assertEqual(8, granarts_section.count('class="weapon-card"'))
 
         for label, (slug, filename) in GRANARTS_ICONS.items():
             pattern = (
@@ -68,7 +69,7 @@ class WeaponCatalogIconTests(unittest.TestCase):
                 rf'alt="" width="48" height="48">'
                 rf'<span>{re.escape(label)}</span></a>'
             )
-            self.assertRegex(granarts_html, pattern)
+            self.assertRegex(granarts_section, pattern)
 
     def test_weapon_card_icons_are_forced_visible_by_page_css(self):
         css = PAGE_STYLE.read_text(encoding="utf-8")
