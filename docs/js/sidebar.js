@@ -78,7 +78,22 @@ var html =`
             <li><a href="/PSNOVA/pages/quest/additional.html">追加クエスト</a></li>
         </ul>
     </li>
-    <li><a href="/PSNOVA/pages/promise-order.html">プロミスオーダー</a></li>
+    <li class="has-submenu promise-order-data-item">
+        <a class="promise-order-data-link" href="/PSNOVA/pages/promise-order.html">プロミスオーダー</a>
+        <ul class="weapon-submenu promise-order-submenu" aria-label="プロミスオーダーNPC">
+            <li><a href="/PSNOVA/pages/promise-order/fildia.html">フィルディア</a></li>
+            <li><a href="/PSNOVA/pages/promise-order/lutina.html">ルティナ</a></li>
+            <li><a href="/PSNOVA/pages/promise-order/sail.html">セイル</a></li>
+            <li><a href="/PSNOVA/pages/promise-order/izuna.html">イズナ</a></li>
+            <li><a href="/PSNOVA/pages/promise-order/lithia.html">リーティア</a></li>
+            <li><a href="/PSNOVA/pages/promise-order/kisara.html">キサラ</a></li>
+            <li><a href="/PSNOVA/pages/promise-order/orcuss.html">オルクス</a></li>
+            <li><a href="/PSNOVA/pages/promise-order/yomi.html">ヨミ</a></li>
+            <li><a href="/PSNOVA/pages/promise-order/callisto.html">カリスト</a></li>
+            <li><a href="/PSNOVA/pages/promise-order/hyperion.html">ヒュペリオン</a></li>
+            <li><a href="/PSNOVA/pages/promise-order/sharon.html">シャロン</a></li>
+        </ul>
+    </li>
 
     <li><p>キャラクター</p></li>
     <li><a href="/PSNOVA/pages/class.html">クラス</a></li>
