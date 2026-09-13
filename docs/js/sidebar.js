@@ -22,32 +22,19 @@ var html =`
     <li><a href="/PSNOVA/pages/enemy.html">エネミー</a></li>
     <li><a href="/PSNOVA/pages/gigantes.html">ギガンテス</a></li>
     <li class="has-submenu weapon-data-item">
-        <a class="weapon-data-link" href="/PSNOVA/pages/weapon.html">武器データ</a>
-        <ul class="weapon-submenu" aria-label="武器種">
-            <li><a href="/PSNOVA/pages/weapon/sword.html">ソード</a></li>
-            <li><a href="/PSNOVA/pages/weapon/partizan.html">パルチザン</a></li>
-            <li><a href="/PSNOVA/pages/weapon/doublesaber.html">ダブルセイバー</a></li>
-            <li><a href="/PSNOVA/pages/weapon/knuckle.html">ナックル</a></li>
-            <li><a href="/PSNOVA/pages/weapon/rifle.html">アサルトライフル</a></li>
-            <li><a href="/PSNOVA/pages/weapon/tmachinegun.html">ツインマシンガン</a></li>
-            <li><a href="/PSNOVA/pages/weapon/rod.html">ロッド</a></li>
-            <li><a href="/PSNOVA/pages/weapon/talis.html">タリス</a></li>
-            <li><a href="/PSNOVA/pages/weapon/wand.html">ウォンド</a></li>
-            <li><a href="/PSNOVA/pages/weapon/halo.html">ヘイロウ</a></li>
-            <li><a href="/PSNOVA/pages/weapon/pile.html">パイル</a></li>
-        </ul>
-    </li>
-    <li class="has-submenu weapon-data-item">
-        <a class="weapon-data-link" href="/PSNOVA/pages/granarts.html">グランアーツ</a>
-        <ul class="weapon-submenu" aria-label="グランアーツ武器種">
-            <li><a href="/PSNOVA/pages/granarts/sword.html">ソード</a></li>
-            <li><a href="/PSNOVA/pages/granarts/partizan.html">パルチザン</a></li>
-            <li><a href="/PSNOVA/pages/granarts/doublesaber.html">ダブルセイバー</a></li>
-            <li><a href="/PSNOVA/pages/granarts/knuckle.html">ナックル</a></li>
-            <li><a href="/PSNOVA/pages/granarts/rifle.html">アサルトライフル</a></li>
-            <li><a href="/PSNOVA/pages/granarts/tmachinegun.html">ツインマシンガン</a></li>
-            <li><a href="/PSNOVA/pages/granarts/halo.html">ヘイロウ</a></li>
-            <li><a href="/PSNOVA/pages/granarts/pile.html">パイル</a></li>
+        <a class="weapon-data-link" href="/PSNOVA/pages/weapon.html">武器・GA</a>
+        <ul class="weapon-submenu weapon-ga-submenu" aria-label="武器・GA">
+            <li class="weapon-route-row"><a class="weapon-route-main" href="/PSNOVA/pages/weapon/sword.html">ソード</a><span class="weapon-route-related">（<a class="weapon-route-related-link" href="/PSNOVA/pages/granarts/sword.html">GA</a>）</span></li>
+            <li class="weapon-route-row"><a class="weapon-route-main" href="/PSNOVA/pages/weapon/partizan.html">パルチザン</a><span class="weapon-route-related">（<a class="weapon-route-related-link" href="/PSNOVA/pages/granarts/partizan.html">GA</a>）</span></li>
+            <li class="weapon-route-row"><a class="weapon-route-main" href="/PSNOVA/pages/weapon/doublesaber.html">ダブルセイバー</a><span class="weapon-route-related">（<a class="weapon-route-related-link" href="/PSNOVA/pages/granarts/doublesaber.html">GA</a>）</span></li>
+            <li class="weapon-route-row"><a class="weapon-route-main" href="/PSNOVA/pages/weapon/knuckle.html">ナックル</a><span class="weapon-route-related">（<a class="weapon-route-related-link" href="/PSNOVA/pages/granarts/knuckle.html">GA</a>）</span></li>
+            <li class="weapon-route-row"><a class="weapon-route-main" href="/PSNOVA/pages/weapon/rifle.html">アサルトライフル</a><span class="weapon-route-related">（<a class="weapon-route-related-link" href="/PSNOVA/pages/granarts/rifle.html">GA</a>）</span></li>
+            <li class="weapon-route-row"><a class="weapon-route-main" href="/PSNOVA/pages/weapon/tmachinegun.html">ツインマシンガン</a><span class="weapon-route-related">（<a class="weapon-route-related-link" href="/PSNOVA/pages/granarts/tmachinegun.html">GA</a>）</span></li>
+            <li class="weapon-route-row"><a class="weapon-route-main" href="/PSNOVA/pages/weapon/rod.html">ロッド</a><span class="weapon-route-related">（<a class="weapon-route-related-link weapon-route-tech-link" href="/PSNOVA/pages/technic.html">テクニック</a>）</span></li>
+            <li class="weapon-route-row"><a class="weapon-route-main" href="/PSNOVA/pages/weapon/talis.html">タリス</a><span class="weapon-route-related">（<a class="weapon-route-related-link weapon-route-tech-link" href="/PSNOVA/pages/technic.html">テクニック</a>）</span></li>
+            <li class="weapon-route-row"><a class="weapon-route-main" href="/PSNOVA/pages/weapon/wand.html">ウォンド</a><span class="weapon-route-related">（<a class="weapon-route-related-link weapon-route-tech-link" href="/PSNOVA/pages/technic.html">テクニック</a>）</span></li>
+            <li class="weapon-route-row"><a class="weapon-route-main" href="/PSNOVA/pages/weapon/halo.html">ヘイロウ</a><span class="weapon-route-related">（<a class="weapon-route-related-link" href="/PSNOVA/pages/granarts/halo.html">GA</a>）</span></li>
+            <li class="weapon-route-row"><a class="weapon-route-main" href="/PSNOVA/pages/weapon/pile.html">パイル</a><span class="weapon-route-related">（<a class="weapon-route-related-link" href="/PSNOVA/pages/granarts/pile.html">GA</a>）</span></li>
         </ul>
     </li>
     <li class="has-submenu weapon-data-item">
@@ -149,9 +136,8 @@ function markCurrentSidebarLink(){
             return;
         }
 
-        var exactCurrent = linkPath === currentPath;
-        var weaponParentCurrent = weaponChild && linkPath === "/PSNOVA/pages/weapon.html";
-        var granartsParentCurrent = granartsChild && linkPath === "/PSNOVA/pages/granarts.html";
+        var exactCurrent = linkPath === currentPath && !link.classList.contains("weapon-route-tech-link");
+        var weaponParentCurrent = (weaponChild || granartsChild) && linkPath === "/PSNOVA/pages/weapon.html";
         var technicParentCurrent = technicChild && linkPath === "/PSNOVA/pages/technic.html";
         var questParentCurrent = questChild && linkPath === "/PSNOVA/pages/difficulty.html";
         var promiseOrderParentCurrent = promiseOrderChild && linkPath === "/PSNOVA/pages/promise-order.html";
@@ -159,7 +145,7 @@ function markCurrentSidebarLink(){
         link.classList.toggle("is-current", exactCurrent);
         link.classList.toggle(
             "is-parent-current",
-            weaponParentCurrent || granartsParentCurrent || technicParentCurrent || questParentCurrent || promiseOrderParentCurrent
+            weaponParentCurrent || technicParentCurrent || questParentCurrent || promiseOrderParentCurrent
         );
         if (exactCurrent) {
             link.setAttribute("aria-current", "page");
