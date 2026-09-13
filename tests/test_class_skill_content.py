@@ -60,15 +60,27 @@ def test_skill_page_uses_static_semantic_tables():
     tables = re.findall(r"<table\b[^>]*>.*?</table>", html, flags=re.I | re.S)
 
     assert tables
+    assert all("<tbody>" in table for table in tables)
 
-    for table in tables:
+    class_section = html[: html.index('<h2 id="combo-skills">')]
+    class_tables = re.findall(r"<table\b[^>]*>.*?</table>", class_section, flags=re.I | re.S)
+    assert len(class_tables) == 4
+
+    for table in class_tables:
         assert "<thead>" in table
-        assert "<tbody>" in table
-
         headers = re.findall(r"<th\b([^>]*)>", table, flags=re.I)
         assert headers
-
         for attrs in headers:
+            assert re.search(
+                r'\bscope\s*=\s*["\']col["\']',
+                attrs,
+                flags=re.I,
+            )
+
+    for table in tables:
+        if "<thead>" not in table:
+            continue
+        for attrs in re.findall(r"<thead>.*?<th\b([^>]*)>", table, flags=re.I | re.S):
             assert re.search(
                 r'\bscope\s*=\s*["\']col["\']',
                 attrs,
