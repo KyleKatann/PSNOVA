@@ -55,7 +55,7 @@ def test_technic_overview_uses_weapon_catalog_pattern_for_attributes():
     html = PAGE.read_text(encoding="utf-8")
 
     assert '<link rel="stylesheet" href="/PSNOVA/css/page.css">' in html
-    assert '<h3>属性から選ぶ</h3>' in html
+    assert '<h2>属性から選ぶ</h2>' in html
     assert '<div class="weapon-catalog">' in html
     assert html.count('class="weapon-card"') == 6
 
