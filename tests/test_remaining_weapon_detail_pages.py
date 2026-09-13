@@ -27,7 +27,7 @@ class RemainingWeaponDetailPageTests(unittest.TestCase):
                 )
 
                 self.assertIn(
-                    f"<title>PSNOVA攻略サイト - {name}</title>",
+                    f"<title>PSNOVA攻略サイト - {name} 武器データ</title>",
                     html,
                 )
                 self.assertIn(
