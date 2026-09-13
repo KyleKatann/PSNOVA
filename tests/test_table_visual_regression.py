@@ -8,6 +8,7 @@ PAGE_STYLE = ROOT / "docs" / "css" / "page.css"
 
 
 def css_rules(css):
+    css = re.sub(r"/\*.*?\*/", "", css, flags=re.S)
     rules = {}
     for selectors, declarations in re.findall(r"([^{}]+)\{([^{}]*)\}", css):
         for selector in selectors.split(","):
