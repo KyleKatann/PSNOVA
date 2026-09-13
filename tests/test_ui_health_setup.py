@@ -47,7 +47,7 @@ class UiHealthSetupTests(unittest.TestCase):
             "desktopでは#mainと#subが重なってはならない",
             "aria-expanded",
             "window.matchMedia('(pointer: coarse)').matches",
-            "weapon header must remain above the first data row",
+            "武器headerは先頭data行より上に維持しなければならない",
             "gigantes-table-scroll",
         ):
             with self.subTest(token=token):
