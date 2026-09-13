@@ -1509,3 +1509,39 @@ footer .footer-links {
 footer .footer-links a {
     color: inherit;
 }
+
+/* Base-page tables that share the same semantic column pattern use one grid. */
+html:has(link[rel="canonical"][href$="/PSNOVA/pages/base.html"]) #main table:has(> thead > tr > :nth-child(7):last-child):has(tbody br) {
+    table-layout: fixed;
+}
+
+html:has(link[rel="canonical"][href$="/PSNOVA/pages/base.html"]) #main table:has(> thead > tr > :nth-child(7):last-child):has(tbody br) > thead > tr > :nth-child(1) { width: 24%; }
+html:has(link[rel="canonical"][href$="/PSNOVA/pages/base.html"]) #main table:has(> thead > tr > :nth-child(7):last-child):has(tbody br) > thead > tr > :nth-child(2) { width: 8%; }
+html:has(link[rel="canonical"][href$="/PSNOVA/pages/base.html"]) #main table:has(> thead > tr > :nth-child(7):last-child):has(tbody br) > thead > tr > :nth-child(3) { width: 8%; }
+html:has(link[rel="canonical"][href$="/PSNOVA/pages/base.html"]) #main table:has(> thead > tr > :nth-child(7):last-child):has(tbody br) > thead > tr > :nth-child(4) { width: 10%; }
+html:has(link[rel="canonical"][href$="/PSNOVA/pages/base.html"]) #main table:has(> thead > tr > :nth-child(7):last-child):has(tbody br) > thead > tr > :nth-child(5) { width: 20%; }
+html:has(link[rel="canonical"][href$="/PSNOVA/pages/base.html"]) #main table:has(> thead > tr > :nth-child(7):last-child):has(tbody br) > thead > tr > :nth-child(6) { width: 10%; }
+html:has(link[rel="canonical"][href$="/PSNOVA/pages/base.html"]) #main table:has(> thead > tr > :nth-child(7):last-child):has(tbody br) > thead > tr > :nth-child(7) { width: 20%; }
+
+html:has(link[rel="canonical"][href$="/PSNOVA/pages/base.html"]) #main table:has(> thead > tr > :nth-child(7):last-child):not(:has(tbody br)) {
+    table-layout: fixed;
+}
+
+html:has(link[rel="canonical"][href$="/PSNOVA/pages/base.html"]) #main table:has(> thead > tr > :nth-child(7):last-child):not(:has(tbody br)) > thead > tr > :nth-child(1) { width: 28%; }
+html:has(link[rel="canonical"][href$="/PSNOVA/pages/base.html"]) #main table:has(> thead > tr > :nth-child(7):last-child):not(:has(tbody br)) > thead > tr > :nth-child(2) { width: 8%; }
+html:has(link[rel="canonical"][href$="/PSNOVA/pages/base.html"]) #main table:has(> thead > tr > :nth-child(7):last-child):not(:has(tbody br)) > thead > tr > :nth-child(3) { width: 8%; }
+html:has(link[rel="canonical"][href$="/PSNOVA/pages/base.html"]) #main table:has(> thead > tr > :nth-child(7):last-child):not(:has(tbody br)) > thead > tr > :nth-child(4) { width: 10%; }
+html:has(link[rel="canonical"][href$="/PSNOVA/pages/base.html"]) #main table:has(> thead > tr > :nth-child(7):last-child):not(:has(tbody br)) > thead > tr > :nth-child(5) { width: 12%; }
+html:has(link[rel="canonical"][href$="/PSNOVA/pages/base.html"]) #main table:has(> thead > tr > :nth-child(7):last-child):not(:has(tbody br)) > thead > tr > :nth-child(6) { width: 16%; }
+html:has(link[rel="canonical"][href$="/PSNOVA/pages/base.html"]) #main table:has(> thead > tr > :nth-child(7):last-child):not(:has(tbody br)) > thead > tr > :nth-child(7) { width: 18%; }
+
+html:has(link[rel="canonical"][href$="/PSNOVA/pages/base.html"]) #main table:has(> thead > tr > :nth-child(6):last-child) {
+    table-layout: fixed;
+}
+
+html:has(link[rel="canonical"][href$="/PSNOVA/pages/base.html"]) #main table:has(> thead > tr > :nth-child(6):last-child) > thead > tr > :nth-child(1) { width: 32%; }
+html:has(link[rel="canonical"][href$="/PSNOVA/pages/base.html"]) #main table:has(> thead > tr > :nth-child(6):last-child) > thead > tr > :nth-child(2) { width: 10%; }
+html:has(link[rel="canonical"][href$="/PSNOVA/pages/base.html"]) #main table:has(> thead > tr > :nth-child(6):last-child) > thead > tr > :nth-child(3) { width: 10%; }
+html:has(link[rel="canonical"][href$="/PSNOVA/pages/base.html"]) #main table:has(> thead > tr > :nth-child(6):last-child) > thead > tr > :nth-child(4) { width: 12%; }
+html:has(link[rel="canonical"][href$="/PSNOVA/pages/base.html"]) #main table:has(> thead > tr > :nth-child(6):last-child) > thead > tr > :nth-child(5) { width: 14%; }
+html:has(link[rel="canonical"][href$="/PSNOVA/pages/base.html"]) #main table:has(> thead > tr > :nth-child(6):last-child) > thead > tr > :nth-child(6) { width: 22%; }
