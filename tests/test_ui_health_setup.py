@@ -44,7 +44,7 @@ class UiHealthSetupTests(unittest.TestCase):
             "document.documentElement.scrollWidth",
             "image.naturalWidth === 0",
             "document.styleSheets",
-            "#main and #sub should not overlap on desktop",
+            "desktopでは#mainと#subが重なってはならない",
             "aria-expanded",
             "window.matchMedia('(pointer: coarse)').matches",
             "weapon header must remain above the first data row",
