@@ -692,7 +692,7 @@ footer a {
 #main table .rarity-cell {
     background: var(--accent-soft);
     font-weight: 800;
-    text-align: center;
+    text-align: center !important;
     white-space: nowrap;
     font-variant-numeric: tabular-nums;
 }
