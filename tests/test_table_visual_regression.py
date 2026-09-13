@@ -3,8 +3,10 @@ import unittest
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-STYLE = ROOT / "docs" / "css" / "style.css"
-PAGE_STYLE = ROOT / "docs" / "css" / "page.css"
+DOCS = ROOT / "docs"
+STYLE = DOCS / "css" / "style.css"
+PAGE_STYLE = DOCS / "css" / "page.css"
+SCRIPT = DOCS / "js" / "menubar.js"
 
 
 def css_rules(css):
@@ -86,7 +88,7 @@ class TableVisualRegressionTests(unittest.TestCase):
         base = rules["#main table .rarity-cell"]
         self.assertIn("background: var(--accent-soft);", base)
         self.assertIn("font-weight: 800;", base)
-        self.assertIn("text-align: center;", base)
+        self.assertIn("text-align: center !important;", base)
         self.assertIn("white-space: nowrap;", base)
         self.assertIn("font-variant-numeric: tabular-nums;", base)
 
@@ -122,6 +124,46 @@ class TableVisualRegressionTests(unittest.TestCase):
             declaration = f"color: var({token});"
             self.assertIn(declaration, rules[selector])
             self.assertIn(declaration, rules[pseudo])
+
+    def test_rarity_alignment_is_uniform_across_all_public_pages(self):
+        css = STYLE.read_text(encoding="utf-8")
+        script = SCRIPT.read_text(encoding="utf-8")
+        rules = css_rules(css)
+
+        self.assertIn(
+            "text-align: center !important;",
+            rules["#main table .rarity-cell"],
+        )
+        self.assertIn('label.indexOf("レア") !== -1', script)
+        self.assertIn('cell.classList.add("rarity-cell")', script)
+
+        rarity_pages = []
+        for path in sorted(DOCS.rglob("*.html")):
+            source = path.read_text(encoding="utf-8")
+            tables = re.findall(r"<table\b[^>]*>.*?</table>", source, re.I | re.S)
+            rarity_tables = [table for table in tables if "レアリティ" in table]
+            if not rarity_tables:
+                continue
+
+            rarity_pages.append(path)
+            self.assertIn(
+                '<link rel="stylesheet" href="/PSNOVA/css/style.css">',
+                source,
+                str(path),
+            )
+            self.assertIn(
+                '<script defer src="/PSNOVA/js/menubar.js"></script>',
+                source,
+                str(path),
+            )
+
+            for table in rarity_tables:
+                thead = re.search(r"<thead\b[^>]*>.*?</thead>", table, re.I | re.S)
+                self.assertIsNotNone(thead, str(path))
+                header_text = re.sub(r"<[^>]+>", "", thead.group(0))
+                self.assertIn("レアリティ", header_text, str(path))
+
+        self.assertGreater(len(rarity_pages), 1)
 
 
 if __name__ == "__main__":
