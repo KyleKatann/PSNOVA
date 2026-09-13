@@ -8,6 +8,7 @@ var html =`
 
     <li><p>攻略情報</p></li>
     <li><a href="/PSNOVA/pages/faq.html">初心者Q&amp;A</a></li>
+    <li><a href="/PSNOVA/pages/farming.html">稼ぎ</a></li>
     <li><a href="/PSNOVA/pages/walkthrough.html">攻略チャート</a></li>
     <li><a href="/PSNOVA/pages/tips-bugs.html">小技・バグ</a></li>
     <li><a href="/PSNOVA/pages/vh-xh.html">VH・XH攻略</a></li>
