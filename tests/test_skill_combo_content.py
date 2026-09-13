@@ -10,10 +10,10 @@ SKILL_PAGE = ROOT / "docs" / "pages" / "skill.html"
 class SkillComboContentTests(unittest.TestCase):
     def test_combo_skill_sections_keep_all_migrated_tables(self):
         html = SKILL_PAGE.read_text(encoding="utf-8")
-        start = html.index('<h3 id="combo-skills">')
+        start = html.index('<h2 id="combo-skills">')
         section = html[start : html.index("</section>", start)]
 
-        self.assertIn('<h3 id="combo-skills-many">組み合わせの多いコンボスキル</h3>', section)
+        self.assertIn('<h2 id="combo-skills-many">組み合わせの多いコンボスキル</h2>', section)
         self.assertEqual(section.count("<table>"), 46)
         self.assertEqual(section.count('<div class="table-scroll">'), 46)
 
@@ -37,7 +37,7 @@ class SkillComboContentTests(unittest.TestCase):
 
     def test_combo_skill_internal_list_links_have_targets(self):
         html = SKILL_PAGE.read_text(encoding="utf-8")
-        start = html.index('<h3 id="combo-skills">')
+        start = html.index('<h2 id="combo-skills">')
         section = html[start : html.index("</section>", start)]
 
         targets = set(re.findall(r'\sid="([A-Za-z0-9_-]+)"', section))
