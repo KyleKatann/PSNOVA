@@ -8,8 +8,11 @@ SITEMAP = ROOT / "docs" / "sitemap.xml"
 
 
 class AppearancePageSplitTests(unittest.TestCase):
-    def test_parent_page_links_to_three_detail_pages(self):
-        html = (PAGES / "appearance.html").read_text(encoding="utf-8")
+    def test_character_create_is_the_parent_page(self):
+        html = (PAGES / "character-create.html").read_text(encoding="utf-8")
+        self.assertIn("<h1>キャラクタークリエイト</h1>", html)
+        self.assertIn("最初に決める項目", html)
+        self.assertIn("ヘアスタイル・コスチューム・アクセサリー", html)
         for href in (
             "/PSNOVA/pages/appearance/hairstyle.html",
             "/PSNOVA/pages/appearance/costume.html",
@@ -17,6 +20,8 @@ class AppearancePageSplitTests(unittest.TestCase):
         ):
             with self.subTest(href=href):
                 self.assertIn(f'href="{href}"', html)
+
+        self.assertFalse((PAGES / "appearance.html").exists())
 
     def test_content_is_split_by_category(self):
         hairstyle = (PAGES / "appearance" / "hairstyle.html").read_text(encoding="utf-8")
@@ -36,10 +41,13 @@ class AppearancePageSplitTests(unittest.TestCase):
         self.assertNotIn("ミディアムレイヤー", accessory)
         self.assertNotIn("クローズクォーター", accessory)
 
-    def test_sidebar_uses_parent_child_navigation(self):
+    def test_sidebar_uses_character_create_as_parent(self):
         sidebar = SIDEBAR.read_text(encoding="utf-8")
         self.assertIn('class="has-submenu appearance-data-item"', sidebar)
-        self.assertIn('class="appearance-data-link" href="/PSNOVA/pages/appearance.html"', sidebar)
+        self.assertIn(
+            'class="appearance-data-link" href="/PSNOVA/pages/character-create.html">キャラクタークリエイト</a>',
+            sidebar,
+        )
         self.assertIn('class="weapon-submenu appearance-submenu"', sidebar)
         for href in (
             "/PSNOVA/pages/appearance/hairstyle.html",
@@ -49,10 +57,22 @@ class AppearancePageSplitTests(unittest.TestCase):
             with self.subTest(href=href):
                 self.assertIn(f'href="{href}"', sidebar)
         self.assertIn("var appearanceChild =", sidebar)
-        self.assertIn("appearanceParentCurrent", sidebar)
+        self.assertIn(
+            'var appearanceParentCurrent = appearanceChild && linkPath === "/PSNOVA/pages/character-create.html";',
+            sidebar,
+        )
+        self.assertNotIn('href="/PSNOVA/pages/appearance.html"', sidebar)
 
-    def test_sitemap_contains_split_pages(self):
+    def test_sitemap_uses_character_create_parent(self):
         xml = SITEMAP.read_text(encoding="utf-8")
+        self.assertIn(
+            "https://kylekatann.github.io/PSNOVA/pages/character-create.html",
+            xml,
+        )
+        self.assertNotIn(
+            "https://kylekatann.github.io/PSNOVA/pages/appearance.html",
+            xml,
+        )
         for path in (
             "appearance/hairstyle.html",
             "appearance/costume.html",

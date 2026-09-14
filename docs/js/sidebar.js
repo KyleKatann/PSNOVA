@@ -92,8 +92,8 @@ var html =`
     <li><a href="/PSNOVA/pages/npc-coldsleep.html">コールドスリープ</a></li>
     <li><a href="/PSNOVA/pages/traits.html">特徴</a></li>
     <li class="has-submenu appearance-data-item">
-        <a class="appearance-data-link" href="/PSNOVA/pages/appearance.html">ヘアスタイル・コスチューム・アクセサリー</a>
-        <ul class="weapon-submenu appearance-submenu" aria-label="外見データ">
+        <a class="appearance-data-link" href="/PSNOVA/pages/character-create.html">キャラクタークリエイト</a>
+        <ul class="weapon-submenu appearance-submenu" aria-label="キャラクタークリエイト">
             <li><a href="/PSNOVA/pages/appearance/hairstyle.html">ヘアスタイル</a></li>
             <li><a href="/PSNOVA/pages/appearance/costume.html">コスチューム</a></li>
             <li><a href="/PSNOVA/pages/appearance/accessory.html">アクセサリー</a></li>
@@ -149,7 +149,7 @@ function markCurrentSidebarLink(){
         var technicParentCurrent = technicChild && linkPath === "/PSNOVA/pages/technic.html";
         var questParentCurrent = questChild && linkPath === "/PSNOVA/pages/difficulty.html";
         var promiseOrderParentCurrent = promiseOrderChild && linkPath === "/PSNOVA/pages/promise-order.html";
-        var appearanceParentCurrent = appearanceChild && linkPath === "/PSNOVA/pages/appearance.html";
+        var appearanceParentCurrent = appearanceChild && linkPath === "/PSNOVA/pages/character-create.html";
 
         link.classList.toggle("is-current", exactCurrent);
         link.classList.toggle(
