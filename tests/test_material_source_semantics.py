@@ -21,6 +21,23 @@ class MaterialSourceSemanticsTests(unittest.TestCase):
             self.assertIsNotNone(body_match)
             self.assertNotIn("<th", body_match.group(1).lower())
 
+    def test_material_sections_are_always_visible_without_collapsible_markup(self):
+        html = MATERIAL.read_text(encoding="utf-8")
+        lower = html.lower()
+        self.assertNotIn("<details", lower)
+        self.assertNotIn("<summary", lower)
+
+        for heading in (
+            "食材",
+            "鉱石・資材",
+            "原生種素材",
+            "ダーカー素材",
+            "ギガンテス素材",
+            "メモリーフラグメント・グランピース・チケット・その他",
+            "コア",
+        ):
+            self.assertIn(f"<h3>{heading}</h3>", html)
+
 
 if __name__ == "__main__":
     unittest.main()
