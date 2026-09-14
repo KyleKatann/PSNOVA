@@ -2,9 +2,10 @@ import unittest
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-PAGES = ROOT / "docs" / "pages"
-SIDEBAR = ROOT / "docs" / "js" / "sidebar.js"
-SITEMAP = ROOT / "docs" / "sitemap.xml"
+DOCS = ROOT / "docs"
+PAGES = DOCS / "pages"
+SIDEBAR = DOCS / "js" / "sidebar.js"
+SITEMAP = DOCS / "sitemap.xml"
 
 
 class TipsContentRedistributionTests(unittest.TestCase):
@@ -14,24 +15,27 @@ class TipsContentRedistributionTests(unittest.TestCase):
                 self.assertFalse((PAGES / path).exists())
 
     def test_tips_content_is_redistributed(self):
-        faq = (PAGES / "faq.html").read_text(encoding="utf-8")
+        walkthrough = (PAGES / "walkthrough.html").read_text(encoding="utf-8")
+        classes = (PAGES / "class.html").read_text(encoding="utf-8")
+        specialability = (PAGES / "specialability.html").read_text(encoding="utf-8")
         gigantes = (PAGES / "gigantes.html").read_text(encoding="utf-8")
         npc = (PAGES / "npc.html").read_text(encoding="utf-8")
         costume = (PAGES / "appearance" / "costume.html").read_text(encoding="utf-8")
 
-        for text in (
-            "イベントデモはスキップできる？",
-            "テキストウィンドウを非表示にできる？",
-            "素早く移動する方法はある？",
-            "<h2>状態異常</h2>",
-            "グラン中毒",
-            "インフェクション",
-        ):
-            with self.subTest(page="faq", text=text):
-                self.assertIn(text, faq)
+        for text in ("イベント操作", "【SELECT】ボタン", "テキストウィンドウを非表示"):
+            with self.subTest(page="walkthrough", text=text):
+                self.assertIn(text, walkthrough)
+
+        for text in ("移動テクニック", "ストレイト", "ランブリングムーン"):
+            with self.subTest(page="class", text=text):
+                self.assertIn(text, classes)
+
+        for text in ("<h2>状態異常</h2>", "グラン中毒", "インフェクション"):
+            with self.subTest(page="specialability", text=text):
+                self.assertIn(text, specialability)
 
         for text in (
-            "ギガンテス各部位への有効攻撃",
+            "各部位への有効攻撃",
             "装甲には打撃",
             "居眠りギガンテス",
         ):
