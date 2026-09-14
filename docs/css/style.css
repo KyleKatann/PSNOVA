@@ -1618,3 +1618,14 @@ html:has(link[rel="canonical"][href$="/PSNOVA/pages/base.html"]) #main table:has
 html:has(link[rel="canonical"][href$="/PSNOVA/pages/base.html"]) #main table:has(> thead > tr > :nth-child(6):last-child) > thead > tr > :nth-child(4) { width: 12%; }
 html:has(link[rel="canonical"][href$="/PSNOVA/pages/base.html"]) #main table:has(> thead > tr > :nth-child(6):last-child) > thead > tr > :nth-child(5) { width: 14%; }
 html:has(link[rel="canonical"][href$="/PSNOVA/pages/base.html"]) #main table:has(> thead > tr > :nth-child(6):last-child) > thead > tr > :nth-child(6) { width: 22%; }
+
+/* Material-page tables with the same five-column schema share one grid. */
+html:has(link[rel="canonical"][href$="/PSNOVA/pages/material.html"]) #main table:has(> thead > tr > :nth-child(5):last-child) {
+    table-layout: fixed;
+}
+
+html:has(link[rel="canonical"][href$="/PSNOVA/pages/material.html"]) #main table:has(> thead > tr > :nth-child(5):last-child) > thead > tr > :nth-child(1) { width: 25%; }
+html:has(link[rel="canonical"][href$="/PSNOVA/pages/material.html"]) #main table:has(> thead > tr > :nth-child(5):last-child) > thead > tr > :nth-child(2) { width: 10%; }
+html:has(link[rel="canonical"][href$="/PSNOVA/pages/material.html"]) #main table:has(> thead > tr > :nth-child(5):last-child) > thead > tr > :nth-child(3) { width: 22%; }
+html:has(link[rel="canonical"][href$="/PSNOVA/pages/material.html"]) #main table:has(> thead > tr > :nth-child(5):last-child) > thead > tr > :nth-child(4) { width: 18%; }
+html:has(link[rel="canonical"][href$="/PSNOVA/pages/material.html"]) #main table:has(> thead > tr > :nth-child(5):last-child) > thead > tr > :nth-child(5) { width: 25%; }
