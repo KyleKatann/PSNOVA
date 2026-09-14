@@ -1,4 +1,13 @@
 /* Responsive menu compatibility API for existing static pages. */
+(function enableFullTouchZoom() {
+    if (!document.head || document.getElementById("psnova-touch-zoom")) return;
+
+    var style = document.createElement("style");
+    style.id = "psnova-touch-zoom";
+    style.textContent = "html, body, body * { touch-action: auto !important; }";
+    document.head.appendChild(style);
+})();
+
 function OCwindowWidth() {
     return window.innerWidth;
 }
