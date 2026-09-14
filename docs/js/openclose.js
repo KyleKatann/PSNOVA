@@ -31,7 +31,7 @@ function normalizeWeaponGranartsMenu() {
 
     submenu.setAttribute("aria-label", "武器・グランアーツ");
     submenu.style.display = "grid";
-    submenu.style.gridTemplateColumns = "repeat(2, minmax(0, 1fr))";
+    submenu.style.gridTemplateColumns = "1fr";
     submenu.style.columnGap = "0";
     submenu.style.rowGap = "0";
 
