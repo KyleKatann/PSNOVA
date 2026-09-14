@@ -23,6 +23,7 @@ class TipsPageSplitTests(unittest.TestCase):
         tips = (PAGES / "tips.html").read_text(encoding="utf-8")
         trivia = (PAGES / "trivia.html").read_text(encoding="utf-8")
         bugs = (PAGES / "bugs.html").read_text(encoding="utf-8")
+        pso2 = (PAGES / "pso2.html").read_text(encoding="utf-8")
 
         self.assertIn("イベントスキップ", tips)
         self.assertNotIn("イズナの格言集", tips)
@@ -31,6 +32,11 @@ class TipsPageSplitTests(unittest.TestCase):
         self.assertIn("イズナの格言集", trivia)
         self.assertNotIn("イベントスキップ", trivia)
         self.assertNotIn("修正済みの不具合", trivia)
+        self.assertNotIn("PSO2との時系列関係", trivia)
+
+        self.assertIn("PSO2との時系列関係", pso2)
+        self.assertIn("A.P.(238/2/20) EP1開始", pso2)
+        self.assertIn("A.P.(239/1/7) EP3開始", pso2)
 
         self.assertIn("修正済みの不具合", bugs)
         self.assertNotIn("イベントスキップ", bugs)
