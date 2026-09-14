@@ -7,67 +7,92 @@ SIDEBAR = ROOT / "docs" / "js" / "sidebar.js"
 SITEMAP = ROOT / "docs" / "sitemap.xml"
 
 
-class TipsPageSplitTests(unittest.TestCase):
-    def test_parent_page_links_three_categories(self):
-        html = (PAGES / "tips-bugs.html").read_text(encoding="utf-8")
-        self.assertIn("<h1>小技・小ネタ・バグ</h1>", html)
-        for href in (
-            "/PSNOVA/pages/tips.html",
-            "/PSNOVA/pages/trivia.html",
-            "/PSNOVA/pages/bugs.html",
+class TipsContentRedistributionTests(unittest.TestCase):
+    def test_old_tips_pages_are_removed(self):
+        for path in ("tips-bugs.html", "tips.html", "trivia.html"):
+            with self.subTest(path=path):
+                self.assertFalse((PAGES / path).exists())
+
+    def test_tips_content_is_redistributed(self):
+        faq = (PAGES / "faq.html").read_text(encoding="utf-8")
+        gigantes = (PAGES / "gigantes.html").read_text(encoding="utf-8")
+        npc = (PAGES / "npc.html").read_text(encoding="utf-8")
+        costume = (PAGES / "appearance" / "costume.html").read_text(encoding="utf-8")
+
+        for text in (
+            "イベントデモはスキップできる？",
+            "テキストウィンドウを非表示にできる？",
+            "素早く移動する方法はある？",
+            "<h2>状態異常</h2>",
+            "グラン中毒",
+            "インフェクション",
         ):
-            with self.subTest(href=href):
-                self.assertIn(f'href="{href}"', html)
+            with self.subTest(page="faq", text=text):
+                self.assertIn(text, faq)
 
-    def test_content_is_split_by_category(self):
-        tips = (PAGES / "tips.html").read_text(encoding="utf-8")
-        trivia = (PAGES / "trivia.html").read_text(encoding="utf-8")
-        bugs = (PAGES / "bugs.html").read_text(encoding="utf-8")
+        for text in (
+            "ギガンテス各部位への有効攻撃",
+            "装甲には打撃",
+            "居眠りギガンテス",
+        ):
+            with self.subTest(page="gigantes", text=text):
+                self.assertIn(text, gigantes)
+
+        for text in (
+            "友好度によるクエストクリア報酬への影響",
+            "親友3人で経験値28500/グラン9345",
+            "NPCとの会話",
+            "ユノの宝石に書かれている文字",
+            "イズナの格言集",
+        ):
+            with self.subTest(page="npc", text=text):
+                self.assertIn(text, npc)
+
+        self.assertIn("カラー変更に関する特殊な挙動", costume)
+        self.assertIn("名称末尾に「◆」が付くDLCアイテム", costume)
+
+    def test_pso2_timeline_remains_on_pso2_page(self):
         pso2 = (PAGES / "pso2.html").read_text(encoding="utf-8")
-
-        self.assertIn("イベントスキップ", tips)
-        self.assertNotIn("イズナの格言集", tips)
-        self.assertNotIn("修正済みの不具合", tips)
-
-        self.assertIn("イズナの格言集", trivia)
-        self.assertNotIn("イベントスキップ", trivia)
-        self.assertNotIn("修正済みの不具合", trivia)
-        self.assertNotIn("PSO2との時系列関係", trivia)
-
         self.assertIn("PSO2との時系列関係", pso2)
         self.assertIn("A.P.(238/2/20) EP1開始", pso2)
         self.assertIn("A.P.(239/1/7) EP3開始", pso2)
 
+    def test_bugs_remains_as_standalone_page(self):
+        bugs = (PAGES / "bugs.html").read_text(encoding="utf-8")
+        self.assertIn("<h1>バグ</h1>", bugs)
         self.assertIn("修正済みの不具合", bugs)
-        self.assertNotIn("イベントスキップ", bugs)
-        self.assertNotIn("イズナの格言集", bugs)
 
-    def test_sidebar_uses_parent_and_three_children(self):
+    def test_sidebar_links_directly_to_bugs(self):
         sidebar = SIDEBAR.read_text(encoding="utf-8")
-        self.assertIn('class="has-submenu tips-data-item"', sidebar)
         self.assertIn(
-            'class="tips-data-link" href="/PSNOVA/pages/tips-bugs.html">小技・小ネタ・バグ</a>',
+            '<a href="/PSNOVA/pages/bugs.html">バグ・不具合</a>',
             sidebar,
         )
-        self.assertIn('class="weapon-submenu tips-submenu"', sidebar)
-        for href in (
+        for text in (
+            "/PSNOVA/pages/tips-bugs.html",
             "/PSNOVA/pages/tips.html",
             "/PSNOVA/pages/trivia.html",
-            "/PSNOVA/pages/bugs.html",
+            "tips-data-item",
+            "tips-data-link",
+            "tips-submenu",
+            "var tipsChild =",
+            "var tipsParentCurrent =",
         ):
-            with self.subTest(href=href):
-                self.assertIn(f'href="{href}"', sidebar)
-        self.assertIn("var tipsChild =", sidebar)
-        self.assertIn(
-            'var tipsParentCurrent = tipsChild && linkPath === "/PSNOVA/pages/tips-bugs.html";',
-            sidebar,
-        )
+            with self.subTest(text=text):
+                self.assertNotIn(text, sidebar)
 
-    def test_sitemap_contains_parent_and_children(self):
+    def test_sitemap_contains_only_bugs_page(self):
         xml = SITEMAP.read_text(encoding="utf-8")
-        for path in ("tips-bugs.html", "tips.html", "trivia.html", "bugs.html"):
+        self.assertIn(
+            "https://kylekatann.github.io/PSNOVA/pages/bugs.html",
+            xml,
+        )
+        for path in ("tips-bugs.html", "tips.html", "trivia.html"):
             with self.subTest(path=path):
-                self.assertIn(f"https://kylekatann.github.io/PSNOVA/pages/{path}", xml)
+                self.assertNotIn(
+                    f"https://kylekatann.github.io/PSNOVA/pages/{path}",
+                    xml,
+                )
 
 
 if __name__ == "__main__":
