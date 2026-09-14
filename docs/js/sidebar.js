@@ -7,7 +7,8 @@ var html =`
     <li><a href="/PSNOVA/">ゲーム紹介</a></li>
 
     <li><p>攻略情報</p></li>
-    <li><a href="/PSNOVA/pages/faq.html">基本システムとPSO2との関係</a></li>
+    <li><a href="/PSNOVA/pages/faq.html">基本システム</a></li>
+    <li><a href="/PSNOVA/pages/pso2.html">PSO2との関係</a></li>
     <li><a href="/PSNOVA/pages/trial-version.html">体験版</a></li>
     <li><a href="/PSNOVA/pages/farming.html">稼ぎ</a></li>
     <li><a href="/PSNOVA/pages/walkthrough.html">攻略チャート</a></li>
