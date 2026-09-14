@@ -12,14 +12,7 @@ var html =`
     <li><a href="/PSNOVA/pages/trial-version.html">体験版</a></li>
     <li><a href="/PSNOVA/pages/farming.html">稼ぎ</a></li>
     <li><a href="/PSNOVA/pages/walkthrough.html">攻略チャート</a></li>
-    <li class="has-submenu tips-data-item">
-        <a class="tips-data-link" href="/PSNOVA/pages/tips-bugs.html">小技・小ネタ・バグ</a>
-        <ul class="weapon-submenu tips-submenu" aria-label="小技・小ネタ・バグ">
-            <li><a href="/PSNOVA/pages/tips.html">小技</a></li>
-            <li><a href="/PSNOVA/pages/trivia.html">小ネタ</a></li>
-            <li><a href="/PSNOVA/pages/bugs.html">バグ</a></li>
-        </ul>
-    </li>
+    <li><a href="/PSNOVA/pages/bugs.html">バグ・不具合</a></li>
     <li><a href="/PSNOVA/pages/vh-xh.html">VH・XH攻略</a></li>
     <li><a href="/PSNOVA/pages/novafactor.html">ノヴァファクター集め</a></li>
     <li><a href="/PSNOVA/pages/download.html">ダウンロードコンテンツ</a></li>
@@ -142,7 +135,6 @@ function markCurrentSidebarLink(){
     var questChild = /^\/PSNOVA\/pages\/quest\/[^/]+\.html$/.test(currentPath);
     var promiseOrderChild = /^\/PSNOVA\/pages\/promise-order\/[^/]+\.html$/.test(currentPath);
     var appearanceChild = /^\/PSNOVA\/pages\/appearance\/[^/]+\.html$/.test(currentPath);
-    var tipsChild = currentPath === "/PSNOVA/pages/tips.html" || currentPath === "/PSNOVA/pages/trivia.html" || currentPath === "/PSNOVA/pages/bugs.html";
     var links = document.querySelectorAll("#sub .submenu a[href]");
 
     Array.prototype.slice.call(links).forEach(function(link){
@@ -159,12 +151,11 @@ function markCurrentSidebarLink(){
         var questParentCurrent = questChild && linkPath === "/PSNOVA/pages/difficulty.html";
         var promiseOrderParentCurrent = promiseOrderChild && linkPath === "/PSNOVA/pages/promise-order.html";
         var appearanceParentCurrent = appearanceChild && linkPath === "/PSNOVA/pages/character-create.html";
-        var tipsParentCurrent = tipsChild && linkPath === "/PSNOVA/pages/tips-bugs.html";
 
         link.classList.toggle("is-current", exactCurrent);
         link.classList.toggle(
             "is-parent-current",
-            weaponParentCurrent || technicParentCurrent || questParentCurrent || promiseOrderParentCurrent || appearanceParentCurrent || tipsParentCurrent
+            weaponParentCurrent || technicParentCurrent || questParentCurrent || promiseOrderParentCurrent || appearanceParentCurrent
         );
         if (exactCurrent) {
             link.setAttribute("aria-current", "page");
