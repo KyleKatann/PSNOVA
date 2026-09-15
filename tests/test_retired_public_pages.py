@@ -7,6 +7,8 @@ RETIRED_PATHS = (
     "/PSNOVA/copyright.html",
     "/PSNOVA/issue.html",
     "/PSNOVA/pages/faq.html",
+    "/PSNOVA/pages/difficulty.html",
+    "/PSNOVA/pages/weapon.html",
 )
 
 
@@ -14,6 +16,8 @@ def test_retired_public_pages_are_not_restored():
     assert not (DOCS / "copyright.html").exists()
     assert not (DOCS / "issue.html").exists()
     assert not (DOCS / "pages" / "faq.html").exists()
+    assert not (DOCS / "pages" / "difficulty.html").exists()
+    assert not (DOCS / "pages" / "weapon.html").exists()
 
 
 def test_retired_public_pages_are_not_linked_or_indexed():
