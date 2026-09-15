@@ -114,6 +114,7 @@
 ## 最優先ルール：GitHubへの直接HTTP接続・Code Search・ブラウザ経由取得を禁止する
 
 **このリポジトリのコードやrepository contentへアクセスするために、`curl`、`Invoke-WebRequest`、その他のHTTP clientからGitHub API、`raw.githubusercontent.com`、GitHub raw URLへ直接接続してはならない。** GitHub Code Searchも使用してはならず、検索結果、0件、件数、index状態をcurrent repository stateの確認や探索に使ってはならない。Web検索、Webブラウザ、通常のWeb fetchを使ってGitHubページやraw URLからrepository contentを取得・確認することも禁止する。ただし、**ユーザーがその特定作業でGitHubのブラウザ/Web経由アクセスを明示的に指定した場合に限り、Web検索・ブラウザ経由のGitHub閲覧だけを例外として許可する。** この例外は `curl`、`Invoke-WebRequest`、GitHub Code Searchの使用許可を意味しない。通常は接続済みGitHubコネクタのread操作、または既存local worktreeの直接ファイル読取を使用する。
+- **この禁止はcontainer内の `curl`、`wget`、Python等からの直接HTTP/DNSアクセスにも適用する。GitHubコネクタで取得可能なrepository contentを、実行環境側のネットワーク経路へ切り替えて取得してはならない。**
 
 ## 目的
 
