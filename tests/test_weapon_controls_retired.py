@@ -32,7 +32,7 @@ def test_weapon_detail_pages_keep_only_catalog_navigation():
         html = (WEAPON_DIR / filename).read_text(encoding="utf-8")
         assert (
             '<a class="weapon-page-nav-index" '
-            'href="/PSNOVA/pages/weapon.html">武器一覧</a>'
+            'href="/PSNOVA/pages/combat.html">武器一覧</a>'
         ) in html
         assert 'rel="prev"' not in html
         assert 'rel="next"' not in html
