@@ -21,7 +21,7 @@ WEAPONS = {
 
 class WeaponPageSplitTests(unittest.TestCase):
     def test_weapon_index_is_lightweight_catalog(self):
-        html = (PAGES / "weapon.html").read_text(encoding="utf-8")
+        html = (PAGES / "combat.html").read_text(encoding="utf-8")
         self.assertIn('class="weapon-catalog"', html)
         self.assertNotIn("<details>", html)
         self.assertNotIn('meta name="keywords"', html)

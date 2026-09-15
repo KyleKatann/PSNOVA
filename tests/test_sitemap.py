@@ -15,7 +15,7 @@ class SitemapTests(unittest.TestCase):
         xml = SITEMAP.read_text(encoding="utf-8")
         for url in (
             "https://kylekatann.github.io/PSNOVA/",
-            "https://kylekatann.github.io/PSNOVA/pages/weapon.html",
+            "https://kylekatann.github.io/PSNOVA/pages/combat.html",
             "https://kylekatann.github.io/PSNOVA/pages/material.html",
             "https://kylekatann.github.io/PSNOVA/pages/enemy.html",
             "https://kylekatann.github.io/PSNOVA/pages/trophy.html",

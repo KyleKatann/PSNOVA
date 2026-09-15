@@ -4,7 +4,7 @@ import unittest
 
 
 ROOT = Path(__file__).resolve().parents[1]
-WEAPON_PAGE = ROOT / "docs" / "pages" / "weapon.html"
+WEAPON_PAGE = ROOT / "docs" / "pages" / "combat.html"
 PAGE_STYLE = ROOT / "docs" / "css" / "page.css"
 
 ICONS = {

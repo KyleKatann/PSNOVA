@@ -5,7 +5,7 @@ ROOT = Path(__file__).resolve().parents[1]
 DOCS = ROOT / "docs"
 
 STATIC_PAGE_STYLE_TARGETS = (
-    DOCS / "pages" / "weapon.html",
+    DOCS / "pages" / "combat.html",
     DOCS / "pages" / "weapon" / "doublesaber.html",
     DOCS / "pages" / "weapon" / "halo.html",
     DOCS / "pages" / "weapon" / "knuckle.html",

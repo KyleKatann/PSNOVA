@@ -64,11 +64,16 @@ def sitemap_routes():
     return routes
 
 
+def is_redirect_page(path):
+    html = path.read_text(encoding="utf-8").lower()
+    return '<meta http-equiv="refresh"' in html
+
+
 def public_html_routes():
     routes = {SITE_ROOT}
 
     for path in DOCS.rglob("*.html"):
-        if path == DOCS / "index.html":
+        if path == DOCS / "index.html" or is_redirect_page(path):
             continue
 
         relative = path.relative_to(DOCS).as_posix()
@@ -127,5 +132,3 @@ def test_runtime_metadata_repair_is_removed():
     menubar = MENUBAR.read_text(encoding="utf-8")
     assert "page-meta.js" not in menubar
     assert "data-psnova-page-meta" not in menubar
-
-

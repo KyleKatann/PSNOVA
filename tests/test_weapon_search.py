@@ -2,7 +2,7 @@ import unittest
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-WEAPON_HTML = ROOT / "docs" / "pages" / "weapon.html"
+WEAPON_HTML = ROOT / "docs" / "pages" / "combat.html"
 KNUCKLE_HTML = ROOT / "docs" / "pages" / "weapon" / "knuckle.html"
 
 
