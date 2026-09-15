@@ -14,7 +14,7 @@ class WeaponSidebarTests(unittest.TestCase):
         js = SIDEBAR_JS.read_text(encoding="utf-8")
 
         self.assertIn(
-            'class="weapon-data-link" href="/PSNOVA/pages/weapon.html">武器・GA</a>',
+            'class="weapon-data-link" href="/PSNOVA/pages/combat.html">武器・GA</a>',
             js,
         )
         self.assertIn(
