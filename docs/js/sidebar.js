@@ -22,7 +22,7 @@ var html =`
     <li><a href="/PSNOVA/pages/enemy.html">エネミー</a></li>
     <li><a href="/PSNOVA/pages/gigantes.html">ギガンテス</a></li>
     <li class="has-submenu weapon-data-item">
-        <a class="weapon-data-link" href="/PSNOVA/pages/weapon.html">武器・GA</a>
+        <a class="weapon-data-link" href="/PSNOVA/pages/combat.html">武器・GA</a>
         <ul class="weapon-submenu weapon-ga-submenu" aria-label="武器・GA">
             <li class="weapon-route-row"><a class="weapon-route-main" href="/PSNOVA/pages/weapon/sword.html">ソード</a><span class="weapon-route-related">（<a class="weapon-route-related-link" href="/PSNOVA/pages/granarts/sword.html">GA</a>）</span></li>
             <li class="weapon-route-row"><a class="weapon-route-main" href="/PSNOVA/pages/weapon/partizan.html">パルチザン</a><span class="weapon-route-related">（<a class="weapon-route-related-link" href="/PSNOVA/pages/granarts/partizan.html">GA</a>）</span></li>
@@ -55,7 +55,7 @@ var html =`
     <li><a href="/PSNOVA/pages/item.html">消費アイテム</a></li>
 
     <li class="has-submenu quest-data-item">
-        <a class="quest-data-link" href="/PSNOVA/pages/difficulty.html">クエスト</a>
+        <a class="quest-data-link" href="/PSNOVA/pages/quest.html">クエスト</a>
         <ul class="weapon-submenu quest-submenu" aria-label="クエストエリア">
             <li><a href="/PSNOVA/pages/quest/steel-wilderness.html">鋼の荒野</a></li>
             <li><a href="/PSNOVA/pages/quest/gran-water-source.html">グラン水源</a></li>
@@ -145,9 +145,9 @@ function markCurrentSidebarLink(){
         }
 
         var exactCurrent = linkPath === currentPath && !link.classList.contains("weapon-route-tech-link");
-        var weaponParentCurrent = (weaponChild || granartsChild) && linkPath === "/PSNOVA/pages/weapon.html";
+        var weaponParentCurrent = (weaponChild || granartsChild) && linkPath === "/PSNOVA/pages/combat.html";
         var technicParentCurrent = technicChild && linkPath === "/PSNOVA/pages/technic.html";
-        var questParentCurrent = questChild && linkPath === "/PSNOVA/pages/difficulty.html";
+        var questParentCurrent = questChild && linkPath === "/PSNOVA/pages/quest.html";
         var promiseOrderParentCurrent = promiseOrderChild && linkPath === "/PSNOVA/pages/promise-order.html";
         var appearanceParentCurrent = appearanceChild && linkPath === "/PSNOVA/pages/character-create.html";
 
