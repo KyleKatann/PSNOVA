@@ -6,12 +6,14 @@ DOCS = ROOT / "docs"
 RETIRED_PATHS = (
     "/PSNOVA/copyright.html",
     "/PSNOVA/issue.html",
+    "/PSNOVA/pages/faq.html",
 )
 
 
 def test_retired_public_pages_are_not_restored():
     assert not (DOCS / "copyright.html").exists()
     assert not (DOCS / "issue.html").exists()
+    assert not (DOCS / "pages" / "faq.html").exists()
 
 
 def test_retired_public_pages_are_not_linked_or_indexed():
