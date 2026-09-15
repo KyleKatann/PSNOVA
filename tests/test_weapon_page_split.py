@@ -75,7 +75,7 @@ class WeaponPageSplitTests(unittest.TestCase):
             sidebar,
         )
         self.assertIn(
-            "/PSNOVA/pages/weapon.html",
+            "/PSNOVA/pages/combat.html",
             sidebar,
         )
 
