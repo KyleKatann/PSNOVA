@@ -4,23 +4,48 @@ var html =`
 <nav aria-label="攻略メニュー">
 <h2>攻略メニュー</h2>
 <ul class="submenu">
+    <li><p>ゲームガイド</p></li>
     <li><a href="/PSNOVA/">ゲーム紹介</a></li>
 
-    <li><p>攻略情報</p></li>
-    <li><a href="/PSNOVA/pages/pso2.html">PSO2との関係</a></li>
-    <li><a href="/PSNOVA/pages/trial-version.html">体験版</a></li>
-    <li><a href="/PSNOVA/pages/farming.html">稼ぎ</a></li>
+    <li><p>攻略</p></li>
     <li><a href="/PSNOVA/pages/walkthrough.html">攻略チャート</a></li>
-    <li><a href="/PSNOVA/pages/bugs.html">バグ・不具合</a></li>
+    <li><a href="/PSNOVA/pages/farming.html">稼ぎ</a></li>
     <li><a href="/PSNOVA/pages/vh-xh.html">VH・XH攻略</a></li>
     <li><a href="/PSNOVA/pages/novafactor.html">ノヴァファクター集め</a></li>
-    <li><a href="/PSNOVA/pages/download.html">ダウンロードコンテンツ</a></li>
-    <li><a href="/PSNOVA/pages/base.html">拠点施設</a></li>
-    <li><a href="/PSNOVA/pages/food.html">食事</a></li>
 
-    <li><p>各種データ</p></li>
-    <li><a href="/PSNOVA/pages/enemy.html">エネミー</a></li>
-    <li><a href="/PSNOVA/pages/gigantes.html">ギガンテス</a></li>
+    <li><p>クエスト</p></li>
+    <li class="has-submenu quest-data-item">
+        <a class="quest-data-link" href="/PSNOVA/pages/quest.html">クエスト</a>
+        <ul class="weapon-submenu quest-submenu" aria-label="クエストエリア">
+            <li><a href="/PSNOVA/pages/quest/steel-wilderness.html">鋼の荒野</a></li>
+            <li><a href="/PSNOVA/pages/quest/gran-water-source.html">グラン水源</a></li>
+            <li><a href="/PSNOVA/pages/quest/flame-highlands.html">炎の高地</a></li>
+            <li><a href="/PSNOVA/pages/quest/ancient-city.html">古代都市</a></li>
+            <li><a href="/PSNOVA/pages/quest/great-spire.html">大尖塔</a></li>
+            <li><a href="/PSNOVA/pages/quest/nova-interior.html">ノヴァ内部</a></li>
+            <li><a href="/PSNOVA/pages/quest/additional.html">追加クエスト</a></li>
+        </ul>
+    </li>
+    <li class="has-submenu promise-order-data-item">
+        <a class="promise-order-data-link" href="/PSNOVA/pages/promise-order.html">プロミスオーダー</a>
+        <ul class="weapon-submenu promise-order-submenu" aria-label="プロミスオーダーNPC">
+            <li><a href="/PSNOVA/pages/promise-order/fildia.html">フィルディア</a></li>
+            <li><a href="/PSNOVA/pages/promise-order/lutina.html">ルティナ</a></li>
+            <li><a href="/PSNOVA/pages/promise-order/sail.html">セイル</a></li>
+            <li><a href="/PSNOVA/pages/promise-order/izuna.html">イズナ</a></li>
+            <li><a href="/PSNOVA/pages/promise-order/lithia.html">リーティア</a></li>
+            <li><a href="/PSNOVA/pages/promise-order/kisara.html">キサラ</a></li>
+            <li><a href="/PSNOVA/pages/promise-order/orcuss.html">オルクス</a></li>
+            <li><a href="/PSNOVA/pages/promise-order/yomi.html">ヨミ</a></li>
+            <li><a href="/PSNOVA/pages/promise-order/callisto.html">カリスト</a></li>
+            <li><a href="/PSNOVA/pages/promise-order/hyperion.html">ヒュペリオン</a></li>
+            <li><a href="/PSNOVA/pages/promise-order/sharon.html">シャロン</a></li>
+        </ul>
+    </li>
+
+    <li><p>戦闘・装備</p></li>
+    <li><a href="/PSNOVA/pages/class.html">クラス</a></li>
+    <li><a href="/PSNOVA/pages/skill.html">スキル</a></li>
     <li class="has-submenu weapon-data-item">
         <a class="weapon-data-link" href="/PSNOVA/pages/combat.html">武器・GA</a>
         <ul class="weapon-submenu weapon-ga-submenu" aria-label="武器・GA">
@@ -51,46 +76,25 @@ var html =`
     <li><a href="/PSNOVA/pages/armor.html">防具データ</a></li>
     <li><a href="/PSNOVA/pages/attachment.html">アタッチパーツ</a></li>
     <li><a href="/PSNOVA/pages/specialability.html">特殊能力</a></li>
+
+    <li><p>エネミー</p></li>
+    <li><a href="/PSNOVA/pages/enemy.html">エネミー</a></li>
+    <li><a href="/PSNOVA/pages/gigantes.html">ギガンテス</a></li>
+
+    <li><p>アイテム</p></li>
     <li><a href="/PSNOVA/pages/material.html">素材</a></li>
     <li><a href="/PSNOVA/pages/item.html">消費アイテム</a></li>
 
-    <li class="has-submenu quest-data-item">
-        <a class="quest-data-link" href="/PSNOVA/pages/quest.html">クエスト</a>
-        <ul class="weapon-submenu quest-submenu" aria-label="クエストエリア">
-            <li><a href="/PSNOVA/pages/quest/steel-wilderness.html">鋼の荒野</a></li>
-            <li><a href="/PSNOVA/pages/quest/gran-water-source.html">グラン水源</a></li>
-            <li><a href="/PSNOVA/pages/quest/flame-highlands.html">炎の高地</a></li>
-            <li><a href="/PSNOVA/pages/quest/ancient-city.html">古代都市</a></li>
-            <li><a href="/PSNOVA/pages/quest/great-spire.html">大尖塔</a></li>
-            <li><a href="/PSNOVA/pages/quest/nova-interior.html">ノヴァ内部</a></li>
-            <li><a href="/PSNOVA/pages/quest/additional.html">追加クエスト</a></li>
-        </ul>
-    </li>
-    <li class="has-submenu promise-order-data-item">
-        <a class="promise-order-data-link" href="/PSNOVA/pages/promise-order.html">プロミスオーダー</a>
-        <ul class="weapon-submenu promise-order-submenu" aria-label="プロミスオーダーNPC">
-            <li><a href="/PSNOVA/pages/promise-order/fildia.html">フィルディア</a></li>
-            <li><a href="/PSNOVA/pages/promise-order/lutina.html">ルティナ</a></li>
-            <li><a href="/PSNOVA/pages/promise-order/sail.html">セイル</a></li>
-            <li><a href="/PSNOVA/pages/promise-order/izuna.html">イズナ</a></li>
-            <li><a href="/PSNOVA/pages/promise-order/lithia.html">リーティア</a></li>
-            <li><a href="/PSNOVA/pages/promise-order/kisara.html">キサラ</a></li>
-            <li><a href="/PSNOVA/pages/promise-order/orcuss.html">オルクス</a></li>
-            <li><a href="/PSNOVA/pages/promise-order/yomi.html">ヨミ</a></li>
-            <li><a href="/PSNOVA/pages/promise-order/callisto.html">カリスト</a></li>
-            <li><a href="/PSNOVA/pages/promise-order/hyperion.html">ヒュペリオン</a></li>
-            <li><a href="/PSNOVA/pages/promise-order/sharon.html">シャロン</a></li>
-        </ul>
-    </li>
+    <li><p>拠点</p></li>
+    <li><a href="/PSNOVA/pages/base.html">拠点施設</a></li>
+    <li><a href="/PSNOVA/pages/food.html">食事</a></li>
 
     <li><p>キャラクター</p></li>
-    <li><a href="/PSNOVA/pages/class.html">クラス</a></li>
-    <li><a href="/PSNOVA/pages/skill.html">スキル</a></li>
     <li><a href="/PSNOVA/pages/species.html">種族</a></li>
+    <li><a href="/PSNOVA/pages/traits.html">特徴</a></li>
     <li><a href="/PSNOVA/pages/npc.html">NPC</a></li>
     <li><a href="/PSNOVA/pages/npc-password.html">NPC(パスワード解放)</a></li>
     <li><a href="/PSNOVA/pages/npc-coldsleep.html">コールドスリープ</a></li>
-    <li><a href="/PSNOVA/pages/traits.html">特徴</a></li>
     <li class="has-submenu appearance-data-item">
         <a class="appearance-data-link" href="/PSNOVA/pages/character-create.html">キャラクタークリエイト</a>
         <ul class="weapon-submenu appearance-submenu" aria-label="キャラクタークリエイト">
@@ -100,6 +104,11 @@ var html =`
         </ul>
     </li>
 
+    <li><p>その他</p></li>
+    <li><a href="/PSNOVA/pages/pso2.html">PSO2との関係</a></li>
+    <li><a href="/PSNOVA/pages/trial-version.html">体験版</a></li>
+    <li><a href="/PSNOVA/pages/download.html">ダウンロードコンテンツ</a></li>
+    <li><a href="/PSNOVA/pages/bugs.html">バグ・不具合</a></li>
     <li><a href="/PSNOVA/pages/trophy.html">トロフィー</a></li>
 </ul>
 </nav>
