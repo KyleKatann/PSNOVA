@@ -6,6 +6,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 DOCS = ROOT / "docs"
 SIDEBAR = DOCS / "js" / "sidebar.js"
+OPEN_CLOSE = DOCS / "js" / "openclose.js"
 
 PUBLIC_SCRIPTS = (
     "/PSNOVA/js/openclose.js",
@@ -87,6 +88,38 @@ class PublicScriptLoadingTests(unittest.TestCase):
             violations,
             "公開HTMLにinline scriptが残っている:\n"
             + "\n".join(violations),
+        )
+
+    def test_public_page_interaction_protection_preserves_copy(self):
+        js = OPEN_CLOSE.read_text(encoding="utf-8")
+
+        self.assertIn(
+            'document.addEventListener("contextmenu"',
+            js,
+        )
+        self.assertIn(
+            '(event.ctrlKey || event.metaKey)',
+            js,
+        )
+        self.assertIn(
+            'event.key.toLowerCase() === "s"',
+            js,
+        )
+        self.assertNotIn(
+            'addEventListener("copy"',
+            js,
+        )
+        self.assertNotIn(
+            "addEventListener('copy'",
+            js,
+        )
+        self.assertNotIn(
+            'addEventListener("cut"',
+            js,
+        )
+        self.assertNotIn(
+            "addEventListener('cut'",
+            js,
         )
 
     def test_sidebar_self_initializes(self):
