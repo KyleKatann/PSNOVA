@@ -28,40 +28,46 @@ def test_nova_factor_guide_is_linked_below_faq():
 def test_nova_factor_guide_keeps_reader_facing_copy():
     html = PAGE.read_text(encoding="utf-8")
 
-    assert "ノヴァファクターはLv201以上の大型エネミーからドロップする。" in html
+    assert "ノヴァファクターはLv201～260の大型エネミーから狙える希少素材。" in html
     assert "必要装備" in html
     assert "おすすめクエスト" in html
-    assert "対象属性" not in html
-    assert "弱点属性" not in html
-    assert "5ch" not in html
-    assert "内部テーブル" not in html
-    assert "なぜ" not in html
-    assert "→" not in html
-    assert "周回先の選び方" not in html
-    assert "難：ギュゲンテ撃破任務 XH" not in html
-    assert "難：リベルゲンテ決戦 XH" not in html
+    assert "約154か所" in html
+    assert "約155か所" in html
+    assert "約105～130か所" in html
+
+    for internal_term in (
+        "DropID",
+        "CharacterID",
+        "PartsParam",
+        "Repop",
+        "runtime",
+        "selector",
+        "enemy_group_id",
+        "incident",
+        "内部テーブル",
+    ):
+        assert internal_term not in html
 
 
-def test_death_date_spawn_order_matches_last_date_pattern():
+def test_recommended_quest_order_and_spawn_order():
     html = PAGE.read_text(encoding="utf-8")
 
-    death_date = html.split("<h3>1. 超：デス・デート XH</h3>", 1)[1].split(
-        "<h3>2. 超：城壁のヴィヴリュード XH</h3>", 1
+    comparison = html.split("<h2>おすすめクエスト</h2>", 1)[1].split(
+        "<h3>1. 難：★ラスト・デート XH</h3>", 1
     )[0]
     assert_in_order(
-        death_date,
+        comparison,
         [
-            "デェフキュオネ",
-            "グラヴディオン",
-            "ノイヴァトアス",
-            "ヴァリゴルドス",
-            "ヴィヴリュード",
-            "アルテイオス",
+            "難：★ラスト・デート XH",
+            "超：デス・デート XH",
+            "極：ヘル・デート XH",
+            "極：棘と大火球の輪舞曲 XH",
+            "超：尖塔に潜む光線獣 XH",
         ],
     )
 
-    last_date = html.split("<h3>3. 難：★ラスト・デート XH</h3>", 1)[1].split(
-        "</section>", 1
+    last_date = html.split("<h3>1. 難：★ラスト・デート XH</h3>", 1)[1].split(
+        "<h3>2. 超：デス・デート XH</h3>", 1
     )[0]
     assert_in_order(
         last_date,
@@ -70,6 +76,21 @@ def test_death_date_spawn_order_matches_last_date_pattern():
             "グラヴディオン",
             "マグネトアス",
             "ディゴルドス",
+            "ヴィヴリュード",
+            "アルテイオス",
+        ],
+    )
+
+    death_date = html.split("<h3>2. 超：デス・デート XH</h3>", 1)[1].split(
+        "<h3>3. 極：ヘル・デート XH</h3>", 1
+    )[0]
+    assert_in_order(
+        death_date,
+        [
+            "デェフキュオネ",
+            "グラヴディオン",
+            "ノイヴァトアス",
+            "ヴァリゴルドス",
             "ヴィヴリュード",
             "アルテイオス",
         ],
