@@ -21,6 +21,7 @@
 
 - write操作が失敗または不明瞭な結果になった場合は、再試行前にread-onlyでHEAD、対象file、diff、必要なschemaを確認し、repositoryが変更されたかを確定する。意図外変更があれば安全な最小復旧を行い、復旧をread-onlyで検証してからAgent更新と元作業へ戻る。
 - 原因追及はread-onlyを優先し、推測値・dummy・probe write・別write APIの順番試行を使わない。同じ失敗を引数だけ推測変更して繰り返してはならない。
+- 過去会話、過去commit、旧サイト構成だけから推測したfile pathを`fetch_file`へ渡してはならない。current repositoryで対象pathが未確認の場合は、先に現在のdirectory listingまたはtreeをread-onlyで取得し、そこに実在するpathだけを使用する。直前のcurrent read結果ですでにpathを確認済みの場合は再listingを不要とする。
 - 大きなtext fileを`fetch_file`で取得するとき、全範囲取得がresponse sizeや接続切断で失敗した場合は、同じ大型requestを繰り返さず、連続した小さいline rangeへ分割して取得する。必要な全範囲を成功済みchunkで揃えた後は、再確認目的で大型requestへ戻さない。
 - `Agent.md`など全文置換が必要な大きなtext fileでは、変更対象外の既存文を手作業で言い換えず、成功済みの連続chunkから取得した原文をそのまま再構成する。commit直後のcompareで意図外の語句変更を1件でも検出した場合は、その語句だけを原文へ戻し、原因に対応する再発防止ルールを具体化してから元作業へ戻る。
 - 操作系エラーごとにincident logを増やすのではなく、原因に対応する再発防止ルールを既存sectionへ統合・具体化してよい。ただし、そのrunでは必ず`Agent.md`に恒久的な改善を1件以上反映する。
