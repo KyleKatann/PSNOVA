@@ -8,6 +8,22 @@
     document.head.appendChild(style);
 })();
 
+/* Discourage casual page saving while keeping text selection and copying available. */
+(function protectPublicPageInteractions() {
+    document.addEventListener("contextmenu", function (event) {
+        event.preventDefault();
+    });
+
+    document.addEventListener("keydown", function (event) {
+        var saveShortcut = (event.ctrlKey || event.metaKey)
+            && event.key.toLowerCase() === "s";
+
+        if (saveShortcut) {
+            event.preventDefault();
+        }
+    });
+})();
+
 function OCwindowWidth() {
     return window.innerWidth;
 }
