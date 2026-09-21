@@ -27,6 +27,7 @@
 - `Agent.md`など全文置換が必要な大きなtext fileでは、変更対象外の既存文を手作業で言い換えず、成功済みの連続chunkから取得した原文をそのまま再構成する。commit直後のcompareで意図外の語句変更を1件でも検出した場合は、その語句だけを原文へ戻し、原因に対応する再発防止ルールを具体化してから元作業へ戻る。
 - 操作系エラーごとにincident logを増やすのではなく、原因に対応する再発防止ルールを既存sectionへ統合・具体化してよい。ただし、そのrunでは必ず`Agent.md`に恒久的な改善を1件以上反映する。
 - 外部credential失効やservice outage等で安全な継続が物理的に不可能な場合だけ、原因と必要なユーザー操作を報告する。回復可能な操作系エラーをこの例外へ拡張して停止理由にしてはならない。
+- GitHub Pagesのdeploymentがsuccessでも外部Web取得toolが公開URLを「access不可」と返す場合は、tool側の取得制約と公開site障害を区別する。deployment statusとrepository上の公開HTMLをread-onlyで検証し、外部Web toolの非対応だけをページ破損の根拠にしない。
 - ローカル解析でPythonの追加moduleや外部CLIを使う前に、`python -c "import ..."` や `command -v` 等のread-only確認で利用可否を確認し、未導入の依存を前提に実行してoperation errorを発生させてはならない。標準toolで足りる場合は追加package前提を置かず、既存標準commandの出力から処理する。
 
 ## 最優先ルール：HEADの停止判定に古い基準を使わない
