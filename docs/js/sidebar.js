@@ -86,7 +86,12 @@ var html =`
     <li><a href="/PSNOVA/pages/item.html">消費アイテム</a></li>
 
     <li><p>拠点</p></li>
-    <li><a href="/PSNOVA/pages/base.html">拠点施設</a></li>
+    <li class="has-submenu weapon-data-item">
+        <a href="/PSNOVA/pages/base.html">拠点施設</a>
+        <ul class="weapon-submenu" aria-label="拠点施設">
+            <li><a href="/PSNOVA/pages/search-corps.html">探索隊司令部</a></li>
+        </ul>
+    </li>
     <li><a href="/PSNOVA/pages/food.html">食事</a></li>
 
     <li><p>キャラクター</p></li>
@@ -142,6 +147,7 @@ function markCurrentSidebarLink(){
     var technicChild = /^\/PSNOVA\/pages\/technic\/[^/]+\.html$/.test(currentPath);
     var questChild = /^\/PSNOVA\/pages\/quest\/[^/]+\.html$/.test(currentPath);
     var promiseOrderChild = /^\/PSNOVA\/pages\/promise-order\/[^/]+\.html$/.test(currentPath);
+    var baseChild = currentPath === "/PSNOVA/pages/search-corps.html";
     var appearanceChild = /^\/PSNOVA\/pages\/appearance\/[^/]+\.html$/.test(currentPath);
     var links = document.querySelectorAll("#sub .submenu a[href]");
 
@@ -158,12 +164,13 @@ function markCurrentSidebarLink(){
         var technicParentCurrent = technicChild && linkPath === "/PSNOVA/pages/technic.html";
         var questParentCurrent = questChild && linkPath === "/PSNOVA/pages/quest.html";
         var promiseOrderParentCurrent = promiseOrderChild && linkPath === "/PSNOVA/pages/promise-order.html";
+        var baseParentCurrent = baseChild && linkPath === "/PSNOVA/pages/base.html";
         var appearanceParentCurrent = appearanceChild && linkPath === "/PSNOVA/pages/character-create.html";
 
         link.classList.toggle("is-current", exactCurrent);
         link.classList.toggle(
             "is-parent-current",
-            weaponParentCurrent || technicParentCurrent || questParentCurrent || promiseOrderParentCurrent || appearanceParentCurrent
+            weaponParentCurrent || technicParentCurrent || questParentCurrent || promiseOrderParentCurrent || baseParentCurrent || appearanceParentCurrent
         );
         if (exactCurrent) {
             link.setAttribute("aria-current", "page");
