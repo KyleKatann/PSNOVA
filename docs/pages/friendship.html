@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="ja">
+
+<head>
+    <title>PSNOVA攻略サイト - 友好度の上げ方</title>
+    <meta charset="UTF-8">
+    <meta name="description" content="PSNOVAのNPC友好度の上げ方を解説。クエストクリア、プロミスオーダーによる上昇量、友好度の段階と上限、支援行動に関するよくある誤解をまとめています。">
+    <link rel="canonical" href="https://kylekatann.github.io/PSNOVA/pages/friendship.html">
+    <meta property="og:title" content="PSNOVA攻略サイト - 友好度の上げ方">
+    <meta property="og:description" content="PSNOVAのNPC友好度の上げ方を解説。クエストクリア、プロミスオーダーによる上昇量、友好度の段階と上限、支援行動に関するよくある誤解をまとめています。">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://kylekatann.github.io/PSNOVA/pages/friendship.html">
+    <meta property="og:image" content="https://kylekatann.github.io/PSNOVA/img/logo.png">
+    <meta property="og:image:alt" content="PSNOVA 攻略サイト">
+    <meta property="og:site_name" content="PSNOVA攻略サイト">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="/PSNOVA/img/logo.png" type="image/png">
+    <link rel="stylesheet" href="/PSNOVA/css/style.css">
+    <script defer src="/PSNOVA/js/openclose.js"></script>
+    <script defer src="/PSNOVA/js/menubar.js"></script>
+    <script defer src="/PSNOVA/js/sidebar.js"></script>
+</head>
+
+<body class="guide-page friendship-page">
+    <a class="skip-link" href="#main">本文へスキップ</a>
+    <div id="container">
+        <header>
+            <div id="logo"><a href="/PSNOVA/"><img src="/PSNOVA/img/logo.png" alt="PSNOVA 攻略サイト" width="676" height="100"></a></div>
+        </header>
+
+        <div id="contents">
+            <main id="main">
+                <section>
+                    <h1>友好度の上げ方</h1>
+                    <p class="page-lead">NPCの友好度は、対象NPCをパーティーに入れてクエストをクリアするか、そのNPCのプロミスオーダーを達成することで上昇する。クエストクリア時の上昇量はクリア評価に応じて決まり、支援テクニックや回復アイテムを使った回数では増えない。一部のDLC NPCには、イベント進行に連動して一度だけ友好度が加算される専用処理もある。</p>
+
+                    <h2>効率よく上げる方法</h2>
+                    <ol>
+                        <li>未達成または再受注できる<a href="/PSNOVA/pages/promise-order.html">プロミスオーダー</a>がある場合は、まずそちらを優先する。オーダーごとに友好度加算値が設定されており、収録データでは1～150、多くは50～80となっている。</li>
+                        <li>プロミスオーダーを使えない間は、友好度を上げたいNPCをパーティーに入れて短いクエストを周回する。</li>
+                        <li>クエスト周回では、できるだけ高いクリアランクを取る。Sランクなら1回につき+5となる。</li>
+                    </ol>
+
+                    <h2>クエストクリア時の上昇量</h2>
+                    <p>同行NPCへの友好度加算は、クエストクリア時の内部評価と同じ値から決まる。画面に表示されるクリアランクとの対応は次のとおり。</p>
+                    <div class="table-scroll">
+                        <table>
+                            <thead>
+                                <tr><th scope="col">クリアランク</th><th scope="col">友好度</th></tr>
+                            </thead>
+                            <tbody>
+                                <tr><td>S</td><td>+5</td></tr>
+                                <tr><td>A</td><td>+3</td></tr>
+                                <tr><td>B</td><td>+2</td></tr>
+                                <tr><td>C</td><td>+1</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <p>通常クエスト側には、これとは別の基礎友好度加算は設定されていない。そのため、同じクリアランクならクエストクリアによる友好度上昇量も同じになる。</p>
+
+                    <h2>プロミスオーダー</h2>
+                    <p>プロミスオーダーは、達成時に依頼主のNPCへオーダーごとの友好度が加算される。クエスト1回の上昇量より大きい設定が多いため、受注できるものが残っている場合は友好度上げの主な手段になる。</p>
+                    <p>各NPCのオーダー内容は<a href="/PSNOVA/pages/promise-order.html">プロミスオーダー一覧</a>を参照。</p>
+
+                    <h2>友好度の段階</h2>
+                    <p>画面上の友好度表示は5段階に分かれている。</p>
+                    <div class="table-scroll">
+                        <table>
+                            <thead>
+                                <tr><th scope="col">表示段階</th><th scope="col">友好度</th></tr>
+                            </thead>
+                            <tbody>
+                                <tr><td>1</td><td>0～199</td></tr>
+                                <tr><td>2</td><td>200～399</td></tr>
+                                <tr><td>3</td><td>400～599</td></tr>
+                                <tr><td>4</td><td>600～799</td></tr>
+                                <tr><td>5</td><td>800以上</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <p>これとは別に、ゲーム内部では400と800を境界にした判定も使われている。表示上は800以上で最高段階となる。</p>
+
+                    <h2>友好度の上限</h2>
+                    <p>一部の重要NPCには、その時点での友好度上限が設定されている。ストーリーやイベントの進行条件を満たすと上限が引き上げられる場合があり、加算時には現在の上限を超えないように補正される。</p>
+                    <p>上限を超えた分を後から持ち越す処理はないため、友好度が一定値から動かない場合は、まずゲーム進行による上限解放を確認するとよい。</p>
+
+                    <h2>よくある誤解</h2>
+                    <h3>シフタやレスタを使うと友好度が上がる？</h3>
+                    <p><strong>上がらない。</strong>シフタ、デバンド、レスタ、アンティ、スターアトマイザー、ソルアトマイザー、ムーンアトマイザーには、それ自体で友好度を加算する処理はない。</p>
+                    <p>支援したときにNPCがお礼のボイスを再生することがあるが、これは支援に反応する会話処理であり、友好度加算とは別の仕組みである。</p>
+                    <p>ただし、シフタなどによって戦闘が速くなり、結果としてクリア評価が上がれば、クエストクリア時の友好度が間接的に増えることはある。最終的なクリアランクが同じなら、支援行動の回数によって追加の友好度が付くことはない。</p>
+                </section>
+            </main>
+        </div>
+
+        <footer>
+            <small>Copyright&copy; <a href="/PSNOVA/">PSNOVA 攻略サイト</a> All Rights Reserved.</small>
+        </footer>
+    </div>
+
+    <p class="nav-fix-pos-pagetop"><a href="#">↑</a></p>
+    <button type="button" id="menubar_hdr" class="close"></button>
+</body>
+</html>
