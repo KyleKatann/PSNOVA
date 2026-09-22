@@ -58,6 +58,36 @@ class EmergencyCallPageTests(unittest.TestCase):
         self.assertNotIn("7|7|0|0", html)
         self.assertNotIn("invalid_definition", html)
 
+    def test_uses_audited_display_names(self):
+        html = self.page_html()
+
+        for expected in (
+            "鋼の荒野哨戒任務",
+            "極：伏す猛銃と天舞う砲凰",
+            "超：氷塊のギガティオン",
+            "水源を這う脚",
+            "源流を塞ぐ杭",
+            "★戦士に贈る愛",
+            "拠点を守れ　　拠点耐久",
+            "赤い樹枝",
+        ):
+            with self.subTest(expected=expected):
+                self.assertIn(expected, html)
+
+        for obsolete in (
+            "銅の荒野",
+            "冷：",
+            "劇珪",
+            "劇産",
+            "水装を這う脚",
+            "装流を塞ぐ杭",
+            "★戦土",
+            "拠点を守れ   拠点耐久",
+            "赤い樹液",
+        ):
+            with self.subTest(obsolete=obsolete):
+                self.assertNotIn(obsolete, html)
+
     def test_is_linked_from_quest_index_and_sitemap(self):
         quest_index = QUEST_INDEX.read_text(encoding="utf-8")
         sitemap = SITEMAP.read_text(encoding="utf-8")
