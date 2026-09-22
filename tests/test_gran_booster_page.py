@@ -107,8 +107,8 @@ class GranBoosterPageTests(unittest.TestCase):
     def test_traits_page_keeps_matching_trait_values(self):
         traits = TRAITS.read_text(encoding="utf-8")
 
-        self.assertIn("<tr><td>グラン予報士</td><td>Gブースター効果 +1</td><td>グランブースター</td><td>消費GP -1% / 入手グラン +5%</td></tr>", traits)
-        self.assertIn("<tr><td>上級グラン予報士</td><td>Gブースター効果 +2</td><td>グランブースター</td><td>消費GP -2% / 入手グラン +10%</td></tr>", traits)
+        self.assertIn("<tr><td>グラン予報士</td><td>Gブースター効果 +1</td><td>グランブースター</td><td>追加効果: 消費GP -1% / 入手グラン +5%</td></tr>", traits)
+        self.assertIn("<tr><td>上級グラン予報士</td><td>Gブースター効果 +2</td><td>グランブースター</td><td>追加効果: 消費GP -2% / 入手グラン +10%</td></tr>", traits)
 
     def test_page_is_linked_from_base_and_sitemap(self):
         path = "/PSNOVA/pages/gran-booster.html"
