@@ -560,6 +560,7 @@ body.emergency-call-page #main .emergency-call-table tr > :nth-child(n + 3) {
 body.emergency-call-page #main .emergency-call-table th,
 body.emergency-call-page #main .emergency-call-table td {
     box-sizing: border-box;
+    vertical-align: middle;
 }
 
 body.emergency-call-page #main .emergency-call-table tr > :nth-child(n + 2) {
@@ -570,10 +571,4 @@ body.emergency-call-page #main .emergency-call-table tr > :nth-child(n + 2) {
 
 body.emergency-call-page #main .emergency-call-table tbody td:nth-child(n + 3) {
     text-align: left !important;
-    vertical-align: top;
-}
-
-body.emergency-call-page #main .emergency-call-table tbody td:first-child,
-body.emergency-call-page #main .emergency-call-table tbody td:nth-child(2) {
-    vertical-align: middle;
 }
