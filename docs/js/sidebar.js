@@ -24,6 +24,7 @@ var html =`
             <li><a href="/PSNOVA/pages/quest/great-spire.html">大尖塔</a></li>
             <li><a href="/PSNOVA/pages/quest/nova-interior.html">ノヴァ内部</a></li>
             <li><a href="/PSNOVA/pages/quest/additional.html">追加クエスト</a></li>
+            <li><a href="/PSNOVA/pages/quest/emergency-call.html">エマージェンシーコール</a></li>
         </ul>
     </li>
     <li class="has-submenu promise-order-data-item">
