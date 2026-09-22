@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="ja">
+<head>
+    <title>PSNOVA攻略サイト - レアドロップの仕組み</title>
+    <meta charset="UTF-8">
+    <meta name="description" content="PSNOVAのレアドロップについて、通常枠とレア枠の違い、ドロップ補正の加算方式、アイテム探知装置・ブーストエネミー・グランバーストを使ったレアドロップ率の上げ方をまとめています。">
+    <link rel="canonical" href="https://kylekatann.github.io/PSNOVA/pages/rare-drop.html">
+    <meta property="og:title" content="PSNOVA攻略サイト - レアドロップの仕組み">
+    <meta property="og:description" content="通常枠とレア枠の違い、ドロップ補正の加算方式、レアドロップ率を最大まで上げる方法をまとめています。">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://kylekatann.github.io/PSNOVA/pages/rare-drop.html">
+    <meta property="og:image" content="https://kylekatann.github.io/PSNOVA/img/logo.png">
+    <meta property="og:image:alt" content="PSNOVA 攻略サイト">
+    <meta property="og:site_name" content="PSNOVA攻略サイト">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="/PSNOVA/img/logo.png" type="image/png">
+    <link rel="stylesheet" href="/PSNOVA/css/style.css">
+    <link rel="stylesheet" href="/PSNOVA/css/page.css" data-psnova-page-style="true">
+    <script defer src="/PSNOVA/js/openclose.js"></script>
+    <script defer src="/PSNOVA/js/menubar.js"></script>
+    <script defer src="/PSNOVA/js/sidebar.js"></script>
+</head>
+<body class="guide-page">
+    <a class="skip-link" href="#main">本文へスキップ</a>
+    <div id="container">
+        <header>
+            <div id="logo"><a href="/PSNOVA/"><img src="/PSNOVA/img/logo.png" alt="PSNOVA 攻略サイト" width="676" height="100"></a></div>
+        </header>
+
+        <div id="contents">
+            <main id="main">
+                <section>
+                    <h1>レアドロップの仕組みと、レアアイテムを最も落としやすくする方法</h1>
+                    <p class="page-lead">敵固有ドロップでは、レア枠と通常枠が別々に判定され、効くドロップ補正も異なります。複数のドロップ補正は乗算ではなく増加分を加算して計算されます。このページでは、レア枠の仕組みとレアドロップ率を高める方法をまとめています。</p>
+
+                    <h2>敵固有ドロップは5つの枠を順番に判定する</h2>
+                    <p>敵固有ドロップは、次の5つの枠を上から順番に判定し、最初に成功したアイテムがその抽選の結果になります。レアアイテムは通常アイテムとは別の「レア枠」に設定されており、通常枠より先に判定されます。</p>
+                    <ol>
+                        <li>レア枠</li>
+                        <li>通常枠1</li>
+                        <li>通常枠2</li>
+                        <li>通常枠3</li>
+                        <li>通常枠4</li>
+                    </ol>
+
+                    <h2>「アイテムドロップ率」と「レアドロップ率」は別物</h2>
+                    <p>通常アイテムとレアアイテムには、別々のドロップ補正が使われています。</p>
+                    <table>
+                        <thead>
+                            <tr><th scope="col">対象</th><th scope="col">作用する補正</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>レア枠</td><td>レアドロップ率補正</td></tr>
+                            <tr><td>通常枠1～4</td><td>アイテムドロップ率補正</td></tr>
+                        </tbody>
+                    </table>
+                    <p>そのため、「アイテムドロップ率アップ」はレア枠には作用しません。ラッキーライズⅠ、テンプテーション、ギガ魚フライ定食、ギガ海鮮丼・特盛り、シャロンの「ロマンテスト」などは通常枠を強化します。</p>
+
+                    <h2>ドロップ率は乗算ではなく加算</h2>
+                    <p>プレイヤーが何も補正を受けていない状態のレアドロップ率を100%とします。各効果は、この100%に対する倍率として扱われます。例えば、料理による1.05倍、ブーストエネミーによる2倍といった形です。</p>
+                    <p>複数の効果を重ねた場合は倍率同士をそのまま掛けるのではなく、それぞれの1倍を超えた分を100%へ加算します。</p>
+                    <pre><code>基準                         100%
+2倍の効果による増加分        +100%
+2倍の効果による増加分        +100%
+--------------------------------
+最終                         300%</code></pre>
+                    <p>2倍の効果を2つ重ねても4倍にはならず、最終的には元の3倍になります。</p>
+
+                    <h2>アイテム探知装置でレアドロップ率を上げる</h2>
+                    <p>アイテム探知装置では、配属したクルーの能力によって通常ドロップとレアドロップを別々に強化できます。「アイテム探索能力UP」は通常枠、「レアアイテム探索能力UP」はレア枠を強化します。</p>
+                    <p>レア側補正は「レアアイテム探索能力UP」を持つクルーの配置人数によって変化し、最大段階では補正倍率が2倍になります。「レアアイテム探索能力UP」を持つクルーは、イスタル、メイズ、カトルズ、アンリ、メルクレード、オウカ、ジャニスの7人です。アイテム探知装置を最大レベルまで発展させ、この能力を持つクルーを5人配置すると最大段階に到達します。</p>
+                    <p>通常アイテム・レアアイテムのドロップ率を上げる<a href="/PSNOVA/pages/item-detector.html">アイテム探知装置</a>については、こちらを参照してください。</p>
+
+                    <h2>ブーストエネミーは2倍</h2>
+                    <p>ブーストエネミーには2倍のドロップ補正があり、レア枠と通常枠の両方に適用されます。</p>
+                    <p>ブーストエネミーの出現率を上げる<a href="/PSNOVA/pages/enemy-radar.html">エネミーレーダー</a>については、こちらを参照してください。</p>
+
+                    <h2>グランバーストのドロップ補正</h2>
+                    <table>
+                        <thead>
+                            <tr><th scope="col">効果</th><th scope="col">内容</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>レアドロップアップ</td><td>レアドロップ率を2倍</td></tr>
+                            <tr><td>アイテムドロップアップ</td><td>ドロップ抽選を1回追加</td></tr>
+                        </tbody>
+                    </table>
+                    <p>「レアドロップアップ」は他のレア補正と同じ加算方式で、プレイヤーの基準100%に+100%が加わります。「アイテムドロップアップ」はドロップ率を上げる効果ではなく、ドロップ抽選そのものを1回増やします。</p>
+
+                    <h2>最大までレアドロップ率を上げる方法</h2>
+                    <table>
+                        <thead>
+                            <tr><th scope="col">方法</th><th scope="col">補正倍率</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>プレイヤーの基準</td><td>100%</td></tr>
+                            <tr><td>アイテム探知装置を最大にし、「レアアイテム探索能力UP」持ちを5人配置</td><td>2倍</td></tr>
+                            <tr><td>ギガババロア または ギガ骨の髄まで定食</td><td>1.05倍</td></tr>
+                            <tr><td>レイヴァンを同行</td><td>1.05倍</td></tr>
+                            <tr><td>ブーストエネミー</td><td>2倍</td></tr>
+                            <tr><td>グランバースト「レアドロップアップ」</td><td>2倍</td></tr>
+                        </tbody>
+                    </table>
+
+                    <pre><code>通常の敵
+  100% + 100% + 5% + 5% + 100%
+  = 310%
+  = 元の3.1倍
+
+ブーストエネミー
+  100% + 100% + 5% + 5% + 100% + 100%
+  = 410%
+  = 元の4.1倍</code></pre>
+
+                    <p>例えば、補正前のレア枠のドロップ率が1%なら、通常敵の最大構成では3.10%、ブーストエネミーの最大構成では4.10%になります。</p>
+                    <p>グランバースト「アイテムドロップアップ」が発生した場合は、このレア倍率とは別にドロップ抽選が1回追加されます。</p>
+                </section>
+            </main>
+        </div>
+
+        <footer>
+            <small>Copyright&copy; <a href="/PSNOVA/">PSNOVA 攻略サイト</a> All Rights Reserved.</small>
+        </footer>
+    </div>
+    <p class="nav-fix-pos-pagetop"><a href="#">↑</a></p>
+    <button type="button" id="menubar_hdr" class="close"></button>
+</body>
+</html>
