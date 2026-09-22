@@ -521,3 +521,56 @@
     html:has(link[rel="canonical"][href*="/PSNOVA/pages/quest/"]) #main table tr > :nth-child(5) { width: 20%; }
     html:has(link[rel="canonical"][href*="/PSNOVA/pages/quest/"]) #main table tr > :nth-child(6) { width: 20%; }
 }
+
+
+/* === EMERGENCY CALL PAGE === */
+
+body.emergency-call-page #main .emergency-call-table {
+    width: 100%;
+    min-width: 1120px;
+    table-layout: fixed;
+}
+
+body.emergency-call-page #main .emergency-call-table .ec-col-quest {
+    width: 18%;
+}
+
+body.emergency-call-page #main .emergency-call-table .ec-col-name {
+    width: 17%;
+}
+
+body.emergency-call-page #main .emergency-call-table .ec-col-difficulty {
+    width: 13%;
+}
+
+body.emergency-call-page #main .emergency-call-table th,
+body.emergency-call-page #main .emergency-call-table td {
+    box-sizing: border-box;
+}
+
+body.emergency-call-page #main .emergency-call-table thead th:first-child,
+body.emergency-call-page #main .emergency-call-table tbody td:first-child,
+body.emergency-call-page #main .emergency-call-table thead th:nth-child(n + 3),
+body.emergency-call-page #main .emergency-call-table tbody td:nth-child(n + 3) {
+    white-space: nowrap;
+}
+
+body.emergency-call-page #main .emergency-call-table thead th:nth-child(2),
+body.emergency-call-page #main .emergency-call-table tbody td:nth-child(2) {
+    white-space: normal;
+    overflow-wrap: anywhere;
+    word-break: normal;
+}
+
+body.emergency-call-page #main .emergency-call-table tbody td:nth-child(n + 3) {
+    text-align: left;
+}
+
+body.emergency-call-page #main .emergency-call-table tbody td:first-child,
+body.emergency-call-page #main .emergency-call-table tbody td:nth-child(2) {
+    vertical-align: middle;
+}
+
+body.emergency-call-page #main .emergency-call-table tbody td:nth-child(n + 3) {
+    vertical-align: top;
+}
