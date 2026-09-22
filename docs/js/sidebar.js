@@ -11,6 +11,7 @@ var html =`
     <li><a href="/PSNOVA/pages/walkthrough.html">攻略チャート</a></li>
     <li><a href="/PSNOVA/pages/farming.html">稼ぎ</a></li>
     <li><a href="/PSNOVA/pages/vh-xh.html">VH・XH攻略</a></li>
+    <li><a href="/PSNOVA/pages/rare-drop.html">レアドロップ</a></li>
     <li><a href="/PSNOVA/pages/novafactor.html">ノヴァファクター集め</a></li>
 
     <li><p>クエスト</p></li>
@@ -92,6 +93,7 @@ var html =`
         <ul class="weapon-submenu" aria-label="拠点施設">
             <li><a href="/PSNOVA/pages/search-corps.html">探索隊司令部</a></li>
             <li><a href="/PSNOVA/pages/gran-booster.html">グランブースター</a></li>
+            <li><a href="/PSNOVA/pages/item-detector.html">アイテム探知装置</a></li>
             <li><a href="/PSNOVA/pages/enemy-radar.html">エネミーレーダー</a></li>
         </ul>
     </li>
@@ -150,7 +152,7 @@ function markCurrentSidebarLink(){
     var technicChild = /^\/PSNOVA\/pages\/technic\/[^/]+\.html$/.test(currentPath);
     var questChild = /^\/PSNOVA\/pages\/quest\/[^/]+\.html$/.test(currentPath);
     var promiseOrderChild = /^\/PSNOVA\/pages\/promise-order\/[^/]+\.html$/.test(currentPath);
-    var baseChild = currentPath === "/PSNOVA/pages/search-corps.html" || currentPath === "/PSNOVA/pages/gran-booster.html" || currentPath === "/PSNOVA/pages/enemy-radar.html";
+    var baseChild = currentPath === "/PSNOVA/pages/search-corps.html" || currentPath === "/PSNOVA/pages/gran-booster.html" || currentPath === "/PSNOVA/pages/item-detector.html" || currentPath === "/PSNOVA/pages/enemy-radar.html";
     var appearanceChild = /^\/PSNOVA\/pages\/appearance\/[^/]+\.html$/.test(currentPath);
     var links = document.querySelectorAll("#sub .submenu a[href]");
 
