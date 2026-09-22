@@ -112,14 +112,16 @@ class EmergencyCallPageTests(unittest.TestCase):
             with self.subTest(obsolete=obsolete):
                 self.assertNotIn(obsolete, html)
 
-    def test_is_linked_from_quest_index_and_sitemap(self):
+    def test_is_linked_from_quest_index_sidebar_and_sitemap(self):
         quest_index = QUEST_INDEX.read_text(encoding="utf-8")
+        sidebar = (ROOT / "docs" / "js" / "sidebar.js").read_text(encoding="utf-8")
         sitemap = SITEMAP.read_text(encoding="utf-8")
 
         path = "/PSNOVA/pages/quest/emergency-call.html"
 
         self.assertIn(f'href="{path}"', quest_index)
         self.assertIn(">エマージェンシーコール</span>", quest_index)
+        self.assertIn(f'<li><a href="{path}">エマージェンシーコール</a></li>', sidebar)
         self.assertIn(f"https://kylekatann.github.io{path}", sitemap)
 
 
