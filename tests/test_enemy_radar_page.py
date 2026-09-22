@@ -79,6 +79,16 @@ class EnemyRadarPageTests(unittest.TestCase):
         self.assertIn("ブーストエネミーは表の倍率が最終的な出現率に反映されます", html)
         self.assertIn("基礎3%のため、「野生の勘」5人では24%", html)
 
+    def test_maximum_effect_limits_match_audited_report(self):
+        html = self.page_html()
+
+        self.assertIn("<h2>最大時の実効率</h2>", html)
+        self.assertIn("基礎レア発生率が20%に設定されているラッピーのみ", html)
+        self.assertIn("20% × 7.00 = 140%相当", html)
+        self.assertIn("最終的なレアエネミー出現率が100%になるという意味ではありません", html)
+        self.assertIn("最大でも24%", html)
+        self.assertIn("エネミーレーダー単独でブーストエネミー出現率を100%にはできません", html)
+
     def test_trait_crew_list_is_complete(self):
         html = self.page_html()
 
