@@ -43,8 +43,9 @@ class EmergencyCallPageTests(unittest.TestCase):
 
         for table in tables:
             with self.subTest(table=table):
-                headers = [th.get_text(" ", strip=True) for th in table.select("thead th")]
-                self.assertEqual(headers[1], "エマージェンシーコール名")
+                header_cells = table.select("thead th")
+                self.assertEqual(header_cells[1].get_text("", strip=True), "エマージェンシーコール名")
+                self.assertIsNotNone(header_cells[1].find("br"))
 
                 cols = table.select("colgroup > col")
                 self.assertEqual(len(cols), 7)
@@ -69,8 +70,10 @@ class EmergencyCallPageTests(unittest.TestCase):
         self.assertIn("overflow-wrap: anywhere;", css)
         self.assertIn("tbody td:nth-child(n + 3)", css)
         self.assertIn("text-align: left !important;", css)
+        self.assertIn("vertical-align: middle;", css)
+        self.assertNotIn("vertical-align: top;", css)
         self.assertNotIn("min-width: 1120px;", css)
-        self.assertIn('/PSNOVA/css/page.css?v=20260922-ec3', html)
+        self.assertIn('/PSNOVA/css/page.css?v=20260922-ec4', html)
 
     def test_uses_public_difficulty_labels(self):
         text = self.page_soup().get_text(" ", strip=True)
