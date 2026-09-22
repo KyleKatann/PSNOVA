@@ -95,6 +95,7 @@ var html =`
             <li><a href="/PSNOVA/pages/gran-booster.html">グランブースター</a></li>
             <li><a href="/PSNOVA/pages/item-detector.html">アイテム探知装置</a></li>
             <li><a href="/PSNOVA/pages/enemy-radar.html">エネミーレーダー</a></li>
+            <li><a href="/PSNOVA/pages/burst-accelerator.html">バースト加速装置</a></li>
         </ul>
     </li>
     <li><a href="/PSNOVA/pages/food.html">食事</a></li>
@@ -152,7 +153,7 @@ function markCurrentSidebarLink(){
     var technicChild = /^\/PSNOVA\/pages\/technic\/[^/]+\.html$/.test(currentPath);
     var questChild = /^\/PSNOVA\/pages\/quest\/[^/]+\.html$/.test(currentPath);
     var promiseOrderChild = /^\/PSNOVA\/pages\/promise-order\/[^/]+\.html$/.test(currentPath);
-    var baseChild = currentPath === "/PSNOVA/pages/search-corps.html" || currentPath === "/PSNOVA/pages/gran-booster.html" || currentPath === "/PSNOVA/pages/item-detector.html" || currentPath === "/PSNOVA/pages/enemy-radar.html";
+    var baseChild = currentPath === "/PSNOVA/pages/search-corps.html" || currentPath === "/PSNOVA/pages/gran-booster.html" || currentPath === "/PSNOVA/pages/item-detector.html" || currentPath === "/PSNOVA/pages/enemy-radar.html" || currentPath === "/PSNOVA/pages/burst-accelerator.html";
     var appearanceChild = /^\/PSNOVA\/pages\/appearance\/[^/]+\.html$/.test(currentPath);
     var links = document.querySelectorAll("#sub .submenu a[href]");
 
