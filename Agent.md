@@ -102,6 +102,7 @@
 **既存UTF-8 text fileをGitHubコネクタの `update_file` で更新する場合は、実行直前に利用可能なaction schemaをread-onlyで確認し、その正式なfield名と型だけを使って1回で呼び出す。** 現在の `update_file` では必須fieldとして `repository_full_name`、`path`、`content`、`message`、`sha` を渡し、このrepositoryでは対象branchを明示する場合は `branch: "master"` を使う。`repository_full_name` を `repo_full_name` など別actionのfield名へ置換してはならず、必須fieldの欠落、schema外fieldの追加、field名の推測、型の不一致、引数objectの余分なnest、object全体のJSON文字列化を禁止する。
 
 - `content` にはpatch、diff、部分断片ではなく、直前に取得したcurrent fileを基礎とする完全なUTF-8 replacement textを渡す。
+- 同一file内で繰り返し出現するHTML・table・list等のmarkupを置換する場合、generic fragmentが1件だけ一致すると仮定してはならない。write前に対象sectionの見出しや固有文言を含む一意contextへscopeし、その置換anchorがcurrent fileでexactly 1 occurrenceであることをread-onlyで確認してからcontentを生成する。2件以上一致した場合はwriteを行わず、一意contextへ切り替える。
 - `sha` には同じ対象fileを直前の `fetch_file` で取得したcurrent blob SHAを使い、古いSHA、commit SHA、tree SHA、推測値を渡してはならない。
 - schemaを未確認のままwriteを試して `argument_binding` やvalidation errorから正しい引数形式を推測してはならない。schema確認はwrite前のread-only discoveryで完了させる。
 - `argument_binding` が発生した場合、そのwriteは適用されていないものとして扱うが、引数を推測修正して連続再試行してはならない。原因となったfield名・型・構造をread-only schemaと照合して確定し、ユーザーの指示または既存の停止ルールに従う。
