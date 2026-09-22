@@ -6,10 +6,10 @@
 
 ## 最優先ルール：解析MarkdownをPSNOVAへ保存しない
 
-**このリポジトリ`KyleKatann/PSNOVA`に、ゲーム解析・逆解析・バイナリ解析・調査過程・解析結果・解析引き継ぎを主目的とするMarkdownファイルを作成、移動、複製、復元、commitしてはならない。** ファイル名ではなく内容と用途で判定し、`analysis`、`解析`、`current_state`、`report`、`handoff`、`audit`、`notes`などへの改名による回避も禁止する。PSNOVA解析に関するMarkdownを保存する必要がある場合は、解析専用リポジトリ`KyleKatann/PSNOVAanlysis`へ保存する。
+**このリポジトリ`KyleKatann/PSNOVA`に、ゲーム解析・逆解析・バイナリ解析・調査過程・解析結果・解析引き継ぎを主目的とするMarkdownファイルを作成、移動、複製、復元、commitしてはならない。** ファイル名ではなく内容と用途で判定し、`analysis`、`解析`、`current_state`、`report`、`handoff`、`audit`、`notes`などへの改名による回避も禁止する。PSNOVA解析に関するMarkdownを保存する必要がある場合は、解析専用リポジトリ`KyleKatann/PSNOVAanalysis`へ保存する。
 
 - この禁止は、攻略サイトそのものの公開コンテンツ、既存の`README.md`、`Agent.md`、サイト開発・運用に直接必要なMarkdownには適用しない。ただし、これらへ逆解析の作業ログや解析スナップショットを代替保存してはならない。
-- ユーザーが「MDへ書く」「解析結果を保存する」等と指示し、保存先を明示していない場合、PSNOVA解析内容は`KyleKatann/PSNOVAanlysis`側へ保存し、`KyleKatann/PSNOVA`へ解析Markdownを追加してはならない。
+- ユーザーが「MDへ書く」「解析結果を保存する」等と指示し、保存先を明示していない場合、PSNOVA解析内容は`KyleKatann/PSNOVAanalysis`側へ保存し、`KyleKatann/PSNOVA`へ解析Markdownを追加してはならない。
 - `KyleKatann/PSNOVA`から解析Markdownを移管した後、そのコピーをバックアップ、履歴、参照用等の理由で再配置してはならない。Git履歴に過去commitとして残ることは本ルールの違反とはしない。
 - この禁止を解除できるのは、ユーザーが将来`KyleKatann/PSNOVA`への解析Markdown保存を明示的に許可またはこのルールの撤回を指示した場合だけである。
 
