@@ -88,7 +88,7 @@ class EmergencyCallPageTests(unittest.TestCase):
             with self.subTest(label=label):
                 self.assertIn(label, text)
 
-    def test_explains_invalid_item_reward_without_internal_id(self):
+    def test_invalid_item_reward_stays_reader_facing(self):
         html = self.page_html()
         text = self.page_soup().get_text(" ", strip=True)
 
@@ -97,6 +97,18 @@ class EmergencyCallPageTests(unittest.TestCase):
         self.assertIn("アイテム付与なし", text)
         self.assertNotIn("7|7|0|0", html)
         self.assertNotIn("invalid_definition", html)
+        self.assertNotIn("有効なアイテム定義", text)
+        self.assertNotIn("データ上はアイテム数量", text)
+
+    def test_intro_is_reader_facing(self):
+        soup = self.page_soup()
+        lead = soup.select_one(".page-lead").get_text(" ", strip=True)
+
+        self.assertIn("成功時にもらえる報酬", lead)
+        self.assertIn("報酬比較や周回先の確認", lead)
+        for developer_term in ("監査", "表示対象", "player-facing", "trial", "ItemID"):
+            with self.subTest(developer_term=developer_term):
+                self.assertNotIn(developer_term, lead)
 
     def test_uses_audited_display_names(self):
         html = self.page_html()
