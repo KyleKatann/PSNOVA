@@ -8,6 +8,7 @@ PAGE = ROOT / "docs" / "pages" / "gran-booster.html"
 BASE = ROOT / "docs" / "pages" / "base.html"
 TRAITS = ROOT / "docs" / "pages" / "traits.html"
 SITEMAP = ROOT / "docs" / "sitemap.xml"
+SIDEBAR = ROOT / "docs" / "js" / "sidebar.js"
 
 
 class GranBoosterPageTests(unittest.TestCase):
@@ -117,6 +118,18 @@ class GranBoosterPageTests(unittest.TestCase):
 
         self.assertIn(f'href="{path}">グランブースター Lv.1</a>', base)
         self.assertIn(f"https://kylekatann.github.io{path}", sitemap)
+
+    def test_sidebar_contains_gran_booster_and_current_page_grouping(self):
+        sidebar = SIDEBAR.read_text(encoding="utf-8")
+
+        self.assertIn(
+            '<li><a href="/PSNOVA/pages/gran-booster.html">グランブースター</a></li>',
+            sidebar,
+        )
+        self.assertIn(
+            'currentPath === "/PSNOVA/pages/gran-booster.html"',
+            sidebar,
+        )
 
     def test_public_metadata_is_present(self):
         html = self.page_html()
