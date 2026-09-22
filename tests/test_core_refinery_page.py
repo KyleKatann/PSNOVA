@@ -1,0 +1,134 @@
+import unittest
+from pathlib import Path
+
+
+ROOT = Path(__file__).resolve().parents[1]
+PAGE = ROOT / "docs" / "pages" / "core-refinery.html"
+BASE = ROOT / "docs" / "pages" / "base.html"
+TRAITS = ROOT / "docs" / "pages" / "traits.html"
+SHARON = ROOT / "docs" / "pages" / "promise-order" / "sharon.html"
+SIDEBAR = ROOT / "docs" / "js" / "sidebar.js"
+SITEMAP = ROOT / "docs" / "sitemap.xml"
+
+
+class CoreRefineryPageTests(unittest.TestCase):
+    def page_html(self):
+        return PAGE.read_text(encoding="utf-8")
+
+    def test_page_is_reader_facing(self):
+        html = self.page_html()
+
+        self.assertIn("<h1>コア精錬所</h1>", html)
+        self.assertIn("v1.05では実際に建設できるのはLv.5のみ", html)
+        self.assertIn("最大5人のクルーを配属できます", html)
+
+        for internal_term in (
+            "502201",
+            "502202",
+            "502203",
+            "504201",
+            "parameter927",
+            "parameter929",
+            "Type16",
+            "GacyaNPC_Size",
+            "0x8148",
+            "Pat_01_3",
+            "PR_1520_sha",
+            "99999999",
+            "Core_Refinery_AttachParts",
+            "Core_Refinery_CoreEvolve",
+        ):
+            with self.subTest(internal_term=internal_term):
+                self.assertNotIn(internal_term, html)
+
+    def test_facility_shape_slots_and_cost(self):
+        html = self.page_html()
+        self.assertIn("<tr><td>Lv.5</td><td>4×4</td><td>5人</td><td>54,000</td></tr>", html)
+
+    def test_reducer_values_and_holders(self):
+        html = self.page_html()
+
+        expected = (
+            ("コア工作士", "-5%", "ブラック、ヒーベスト、キャサリン、ルーティ、ラティス"),
+            ("コア鋳造士", "-10%", "ディーヴァス、ターシャ、ティセリア"),
+            ("コア精錬士", "-20%", "クシード、ヴァルメン"),
+        )
+        for name, effect, crew in expected:
+            with self.subTest(name=name):
+                self.assertIn(f"<td>{name}</td><td>{effect}</td><td>{crew}</td>", html)
+
+    def test_max_reduction_and_chief_can_coexist(self):
+        html = self.page_html()
+
+        self.assertIn("消費グランエナジーを70%軽減", html)
+        self.assertIn("実際に支払う量は30%", html)
+        self.assertIn("<tr><td>ディーヴァス</td><td>コア鋳造士 + 精錬所チーフ</td><td>-10%</td></tr>", html)
+        self.assertIn("最大70%軽減と機能拡張を同時に有効化できます", html)
+
+    def test_chief_expands_skill_evolution_routes(self):
+        html = self.page_html()
+
+        self.assertIn("通常状態では242種類の強化ルート", html)
+        self.assertIn("チーフ配属時は331種類", html)
+        self.assertIn("新たに強化元として扱える特殊能力: 89種類追加", html)
+        self.assertIn("消費グランエナジーを直接減らす特徴ではなく", html)
+
+    def test_chief_holders(self):
+        html = self.page_html()
+
+        self.assertIn("<tr><td>ディーヴァス</td><td>コア鋳造士 (-10%)</td></tr>", html)
+        self.assertIn("<tr><td>ルーティ</td><td>コア工作士 (-5%)</td></tr>", html)
+        self.assertIn("<tr><td>リューフィ</td><td>-</td></tr>", html)
+
+    def test_unlock_promise(self):
+        html = self.page_html()
+
+        self.assertIn("シャロンの約束「コア精錬研究」", html)
+        self.assertIn("グランピース(雷属性)」99個", html)
+        self.assertIn("グランピース(光属性)」99個", html)
+
+    def test_existing_pages_are_corrected(self):
+        base = BASE.read_text(encoding="utf-8")
+        traits = TRAITS.read_text(encoding="utf-8")
+        sharon = SHARON.read_text(encoding="utf-8")
+
+        self.assertIn('<a href="/PSNOVA/pages/core-refinery.html">コア精錬所 Lv.5</a></td><td>4×4</td>', base)
+        self.assertNotIn("コア精錬所 Lv.5</td><td>4×3</td>", base)
+
+        self.assertIn("<tr><td>コア精錬士</td><td>精錬所エナジー減 -20%</td><td>コア精錬所</td></tr>", traits)
+        self.assertNotIn("製錬所エナジー減", traits)
+        self.assertNotIn("コア精錬士</td><td>精錬所エナジー減 -15%", traits)
+
+        self.assertIn("施設「コア精錬所」追加", sharon)
+        self.assertNotIn("施設「コア製錬所」追加", sharon)
+
+    def test_links_are_present(self):
+        path = "/PSNOVA/pages/core-refinery.html"
+        sidebar = SIDEBAR.read_text(encoding="utf-8")
+        sitemap = SITEMAP.read_text(encoding="utf-8")
+
+        self.assertIn(f'<li><a href="{path}">コア精錬所</a></li>', sidebar)
+        self.assertIn(f'currentPath === "{path}"', sidebar)
+        self.assertIn(f"https://kylekatann.github.io{path}", sitemap)
+
+    def test_tables_have_captions(self):
+        html = self.page_html()
+
+        self.assertEqual(html.count("<caption>"), 4)
+        self.assertIn("<caption>コア精錬所の施設情報</caption>", html)
+        self.assertIn("<caption>消費グランエナジーを軽減する特徴と所持クルー</caption>", html)
+        self.assertIn("<caption>最大70%軽減を実現する配属例</caption>", html)
+        self.assertIn("<caption>精錬所チーフを持つクルー</caption>", html)
+
+    def test_public_metadata(self):
+        html = self.page_html()
+
+        self.assertIn("<title>PSNOVA攻略サイト - コア精錬所</title>", html)
+        self.assertIn(
+            '<link rel="canonical" href="https://kylekatann.github.io/PSNOVA/pages/core-refinery.html">',
+            html,
+        )
+
+
+if __name__ == "__main__":
+    unittest.main()
