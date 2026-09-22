@@ -21,6 +21,7 @@ class BurstAcceleratorPageTests(unittest.TestCase):
         self.assertIn("Lv1～5で配属できる人数が1～5人へ増えます", html)
         self.assertIn("抽選上の重みが1増えます", html)
         self.assertIn("すでに発動中の効果は次回候補から除外", html)
+        self.assertIn("狙った効果を出しやすくする組み方を確認できます", html)
 
         for internal_term in (
             "500200",
@@ -37,6 +38,9 @@ class BurstAcceleratorPageTests(unittest.TestCase):
             "9090090",
             "Pat_01_3",
             "PR_1320_orc",
+            "currentデータ",
+            "内部データ",
+            "古い/静的な表",
         ):
             with self.subTest(internal_term=internal_term):
                 self.assertNotIn(internal_term, html)
@@ -66,11 +70,12 @@ class BurstAcceleratorPageTests(unittest.TestCase):
         self.assertIn("<tr><td>5</td><td>71.43%</td><td>57.14%</td><td>50%</td></tr>", html)
         self.assertIn("余った枠へ別のBURST特徴を置くと分母が増えるため、空けておく方が高確率", html)
 
-    def test_old_125_percent_interpretation_is_explicitly_rejected(self):
+    def test_baseline_probability_excludes_empty_candidates(self):
         html = self.page_html()
 
-        self.assertIn("「ハズレ62.5%」ではない", html)
+        self.assertIn("<h2>配属なしの初回抽選</h2>", html)
         self.assertIn("それぞれ約33.33%", html)
+        self.assertIn("「ハズレ」が62.5%を占めるわけではありません", html)
         self.assertNotIn("配属なしではハズレ62.5%", html)
 
     def test_burst_item_effect_is_draw_count_not_rate(self):
@@ -80,6 +85,12 @@ class BurstAcceleratorPageTests(unittest.TestCase):
         self.assertIn("<tr><td>BURST:アイテム</td><td>ドロップ抽選回数を1回追加</td>", html)
         self.assertIn("<tr><td>BURST:アイテム</td><td>ドロップ抽選回数を1回追加</td></tr>", traits)
         self.assertNotIn("<tr><td>BURST:アイテム</td><td>アイテムのドロップ率アップ</td></tr>", traits)
+
+    def test_rare_drop_wording_does_not_claim_final_rate_doubles(self):
+        html = self.page_html()
+
+        self.assertIn("レア枠の判定補正を単独時×2", html)
+        self.assertIn("最終的なレア取得率そのものが単純に2倍になるわけではありません", html)
 
     def test_current_holder_counts_are_reflected(self):
         html = self.page_html()
@@ -111,9 +122,19 @@ class BurstAcceleratorPageTests(unittest.TestCase):
         sitemap = SITEMAP.read_text(encoding="utf-8")
 
         self.assertIn(f'href="{path}">バースト加速装置 Lv.1</a>', base)
+        self.assertIn("対応するバースト効果の抽選重みが増加（Lv5で最大5人配属）", base)
+        self.assertNotIn("バースト効果を追加(最大5種)", base)
         self.assertIn(f'<li><a href="{path}">バースト加速装置</a></li>', sidebar)
         self.assertIn(f'currentPath === "{path}"', sidebar)
         self.assertIn(f"https://kylekatann.github.io{path}", sitemap)
+
+    def test_tables_have_reader_facing_captions(self):
+        html = self.page_html()
+
+        self.assertIn("<caption>施設レベルごとの開発費と配属可能人数</caption>", html)
+        self.assertIn("<caption>同じBURST特徴へ集中した場合の初回発動確率</caption>", html)
+        self.assertIn("<caption>BURST特徴ごとの発動時の効果と所持クルー</caption>", html)
+        self.assertEqual(html.count("<caption>"), 3)
 
     def test_public_metadata_is_present(self):
         html = self.page_html()
