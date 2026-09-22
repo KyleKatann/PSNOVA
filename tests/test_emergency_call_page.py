@@ -35,6 +35,30 @@ class EmergencyCallPageTests(unittest.TestCase):
 
         self.assertEqual(len(quest_names), 115)
 
+    def test_table_layout_contract(self):
+        soup = self.page_soup()
+        tables = soup.select("table.emergency-call-table")
+
+        self.assertEqual(len(tables), 6)
+
+        for table in tables:
+            with self.subTest(table=table):
+                headers = [th.get_text(" ", strip=True) for th in table.select("thead th")]
+                self.assertEqual(headers[1], "エマージェンシーコール名")
+
+                cols = table.select("colgroup > col")
+                self.assertEqual(len(cols), 7)
+                self.assertEqual(sum("ec-col-difficulty" in (col.get("class") or []) for col in cols), 5)
+
+        css = (ROOT / "docs" / "css" / "page.css").read_text(encoding="utf-8")
+        self.assertIn("body.emergency-call-page #main .emergency-call-table", css)
+        self.assertIn(".ec-col-difficulty", css)
+        self.assertIn("width: 13%;", css)
+        self.assertIn("tbody td:nth-child(n + 3)", css)
+        self.assertIn("text-align: left;", css)
+        self.assertIn("tbody td:nth-child(2)", css)
+        self.assertIn("overflow-wrap: anywhere;", css)
+
     def test_uses_public_difficulty_labels(self):
         text = self.page_soup().get_text(" ", strip=True)
 
