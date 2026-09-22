@@ -24,6 +24,7 @@
 **ツール/API/コマンド/ネットワーク/argument binding/権限・resource取得など、実装内容そのものではなく操作経路に起因するエラーは、前節の即時停止ルールの例外とする。** 操作系エラーだけを理由にユーザーへの停止報告で作業を終了してはならない。まずread-only操作で原因と影響範囲を特定し、repository stateが変更されたか確認する。原因が判明したら、同種事故を防ぐ恒久的な手順・判断基準を`Agent.md`の関連箇所へ追記または具体化し、そのAgent変更を専用commitで保存して親commitとの差分を確認したうえで、元の作業を再開する。本節は、本ガイド内の操作系エラーについて「停止する」「ユーザーの新しい指示を待つ」とする他の記述より優先する。
 
 - write操作が失敗または不明瞭な結果になった場合は、再試行前にread-onlyでHEAD、対象file、diff、必要なschemaを確認し、repositoryが変更されたかを確定する。意図外変更があれば安全な最小復旧を行い、復旧をread-onlyで検証してからAgent更新と元作業へ戻る。
+- GitHub connectorのactionをそのsessionで初めて使う場合、引数名やschemaを類似action・過去会話・記憶から推測せず、実行直前に利用可能tool metadataから当該actionのschemaをread-onlyで確認する。複数actionをまとめて呼ぶ場合も、未確認actionを1つでも含めてはならない。
 - 原因追及はread-onlyを優先し、推測値・dummy・probe write・別write APIの順番試行を使わない。同じ失敗を引数だけ推測変更して繰り返してはならない。
 - 過去会話、過去commit、旧サイト構成だけから推測したfile pathを`fetch_file`へ渡してはならない。current repositoryで対象pathが未確認の場合は、先に現在のdirectory listingまたはtreeをread-onlyで取得し、そこに実在するpathだけを使用する。直前のcurrent read結果ですでにpathを確認済みの場合は再listingを不要とする。
 - リポジトリ固有の指示ファイル名も慣例から推測しない。PSNOVAではルートの正本は`Agent.md`であり、`AGENTS.md`等の別名を仮定せず、初回のroot listingで実在pathを確認してから読む。
