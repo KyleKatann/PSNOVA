@@ -527,20 +527,34 @@
 
 body.emergency-call-page #main .emergency-call-table {
     width: 100%;
-    min-width: 1120px;
+    min-width: 0;
+    max-width: 100%;
     table-layout: fixed;
 }
 
 body.emergency-call-page #main .emergency-call-table .ec-col-quest {
-    width: 18%;
+    width: 20% !important;
 }
 
 body.emergency-call-page #main .emergency-call-table .ec-col-name {
-    width: 17%;
+    width: 15% !important;
 }
 
 body.emergency-call-page #main .emergency-call-table .ec-col-difficulty {
-    width: 13%;
+    width: 13% !important;
+}
+
+body.emergency-call-page #main .emergency-call-table tr > :first-child {
+    width: 20% !important;
+    white-space: nowrap !important;
+}
+
+body.emergency-call-page #main .emergency-call-table tr > :nth-child(2) {
+    width: 15% !important;
+}
+
+body.emergency-call-page #main .emergency-call-table tr > :nth-child(n + 3) {
+    width: 13% !important;
 }
 
 body.emergency-call-page #main .emergency-call-table th,
@@ -548,29 +562,18 @@ body.emergency-call-page #main .emergency-call-table td {
     box-sizing: border-box;
 }
 
-body.emergency-call-page #main .emergency-call-table thead th:first-child,
-body.emergency-call-page #main .emergency-call-table tbody td:first-child,
-body.emergency-call-page #main .emergency-call-table thead th:nth-child(n + 3),
-body.emergency-call-page #main .emergency-call-table tbody td:nth-child(n + 3) {
-    white-space: nowrap;
-}
-
-body.emergency-call-page #main .emergency-call-table thead th:nth-child(2),
-body.emergency-call-page #main .emergency-call-table tbody td:nth-child(2) {
-    white-space: normal;
+body.emergency-call-page #main .emergency-call-table tr > :nth-child(n + 2) {
+    white-space: normal !important;
     overflow-wrap: anywhere;
     word-break: normal;
 }
 
 body.emergency-call-page #main .emergency-call-table tbody td:nth-child(n + 3) {
-    text-align: left;
+    text-align: left !important;
+    vertical-align: top;
 }
 
 body.emergency-call-page #main .emergency-call-table tbody td:first-child,
 body.emergency-call-page #main .emergency-call-table tbody td:nth-child(2) {
     vertical-align: middle;
-}
-
-body.emergency-call-page #main .emergency-call-table tbody td:nth-child(n + 3) {
-    vertical-align: top;
 }
