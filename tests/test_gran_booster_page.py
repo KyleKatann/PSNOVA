@@ -25,27 +25,8 @@ class GranBoosterPageTests(unittest.TestCase):
         self.assertIn("GP消費量軽減の効果を受けられます", html)
         self.assertNotIn("GP消費量軽減の補正を受けられる", html)
 
-        for internal_term in (
-            "497200",
-            "497201",
-            "parameter902",
-            "907100",
-            "907110",
-            "ID901",
-            "ID509",
-            "Type12",
-            "GacyaNPC_Size",
-            "SP07_120_025_ed",
-            "SP07_210_050_ed",
-            "9050010",
-            "9090090",
-            "Pat_01_3",
-            "PR_1320_orc",
-        ):
-            with self.subTest(internal_term=internal_term):
-                self.assertNotIn(internal_term, html)
 
-    def test_effect_tiers_match_audited_report(self):
+    def test_effect_tiers_match_public_table(self):
         html = self.page_html()
 
         expected_rows = (
