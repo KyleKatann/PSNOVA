@@ -38,7 +38,8 @@ def test_nova_factor_guide_keeps_reader_facing_copy():
     assert "テンプテーションが上げるのは通常アイテム側のドロップ率" in html
     assert "レア枠の当選率は上がらない" in html
     assert "レア枠から始まるドロップ抽選を1回追加" in html
-    assert 'href="/PSNOVA/pages/rare-drop.html">レアドロップの仕組み</a>' in html
+    assert "レアドロップ効率化" in html
+    assert 'href="/PSNOVA/pages/rare-drop.html"' not in html
     assert "テンプテーションを付けられるなら付けておく" not in html
 
     for internal_term in (
