@@ -22,6 +22,8 @@ class GranBoosterPageTests(unittest.TestCase):
         self.assertIn("獲得するグランエナジーを増やし、GP消費量を軽減する拠点施設", html)
         self.assertIn("グラン予報士", html)
         self.assertIn("上級グラン予報士", html)
+        self.assertIn("GP消費量軽減の効果を受けられます", html)
+        self.assertNotIn("GP消費量軽減の補正を受けられる", html)
 
         for internal_term in (
             "497200",
