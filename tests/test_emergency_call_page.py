@@ -8,6 +8,14 @@ ROOT = Path(__file__).resolve().parents[1]
 PAGE = ROOT / "docs" / "pages" / "quest" / "emergency-call.html"
 QUEST_INDEX = ROOT / "docs" / "pages" / "quest.html"
 SITEMAP = ROOT / "docs" / "sitemap.xml"
+QUEST_PAGES = (
+    ROOT / "docs" / "pages" / "quest" / "steel-wilderness.html",
+    ROOT / "docs" / "pages" / "quest" / "gran-water-source.html",
+    ROOT / "docs" / "pages" / "quest" / "flame-highlands.html",
+    ROOT / "docs" / "pages" / "quest" / "great-spire.html",
+    ROOT / "docs" / "pages" / "quest" / "ancient-city.html",
+    ROOT / "docs" / "pages" / "quest" / "nova-interior.html",
+)
 
 
 class EmergencyCallPageTests(unittest.TestCase):
@@ -87,6 +95,61 @@ class EmergencyCallPageTests(unittest.TestCase):
         ):
             with self.subTest(label=label):
                 self.assertIn(label, text)
+
+    @staticmethod
+    def normalize_quest_name(name: str) -> str:
+        normalized = name.replace("為", "ため").replace("２", "2").replace("･", "・")
+        aliases = {
+            "鋼野に穿つ杭": "荒野に穿つ杭",
+            "仲間の捜索": "仲間の探索",
+            "難：デェフキュオネ決戦": "難：デュフキュオネ決戦",
+            "超：昏闇のファンアフォル": "超：昏闇のフォンアフォル",
+        }
+        return aliases.get(normalized, normalized)
+
+    def test_unavailable_difficulties_match_quest_database(self):
+        labels = (
+            "ノーマル",
+            "ハード",
+            "ベリーハード",
+            "スーパーハード",
+            "エクストラハード",
+        )
+        quest_difficulties = {}
+
+        for path in QUEST_PAGES:
+            soup = BeautifulSoup(path.read_text(encoding="utf-8"), "html.parser")
+            for row in soup.select("tbody > tr"):
+                cells = row.find_all("td")
+                if len(cells) != 6:
+                    continue
+                quest = self.normalize_quest_name(cells[0].get_text(" ", strip=True))
+                parts = cells[4].get_text("|", strip=True).split("|")
+                quest_difficulties[quest] = {
+                    index
+                    for index, label in enumerate(labels, start=2)
+                    if any(part.startswith(label) for part in parts)
+                }
+
+        matched_quests = set()
+        for row in self.page_soup().select("table.emergency-call-table tbody > tr"):
+            cells = row.find_all("td")
+            self.assertEqual(len(cells), 7)
+            quest = self.normalize_quest_name(cells[0].get_text(" ", strip=True))
+            available = quest_difficulties.get(quest)
+            if available is None:
+                continue
+
+            matched_quests.add(quest)
+            for index in range(2, 7):
+                value = cells[index].get_text(" ", strip=True)
+                with self.subTest(quest=quest, difficulty=labels[index - 2]):
+                    if index in available:
+                        self.assertNotEqual(value, "－")
+                    else:
+                        self.assertEqual(value, "－")
+
+        self.assertEqual(len(matched_quests), 109)
 
     def test_invalid_item_reward_stays_reader_facing(self):
         html = self.page_html()
