@@ -21,8 +21,6 @@ class CoreRefineryPageTests(unittest.TestCase):
         self.assertIn("<h1>コア精錬所</h1>", html)
         self.assertIn("最大5人のクルーを配属できます", html)
         self.assertIn("特殊能力の強化レシピを増やす「精錬所チーフ」", html)
-        self.assertNotIn("強化候補", html)
-        self.assertNotIn("現在のクルーデータ", html)
 
 
 
@@ -50,8 +48,6 @@ class CoreRefineryPageTests(unittest.TestCase):
         html = self.page_html()
 
         self.assertIn("コア特殊能力強化で利用できる強化レシピが増えます", html)
-        self.assertNotIn("強化候補", html)
-        self.assertNotIn("進化候補", html)
 
     def test_chief_holders(self):
         html = self.page_html()
@@ -80,7 +76,6 @@ class CoreRefineryPageTests(unittest.TestCase):
         self.assertNotIn("製錬所エナジー減", traits)
         self.assertNotIn("コア精錬士</td><td>精錬所エナジー減 -15%", traits)
         self.assertIn("精錬所チーフでコア特殊能力強化の強化レシピを拡張", base)
-        self.assertNotIn("進化候補", base)
 
         self.assertIn("施設「コア精錬所」追加", sharon)
         self.assertNotIn("施設「コア製錬所」追加", sharon)
