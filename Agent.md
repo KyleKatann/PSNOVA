@@ -1,9 +1,5 @@
 # PSNOVA エージェントガイド
 
-## 今回だけの特別ルール：レアドロップページの関連リンク
-
-**今回のPSNOVA公開サイトにおける「レアドロップの仕組みと、レアアイテムを最も落としやすくする方法」ページの編集では、「アイテム探知装置」と「エネミーレーダー」の個別ページへ直接リンクする。** 「アイテム探知装置」は `/PSNOVA/pages/item-detector.html`、「エネミーレーダー」は `/PSNOVA/pages/enemy-radar.html` を使う。この指定は今回のレアドロップページ作業に固有のリンク先として扱う。
-
 ## 最優先ルール：解析MarkdownをPSNOVAへ保存しない
 
 **このリポジトリ`KyleKatann/PSNOVA`に、ゲーム解析・逆解析・バイナリ解析・調査過程・解析結果・解析引き継ぎを主目的とするMarkdownファイルを作成、移動、複製、復元、commitしてはならない。** ファイル名ではなく内容と用途で判定し、`analysis`、`解析`、`current_state`、`report`、`handoff`、`audit`、`notes`などへの改名による回避も禁止する。PSNOVA解析に関するMarkdownを保存する必要がある場合は、解析専用リポジトリ`KyleKatann/PSNOVAanalysis`へ保存する。
@@ -185,6 +181,8 @@
 - 一時的なsession handover documentをremote repositoryへ作成・commitしてはならない。永続project ruleは `Agent.md` または別途明示承認されたpermanent documentへ記録し、一時handover noteはremote repository外に置く。
 
 ## サイト全体の不変条件
+
+- 公開攻略ページの本文中には、関連ページへのリンクを原則として置かない。単なる関連情報や「詳しくはこちら」といった誘導のための本文リンクは追加せず、必要な導線はサイドバー、一覧、ナビゲーションなどへ集約する。本文中のリンクは、そのページの理解・操作に直接必要で、リンクがないと読者の目的達成が難しくなる場合に限って使用する。
 
 - 公開PSNOVA pageではspoiler-protection UXまたはspoiler warningを適用しない。plot detailを含む可能性があるという理由だけで、story/gameplay informationをspoiler専用の `<details>` / `<summary>`、`ネタバレを表示` control、masking、blur、spoiler caution、その他同様の処理で隠してはならない。ユーザーが特定の例外を明示要求しない限り、関連情報は直接表示する。
 
