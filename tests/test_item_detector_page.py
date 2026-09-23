@@ -4,6 +4,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 PAGE = ROOT / "docs" / "pages" / "item-detector.html"
+BASE = ROOT / "docs" / "pages" / "base.html"
 
 
 class ItemDetectorPageTests(unittest.TestCase):
@@ -25,6 +26,13 @@ class ItemDetectorPageTests(unittest.TestCase):
         ):
             with self.subTest(internal_term=internal_term):
                 self.assertNotIn(internal_term, html)
+
+    def test_base_uses_same_reader_facing_terms(self):
+        base = BASE.read_text(encoding="utf-8")
+
+        self.assertIn("通常アイテム・レアアイテムを出やすくする", base)
+        self.assertIn("ダウジンガーで通常アイテム、ラッキライザーでレアアイテムをさらに出やすくする", base)
+        self.assertNotIn("特徴【ダウジンガー】【ラッキライザー】", base)
 
     def test_metadata_does_not_claim_assignment_count_table(self):
         html = self.page_html()
