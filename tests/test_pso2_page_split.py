@@ -13,12 +13,13 @@ class Pso2PageSplitTests(unittest.TestCase):
         pso2 = (PAGES / "pso2.html").read_text(encoding="utf-8")
 
         self.assertIn("<h1>PSO2との関係</h1>", pso2)
-        self.assertIn("PSO2未経験でもストーリーやシステムを理解できる？", pso2)
-        self.assertIn("PSO2って何？", pso2)
-        self.assertIn("PSO2プレイヤー向けQ&amp;A", pso2)
-        self.assertIn("PSO2にある武器カテゴリ・クラス・種族が一部見当たらない", pso2)
-        self.assertIn("PSO2と同じ名前のPAなのに、動きや性能が違うのはなぜ？", pso2)
-        self.assertIn("ゼノ・エコー・アフィンを仲間にするには？", pso2)
+        self.assertIn("<h2>PSO2未経験者向け</h2>", pso2)
+        self.assertIn("<h3>PSO2未経験でも遊べる？</h3>", pso2)
+        self.assertIn("<h3>PSO2とは</h3>", pso2)
+        self.assertIn("<h2>PSO2とのシステムの違い</h2>", pso2)
+        self.assertIn("<h3>クラス・武器・種族の違い</h3>", pso2)
+        self.assertIn("<h3>PAとグランアーツの違い</h3>", pso2)
+        self.assertIn("<h3>PSO2クルーの加入条件</h3>", pso2)
 
     def test_sidebar_lists_only_pso2_relationship_page(self):
         sidebar = SIDEBAR.read_text(encoding="utf-8")
