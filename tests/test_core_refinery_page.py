@@ -79,6 +79,7 @@ class CoreRefineryPageTests(unittest.TestCase):
         self.assertIn("<tr><td>ディーヴァス</td><td>コア鋳造士 (-10%)</td></tr>", html)
         self.assertIn("<tr><td>ルーティ</td><td>コア工作士 (-5%)</td></tr>", html)
         self.assertIn("<tr><td>リューフィ</td><td>-</td></tr>", html)
+        self.assertNotIn("<h2>精錬所チーフの所持者</h2>", html)
 
     def test_unlock_promise(self):
         html = self.page_html()
