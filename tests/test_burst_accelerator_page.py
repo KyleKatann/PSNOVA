@@ -103,6 +103,9 @@ class BurstAcceleratorPageTests(unittest.TestCase):
         sitemap = SITEMAP.read_text(encoding="utf-8")
 
         self.assertIn(f'href="{path}">バースト加速装置 Lv.1</a>', base)
+        self.assertIn("配属したBURST特徴に対応するグランバーストを出しやすくする", base)
+        self.assertNotIn("抽選候補の重み", base)
+        self.assertNotIn("抽選重み", base)
         self.assertIn(f'<li><a href="{path}">バースト加速装置</a></li>', sidebar)
         self.assertIn(f'currentPath === "{path}"', sidebar)
         self.assertIn(f"https://kylekatann.github.io{path}", sitemap)
