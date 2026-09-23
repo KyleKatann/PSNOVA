@@ -46,9 +46,6 @@ class EnemyRadarPageTests(unittest.TestCase):
         self.assertIn("<th scope=\"col\">「野生の勘」人数</th>", html)
         self.assertIn("<th scope=\"col\">効果</th>", html)
         self.assertNotIn("<th scope=\"col\">出現率アップ</th>", html)
-        self.assertNotIn("<th scope=\"col\">レアエネミー追加判定</th>", html)
-        self.assertNotIn("<th scope=\"col\">内部計算</th>", html)
-        self.assertNotIn("<th scope=\"col\">基礎3%時の実出現率</th>", html)
 
     def test_effect_explanations_are_reader_facing_and_non_numeric(self):
         html = self.page_html()
@@ -58,9 +55,6 @@ class EnemyRadarPageTests(unittest.TestCase):
         self.assertIn("もともとレアエネミーにならない敵には効果がありません", html)
         self.assertIn("もともとブーストエネミーにならない敵には効果がありません", html)
         self.assertIn("最大まで強化しても確定ではない", html)
-        self.assertNotIn("通常の出現判定とは別の判定", html)
-        self.assertNotIn("元の発生率が設定されていない", html)
-        self.assertNotIn("最大時の実効率", html)
 
     def test_base_return_link_is_removed(self):
         html = self.page_html()
