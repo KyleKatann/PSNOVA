@@ -28,6 +28,7 @@
 - 原因追及はread-onlyを優先し、推測値・dummy・probe write・別write APIの順番試行を使わない。同じ失敗を引数だけ推測変更して繰り返してはならない。
 - 過去会話、過去commit、旧サイト構成だけから推測したfile pathを`fetch_file`へ渡してはならない。current repositoryで対象pathが未確認の場合は、先に現在のdirectory listingまたはtreeをread-onlyで取得し、そこに実在するpathだけを使用する。直前のcurrent read結果ですでにpathを確認済みの場合は再listingを不要とする。
 - GitHubコネクタでdirectory listingが必要な場合、存在確認していない`list_directory`等のaction名を仮定してはならない。現在のtool metadataに専用listing actionがない場合は、directory取得を明示対応している`fetch`のschemaを確認し、確認済みrepository/directory URLだけをread-onlyで取得する。
+- GitHubコネクタの`search`はrepository fileやpathの探索に使用しない。`search`の0件結果やindex状態をpath不存在の根拠にせず、file/path確認はcurrent repositoryのdirectory listingを`fetch`で取得して行う。
 - リポジトリ固有の指示ファイル名も慣例から推測しない。PSNOVAではルートの正本は`Agent.md`であり、`AGENTS.md`等の別名を仮定せず、初回のroot listingで実在pathを確認してから読む。
 - PSNOVAで公開ページ作業を開始する場合、指示ファイルの初回readより先にroot listingを行い、その結果に存在する`Agent.md`だけを読む。会話履歴や他repoの慣例から`AGENTS.md`等を先行fetchしない。
 - repositoryのdefault branch名がcurrent sessionで未確認の場合は、`contents?ref=main`等のbranch名を推測してreadしてはならない。先にrepository metadataまたはbranch listingをread-onlyで取得し、確認済みdefault branchだけを以後の`ref`/write targetに使用する。
