@@ -10,18 +10,19 @@ class SearchCorpsPageTests(unittest.TestCase):
     def page_html(self):
         return PAGE.read_text(encoding="utf-8")
 
-    def test_rate_information_is_not_public(self):
+    def test_public_tables_use_reader_facing_columns(self):
         html = self.page_html()
 
-        self.assertNotIn("大成功率", html)
-        self.assertNotIn("基礎疲労率", html)
-        self.assertNotIn("怪我率アップ", html)
-        self.assertNotIn("<td>5%</td>", html)
-        self.assertNotIn("<td>6%</td>", html)
-        self.assertNotIn("<td>8%</td>", html)
-        self.assertNotIn("<td>10%</td>", html)
-        self.assertNotIn("<td>20%</td>", html)
-        self.assertNotIn("<td>30%</td>", html)
+        for heading in ("派遣名", "必要人数", "必要日数", "通常報酬", "大成功時追加"):
+            self.assertEqual(html.count(f'<th scope="col">{heading}</th>'), 7)
+        self.assertEqual(html.count('<th scope="col">'), 35)
+
+    def test_intro_and_basic_info_use_polite_style(self):
+        html = self.page_html()
+
+        self.assertIn("報酬を持ち帰らせることができます", html)
+        self.assertIn("報酬を受け取れます", html)
+        self.assertIn("すべて満たす必要があります", html)
 
     def test_great_success_rewards_remain(self):
         html = self.page_html()
