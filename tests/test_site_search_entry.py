@@ -32,7 +32,7 @@ class SiteSearchEntryTests(unittest.TestCase):
         for path in (
             "/PSNOVA/pages/class.html",
             "/PSNOVA/pages/skill.html",
-            "/PSNOVA/pages/weapon.html",
+            "/PSNOVA/pages/combat.html",
             "/PSNOVA/pages/armor.html",
             "/PSNOVA/pages/material.html",
             "/PSNOVA/pages/enemy.html",
