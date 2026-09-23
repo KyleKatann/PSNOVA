@@ -122,6 +122,8 @@ class BurstAcceleratorPageTests(unittest.TestCase):
             '<link rel="canonical" href="https://kylekatann.github.io/PSNOVA/pages/burst-accelerator.html">',
             html,
         )
+        head = html.split("</head>", 1)[0]
+        self.assertNotIn("配属人数", head)
         self.assertNotIn("候補の重み", html)
         self.assertNotIn("発動確率", html)
 
