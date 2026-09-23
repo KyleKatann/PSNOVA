@@ -203,6 +203,15 @@ class EmergencyCallPageTests(unittest.TestCase):
             with self.subTest(obsolete=obsolete):
                 self.assertNotIn(obsolete, html)
 
+    def test_navigation_wording_avoids_return_links(self):
+        soup = self.page_soup()
+
+        self.assertIn("地域へ移動", soup.get_text(" ", strip=True))
+        self.assertNotIn("地域から移動", soup.get_text(" ", strip=True))
+        for link in soup.find_all("a"):
+            self.assertFalse(link.get_text(" ", strip=True).endswith("へ戻る"))
+
+
     def test_is_linked_from_quest_index_sidebar_and_sitemap(self):
         quest_index = QUEST_INDEX.read_text(encoding="utf-8")
         sidebar = (ROOT / "docs" / "js" / "sidebar.js").read_text(encoding="utf-8")
