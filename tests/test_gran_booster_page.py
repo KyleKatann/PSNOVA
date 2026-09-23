@@ -81,12 +81,13 @@ class GranBoosterPageTests(unittest.TestCase):
             with self.subTest(row=row):
                 self.assertIn(fragment, html)
 
-    def test_baseline_and_trait_weights_are_explicit(self):
+    def test_conversion_is_presented_as_tentative(self):
         html = self.page_html()
 
         self.assertIn("施設を設置しただけでも獲得グランエナジーは5%増加", html)
-        self.assertIn("「グラン予報士」は効果値を1、「上級グラン予報士」は2増やします", html)
-        self.assertIn("合計10で最大", html)
+        self.assertIn("「グラン予報士」を1、「上級グラン予報士」を2と仮置きすると", html)
+        self.assertIn("仮の換算値", html)
+        self.assertNotIn("効果値", html)
         self.assertIn("<tr><td>グラン予報士</td><td>+1</td><td>獲得グラン +5% / GP消費 -1%</td></tr>", html)
         self.assertIn("<tr><td>上級グラン予報士</td><td>+2</td><td>獲得グラン +10% / GP消費 -2%</td></tr>", html)
 
@@ -130,6 +131,12 @@ class GranBoosterPageTests(unittest.TestCase):
             'currentPath === "/PSNOVA/pages/gran-booster.html"',
             sidebar,
         )
+
+    def test_footer_navigation_links_are_removed(self):
+        html = self.page_html()
+
+        self.assertNotIn("クルーの特徴一覧を見る", html)
+        self.assertNotIn("拠点施設一覧へ戻る", html)
 
     def test_public_metadata_is_present(self):
         html = self.page_html()
