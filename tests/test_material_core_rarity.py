@@ -10,8 +10,10 @@ class MaterialCoreRarityTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         html = MATERIAL.read_text(encoding="utf-8")
-        start = html.index("<summary>コア</summary>")
-        cls.core = html[start:html.index("</details>", start)]
+        start = html.index("<h3>コア</h3>")
+        table_start = html.index("<table>", start)
+        table_end = html.index("</table>", table_start) + len("</table>")
+        cls.core = html[table_start:table_end]
 
     def test_core_rarities_keep_reference_star_notation(self):
         sentinels = {
