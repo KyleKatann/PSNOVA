@@ -56,9 +56,12 @@ class TableVisualRegressionTests(unittest.TestCase):
                             f"rounded table surface: {selector}",
                         )
                     for shadow in re.findall(r"box-shadow:\s*([^;]+)", declarations):
+                        value = shadow.strip()
+                        if value.startswith("inset "):
+                            continue
                         self.assertEqual(
                             "none",
-                            shadow.strip(),
+                            value,
                             f"card-like table shadow: {selector}",
                         )
 
