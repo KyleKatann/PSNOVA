@@ -89,6 +89,8 @@ class GranBoosterPageTests(unittest.TestCase):
         sitemap = SITEMAP.read_text(encoding="utf-8")
 
         self.assertIn(f'href="{path}">グランブースター Lv.1</a>', base)
+        self.assertIn("グラン予報士・上級グラン予報士を持つクルーを配属すると", base)
+        self.assertIn("GP消費量軽減・獲得グランエナジー量アップの効果が強くなる", base)
         self.assertIn(f"https://kylekatann.github.io{path}", sitemap)
 
     def test_sidebar_contains_gran_booster_and_current_page_grouping(self):
