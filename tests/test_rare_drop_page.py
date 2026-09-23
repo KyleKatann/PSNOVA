@@ -22,10 +22,12 @@ class RareDropPageTests(unittest.TestCase):
     def test_gran_burst_item_drop_is_qualitative(self):
         html = self.page_html()
 
-        self.assertIn("アイテムドロップアップ</td><td>アイテムが出やすくなる", html)
+        self.assertIn("アイテム</td><td>アイテムが出やすくなる", html)
         self.assertIn("レアアイテム狙いでも有効", html)
         self.assertNotIn("ドロップ抽選を1回追加", html)
         self.assertNotIn("追加される1回", html)
+        self.assertNotIn("レアドロップアップ", html)
+        self.assertNotIn("アイテムドロップアップ", html)
 
     def test_multiplayer_bonus_does_not_expose_internal_counts(self):
         html = self.page_html()
@@ -74,8 +76,8 @@ class RareDropPageTests(unittest.TestCase):
             "ギガババロア または ギガ骨の髄まで定食",
             "レイヴァン同行",
             "ブーストエネミー",
-            "グランバースト「レアドロップアップ」",
-            "グランバースト「アイテムドロップアップ」",
+            "グランバースト「レアドロップ」",
+            "グランバースト「アイテム」",
             "マルチプレイ",
             "部位破壊",
             "バースト加速装置",
