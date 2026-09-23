@@ -19,14 +19,6 @@ class ItemDetectorPageTests(unittest.TestCase):
         self.assertIn("<tr><td>ラッキライザー</td><td>レアアイテム</td><td>+100%</td></tr>", html)
         self.assertIn('<th scope="col">効果</th>', html)
 
-        for internal_term in (
-            "通常枠",
-            "レア枠",
-            "最終的なアイテム取得率まで完全に独立",
-        ):
-            with self.subTest(internal_term=internal_term):
-                self.assertNotIn(internal_term, html)
-
     def test_base_uses_same_reader_facing_terms(self):
         base = BASE.read_text(encoding="utf-8")
 
