@@ -28,6 +28,7 @@
 - 原因追及はread-onlyを優先し、推測値・dummy・probe write・別write APIの順番試行を使わない。同じ失敗を引数だけ推測変更して繰り返してはならない。
 - 編集前のread-only検証で「特定語や記号が0件になること」を確認する場合、その語や記号が別の意味で正当に残り得る箇所まで一括禁止してはならない。削除対象の文脈・列・sectionへ検証範囲を限定し、広すぎる検証条件で作業を誤停止しない。
 - 全文置換前に対象文字列の出現数を確認し、同一文字列が複数箇所に存在する場合は「1件だけ」と仮定して失敗させず、対象sectionや前後文脈を含む一意な範囲へ置換を限定する。
+- test整理で同一の削除対象assertが複数箇所にある場合は、1件限定のguardで停止させない。各出現が同じ廃止仕様を固定していることをread-onlyで確認し、該当箇所をすべて明示的に削除する。
 - 過去会話、過去commit、旧サイト構成だけから推測したfile pathを`fetch_file`へ渡してはならない。current repositoryで対象pathが未確認の場合は、先に現在のdirectory listingまたはtreeをread-onlyで取得し、そこに実在するpathだけを使用する。直前のcurrent read結果ですでにpathを確認済みの場合は再listingを不要とする。
 - 対象公開ページに対応する回帰test fileを探す場合も、page名から`tests/test_*.py`を推測して`fetch_file`しない。current `tests/` directory listingで実在pathを確認してから取得し、対応testが存在しない場合はその事実を確認したうえで必要なら新規作成する。
 - GitHubコネクタでdirectory listingが必要な場合、存在確認していない`list_directory`等のaction名を仮定してはならない。現在のtool metadataに専用listing actionがない場合は、directory取得を明示対応している`fetch`のschemaを確認し、確認済みrepository/directory URLだけをread-onlyで取得する。
