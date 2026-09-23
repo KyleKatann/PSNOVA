@@ -26,6 +26,7 @@
 - write操作が失敗または不明瞭な結果になった場合は、再試行前にread-onlyでHEAD、対象file、diff、必要なschemaを確認し、repositoryが変更されたかを確定する。意図外変更があれば安全な最小復旧を行い、復旧をread-onlyで検証してからAgent更新と元作業へ戻る。
 - GitHub connectorのactionをそのsessionで初めて使う場合、引数名やschemaを類似action・過去会話・記憶から推測せず、実行直前に利用可能tool metadataから当該actionのschemaをread-onlyで確認する。複数actionをまとめて呼ぶ場合も、未確認actionを1つでも含めてはならない。
 - 原因追及はread-onlyを優先し、推測値・dummy・probe write・別write APIの順番試行を使わない。同じ失敗を引数だけ推測変更して繰り返してはならない。
+- 編集前のread-only検証で「特定語や記号が0件になること」を確認する場合、その語や記号が別の意味で正当に残り得る箇所まで一括禁止してはならない。削除対象の文脈・列・sectionへ検証範囲を限定し、広すぎる検証条件で作業を誤停止しない。
 - 過去会話、過去commit、旧サイト構成だけから推測したfile pathを`fetch_file`へ渡してはならない。current repositoryで対象pathが未確認の場合は、先に現在のdirectory listingまたはtreeをread-onlyで取得し、そこに実在するpathだけを使用する。直前のcurrent read結果ですでにpathを確認済みの場合は再listingを不要とする。
 - GitHubコネクタでdirectory listingが必要な場合、存在確認していない`list_directory`等のaction名を仮定してはならない。現在のtool metadataに専用listing actionがない場合は、directory取得を明示対応している`fetch`のschemaを確認し、確認済みrepository/directory URLだけをread-onlyで取得する。
 - GitHubコネクタの`search`はrepository fileやpathの探索に使用しない。`search`の0件結果やindex状態をpath不存在の根拠にせず、file/path確認はcurrent repositoryのdirectory listingを`fetch`で取得して行う。
