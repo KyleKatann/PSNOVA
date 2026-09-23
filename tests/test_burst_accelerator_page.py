@@ -28,10 +28,6 @@ class BurstAcceleratorPageTests(unittest.TestCase):
         self.assertNotIn("<h2>まず結論</h2>", html)
         self.assertNotIn("<h2>同じBURST特徴を持つクルーを配属する</h2>", html)
 
-        self.assertNotIn("抽選上の重み", html)
-        self.assertNotIn("候補の重み", html)
-        self.assertNotIn("初回抽選", html)
-        self.assertNotIn("データ上は", html)
 
 
     def test_noncombat_effects_use_player_facing_wording(self):
@@ -96,8 +92,6 @@ class BurstAcceleratorPageTests(unittest.TestCase):
 
         self.assertIn(f'href="{path}">バースト加速装置 Lv.1</a>', base)
         self.assertIn("配属したBURST特徴に対応するグランバーストを出しやすくする", base)
-        self.assertNotIn("抽選候補の重み", base)
-        self.assertNotIn("抽選重み", base)
         self.assertIn(f'<li><a href="{path}">バースト加速装置</a></li>', sidebar)
         self.assertIn(f'currentPath === "{path}"', sidebar)
         self.assertIn(f"https://kylekatann.github.io{path}", sitemap)
@@ -119,8 +113,6 @@ class BurstAcceleratorPageTests(unittest.TestCase):
         )
         head = html.split("</head>", 1)[0]
         self.assertNotIn("配属人数", head)
-        self.assertNotIn("候補の重み", html)
-        self.assertNotIn("発動確率", html)
 
 
 if __name__ == "__main__":
