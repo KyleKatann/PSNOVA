@@ -43,6 +43,33 @@ class RareDropPageTests(unittest.TestCase):
         self.assertNotIn("最大出現個数", html)
         self.assertNotIn("成功アイテム数", html)
 
+    def test_requested_section_structure(self):
+        html = self.page_html()
+
+        self.assertNotIn("「レアエネミー出現率アップ」は別の効果", html)
+        self.assertIn("<h2>よくある勘違い</h2>", html)
+        self.assertIn("<h3>捕獲しても不利にはならない</h3>", html)
+        self.assertIn("<h3>通常アイテムのドロップ率を上げすぎない</h3>", html)
+        self.assertNotIn("<h3>レアだけを狙う場合の配置</h3>", html)
+        self.assertIn("<h2>結論：レアドロップ率を最大まで上げる</h2>", html)
+
+    def test_conclusion_covers_all_practical_methods(self):
+        html = self.page_html()
+
+        for term in (
+            "アイテム探知装置+ラッキライザー5人",
+            "ギガババロア または ギガ骨の髄まで定食",
+            "レイヴァン同行",
+            "ブーストエネミー",
+            "グランバースト「レアドロップアップ」",
+            "グランバースト「アイテムドロップアップ」",
+            "マルチプレイ",
+            "部位破壊",
+            "バースト加速装置",
+        ):
+            with self.subTest(term=term):
+                self.assertIn(term, html)
+
     def test_internal_analysis_terms_are_not_public(self):
         html = self.page_html()
 
