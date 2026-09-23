@@ -120,6 +120,8 @@ class EnemyRadarPageTests(unittest.TestCase):
         sitemap = SITEMAP.read_text(encoding="utf-8")
 
         self.assertIn(f'href="{path}">エネミーレーダー Lv.1</a>', base)
+        self.assertIn("レアエネミー・ブーストエネミーを出やすくする", base)
+        self.assertIn("特徴【野生の勘】を持つクルーを配属すると、さらに出やすくなる", base)
         self.assertIn(f'<li><a href="{path}">エネミーレーダー</a></li>', sidebar)
         self.assertIn(f"https://kylekatann.github.io{path}", sitemap)
 
