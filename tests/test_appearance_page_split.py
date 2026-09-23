@@ -23,6 +23,19 @@ class AppearancePageSplitTests(unittest.TestCase):
 
         self.assertFalse((PAGES / "appearance.html").exists())
 
+        for path in (
+            PAGES / "appearance" / "hairstyle.html",
+            PAGES / "appearance" / "costume.html",
+            PAGES / "appearance" / "accessory.html",
+        ):
+            with self.subTest(path=path):
+                child = path.read_text(encoding="utf-8")
+                self.assertIn("キャラクタークリエイトを参照。", child)
+                self.assertNotIn(
+                    '<a href="/PSNOVA/pages/character-create.html">キャラクタークリエイト</a>',
+                    child,
+                )
+
     def test_content_is_split_by_category(self):
         hairstyle = (PAGES / "appearance" / "hairstyle.html").read_text(encoding="utf-8")
         costume = (PAGES / "appearance" / "costume.html").read_text(encoding="utf-8")
