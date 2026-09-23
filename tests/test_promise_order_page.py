@@ -93,7 +93,7 @@ def test_promise_order_important_unlocks_and_repeat_rules_are_preserved():
     assert "難易度XH開放" in orcuss
     assert "再キャラクタークリエイトが<br>可能になる" in lithia
     assert "リーティアがクエストに<br>同行可能になる" in lithia
-    assert "施設「コア製錬所」追加" in sharon
+    assert "施設「コア精錬所」追加" in sharon
 
 
 def test_promise_order_pages_are_registered_in_navigation_and_sitemap():
