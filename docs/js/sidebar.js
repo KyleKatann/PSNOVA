@@ -12,7 +12,7 @@ var html =`
     <li><a href="/PSNOVA/pages/farming.html">稼ぎ</a></li>
     <li><a href="/PSNOVA/pages/friendship.html">友好度の上げ方</a></li>
     <li><a href="/PSNOVA/pages/vh-xh.html">VH・XH攻略</a></li>
-    <li><a href="/PSNOVA/pages/rare-drop.html">レアドロップ</a></li>
+    <li><a href="/PSNOVA/pages/rare-drop.html">レアドロップ効率化</a></li>
     <li><a href="/PSNOVA/pages/novafactor.html">ノヴァファクター集め</a></li>
 
     <li><p>クエスト</p></li>
