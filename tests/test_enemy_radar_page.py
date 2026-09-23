@@ -38,21 +38,6 @@ class EnemyRadarPageTests(unittest.TestCase):
             with self.subTest(internal_term=internal_term):
                 self.assertNotIn(internal_term, html)
 
-    def test_facility_level_table_matches_audited_report(self):
-        html = self.page_html()
-
-        expected_rows = (
-            ("1", "500", "1人", "1人"),
-            ("2", "1,000", "2人", "2人"),
-            ("3", "2,500", "3人", "3人"),
-            ("4", "5,000", "4人", "4人"),
-            ("5", "10,000", "5人", "5人"),
-        )
-
-        for row in expected_rows:
-            fragment = "<tr>" + "".join(f"<td>{value}</td>" for value in row) + "</tr>"
-            with self.subTest(row=row):
-                self.assertIn(fragment, html)
 
     def test_effect_tier_table_matches_audited_report(self):
         html = self.page_html()
@@ -80,15 +65,27 @@ class EnemyRadarPageTests(unittest.TestCase):
         self.assertNotIn("<th scope=\"col\">内部計算</th>", html)
         self.assertNotIn("<th scope=\"col\">基礎3%時の実出現率</th>", html)
 
-    def test_maximum_effect_limits_match_audited_report(self):
+    def test_effect_explanations_are_reader_facing_and_non_numeric(self):
         html = self.page_html()
 
-        self.assertIn("<h2>最大時の実効率</h2>", html)
-        self.assertIn("基礎レア発生率が20%に設定されているラッピーのみ", html)
-        self.assertIn("20% × 7.00 = 140%相当", html)
-        self.assertIn("最終的なレアエネミー出現率が100%になるという意味ではありません", html)
-        self.assertIn("最大でも24%", html)
-        self.assertIn("エネミーレーダー単独でブーストエネミー出現率を100%にはできません", html)
+        self.assertIn("レアエネミーへの補正は、通常の出現判定とは別の判定に使われます", html)
+        self.assertIn("ブーストエネミーへの補正は、元の出現率を基準に強化されます", html)
+        self.assertIn("最大まで強化しても、すべての敵が必ずレアエネミーやブーストエネミーになるわけではありません", html)
+        for removed_detail in (
+            "×1.50～×7.00",
+            "×2.50～×8.00",
+            "3% × 8.00 = 24%",
+            "20% × 7.00 = 140%相当",
+            "基礎3%時の実出現率",
+        ):
+            with self.subTest(removed_detail=removed_detail):
+                self.assertNotIn(removed_detail, html)
+
+    def test_base_return_link_is_removed(self):
+        html = self.page_html()
+
+        self.assertNotIn("拠点施設一覧へ戻る", html)
+
 
     def test_trait_crew_list_is_complete(self):
         html = self.page_html()
