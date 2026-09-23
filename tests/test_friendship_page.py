@@ -18,6 +18,7 @@ class FriendshipPageTests(unittest.TestCase):
         self.assertIn("background:#fff1f1", html)
         self.assertIn("border-left:4px solid #c83f3f", html)
         self.assertNotIn("<h2>よくある誤解</h2>", html)
+        self.assertNotIn("\\n", html)
 
     def test_misunderstanding_body_stays_outside_notice_box(self):
         html = self.page_html()
