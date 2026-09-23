@@ -523,15 +523,6 @@
 }
 
 
-/* === RARE DROP PAGE === */
-
-#main h2.misconception-heading {
-    color: #b42318;
-    background: #fff4f2;
-    border-left-color: #d92d20;
-    border-bottom-color: #f4c7c3;
-}
-
 /* === EMERGENCY CALL PAGE === */
 
 body.emergency-call-page #main .emergency-call-table {
