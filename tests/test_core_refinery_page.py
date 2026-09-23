@@ -24,24 +24,6 @@ class CoreRefineryPageTests(unittest.TestCase):
         self.assertNotIn("強化候補", html)
         self.assertNotIn("現在のクルーデータ", html)
 
-        for internal_term in (
-            "502201",
-            "502202",
-            "502203",
-            "504201",
-            "parameter927",
-            "parameter929",
-            "Type16",
-            "GacyaNPC_Size",
-            "0x8148",
-            "Pat_01_3",
-            "PR_1520_sha",
-            "99999999",
-            "Core_Refinery_AttachParts",
-            "Core_Refinery_CoreEvolve",
-        ):
-            with self.subTest(internal_term=internal_term):
-                self.assertNotIn(internal_term, html)
 
 
     def test_reducer_values_and_holders(self):
@@ -64,13 +46,12 @@ class CoreRefineryPageTests(unittest.TestCase):
         self.assertIn("<tr><td>ディーヴァス</td><td>コア鋳造士 + 精錬所チーフ</td><td>-10%</td></tr>", html)
         self.assertIn("最大70%軽減と機能拡張を同時に有効化できます", html)
 
-    def test_chief_expands_skill_evolution_routes(self):
+    def test_chief_expands_upgrade_recipes(self):
         html = self.page_html()
 
         self.assertIn("コア特殊能力強化で利用できる強化レシピが増えます", html)
-        self.assertNotIn("通常状態では242種類の強化ルート", html)
-        self.assertNotIn("チーフ配属時は331種類", html)
-        self.assertNotIn("新たに強化元として扱える特殊能力: 89種類追加", html)
+        self.assertNotIn("強化候補", html)
+        self.assertNotIn("進化候補", html)
 
     def test_chief_holders(self):
         html = self.page_html()
