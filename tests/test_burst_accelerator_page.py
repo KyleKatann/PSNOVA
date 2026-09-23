@@ -5,7 +5,6 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 PAGE = ROOT / "docs" / "pages" / "burst-accelerator.html"
 BASE = ROOT / "docs" / "pages" / "base.html"
-TRAITS = ROOT / "docs" / "pages" / "traits.html"
 SITEMAP = ROOT / "docs" / "sitemap.xml"
 SIDEBAR = ROOT / "docs" / "js" / "sidebar.js"
 
@@ -18,32 +17,29 @@ class BurstAcceleratorPageTests(unittest.TestCase):
         html = self.page_html()
 
         self.assertIn("<h1>バースト加速装置</h1>", html)
+        self.assertIn("狙ったグランバーストを出しやすくする拠点施設", html)
         self.assertIn("Lv1～5で配属できる人数が1～5人へ増えます", html)
-        self.assertIn("抽選上の重みが1増えます", html)
-        self.assertIn("すでに発動中の効果は次回候補から除外", html)
-        self.assertIn("狙った効果を出しやすくする組み方を確認できます", html)
+        self.assertIn(
+            "同じBURST特徴を持つクルーを複数配属すると、その特徴に対応するグランバーストが選ばれやすくなります",
+            html,
+        )
+        self.assertIn("すでに発動している効果は、次のグランバーストでは選ばれません", html)
 
-        for internal_term in (
-            "500200",
-            "500211",
-            "parameter910",
-            "parameter921",
-            "910100",
-            "Type14",
-            "GacyaNPC_Size",
-            "effect1",
-            "0x8174",
-            "SP08_140_030_ed",
-            "9050010",
-            "9090090",
-            "Pat_01_3",
-            "PR_1320_orc",
-            "currentデータ",
-            "内部データ",
-            "古い/静的な表",
+        for analysis_term in (
+            "抽選上の重み",
+            "候補の重み",
+            "2/5 = 40%",
+            "ハズレ62.5%",
+            "分母が増える",
+            "初回抽選",
+            "データ上は",
+            "所持者を確認できません",
+            "ドロップ抽選回数を1回追加",
+            "追加のレア化判定",
+            "レア枠の判定補正",
         ):
-            with self.subTest(internal_term=internal_term):
-                self.assertNotIn(internal_term, html)
+            with self.subTest(analysis_term=analysis_term):
+                self.assertNotIn(analysis_term, html)
 
     def test_facility_levels_match_audited_data(self):
         html = self.page_html()
@@ -59,38 +55,33 @@ class BurstAcceleratorPageTests(unittest.TestCase):
             with self.subTest(row=row):
                 self.assertIn(fragment, html)
 
-    def test_probability_examples_match_runtime_weight_model(self):
+    def test_noncombat_effects_use_player_facing_wording(self):
         html = self.page_html()
 
-        self.assertIn("レアドロップが選ばれる確率は2/5 = 40%", html)
-        self.assertIn("<tr><td>1</td><td>50%</td><td>25%</td><td>25%</td></tr>", html)
-        self.assertIn("<tr><td>2</td><td>60%</td><td>40%</td><td>40%</td></tr>", html)
-        self.assertIn("<tr><td>3</td><td>66.67%</td><td>50%</td><td>50%</td></tr>", html)
-        self.assertIn("<tr><td>4</td><td>71.43%</td><td>57.14%</td><td>50%</td></tr>", html)
-        self.assertIn("<tr><td>5</td><td>71.43%</td><td>57.14%</td><td>50%</td></tr>", html)
-        self.assertIn("余った枠へ別のBURST特徴を置くと分母が増えるため、空けておく方が高確率", html)
+        expected = (
+            ("BURST:経験値UP", "獲得経験値が増える"),
+            ("BURST:アイテム", "アイテムが出やすくなる"),
+            ("BURST:レアエネミー", "レアエネミーが出やすくなる"),
+            ("BURST:レアドロップ", "レアドロップ率が上がる"),
+        )
+        for trait, effect in expected:
+            with self.subTest(trait=trait):
+                self.assertIn(f"<tr><td>{trait}</td><td>{effect}</td>", html)
 
-    def test_baseline_probability_excludes_empty_candidates(self):
+    def test_combat_effect_wording_is_preserved(self):
         html = self.page_html()
 
-        self.assertIn("<h2>配属なしの初回抽選</h2>", html)
-        self.assertIn("それぞれ約33.33%", html)
-        self.assertIn("「ハズレ」が62.5%を占めるわけではありません", html)
-        self.assertNotIn("配属なしではハズレ62.5%", html)
-
-    def test_burst_item_effect_is_draw_count_not_rate(self):
-        html = self.page_html()
-        traits = TRAITS.read_text(encoding="utf-8")
-
-        self.assertIn("<tr><td>BURST:アイテム</td><td>ドロップ抽選回数を1回追加</td>", html)
-        self.assertIn("<tr><td>BURST:アイテム</td><td>ドロップ抽選回数を1回追加</td></tr>", traits)
-        self.assertNotIn("<tr><td>BURST:アイテム</td><td>アイテムのドロップ率アップ</td></tr>", traits)
-
-    def test_rare_drop_wording_does_not_claim_final_rate_doubles(self):
-        html = self.page_html()
-
-        self.assertIn("レア枠の判定補正を単独時×2", html)
-        self.assertIn("最終的なレア取得率そのものが単純に2倍になるわけではありません", html)
+        expected = (
+            ("BURST:ワンモア", "「ワンモア」の発生率アップ"),
+            ("BURST:ガッツ", "HP10%以上の時、致死ダメージを受けてもHP1で踏みとどまる"),
+            ("BURST:ダメージカット", "エネミーから受けるダメージを減少"),
+            ("BURST:コンバージョン", "ダメージを受けるとGPが回復"),
+            ("BURST:クリティカル", "クリティカルの発生率アップ"),
+            ("BURST:モータルブロウ", "打撃攻撃のダメージが2倍になる"),
+        )
+        for trait, effect in expected:
+            with self.subTest(trait=trait):
+                self.assertIn(f"<tr><td>{trait}</td><td>{effect}</td>", html)
 
     def test_current_holder_counts_are_reflected(self):
         html = self.page_html()
@@ -112,8 +103,11 @@ class BurstAcceleratorPageTests(unittest.TestCase):
                 self.assertIn(f"<td>{trait}</td>", html)
                 self.assertIn(f"<td>{crew}</td>", html)
 
-        self.assertIn("「BURST:原生種」「BURST:ダーカー」", html)
-        self.assertIn("所持者を確認できません", html)
+    def test_footer_navigation_links_are_removed(self):
+        html = self.page_html()
+
+        self.assertNotIn("クルーの特徴一覧を見る", html)
+        self.assertNotIn("拠点施設一覧へ戻る", html)
 
     def test_page_is_linked_from_base_sidebar_and_sitemap(self):
         path = "/PSNOVA/pages/burst-accelerator.html"
@@ -122,8 +116,6 @@ class BurstAcceleratorPageTests(unittest.TestCase):
         sitemap = SITEMAP.read_text(encoding="utf-8")
 
         self.assertIn(f'href="{path}">バースト加速装置 Lv.1</a>', base)
-        self.assertIn("対応するバースト効果の抽選重みが増加（Lv5で最大5人配属）", base)
-        self.assertNotIn("バースト効果を追加(最大5種)", base)
         self.assertIn(f'<li><a href="{path}">バースト加速装置</a></li>', sidebar)
         self.assertIn(f'currentPath === "{path}"', sidebar)
         self.assertIn(f"https://kylekatann.github.io{path}", sitemap)
@@ -132,9 +124,8 @@ class BurstAcceleratorPageTests(unittest.TestCase):
         html = self.page_html()
 
         self.assertIn("<caption>施設レベルごとの開発費と配属可能人数</caption>", html)
-        self.assertIn("<caption>同じBURST特徴へ集中した場合の初回発動確率</caption>", html)
         self.assertIn("<caption>BURST特徴ごとの発動時の効果と所持クルー</caption>", html)
-        self.assertEqual(html.count("<caption>"), 3)
+        self.assertEqual(html.count("<caption>"), 2)
 
     def test_public_metadata_is_present(self):
         html = self.page_html()
@@ -144,6 +135,8 @@ class BurstAcceleratorPageTests(unittest.TestCase):
             '<link rel="canonical" href="https://kylekatann.github.io/PSNOVA/pages/burst-accelerator.html">',
             html,
         )
+        self.assertNotIn("候補の重み", html)
+        self.assertNotIn("発動確率", html)
 
 
 if __name__ == "__main__":
