@@ -53,7 +53,7 @@ class RemainingWeaponDetailPageTests(unittest.TestCase):
                 )
                 self.assertIn(
                     'class="weapon-page-nav-index" '
-                    'href="/PSNOVA/pages/weapon.html"',
+                    'href="/PSNOVA/pages/combat.html"',
                     html,
                 )
                 self.assertIn('<div class="table-scroll">', html)
