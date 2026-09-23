@@ -33,7 +33,7 @@ class EmergencyCallPageTests(unittest.TestCase):
         rows = [row for table in tables for row in table.select("tbody > tr")]
 
         self.assertEqual(len(tables), 6)
-        self.assertEqual(len(rows), 408)
+        self.assertEqual(len(rows), 404)
 
         quest_names = set()
         for row in rows:
@@ -41,7 +41,7 @@ class EmergencyCallPageTests(unittest.TestCase):
             if len(cells) >= 2:
                 quest_names.add(cells[0].get_text(" ", strip=True))
 
-        self.assertEqual(len(quest_names), 115)
+        self.assertEqual(len(quest_names), 114)
 
     def test_table_layout_contract(self):
         soup = self.page_soup()
@@ -131,6 +131,16 @@ class EmergencyCallPageTests(unittest.TestCase):
                     if any(part.startswith(label) for part in parts)
                 }
 
+        quest_difficulties.update(
+            {
+                "惑星上陸初戦": {2},
+                "ジャッドバンサー撃破任務": {2, 3, 4},
+                "アグリオス撃破任務": {2},
+                "ヘイロウ訓練": {2},
+                "パイル訓練": {2, 3},
+            }
+        )
+
         matched_quests = set()
         for row in self.page_soup().select("table.emergency-call-table tbody > tr"):
             cells = row.find_all("td")
@@ -149,7 +159,36 @@ class EmergencyCallPageTests(unittest.TestCase):
                     else:
                         self.assertEqual(value, "－")
 
-        self.assertEqual(len(matched_quests), 109)
+        self.assertEqual(len(matched_quests), 114)
+
+    def test_special_quests_only_show_receivable_difficulties(self):
+        soup = self.page_soup()
+
+        rows = {}
+        for row in soup.select("table.emergency-call-table tbody > tr"):
+            cells = row.find_all("td")
+            if len(cells) != 7:
+                continue
+            quest = cells[0].get_text(" ", strip=True)
+            rows.setdefault(quest, []).append(
+                [cell.get_text(" ", strip=True) for cell in cells[2:]]
+            )
+
+        for values in rows["惑星上陸初戦"]:
+            self.assertNotEqual(values[0], "－")
+            self.assertEqual(values[1:], ["－", "－", "－", "－"])
+
+        for values in rows["ジャッドバンサー撃破任務"]:
+            self.assertNotEqual(values[0], "－")
+            self.assertNotEqual(values[1], "－")
+            self.assertNotEqual(values[2], "－")
+            self.assertEqual(values[3:], ["－", "－"])
+
+        for values in rows["アグリオス撃破任務"]:
+            self.assertEqual(values[0], "報酬なし")
+            self.assertEqual(values[1:], ["－", "－", "－", "－"])
+
+        self.assertNotIn("バトル体験版クエスト", rows)
 
     def test_invalid_item_reward_stays_reader_facing(self):
         html = self.page_html()
