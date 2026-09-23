@@ -18,7 +18,7 @@ class EnemyRadarPageTests(unittest.TestCase):
         html = self.page_html()
 
         self.assertIn("<h1>エネミーレーダー</h1>", html)
-        self.assertIn("レアエネミーとブーストエネミーの出現率を上げる拠点施設", html)
+        self.assertIn("レアエネミーとブーストエネミーを出やすくする拠点施設", html)
         self.assertIn("特徴「野生の勘」", html)
 
         for internal_term in (
