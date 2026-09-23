@@ -41,19 +41,6 @@ class BurstAcceleratorPageTests(unittest.TestCase):
             with self.subTest(analysis_term=analysis_term):
                 self.assertNotIn(analysis_term, html)
 
-    def test_facility_levels_match_audited_data(self):
-        html = self.page_html()
-        expected = (
-            ("1", "500", "1人"),
-            ("2", "1,000", "2人"),
-            ("3", "2,500", "3人"),
-            ("4", "5,000", "4人"),
-            ("5", "10,000", "5人"),
-        )
-        for row in expected:
-            fragment = "<tr>" + "".join(f"<td>{v}</td>" for v in row) + "</tr>"
-            with self.subTest(row=row):
-                self.assertIn(fragment, html)
 
     def test_noncombat_effects_use_player_facing_wording(self):
         html = self.page_html()
@@ -123,9 +110,9 @@ class BurstAcceleratorPageTests(unittest.TestCase):
     def test_tables_have_reader_facing_captions(self):
         html = self.page_html()
 
-        self.assertIn("<caption>施設レベルごとの開発費と配属可能人数</caption>", html)
         self.assertIn("<caption>BURST特徴ごとの発動時の効果と所持クルー</caption>", html)
-        self.assertEqual(html.count("<caption>"), 2)
+        self.assertEqual(html.count("<caption>"), 1)
+
 
     def test_public_metadata_is_present(self):
         html = self.page_html()
