@@ -107,6 +107,9 @@ class DownloadPageTests(unittest.TestCase):
 
         self.assertNotIn("/PSNOVA/js/fixmenu_pagetop.js", source)
 
+        self.assertIn("体験版の仕様", decoded)
+        self.assertNotIn('href="/PSNOVA/pages/trial-version.html"', source)
+
         sidebar = (DOCS / "js" / "sidebar.js").read_text(encoding="utf-8")
         self.assertIn(DOWNLOAD_URL, sidebar)
         self.assertIn("ダウンロードコンテンツ", html.unescape(sidebar))
