@@ -61,6 +61,7 @@ class RareDropPageTests(unittest.TestCase):
         )
         self.assertNotIn("エネミーレーダー</a>を参照してください", html)
         self.assertNotIn("バースト加速装置</a>を参照してください", html)
+        self.assertNotIn("アイテム探知装置</a>を参照してください", html)
 
     def test_conclusion_covers_all_practical_methods(self):
         html = self.page_html()
