@@ -28,7 +28,7 @@ class TalisWeaponPageTests(unittest.TestCase):
     def test_weapon_navigation(self):
         self.assertIn(
             'class="weapon-page-nav-index" '
-            'href="/PSNOVA/pages/weapon.html">武器一覧</a>',
+            'href="/PSNOVA/pages/combat.html">武器一覧</a>',
             self.html,
         )
         self.assertNotIn('rel="prev"', self.html)
