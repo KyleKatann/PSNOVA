@@ -24,6 +24,9 @@ class BurstAcceleratorPageTests(unittest.TestCase):
             html,
         )
         self.assertIn("すでに発動している効果は、次のグランバーストでは選ばれません", html)
+        self.assertIn("<h2>狙ったグランバーストを出しやすくするには</h2>", html)
+        self.assertNotIn("<h2>まず結論</h2>", html)
+        self.assertNotIn("<h2>同じBURST特徴を持つクルーを配属する</h2>", html)
 
         for analysis_term in (
             "抽選上の重み",
