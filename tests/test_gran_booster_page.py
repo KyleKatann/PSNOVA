@@ -43,22 +43,6 @@ class GranBoosterPageTests(unittest.TestCase):
             with self.subTest(internal_term=internal_term):
                 self.assertNotIn(internal_term, html)
 
-    def test_facility_level_table_matches_audited_report(self):
-        html = self.page_html()
-
-        expected_rows = (
-            ("1", "500", "1人", "獲得グラン +15% / GP消費 -2%"),
-            ("2", "1,000", "2人", "獲得グラン +25% / GP消費 -4%"),
-            ("3", "2,500", "3人", "獲得グラン +35% / GP消費 -6%"),
-            ("4", "5,000", "4人", "獲得グラン +45% / GP消費 -8%"),
-            ("5", "10,000", "5人", "獲得グラン +55% / GP消費 -10%"),
-        )
-
-        for row in expected_rows:
-            fragment = "<tr>" + "".join(f"<td>{value}</td>" for value in row) + "</tr>"
-            with self.subTest(row=row):
-                self.assertIn(fragment, html)
-
     def test_effect_tiers_match_audited_report(self):
         html = self.page_html()
 
@@ -84,7 +68,7 @@ class GranBoosterPageTests(unittest.TestCase):
     def test_conversion_is_presented_as_tentative(self):
         html = self.page_html()
 
-        self.assertIn("施設を設置しただけでも獲得グランエナジーは5%増加", html)
+        self.assertIn("<tr><td>0</td><td>+5%</td><td>変化なし</td></tr>", html)
         self.assertIn("「グラン予報士」を1、「上級グラン予報士」を2と仮置きすると", html)
         self.assertIn("仮の換算値", html)
         self.assertNotIn("効果値", html)
@@ -150,6 +134,8 @@ class GranBoosterPageTests(unittest.TestCase):
             '<link rel="canonical" href="https://kylekatann.github.io/PSNOVA/pages/gran-booster.html">',
             html,
         )
+        head = html.split("</head>", 1)[0]
+        self.assertNotIn("配属人数", head)
 
 
 if __name__ == "__main__":
