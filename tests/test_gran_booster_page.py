@@ -90,6 +90,10 @@ class GranBoosterPageTests(unittest.TestCase):
         self.assertNotIn("効果値", html)
         self.assertIn("<tr><td>グラン予報士</td><td>+1</td><td>獲得グラン +5% / GP消費 -1%</td></tr>", html)
         self.assertIn("<tr><td>上級グラン予報士</td><td>+2</td><td>獲得グラン +10% / GP消費 -2%</td></tr>", html)
+        self.assertNotIn("<h2>特徴ごとの換算</h2>", html)
+        trait_pos = html.index("<tr><td>グラン予報士</td><td>+1</td><td>獲得グラン +5% / GP消費 -1%</td></tr>")
+        tier_pos = html.index("<tr><td>0</td><td>+5%</td><td>変化なし</td></tr>")
+        self.assertLess(trait_pos, tier_pos)
 
     def test_trait_crew_lists_are_complete(self):
         html = self.page_html()
