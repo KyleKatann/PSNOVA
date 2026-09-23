@@ -36,6 +36,7 @@
 - PSNOVAで公開ページ作業を開始する場合、指示ファイルの初回readより先にroot listingを行い、その結果に存在する`Agent.md`だけを読む。会話履歴や他repoの慣例から`AGENTS.md`等を先行fetchしない。
 - repositoryのdefault branch名がcurrent sessionで未確認の場合は、`contents?ref=main`等のbranch名を推測してreadしてはならない。先にrepository metadataまたはbranch listingをread-onlyで取得し、確認済みdefault branchだけを以後の`ref`/write targetに使用する。
 - 大きなtext fileを`fetch_file`で取得するとき、全範囲取得がresponse sizeや接続切断で失敗した場合は、同じ大型requestを繰り返さず、連続した小さいline rangeへ分割して取得する。必要な全範囲を成功済みchunkで揃えた後は、再確認目的で大型requestへ戻さない。
+- 複数の大きなfileを1回のtool orchestrationでまとめて`fetch_file`すると接続切断が起きる場合は、repository stateが未変更であることをread-onlyで確認し、その後は対象fileを1件ずつ取得する。同じbulk fetchを再実行しない。
 - `Agent.md`など全文置換が必要な大きなtext fileでは、変更対象外の既存文を手作業で言い換えず、成功済みの連続chunkから取得した原文をそのまま再構成する。commit直後のcompareで意図外の語句変更を1件でも検出した場合は、その語句だけを原文へ戻し、原因に対応する再発防止ルールを具体化してから元作業へ戻る。
 - 操作系エラーごとにincident logを増やすのではなく、原因に対応する再発防止ルールを既存sectionへ統合・具体化してよい。ただし、そのrunでは必ず`Agent.md`に恒久的な改善を1件以上反映する。
 - 外部credential失効やservice outage等で安全な継続が物理的に不可能な場合だけ、原因と必要なユーザー操作を報告する。回復可能な操作系エラーをこの例外へ拡張して停止理由にしてはならない。
