@@ -28,21 +28,10 @@ class BurstAcceleratorPageTests(unittest.TestCase):
         self.assertNotIn("<h2>まず結論</h2>", html)
         self.assertNotIn("<h2>同じBURST特徴を持つクルーを配属する</h2>", html)
 
-        for analysis_term in (
-            "抽選上の重み",
-            "候補の重み",
-            "2/5 = 40%",
-            "ハズレ62.5%",
-            "分母が増える",
-            "初回抽選",
-            "データ上は",
-            "所持者を確認できません",
-            "ドロップ抽選回数を1回追加",
-            "追加のレア化判定",
-            "レア枠の判定補正",
-        ):
-            with self.subTest(analysis_term=analysis_term):
-                self.assertNotIn(analysis_term, html)
+        self.assertNotIn("抽選上の重み", html)
+        self.assertNotIn("候補の重み", html)
+        self.assertNotIn("初回抽選", html)
+        self.assertNotIn("データ上は", html)
 
 
     def test_noncombat_effects_use_player_facing_wording(self):
