@@ -37,12 +37,17 @@ class VisualSystemTests(unittest.TestCase):
         )
         for condition in (
             "weaponParentCurrent",
-            "granartsParentCurrent",
+            "granartsChild",
             "technicParentCurrent",
             "questParentCurrent",
             "promiseOrderParentCurrent",
         ):
             self.assertIn(condition, js)
+        self.assertIn(
+            'var weaponParentCurrent = (weaponChild || granartsChild) && '
+            'linkPath === "/PSNOVA/pages/combat.html";',
+            js,
+        )
         self.assertIn('setAttribute("aria-current", "page")', js)
 
 
