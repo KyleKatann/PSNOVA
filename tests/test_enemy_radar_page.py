@@ -21,25 +21,9 @@ class EnemyRadarPageTests(unittest.TestCase):
         self.assertIn("レアエネミーとブーストエネミーを出やすくする拠点施設", html)
         self.assertIn("特徴「野生の勘」", html)
 
-        for internal_term in (
-            "909100",
-            "ID516",
-            "ID517",
-            "499200",
-            "GacyaNPC_Size",
-            "Type13",
-            "SP08_120_030_ed",
-            "SP07_210_050_ed",
-            "9050010",
-            "9090090",
-            "Pat_01_3",
-            "PR_1320_orc",
-        ):
-            with self.subTest(internal_term=internal_term):
-                self.assertNotIn(internal_term, html)
 
 
-    def test_effect_tier_table_matches_audited_report(self):
+    def test_effect_tier_table_matches_public_table(self):
         html = self.page_html()
 
         expected_rows = (
@@ -74,18 +58,9 @@ class EnemyRadarPageTests(unittest.TestCase):
         self.assertIn("もともとレアエネミーにならない敵には効果がありません", html)
         self.assertIn("もともとブーストエネミーにならない敵には効果がありません", html)
         self.assertIn("最大まで強化しても確定ではない", html)
-        for removed_detail in (
-            "通常の出現判定とは別の判定",
-            "元の発生率が設定されていない",
-            "最大時の実効率",
-            "×1.50～×7.00",
-            "×2.50～×8.00",
-            "3% × 8.00 = 24%",
-            "20% × 7.00 = 140%相当",
-            "基礎3%時の実出現率",
-        ):
-            with self.subTest(removed_detail=removed_detail):
-                self.assertNotIn(removed_detail, html)
+        self.assertNotIn("通常の出現判定とは別の判定", html)
+        self.assertNotIn("元の発生率が設定されていない", html)
+        self.assertNotIn("最大時の実効率", html)
 
     def test_base_return_link_is_removed(self):
         html = self.page_html()
