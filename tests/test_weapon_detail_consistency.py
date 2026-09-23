@@ -54,7 +54,7 @@ class WeaponDetailConsistencyTests(unittest.TestCase):
                 )
 
                 self.assertIn(
-                    '<a class="weapon-page-nav-index" href="/PSNOVA/pages/weapon.html">武器一覧</a>',
+                    '<a class="weapon-page-nav-index" href="/PSNOVA/pages/combat.html">武器一覧</a>',
                     html,
                 )
                 self.assertNotIn('rel="prev"', html)
