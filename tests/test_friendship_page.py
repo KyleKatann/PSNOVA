@@ -28,6 +28,15 @@ class FriendshipPageTests(unittest.TestCase):
             html,
         )
 
+    def test_related_page_name_remains_without_body_link(self):
+        html = self.page_html()
+
+        self.assertIn("プロミスオーダー", html)
+        self.assertNotIn(
+            '<a href="/PSNOVA/pages/promise-order.html">プロミスオーダー</a>',
+            html,
+        )
+
 
 if __name__ == "__main__":
     unittest.main()
