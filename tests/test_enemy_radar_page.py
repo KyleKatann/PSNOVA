@@ -58,12 +58,12 @@ class EnemyRadarPageTests(unittest.TestCase):
         html = self.page_html()
 
         expected_rows = (
-            ("0人", "×1.50", "×2.50", "7.5%"),
-            ("1人", "×1.75", "×2.75", "8.25%"),
-            ("2人", "×2.00", "×3.00", "9%"),
-            ("3人", "×3.00", "×4.00", "12%"),
-            ("4人", "×4.00", "×5.00", "15%"),
-            ("5人", "×7.00", "×8.00", "24%"),
+            ("0人", "+50%"),
+            ("1人", "+75%"),
+            ("2人", "+100%"),
+            ("3人", "+200%"),
+            ("4人", "+300%"),
+            ("5人", "+600%"),
         )
 
         for row in expected_rows:
@@ -71,13 +71,14 @@ class EnemyRadarPageTests(unittest.TestCase):
             with self.subTest(row=row):
                 self.assertIn(fragment, html)
 
-    def test_rare_and_boost_explanations_keep_distinct_semantics(self):
+    def test_public_effect_table_only_shows_requested_columns(self):
         html = self.page_html()
 
-        self.assertIn("通常の出現判定とは別に行われる追加のレア化判定", html)
-        self.assertIn("最終的なレアエネミー出現率へそのまま掛けるものではありません", html)
-        self.assertIn("ブーストエネミーは表の倍率が最終的な出現率に反映されます", html)
-        self.assertIn("基礎3%のため、「野生の勘」5人では24%", html)
+        self.assertIn("<th scope=\"col\">「野生の勘」人数</th>", html)
+        self.assertIn("<th scope=\"col\">ブースト補正</th>", html)
+        self.assertNotIn("<th scope=\"col\">レアエネミー追加判定</th>", html)
+        self.assertNotIn("<th scope=\"col\">内部計算</th>", html)
+        self.assertNotIn("<th scope=\"col\">基礎3%時の実出現率</th>", html)
 
     def test_maximum_effect_limits_match_audited_report(self):
         html = self.page_html()
