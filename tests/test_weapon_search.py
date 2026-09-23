@@ -10,7 +10,8 @@ class WeaponPageTests(unittest.TestCase):
     def test_weapon_landing_page_is_catalog_not_embedded_data_copy(self):
         html = WEAPON_HTML.read_text(encoding="utf-8")
         self.assertIn('class="weapon-catalog"', html)
-        self.assertEqual(11, html.count('class="weapon-card"'))
+        self.assertEqual(19, html.count('class="weapon-card"'))
+        self.assertEqual(2, html.count('class="weapon-catalog"'))
         self.assertNotIn("<table", html)
         self.assertNotIn("<details", html)
 
