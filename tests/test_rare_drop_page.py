@@ -4,7 +4,6 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 PAGE = ROOT / "docs" / "pages" / "rare-drop.html"
-PAGE_CSS = ROOT / "docs" / "css" / "page.css"
 
 
 class RareDropPageTests(unittest.TestCase):
@@ -48,16 +47,19 @@ class RareDropPageTests(unittest.TestCase):
         html = self.page_html()
 
         self.assertNotIn("「レアエネミー出現率アップ」は別の効果", html)
-        self.assertIn('<h2 class="misconception-heading">よくある勘違い</h2>', html)
-        self.assertIn("<h3>捕獲しても不利にはならない</h3>", html)
-        self.assertIn("<h3>通常アイテムのドロップ率を上げすぎない</h3>", html)
+        self.assertIn('<aside class="npc-password-warning" role="note"', html)
+        self.assertIn("<strong>よくある勘違い</strong>", html)
+        self.assertIn("background:#fff1f1", html)
+        self.assertIn("border-left:4px solid #c83f3f", html)
+        self.assertIn("<strong>捕獲しても不利にはならない</strong>", html)
+        self.assertIn("<strong>通常アイテムのドロップ率を上げすぎない</strong>", html)
         self.assertNotIn("<h3>レアだけを狙う場合の配置</h3>", html)
         self.assertIn("<h2>結論：レアドロップ率を最大まで上げる</h2>", html)
         self.assertNotIn("<h3>バースト加速装置で狙った効果を出しやすくする</h3>", html)
 
         self.assertLess(
             html.index("<h2>結論：レアドロップ率を最大まで上げる</h2>"),
-            html.index("よくある勘違い"),
+            html.index("<strong>よくある勘違い</strong>"),
         )
         self.assertNotIn("エネミーレーダー</a>を参照してください", html)
         self.assertNotIn("バースト加速装置</a>を参照してください", html)
@@ -79,14 +81,6 @@ class RareDropPageTests(unittest.TestCase):
         ):
             with self.subTest(term=term):
                 self.assertIn(term, html)
-
-
-    def test_misconception_heading_is_red(self):
-        css = PAGE_CSS.read_text(encoding="utf-8")
-
-        self.assertIn("#main h2.misconception-heading", css)
-        self.assertIn("color: #b42318;", css)
-        self.assertIn("border-left-color: #d92d20;", css)
 
     def test_internal_analysis_terms_are_not_public(self):
         html = self.page_html()
