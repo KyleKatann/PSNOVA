@@ -160,6 +160,7 @@
 12. **ページ固有の静的HTMLまたはゲームデータをruntime JavaScriptで補正してはならない。** 決定的なcontentやmarkupは生HTMLまたはそのgeneratorを直接修正する。既存JavaScriptが提供する本質的なruntime behaviorやsitewide shared componentはこの禁止の対象外だが、page HTML編集の回避策として使用してはならない。
 13. **ユーザーが報告した回帰によって修正仕様が確定した場合、作業手順・安全策・判断基準としてエージェントが実行時に参照する必要がある恒久ルールだけをこのガイドへ記録する。HTML、CSS、JavaScript、ファイル構成その他の実装状態を自動判定できる仕様は、サイト横断であってもregression testへ記録し、`Agent.md`と二重管理しない。** ユーザーが明示的に誤りとした挙動を後から再導入してはならない。
 14. **公開UI文言には、developer-facingなfield名、camelCase、internal identifier、説明のないmixed-language abbreviationではなく、読者向けの明確な日本語を使う。** HP、GP、DLC、PSNOVAなど一般化したゲーム用語やofficial nameは、文脈上標準的で直ちに理解できる場合は使用してよい。
+15. **公開攻略ページには、通常プレイで使用・確認できない残存データ、未使用定義、没データ、内部実装上だけ存在する段階・件数・値を、ユーザーが明示的に要求しない限り掲載しない。** 解析でそれらを確認できても、公開ページでは実際のゲームプレイに利用できる効果・条件・選択肢だけを読者向けに記述する。
 16. **guide pageとdata pageは、通常3文程度の簡潔なreader-facing introductionから始める。** pageが扱う範囲、比較・確認できる内容、情報の実用的な使い方を説明する。placeholder的な1行説明やコピーされたWiki断片を避ける。
 21. **active developmentおよびpublishing branchは `master` のみとする。ユーザーがこのルールを明示的に撤回しない限り、feature branch、work branch、temporary implementation branch、PR branchを作成、切替、使用してはならない。通常の実装、commit、pushは `master` へ直接行う。既存backup/archive branchはread-onlyな歴史的recovery pointとして残してよいが、active workには使用しない。**
 22. **保存資料から現在の公開ページを検証する場合は、読者に有用なgameplay fact、table row/value、note、requirement、exception、acquisition condition、password/code、quest detail、explanatory guide pointを意図せず捨ててはならない。** 完全な重複、保存Wiki/Waybackの外枠、analytics/ads/edit/comment UI、または別途根拠がある事実訂正を除き、有用な内容を保持する。可能ならcurrent public regressionまたはsentinel coverageを追加し、意図しない欠落を自動検知する。
