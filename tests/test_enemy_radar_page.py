@@ -60,7 +60,8 @@ class EnemyRadarPageTests(unittest.TestCase):
         html = self.page_html()
 
         self.assertIn("<th scope=\"col\">「野生の勘」人数</th>", html)
-        self.assertIn("<th scope=\"col\">出現率アップ</th>", html)
+        self.assertIn("<th scope=\"col\">効果</th>", html)
+        self.assertNotIn("<th scope=\"col\">出現率アップ</th>", html)
         self.assertNotIn("<th scope=\"col\">レアエネミー追加判定</th>", html)
         self.assertNotIn("<th scope=\"col\">内部計算</th>", html)
         self.assertNotIn("<th scope=\"col\">基礎3%時の実出現率</th>", html)
