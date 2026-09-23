@@ -52,6 +52,7 @@ class RareDropPageTests(unittest.TestCase):
         self.assertIn("<h3>通常アイテムのドロップ率を上げすぎない</h3>", html)
         self.assertNotIn("<h3>レアだけを狙う場合の配置</h3>", html)
         self.assertIn("<h2>結論：レアドロップ率を最大まで上げる</h2>", html)
+        self.assertNotIn("<h3>バースト加速装置で狙った効果を出しやすくする</h3>", html)
 
     def test_conclusion_covers_all_practical_methods(self):
         html = self.page_html()
