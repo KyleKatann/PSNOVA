@@ -10,28 +10,40 @@ class RareDropPageTests(unittest.TestCase):
     def page_html(self):
         return PAGE.read_text(encoding="utf-8")
 
-    def test_normal_item_drop_rate_does_not_boost_rare_slot(self):
+    def test_normal_item_drop_rate_is_explained_for_players(self):
         html = self.page_html()
 
-        self.assertIn("通常枠に作用する「アイテムドロップ率アップ」はレア枠には作用しません", html)
-        self.assertIn("テンプテーションを付けた武器を持ってもレア枠の当選率は上がらない", html)
-        self.assertIn("レアドロップ率を上げる目的では装備する意味はありません", html)
+        self.assertIn(
+            "レアアイテムだけを狙う場合、アイテムドロップ率を上げてもレアドロップ率そのものは上がりません",
+            html,
+        )
+        self.assertIn("テンプテーションを付けた武器を持つ必要はありません", html)
 
-    def test_gran_burst_item_drop_adds_a_full_lottery(self):
+    def test_gran_burst_item_drop_is_qualitative(self):
         html = self.page_html()
 
-        self.assertIn("追加される1回は通常枠だけを判定するものではありません", html)
-        self.assertIn("レア枠を含む5枠の抽選をもう1回行う効果", html)
-        self.assertIn("追加された抽選でも、最初にレアドロップ率アップ後のレア枠を判定します", html)
-        self.assertIn("追加抽選まで実行されればレアを引ける機会が1回増えます", html)
+        self.assertIn("アイテムドロップアップ</td><td>アイテムが出やすくなる", html)
+        self.assertIn("レアアイテム狙いでも有効", html)
+        self.assertNotIn("ドロップ抽選を1回追加", html)
+        self.assertNotIn("追加される1回", html)
 
-    def test_output_cap_exception_is_explained(self):
+    def test_multiplayer_bonus_does_not_expose_internal_counts(self):
         html = self.page_html()
 
-        self.assertIn("1体の敵から出せる成功アイテム数の上限", html)
-        self.assertIn("必ずレア判定が1回増えるとは限りません", html)
+        self.assertIn("参加するプレイヤーが増えるほどアイテムを入手できる機会が増えます", html)
+        self.assertIn("同行NPCを増やしても、この効果は得られません", html)
+        for hidden_count in ("+2回", "+3回", "+4回", "追加される抽選回数"):
+            with self.subTest(hidden_count=hidden_count):
+                self.assertNotIn(hidden_count, html)
 
-    def test_internal_analysis_identifiers_are_not_public(self):
+    def test_output_limit_is_explained_in_player_facing_language(self):
+        html = self.page_html()
+
+        self.assertIn("敵1体から落ちるアイテム数には上限", html)
+        self.assertNotIn("最大出現個数", html)
+        self.assertNotIn("成功アイテム数", html)
+
+    def test_internal_analysis_terms_are_not_public(self):
         html = self.page_html()
 
         for internal_term in (
@@ -41,6 +53,14 @@ class RareDropPageTests(unittest.TestCase):
             "effect5",
             "param0x77",
             "0x8176D958",
+            "敵固有枠",
+            "通常枠1",
+            "通常枠2",
+            "通常枠3",
+            "通常枠4",
+            "地域ドロップ",
+            "基本判定回数",
+            "ドロップ行",
         ):
             with self.subTest(internal_term=internal_term):
                 self.assertNotIn(internal_term, html)
