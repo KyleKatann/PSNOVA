@@ -19,7 +19,6 @@ class CoreRefineryPageTests(unittest.TestCase):
         html = self.page_html()
 
         self.assertIn("<h1>コア精錬所</h1>", html)
-        self.assertIn("v1.05では実際に建設できるのはLv.5のみ", html)
         self.assertIn("最大5人のクルーを配属できます", html)
 
         for internal_term in (
@@ -41,9 +40,6 @@ class CoreRefineryPageTests(unittest.TestCase):
             with self.subTest(internal_term=internal_term):
                 self.assertNotIn(internal_term, html)
 
-    def test_facility_shape_slots_and_cost(self):
-        html = self.page_html()
-        self.assertIn("<tr><td>Lv.5</td><td>4×4</td><td>5人</td><td>54,000</td></tr>", html)
 
     def test_reducer_values_and_holders(self):
         html = self.page_html()
@@ -68,10 +64,10 @@ class CoreRefineryPageTests(unittest.TestCase):
     def test_chief_expands_skill_evolution_routes(self):
         html = self.page_html()
 
-        self.assertIn("通常状態では242種類の強化ルート", html)
-        self.assertIn("チーフ配属時は331種類", html)
-        self.assertIn("新たに強化元として扱える特殊能力: 89種類追加", html)
-        self.assertIn("消費グランエナジーを直接減らす特徴ではなく", html)
+        self.assertIn("コア特殊能力強化で利用できる強化レシピが増えます", html)
+        self.assertNotIn("通常状態では242種類の強化ルート", html)
+        self.assertNotIn("チーフ配属時は331種類", html)
+        self.assertNotIn("新たに強化元として扱える特殊能力: 89種類追加", html)
 
     def test_chief_holders(self):
         html = self.page_html()
@@ -115,8 +111,8 @@ class CoreRefineryPageTests(unittest.TestCase):
     def test_tables_have_captions(self):
         html = self.page_html()
 
-        self.assertEqual(html.count("<caption>"), 4)
-        self.assertIn("<caption>コア精錬所の施設情報</caption>", html)
+        self.assertEqual(html.count("<caption>"), 3)
+        self.assertNotIn("<caption>コア精錬所の施設情報</caption>", html)
         self.assertIn("<caption>消費グランエナジーを軽減する特徴と所持クルー</caption>", html)
         self.assertIn("<caption>最大70%軽減を実現する配属例</caption>", html)
         self.assertIn("<caption>精錬所チーフを持つクルー</caption>", html)
