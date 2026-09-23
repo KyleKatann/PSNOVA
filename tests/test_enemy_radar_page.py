@@ -60,7 +60,7 @@ class EnemyRadarPageTests(unittest.TestCase):
         html = self.page_html()
 
         self.assertIn("<th scope=\"col\">「野生の勘」人数</th>", html)
-        self.assertIn("<th scope=\"col\">ブースト補正</th>", html)
+        self.assertIn("<th scope=\"col\">出現率アップ</th>", html)
         self.assertNotIn("<th scope=\"col\">レアエネミー追加判定</th>", html)
         self.assertNotIn("<th scope=\"col\">内部計算</th>", html)
         self.assertNotIn("<th scope=\"col\">基礎3%時の実出現率</th>", html)
@@ -68,10 +68,15 @@ class EnemyRadarPageTests(unittest.TestCase):
     def test_effect_explanations_are_reader_facing_and_non_numeric(self):
         html = self.page_html()
 
-        self.assertIn("レアエネミーへの補正は、通常の出現判定とは別の判定に使われます", html)
-        self.assertIn("ブーストエネミーへの補正は、元の出現率を基準に強化されます", html)
-        self.assertIn("最大まで強化しても、すべての敵が必ずレアエネミーやブーストエネミーになるわけではありません", html)
+        self.assertIn("レアエネミーを出やすくする効果です", html)
+        self.assertIn("ブーストエネミーを出やすくする効果です", html)
+        self.assertIn("もともとレアエネミーにならない敵には効果がありません", html)
+        self.assertIn("もともとブーストエネミーにならない敵には効果がありません", html)
+        self.assertIn("最大まで強化しても確定ではない", html)
         for removed_detail in (
+            "通常の出現判定とは別の判定",
+            "元の発生率が設定されていない",
+            "最大時の実効率",
             "×1.50～×7.00",
             "×2.50～×8.00",
             "3% × 8.00 = 24%",
@@ -125,6 +130,8 @@ class EnemyRadarPageTests(unittest.TestCase):
             '<link rel="canonical" href="https://kylekatann.github.io/PSNOVA/pages/enemy-radar.html">',
             html,
         )
+        head = html.split("</head>", 1)[0]
+        self.assertNotIn("配属人数", head)
 
 
 if __name__ == "__main__":
