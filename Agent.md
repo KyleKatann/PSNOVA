@@ -38,7 +38,7 @@
 - `Agent.md`など全文置換が必要な大きなtext fileでは、変更対象外の既存文を手作業で言い換えず、成功済みの連続chunkから取得した原文をそのまま再構成する。commit直後のcompareで意図外の語句変更を1件でも検出した場合は、その語句だけを原文へ戻し、原因に対応する再発防止ルールを具体化してから元作業へ戻る。
 - 操作系エラーごとにincident logを増やすのではなく、原因に対応する再発防止ルールを既存sectionへ統合・具体化してよい。ただし、そのrunでは必ず`Agent.md`に恒久的な改善を1件以上反映する。
 - 外部credential失効やservice outage等で安全な継続が物理的に不可能な場合だけ、原因と必要なユーザー操作を報告する。回復可能な操作系エラーをこの例外へ拡張して停止理由にしてはならない。
-- GitHub Pagesのdeploymentがsuccessでも外部Web取得toolが公開URLを「access不可」と返す場合は、tool側の取得制約と公開site障害を区別する。deployment statusとrepository上の公開HTMLをread-onlyで検証し、外部Web toolの非対応だけをページ破損の根拠にしない。
+- GitHub Pagesの公開URLを外部Web取得toolが「access不可」と返す場合は、tool側の取得制約と公開site障害を区別する。GitHub ActionsやPages workflowのrun statusは確認せず、repository上の公開HTMLその他のread-only情報で検証し、外部Web toolの非対応だけをページ破損の根拠にしない。
 - ローカル解析でPythonの追加moduleや外部CLIを使う前に、`python -c "import ..."` や `command -v` 等のread-only確認で利用可否を確認し、未導入の依存を前提に実行してoperation errorを発生させてはならない。標準toolで足りる場合は追加package前提を置かず、既存標準commandの出力から処理する。
 
 ## 最優先ルール：HEADの停止判定に古い基準を使わない
@@ -155,7 +155,7 @@
 5. 機能変更と無関係なリファクタリングを混在させない。
 6. ユーザーが明示的にURL変更を指示しない限り、`/PSNOVA/` 配下の既存公開URLを維持する。
 7. 変更によって回帰が発生した、または検証中にその他の問題が見つかった場合は、最優先の即時停止ルールに従って直ちに停止する。問題を報告し、ユーザーが新しい指示を出すまで別項目へ進んだり追加修正を試みてはならない。
-8. GitHub Actionsのテストは各コミット後には実行しない。予定した実装バッチを完了してから、最終検証として1回だけ実行する。
+8. **このリポジトリではGitHub Actionsを使用しない。** テスト、検証、CI、`workflow_dispatch`、再実行、artifact取得、workflow runの待機・監視・ポーリングを禁止する。GitHub Pagesがプラットフォーム側で自動実行するbuild/deployment自体は対象外だが、そのrunを作業完了条件にしたり、状態確認のために待機・監視してはならない。検証は既存local worktree、通常のテスト実行、またはrepository contentのread-only確認で行う。既存workflow fileが残っていても実行しない。
 9. このプロジェクトでは画像生成ツールを使用しない。視覚的変更は、リポジトリ内のHTML/CSSと既存の承認済みアセットだけで実装する。JavaScriptは上記最優先ルールにより凍結されている。
 10. 過去資料の確認に `reference/` を再作成・復元したり、依存先として使ってはならない。過去資料の確認が必要な場合は、現存するrepository contentまたはユーザーが明示的に提供した資料を使用する。
 11. migration専用のprogram、workflow、request file、testを再導入してはならない。公開ページの保守はcurrent public sourceと通常の回帰テストを直接更新して行う。
