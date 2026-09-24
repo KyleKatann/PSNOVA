@@ -46,8 +46,21 @@ def test_farming_page_keeps_earning_guidance_and_table():
         assert f"<tr><td>{kind}</td>" in html
 
     assert html.count('<table class="farming-level-table">') == 2
-    for level_band in ("Lv1～30", "Lv31～60", "Lv61～95", "Lv96～114", "Lv115～159", "Lv160～"):
-        assert level_band in html
+    experience_section = html.split("<h2>経験値稼ぎ</h2>", 1)[1].split("<h2>グランエナジー稼ぎ</h2>", 1)[0]
+    for level_band in ("Lv1～30", "Lv31～40", "Lv41～60", "Lv61～89", "Lv90～95", "Lv96～109", "Lv110～114", "Lv115～159", "Lv160～189", "Lv190～229", "Lv230～"):
+        assert level_band in experience_section
+    for quest in (
+        "経験値フィーバー H(DLC)",
+        "ディートアス撃破任務 H",
+        "鋼の荒野殲滅任務 H",
+        "難:炎の高地殲滅任務 VH",
+        "難:炎の高地殲滅任務 SH",
+        "難:グラン水源殲滅任務 SH",
+        "超:ウィルアフォルの巣 XH(検証候補)",
+        "超:尖塔に潜む光線獣 XHなど(検証候補)",
+    ):
+        assert quest in experience_section
+    assert "経験値/分" in experience_section
 
     for internal_token in (
         "questgimmick",
