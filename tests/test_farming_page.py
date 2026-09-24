@@ -50,7 +50,10 @@ def test_farming_page_keeps_earning_guidance_and_table():
 
     fragment_table = html.split('<table class="memory-fragment-table">', 1)[1].split("</table>", 1)[0]
     assert '<colgroup><col style="width:6%"><col style="width:24%"><col style="width:25%"><col style="width:23%"><col style="width:22%"></colgroup>' in fragment_table
-    assert "<br>" not in fragment_table
+    assert "鋼の荒野殲滅任務 N<br>メモリーフラグメント回収<br>メモリーフラグメント集結" in fragment_table
+    assert "レゾルカーネベア討伐<br>マグネトアス討伐" in fragment_table
+    assert "グランエナジー・ラッシュ H / VH<br>メモリーフラグメント回収" in fragment_table
+    assert "メモリーフラグメント回収 VH / SH<br>メモリーフラグメント集結 SH" in fragment_table
 
     style = STYLE.read_text(encoding="utf-8")
     assert '#main .memory-fragment-table {' in style
