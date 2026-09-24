@@ -71,6 +71,14 @@ def test_farming_page_keeps_earning_guidance_and_table():
     assert '#main .memory-fragment-table tbody > tr > :first-child {' in style
     assert "min-width: 0;" in style
 
+    assert "ラッピー系が約6体出現する" in html
+    assert "出現抽選" not in html
+    assert '#main .farming-level-table {' in style
+    assert '.farming-level-table > thead > tr > :nth-child(1) { width: 13%; }' in style
+    assert '.farming-level-table > thead > tr > :nth-child(2) { width: 32%; }' in style
+    assert '.farming-level-table > thead > tr > :nth-child(3) { width: 55%; }' in style
+    assert '.farming-level-table tbody > tr > :nth-child(n+2) {' in style
+
     assert "雪辱の新兵器" not in html
 
 
