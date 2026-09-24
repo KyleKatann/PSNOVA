@@ -22,15 +22,30 @@ def test_farming_page_keeps_earning_guidance_and_table():
         "アルマラッピー・オナー",
         "10000G",
         "ダウジンガー",
-        "メモリーフラグメント変換1～5",
+        "メモリーフラグメント変換1～9",
+        "メモリーフラグメント回収",
+        "メモリーフラグメント集結",
+        "探索隊",
         '<th scope="col">種類</th>',
         '<th scope="col">推奨クエスト</th>',
-        '<th scope="col">理由・補足</th>',
+        '<th scope="col">プロミスオーダー</th>',
+        '<th scope="col">エマージェンシーコール</th>',
+        '<th scope="col">その他</th>',
     ):
         assert token in html
 
-    for kind in "ABCDEFGHI":
+    for kind in "ABCDEFGHIJKLM":
         assert f"<tr><td>{kind}</td>" in html
+
+    for internal_token in (
+        "questgimmick",
+        "promise_registry",
+        "emergency_registry",
+        "title_string_id",
+        "csv総合",
+        "item_4",
+    ):
+        assert internal_token not in html
 
     assert "雪辱の新兵器" not in html
 
