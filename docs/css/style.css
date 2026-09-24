@@ -1631,3 +1631,14 @@ html:has(link[rel="canonical"][href$="/PSNOVA/pages/material.html"]) #main table
 html:has(link[rel="canonical"][href$="/PSNOVA/pages/material.html"]) #main table:has(> thead > tr > :nth-child(5):last-child) > thead > tr > :nth-child(3) { width: 22%; }
 html:has(link[rel="canonical"][href$="/PSNOVA/pages/material.html"]) #main table:has(> thead > tr > :nth-child(5):last-child) > thead > tr > :nth-child(4) { width: 18%; }
 html:has(link[rel="canonical"][href$="/PSNOVA/pages/material.html"]) #main table:has(> thead > tr > :nth-child(5):last-child) > thead > tr > :nth-child(5) { width: 25%; }
+
+/* 稼ぎページのメモリーフラグメント表は、種類列を最小限にして他列へ幅を配分する。 */
+html:has(link[rel="canonical"][href$="/PSNOVA/pages/farming.html"]) #main .memory-fragment-table {
+    table-layout: fixed;
+}
+
+html:has(link[rel="canonical"][href$="/PSNOVA/pages/farming.html"]) #main .memory-fragment-table tbody > tr > :first-child {
+    min-width: 0;
+    white-space: nowrap;
+}
+
