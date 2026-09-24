@@ -56,11 +56,15 @@ def test_farming_page_keeps_earning_guidance_and_table():
         "難:炎の高地殲滅任務 VH",
         "難:炎の高地殲滅任務 SH",
         "難:グラン水源殲滅任務 SH",
-        "超:ウィルアフォルの巣 XH(検証候補)",
-        "超:尖塔に潜む光線獣 XHなど(検証候補)",
+        "超:ウィルアフォルの巣 XH",
+        "超:尖塔に潜む光線獣 XH",
     ):
         assert quest in experience_section
-    assert "経験値/分" in experience_section
+    assert "検証候補" not in experience_section
+    assert "比較候補" not in experience_section
+    assert "主力候補" not in experience_section
+    assert "有力候補" not in experience_section
+    assert "代替候補" not in experience_section
 
     for internal_token in (
         "questgimmick",
