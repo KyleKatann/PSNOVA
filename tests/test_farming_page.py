@@ -22,6 +22,13 @@ def test_farming_page_keeps_earning_guidance_and_table():
         "リーティアのお願い",
         "アルマラッピー・オナー",
         "10000G",
+        "目安レベル帯",
+        "経験値フィーバー N(DLC)",
+        "難:グラン水源殲滅任務 VH",
+        "難:グラン水源殲滅任務 SH",
+        "難:グラン水源殲滅任務 XH",
+        "グランエナジー・ラッシュ VH(DLC)",
+        "経験値23万～50万級",
         "ダウジンガー",
         "メモリーフラグメント変換1～9",
         "メモリーフラグメント回収",
@@ -37,6 +44,10 @@ def test_farming_page_keeps_earning_guidance_and_table():
 
     for kind in "ABCDEFGHIJKLM":
         assert f"<tr><td>{kind}</td>" in html
+
+    assert html.count('<table class="farming-level-table">') == 2
+    for level_band in ("Lv1～30", "Lv31～60", "Lv61～95", "Lv96～114", "Lv115～159", "Lv160～"):
+        assert level_band in html
 
     for internal_token in (
         "questgimmick",
