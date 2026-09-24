@@ -7,6 +7,7 @@ FARMING = DOCS / "pages" / "farming.html"
 FAQ = DOCS / "pages" / "faq.html"
 TRIAL = DOCS / "pages" / "trial-version.html"
 TIPS = DOCS / "pages" / "tips-bugs.html"
+STYLE = DOCS / "css" / "style.css"
 
 
 def test_farming_page_keeps_earning_guidance_and_table():
@@ -46,6 +47,15 @@ def test_farming_page_keeps_earning_guidance_and_table():
         "item_4",
     ):
         assert internal_token not in html
+
+    fragment_table = html.split('<table class="memory-fragment-table">', 1)[1].split("</table>", 1)[0]
+    assert '<colgroup><col style="width:6%"><col style="width:24%"><col style="width:25%"><col style="width:23%"><col style="width:22%"></colgroup>' in fragment_table
+    assert "<br>" not in fragment_table
+
+    style = STYLE.read_text(encoding="utf-8")
+    assert '#main .memory-fragment-table {' in style
+    assert '#main .memory-fragment-table tbody > tr > :first-child {' in style
+    assert "min-width: 0;" in style
 
     assert "雪辱の新兵器" not in html
 
