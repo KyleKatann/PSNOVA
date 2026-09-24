@@ -1642,3 +1642,23 @@ html:has(link[rel="canonical"][href$="/PSNOVA/pages/farming.html"]) #main .memor
     white-space: nowrap;
 }
 
+/* 稼ぎページのレベル帯別表は、推奨手段と説明を読みやすい幅で固定する。 */
+html:has(link[rel="canonical"][href$="/PSNOVA/pages/farming.html"]) #main .farming-level-table {
+    table-layout: fixed;
+}
+
+html:has(link[rel="canonical"][href$="/PSNOVA/pages/farming.html"]) #main .farming-level-table > thead > tr > :nth-child(1) { width: 13%; }
+html:has(link[rel="canonical"][href$="/PSNOVA/pages/farming.html"]) #main .farming-level-table > thead > tr > :nth-child(2) { width: 32%; }
+html:has(link[rel="canonical"][href$="/PSNOVA/pages/farming.html"]) #main .farming-level-table > thead > tr > :nth-child(3) { width: 55%; }
+
+html:has(link[rel="canonical"][href$="/PSNOVA/pages/farming.html"]) #main .farming-level-table tbody > tr > :first-child {
+    min-width: 0;
+    white-space: nowrap;
+}
+
+html:has(link[rel="canonical"][href$="/PSNOVA/pages/farming.html"]) #main .farming-level-table tbody > tr > :nth-child(n+2) {
+    text-align: left;
+    vertical-align: top;
+    padding: 8px 10px;
+}
+
