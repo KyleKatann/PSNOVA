@@ -63,7 +63,7 @@ class GranBurstPageTests(unittest.TestCase):
             html,
         )
 
-    def test_each_weapon_shows_only_the_highest_gauge_pa_name(self):
+    def test_all_weapon_types_are_present_and_ga_weapons_show_the_highest_gauge_pa(self):
         html = self.page_html()
 
         expected = (
@@ -73,17 +73,22 @@ class GranBurstPageTests(unittest.TestCase):
             ("ナックル", "ヘルクラッシュ"),
             ("アサルトライフル", "リフレクトイージス"),
             ("ツインマシンガン", "エルダーリベリオン"),
-            ("パイル", "パイルストーム"),
+            ("ロッド", "なし（テクニック）"),
+            ("タリス", "なし（テクニック）"),
+            ("ウォンド", "なし（テクニック）"),
             ("ヘイロウ", "レゾナンスキャノン"),
+            ("パイル", "パイルストーム"),
         )
         for weapon, pa in expected:
             with self.subTest(weapon=weapon):
                 self.assertIn(f"<tr><td>{weapon}</td><td>{pa}</td></tr>", html)
 
         self.assertIn(
-            "<caption>武器ごとに一回あたりのゲージ増加量が最も大きいグランアーツ</caption>",
+            "<caption>全武器種のグランアーツ確認表</caption>",
             html,
         )
+        self.assertIn("全11武器種を下表にまとめ", html)
+        self.assertIn("ロッド、タリス、ウォンドにはグランアーツがなく、テクニックを使用します", html)
         self.assertNotIn("<th scope=\"col\">倍率</th>", html)
         self.assertNotIn("ゲージ倍率の高い", html)
         self.assertNotIn("ゲージ補正が最も高い", html)
