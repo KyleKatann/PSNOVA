@@ -12,20 +12,41 @@ class GranBurstPageTests(unittest.TestCase):
     def page_html(self):
         return PAGE.read_text(encoding="utf-8")
 
-    def test_page_explains_chain_and_normal_attack_behavior(self):
+    def test_page_explains_mechanics_without_exposing_internal_values(self):
         html = self.page_html()
 
         self.assertIn("<h1>グランバーストの仕組み</h1>", html)
         self.assertIn("チェインが高いほどゲージが増えやすい", html)
-        self.assertIn("<tr><td>100～139</td><td>1.0</td></tr>", html)
-        self.assertIn("<tr><td>140以上</td><td>1.1</td></tr>", html)
-        self.assertIn("139回で99.0、140回目で100.1", html)
+        self.assertIn(
+            "攻撃を当ててチェインを伸ばすほど、その後の攻撃でグランバーストゲージが増えやすくなります",
+            html,
+        )
         self.assertIn(
             "攻撃力、実際に与えたダメージ、弱点への命中、属性弱点、クリティカルの有無では増えません",
             html,
         )
+        self.assertIn(
+            "グランアーツは技ごとにグランバーストゲージの伸びやすさが異なります",
+            html,
+        )
 
-    def test_twin_machinegun_is_presented_as_normal_attack_candidate(self):
+        for removed_value in (
+            "100～139",
+            "140以上",
+            "139回で99.0",
+            "140回目で100.1",
+            ">2.32<",
+            ">2.01<",
+            ">1.79<",
+            ">1.34<",
+            ">1.02<",
+            ">1.00<",
+            ">0.55<",
+        ):
+            with self.subTest(removed_value=removed_value):
+                self.assertNotIn(removed_value, html)
+
+    def test_normal_attack_table_only_presents_hit_count_data(self):
         html = self.page_html()
 
         self.assertIn("ツインマシンガンは4回・4回・5回の合計13ヒット", html)
@@ -33,26 +54,39 @@ class GranBurstPageTests(unittest.TestCase):
             "<tr><td>ツインマシンガン</td><td>4</td><td>4</td><td>5</td><td>13</td></tr>",
             html,
         )
-        self.assertIn("通常攻撃だけでゲージをためる用途では、ツインマシンガンが最有力です", html)
-        self.assertIn("見た目のヒット数すべてが個別のゲージ加算になるとは限りません", html)
+        self.assertIn(
+            "通常攻撃だけでゲージをためる用途では、ツインマシンガンが最有力です",
+            html,
+        )
+        self.assertIn(
+            "見た目のヒット数すべてが個別のゲージ加算になるとは限りません",
+            html,
+        )
 
-    def test_tmg_gran_arts_burst_multipliers_are_reader_facing(self):
+    def test_each_weapon_shows_only_the_highest_gauge_pa_name(self):
         html = self.page_html()
 
         expected = (
-            ("エルダーリベリオン", "2.32"),
-            ("ダンシングスイープ", "2.01"),
-            ("インフィニティファイア", "1.79"),
-            ("リバースタップ", "1.34"),
-            ("サテライトエイム", "1.02"),
-            ("エリアルシューティング", "1.00"),
-            ("バレットスコール", "0.55"),
+            ("ソード", "オーバーエンド"),
+            ("パルチザン", "オーバースライサー"),
+            ("ダブルセイバー", "イリュージョンレイヴ"),
+            ("ナックル", "ヘルクラッシュ"),
+            ("アサルトライフル", "リフレクトイージス"),
+            ("ツインマシンガン", "エルダーリベリオン"),
+            ("パイル", "パイルストーム"),
+            ("ヘイロウ", "レゾナンスキャノン"),
         )
-        for name, multiplier in expected:
-            with self.subTest(name=name):
-                self.assertIn(f"<tr><td>{name}</td><td>{multiplier}</td></tr>", html)
+        for weapon, pa in expected:
+            with self.subTest(weapon=weapon):
+                self.assertIn(f"<tr><td>{weapon}</td><td>{pa}</td></tr>", html)
 
-        self.assertIn("倍率だけで「最速の技」とは決まりません", html)
+        self.assertIn(
+            "<caption>武器ごとにグランバーストゲージが最も伸びやすいグランアーツ</caption>",
+            html,
+        )
+        self.assertNotIn("<th scope=\"col\">倍率</th>", html)
+        self.assertNotIn("ゲージ倍率の高い", html)
+        self.assertNotIn("ゲージ補正が最も高い", html)
 
     def test_internal_analysis_information_is_not_exposed(self):
         html = self.page_html()
