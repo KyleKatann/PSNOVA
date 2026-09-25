@@ -8,6 +8,7 @@ FAQ = DOCS / "pages" / "faq.html"
 TRIAL = DOCS / "pages" / "trial-version.html"
 TIPS = DOCS / "pages" / "tips-bugs.html"
 STYLE = DOCS / "css" / "style.css"
+SIDEBAR = DOCS / "js" / "sidebar.js"
 
 
 def test_farming_page_keeps_earning_guidance_and_table():
@@ -112,6 +113,9 @@ def test_farming_page_keeps_earning_guidance_and_table():
     assert '.farming-level-table > thead > tr > :nth-child(2) { width: 32%; }' in style
     assert '.farming-level-table > thead > tr > :nth-child(3) { width: 55%; }' in style
     assert '.farming-level-table tbody > tr > :nth-child(n+2) {' in style
+
+    sidebar = SIDEBAR.read_text(encoding="utf-8")
+    assert '<a href="/PSNOVA/pages/farming.html">稼ぎ・アイテム管理</a>' in sidebar
 
     assert "雪辱の新兵器" not in html
 
