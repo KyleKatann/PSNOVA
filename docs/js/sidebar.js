@@ -10,7 +10,7 @@ var html =`
     <li><p>攻略</p></li>
     <li><a href="/PSNOVA/pages/walkthrough.html">攻略チャート</a></li>
     <li><a href="/PSNOVA/pages/farming.html">稼ぎ・アイテム管理</a></li>
-    <li><a href="/PSNOVA/pages/gran-burst.html">グランバーストゲージ</a></li>
+    <li><a href="/PSNOVA/pages/gran-burst.html">グランバーストの仕組み</a></li>
     <li><a href="/PSNOVA/pages/friendship.html">友好度の上げ方</a></li>
     <li><a href="/PSNOVA/pages/vh-xh.html">VH・XH攻略</a></li>
     <li><a href="/PSNOVA/pages/rare-drop.html">レアドロップ効率化</a></li>
