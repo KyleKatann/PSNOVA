@@ -14,10 +14,13 @@ def test_farming_page_keeps_earning_guidance_and_table():
     html = FARMING.read_text(encoding="utf-8")
 
     for token in (
-        "<h1>稼ぎ</h1>",
+        "<title>PSNOVA攻略サイト - 稼ぎ・アイテム管理</title>",
+        "<h1>稼ぎ・アイテム管理</h1>",
         "<h2>経験値稼ぎ</h2>",
         "<h2>グランエナジー稼ぎ</h2>",
+        "<h2>グランピース稼ぎ</h2>",
         "<h2>メモリーフラグメント稼ぎ</h2>",
+        "<h2>コアの整理</h2>",
         "難:グラン水源殲滅任務",
         "リーティアのお願い",
         "アルマラッピー・オナー",
@@ -46,6 +49,14 @@ def test_farming_page_keeps_earning_guidance_and_table():
         assert f"<tr><td>{kind}</td>" in html
 
     assert html.count('<table class="farming-level-table">') == 2
+    gran_piece_section = html.split("<h2>グランピース稼ぎ</h2>", 1)[1].split("<h2>メモリーフラグメント稼ぎ</h2>", 1)[0]
+    for token in ("難：リベルゲンテ決戦", "VH", "敵Lv98", "1エリアだけで完結", "複数の車両", "グランピースが共通ドロップ"):
+        assert token in gran_piece_section
+
+    core_section = html.split("<h2>コアの整理</h2>", 1)[1].split("</section>", 1)[0]
+    for token in ("コア精錬所", "コア強化", "同じコア3個", "5個をまとめて使う", "精錬所チーフ", "1個ずつ捨てる"):
+        assert token in core_section
+
     experience_section = html.split("<h2>経験値稼ぎ</h2>", 1)[1].split("<h2>グランエナジー稼ぎ</h2>", 1)[0]
     for level_band in ("Lv1～30", "Lv31～40", "Lv41～60", "Lv61～89", "Lv90～95", "Lv96～109", "Lv110～114", "Lv115～159", "Lv160～189", "Lv190～229", "Lv230～"):
         assert level_band in experience_section
@@ -73,6 +84,12 @@ def test_farming_page_keeps_earning_guidance_and_table():
         "title_string_id",
         "csv総合",
         "item_4",
+        "q100875",
+        "drop_common",
+        "SkillEvolve",
+        "stage_registry",
+        "stage_link",
+        "BossA",
     ):
         assert internal_token not in html
 
