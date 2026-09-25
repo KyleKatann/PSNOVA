@@ -44,6 +44,7 @@
 - GitHub Pagesの公開URLを外部Web取得toolが「access不可」と返す場合は、tool側の取得制約と公開site障害を区別する。GitHub ActionsやPages workflowのrun statusは確認せず、repository上の公開HTMLその他のread-only情報で検証し、外部Web toolの非対応だけをページ破損の根拠にしない。
 - ローカル解析でPythonの追加moduleや外部CLIを使う前に、`python -c "import ..."` や `command -v` 等のread-only確認で利用可否を確認し、未導入の依存を前提に実行してoperation errorを発生させてはならない。標準toolで足りる場合は追加package前提を置かず、既存標準commandの出力から処理する。
 - 過去turnや過去sessionで作成した一時展開directory・中間生成物・mount pathが現在も残っていると仮定してはならない。ローカル解析で既存pathを再利用する前に`test -e`、`find`、directory listing等のread-only確認で現在の実在を確認し、存在しない場合は現在存在する元fileから必要範囲だけ再生成する。
+- 数GB級ZIPや多数fileを含むarchiveへ`zipgrep`等で全体横断検索してはならない。先に`unzip -l`等で候補pathを絞り、必要なfileだけを`unzip -p`または限定展開して検索する。
 
 ## 最優先ルール：HEADの停止判定に古い基準を使わない
 
