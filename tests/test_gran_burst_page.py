@@ -15,7 +15,7 @@ class GranBurstPageTests(unittest.TestCase):
     def test_page_explains_chain_and_normal_attack_behavior(self):
         html = self.page_html()
 
-        self.assertIn("<h1>グランバーストゲージ</h1>", html)
+        self.assertIn("<h1>グランバーストの仕組み</h1>", html)
         self.assertIn("チェインが高いほどゲージが増えやすい", html)
         self.assertIn("<tr><td>100～139</td><td>1.0</td></tr>", html)
         self.assertIn("<tr><td>140以上</td><td>1.1</td></tr>", html)
@@ -81,13 +81,13 @@ class GranBurstPageTests(unittest.TestCase):
         sidebar = SIDEBAR.read_text(encoding="utf-8")
         sitemap = SITEMAP.read_text(encoding="utf-8")
 
-        self.assertIn("<title>PSNOVA攻略サイト - グランバーストゲージ</title>", html)
+        self.assertIn("<title>PSNOVA攻略サイト - グランバーストの仕組み</title>", html)
         self.assertIn(
             '<link rel="canonical" href="https://kylekatann.github.io/PSNOVA/pages/gran-burst.html">',
             html,
         )
         self.assertIn(
-            f'<li><a href="{page_path}">グランバーストゲージ</a></li>',
+            f'<li><a href="{page_path}">グランバーストの仕組み</a></li>',
             sidebar,
         )
         self.assertIn(f"https://kylekatann.github.io{page_path}", sitemap)
