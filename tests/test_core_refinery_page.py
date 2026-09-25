@@ -1,3 +1,4 @@
+import re
 import unittest
 from pathlib import Path
 
@@ -57,6 +58,49 @@ class CoreRefineryPageTests(unittest.TestCase):
         self.assertIn("<tr><td>リューフィ</td><td>-</td></tr>", html)
         self.assertNotIn("<h2>精錬所チーフの所持者</h2>", html)
 
+    def test_all_core_evolve_recipes_are_published(self):
+        html = self.page_html()
+        start = html.index("<h2>全強化レシピ</h2>")
+        end = html.index("<h2>解放条件</h2>", start)
+        section = html[start:end]
+
+        rows = re.findall(
+            r"<tr><td>(.*?)</td><td>(.*?)</td><td>(.*?)</td></tr>",
+            section,
+        )
+
+        self.assertEqual(331, len(rows))
+        self.assertEqual(242, sum(normal != "-" for _, normal, _ in rows))
+        self.assertTrue(all(chief != "-" for _, _, chief in rows))
+        self.assertEqual(
+            89,
+            sum(normal == "-" and chief != "-" for _, normal, chief in rows),
+        )
+        self.assertEqual(
+            56,
+            sum(
+                normal != "-" and normal != chief
+                for _, normal, chief in rows
+            ),
+        )
+
+        self.assertIn(
+            ("パワーⅠ", "×3：パワーⅡ", "×3：パワーⅡ"),
+            rows,
+        )
+        self.assertIn(
+            ("パワーⅤ", "×5：シュートⅤ", "×3：パワーⅥ"),
+            rows,
+        )
+        self.assertIn(
+            ("パワーⅥ", "-", "×5：シュートⅥ"),
+            rows,
+        )
+        self.assertIn(
+            ("対グラン中毒", "-", "×5：ハイパーバースト"),
+            rows,
+        )
+
     def test_unlock_promise(self):
         html = self.page_html()
 
@@ -92,11 +136,12 @@ class CoreRefineryPageTests(unittest.TestCase):
     def test_tables_have_captions(self):
         html = self.page_html()
 
-        self.assertEqual(html.count("<caption>"), 3)
+        self.assertEqual(html.count("<caption>"), 4)
         self.assertNotIn("<caption>コア精錬所の施設情報</caption>", html)
         self.assertIn("<caption>消費グランエナジーを軽減する特徴と所持クルー</caption>", html)
         self.assertIn("<caption>最大70%軽減を実現する配属例</caption>", html)
         self.assertIn("<caption>精錬所チーフを持つクルー</caption>", html)
+        self.assertIn("<caption>コア特殊能力強化の全レシピ</caption>", html)
 
     def test_public_metadata(self):
         html = self.page_html()
