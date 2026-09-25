@@ -63,6 +63,47 @@ class GranBurstPageTests(unittest.TestCase):
             html,
         )
 
+    def test_weapon_order_is_consistent_across_tables(self):
+        html = self.page_html()
+
+        hit_table = html.split("<caption>通常攻撃3段のヒット数</caption>", 1)[1].split("</table>", 1)[0]
+        pa_table = html.split("<caption>全武器種のグランアーツ確認表</caption>", 1)[1].split("</table>", 1)[0]
+
+        canonical_order = (
+            "ソード",
+            "パルチザン",
+            "ダブルセイバー",
+            "ナックル",
+            "アサルトライフル",
+            "ツインマシンガン",
+            "ロッド",
+            "タリス",
+            "ウォンド",
+            "ヘイロウ",
+            "パイル",
+        )
+
+        hit_order = tuple(
+            weapon
+            for weapon in canonical_order
+            if f"<tr><td>{weapon}</td>" in hit_table
+        )
+        self.assertEqual(
+            (
+                "ソード",
+                "パルチザン",
+                "ダブルセイバー",
+                "ナックル",
+                "ツインマシンガン",
+                "ロッド",
+                "パイル",
+            ),
+            hit_order,
+        )
+
+        positions = [pa_table.index(f"<tr><td>{weapon}</td>") for weapon in canonical_order]
+        self.assertEqual(sorted(positions), positions)
+
     def test_all_weapon_types_are_present_and_ga_weapons_show_the_highest_gauge_pa(self):
         html = self.page_html()
 
