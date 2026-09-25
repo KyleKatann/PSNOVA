@@ -81,7 +81,7 @@ class GranBurstPageTests(unittest.TestCase):
                 self.assertIn(f"<tr><td>{weapon}</td><td>{pa}</td></tr>", html)
 
         self.assertIn(
-            "<caption>武器ごとにグランバーストゲージが最も伸びやすいグランアーツ</caption>",
+            "<caption>武器ごとに一回あたりのゲージ増加量が最も大きいグランアーツ</caption>",
             html,
         )
         self.assertNotIn("<th scope=\"col\">倍率</th>", html)
