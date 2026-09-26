@@ -55,7 +55,6 @@ class GranBurstPageTests(unittest.TestCase):
             ("ダブルセイバー", "2", "2", "3", "7"),
             ("ナックル", "1", "1", "1", "3"),
             ("アサルトライフル", "1", "1", "1", "3"),
-            ("ツインマシンガン", "4", "4", "5", "13"),
             ("ロッド", "1", "1", "1", "3"),
             ("タリス", "1", "1", "1", "3"),
             ("ウォンド", "1", "1", "1", "3"),
@@ -69,6 +68,10 @@ class GranBurstPageTests(unittest.TestCase):
                     html,
                 )
 
+        self.assertIn(
+            '<tr class="burst-highlight-row" style="font-weight:700;"><td>ツインマシンガン</td><td>4</td><td>4</td><td>5</td><td>13</td></tr>',
+            html,
+        )
         self.assertIn("ツインマシンガンは4回・4回・5回の合計13ヒット", html)
         self.assertIn(
             "アサルトライフルは射撃方式によって通常攻撃の構造が変わります",
@@ -107,10 +110,10 @@ class GranBurstPageTests(unittest.TestCase):
             "パイル",
         )
 
-        hit_positions = [hit_table.index(f"<tr><td>{weapon}</td>") for weapon in canonical_order]
+        hit_positions = [hit_table.index(f"<td>{weapon}</td>") for weapon in canonical_order]
         self.assertEqual(sorted(hit_positions), hit_positions)
 
-        pa_positions = [pa_table.index(f"<tr><td>{weapon}</td>") for weapon in canonical_order]
+        pa_positions = [pa_table.index(f"<td>{weapon}</td>") for weapon in canonical_order]
         self.assertEqual(sorted(pa_positions), pa_positions)
 
     def test_all_weapon_types_are_present_and_ga_weapons_show_the_highest_gauge_pa(self):
@@ -122,7 +125,6 @@ class GranBurstPageTests(unittest.TestCase):
             ("ダブルセイバー", "イリュージョンレイヴ"),
             ("ナックル", "ヘルクラッシュ"),
             ("アサルトライフル", "リフレクトイージス"),
-            ("ツインマシンガン", "エルダーリベリオン"),
             ("ロッド", "なし（テクニック）"),
             ("タリス", "なし（テクニック）"),
             ("ウォンド", "なし（テクニック）"),
@@ -134,6 +136,10 @@ class GranBurstPageTests(unittest.TestCase):
                 self.assertIn(f"<tr><td>{weapon}</td><td>{pa}</td></tr>", html)
 
         self.assertIn(
+            '<tr class="burst-highlight-row" style="font-weight:700;"><td>ツインマシンガン</td><td>エルダーリベリオン</td></tr>',
+            html,
+        )
+        self.assertIn(
             "<caption>全武器種のグランアーツ確認表</caption>",
             html,
         )
@@ -142,6 +148,12 @@ class GranBurstPageTests(unittest.TestCase):
         self.assertNotIn("<th scope=\"col\">倍率</th>", html)
         self.assertNotIn("ゲージ倍率の高い", html)
         self.assertNotIn("ゲージ補正が最も高い", html)
+
+    def test_only_twin_machinegun_rows_are_highlighted(self):
+        html = self.page_html()
+
+        self.assertEqual(2, html.count('class="burst-highlight-row"'))
+        self.assertEqual(2, html.count('class="burst-highlight-row" style="font-weight:700;"><td>ツインマシンガン</td>'))
 
     def test_internal_analysis_information_is_not_exposed(self):
         html = self.page_html()
