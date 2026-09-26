@@ -146,7 +146,7 @@ class GranBurstPageTests(unittest.TestCase):
             html,
         )
         self.assertIn(
-            "<caption>全11武器種のグランアーツ確認表</caption>",
+            "<caption>全武器種のグランアーツ確認表</caption>",
             html,
         )
         self.assertIn("全11武器種を下表にまとめ", html)
