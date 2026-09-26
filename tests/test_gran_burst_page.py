@@ -49,6 +49,12 @@ class GranBurstPageTests(unittest.TestCase):
     def test_normal_attack_table_only_presents_hit_count_data(self):
         html = self.page_html()
 
+        self.assertIn('<table class="burst-hit-table">', html)
+        self.assertIn(
+            "#main .burst-hit-table tbody td:nth-child(2) { text-align: center !important; }",
+            html,
+        )
+
         expected = (
             ("ソード", "1", "1", "1", "3"),
             ("パルチザン", "1", "1", "1", "3"),
@@ -140,7 +146,7 @@ class GranBurstPageTests(unittest.TestCase):
             html,
         )
         self.assertIn(
-            "<caption>全武器種のグランアーツ確認表</caption>",
+            "<caption>全11武器種のグランアーツ確認表</caption>",
             html,
         )
         self.assertIn("全11武器種を下表にまとめ", html)
