@@ -49,13 +49,37 @@ class GranBurstPageTests(unittest.TestCase):
     def test_normal_attack_table_only_presents_hit_count_data(self):
         html = self.page_html()
 
+        expected = (
+            ("ソード", "1", "1", "1", "3"),
+            ("パルチザン", "1", "1", "1", "3"),
+            ("ダブルセイバー", "2", "2", "3", "7"),
+            ("ナックル", "1", "1", "1", "3"),
+            ("アサルトライフル", "1", "1", "1", "3"),
+            ("ツインマシンガン", "4", "4", "5", "13"),
+            ("ロッド", "1", "1", "1", "3"),
+            ("タリス", "1", "1", "1", "3"),
+            ("ウォンド", "1", "1", "1", "3"),
+            ("ヘイロウ", "1", "1", "1", "3"),
+            ("パイル", "1", "1", "2", "4"),
+        )
+        for weapon, first, second, third, total in expected:
+            with self.subTest(weapon=weapon):
+                self.assertIn(
+                    f"<tr><td>{weapon}</td><td>{first}</td><td>{second}</td><td>{third}</td><td>{total}</td></tr>",
+                    html,
+                )
+
         self.assertIn("ツインマシンガンは4回・4回・5回の合計13ヒット", html)
         self.assertIn(
-            "<tr><td>ツインマシンガン</td><td>4</td><td>4</td><td>5</td><td>13</td></tr>",
+            "アサルトライフルは射撃方式によって通常攻撃の構造が変わります",
             html,
         )
         self.assertIn(
-            "通常攻撃だけでゲージをためる用途では、ツインマシンガンが最有力です",
+            "フルオートは連続射撃のため3段合計には含めていません",
+            html,
+        )
+        self.assertIn(
+            "3段式の通常攻撃ではツインマシンガンが最もヒット数を稼げます",
             html,
         )
         self.assertIn(
@@ -83,26 +107,11 @@ class GranBurstPageTests(unittest.TestCase):
             "パイル",
         )
 
-        hit_order = tuple(
-            weapon
-            for weapon in canonical_order
-            if f"<tr><td>{weapon}</td>" in hit_table
-        )
-        self.assertEqual(
-            (
-                "ソード",
-                "パルチザン",
-                "ダブルセイバー",
-                "ナックル",
-                "ツインマシンガン",
-                "ロッド",
-                "パイル",
-            ),
-            hit_order,
-        )
+        hit_positions = [hit_table.index(f"<tr><td>{weapon}</td>") for weapon in canonical_order]
+        self.assertEqual(sorted(hit_positions), hit_positions)
 
-        positions = [pa_table.index(f"<tr><td>{weapon}</td>") for weapon in canonical_order]
-        self.assertEqual(sorted(positions), positions)
+        pa_positions = [pa_table.index(f"<tr><td>{weapon}</td>") for weapon in canonical_order]
+        self.assertEqual(sorted(pa_positions), pa_positions)
 
     def test_all_weapon_types_are_present_and_ga_weapons_show_the_highest_gauge_pa(self):
         html = self.page_html()
