@@ -155,6 +155,16 @@ class GranBurstPageTests(unittest.TestCase):
         self.assertNotIn("ゲージ倍率の高い", html)
         self.assertNotIn("ゲージ補正が最も高い", html)
 
+    def test_pile_section_explains_player_facing_limits_and_burst_benefit(self):
+        html = self.page_html()
+
+        self.assertIn("杭が多いほどグランバーストゲージをためやすい", html)
+        self.assertIn("刺さっている杭の数に応じてグランバーストゲージの増加量が有利になります", html)
+        self.assertIn("ギガンテス1体につき最大8本", html)
+        self.assertIn("同じステージ全体では最大20本", html)
+        self.assertIn("プレイヤー、NPC、マルチプレイ中の仲間が刺した杭は同じ枠として数えられます", html)
+        self.assertIn("ギガンテスに杭が4本刺さると杭を増やす行動から別の行動へ切り替える設定が基本です", html)
+
     def test_only_twin_machinegun_rows_are_highlighted(self):
         html = self.page_html()
 
