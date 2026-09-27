@@ -137,6 +137,16 @@ def test_quest_pages_keep_detail_sentinels():
     assert "制限時間15分" in additional
 
 
+def test_hell_date_branching_is_documented_as_fully_random():
+    great_spire = page_text("great-spire.html")
+    statement = (
+        "このクエストの分岐先は完全にランダムで決まり、"
+        "進み方や撃破順で狙って行き先を調整することはできない。"
+    )
+
+    assert statement in great_spire
+
+
 def test_quest_pages_are_registered_in_sidebar_and_sitemap():
     sidebar = (ROOT / "docs" / "js" / "sidebar.js").read_text(encoding="utf-8")
     sitemap = (ROOT / "docs" / "sitemap.xml").read_text(encoding="utf-8")
