@@ -45,6 +45,7 @@
 - ローカル解析でPythonの追加moduleや外部CLIを使う前に、`python -c "import ..."` や `command -v` 等のread-only確認で利用可否を確認し、未導入の依存を前提に実行してoperation errorを発生させてはならない。標準toolで足りる場合は追加package前提を置かず、既存標準commandの出力から処理する。
 - この実行環境のcontainer / Pythonから外部networkへ直接接続できると仮定しない。GitHub上の非公開資産は接続済みGitHub connectorで取得し、container側の`curl`・`urllib`・`requests`等を代替取得経路として試さない。
 - 複数行のad-hoc Pythonを実行する場合は、構文が長い集計処理を直接heredoc実行へ流し込まず、一時`.py`へ書いて`python -m py_compile`で構文確認してから実行する。単純な構文ミスをoperation errorとして発生させない。
+- ローカルPython処理が多数のRMD/font atlas復号などで長時間化する場合、同一の高コスト復号をmessageごとに繰り返さない。fingerprintやatlasなど再利用可能な結果をcacheし、tool実行上限内で完了する粒度へ分割してから実行する。
 - `bash -lc`でglobを使う`for`文へstderr redirectを混在させる場合、word list直後へ`2>/dev/null`を置かない。必要なら`shopt -s nullglob`を使うか、対象一覧を`find`等で先に確定してからloopし、shell構文を実行前に単純化する。
 - 過去turnや過去sessionで作成した一時展開directory・中間生成物・mount pathが現在も残っていると仮定してはならない。ローカル解析で既存pathを再利用する前に`test -e`、`find`、directory listing等のread-only確認で現在の実在を確認し、存在しない場合は現在存在する元fileから必要範囲だけ再生成する。
 - 数GB級ZIPや多数fileを含むarchiveへ`zipgrep`等で全体横断検索してはならない。先に`unzip -l`等で候補pathを絞り、必要なfileだけを`unzip -p`または限定展開して検索する。
