@@ -162,15 +162,7 @@ class HiddenDropTableTest(unittest.TestCase):
     def test_quest_column_is_three_column_left_aligned_and_compact(self):
         self.assertIn('<table id="drop-table">', self.html)
         self.assertIn(
-            '#drop-table tbody tr.enemy-source td:last-child,',
-            self.html,
-        )
-        self.assertIn(
-            '#drop-table tbody tr.field-source td:last-child,',
-            self.html,
-        )
-        self.assertIn(
-            '#drop-table tbody tr.quest-reward-source td:last-child {',
+            '#drop-table tbody td:last-child {',
             self.html,
         )
         for css in (
@@ -185,6 +177,21 @@ class HiddenDropTableTest(unittest.TestCase):
             '<colgroup><col style="width:24%"><col style="width:22%"><col style="width:54%"></colgroup>',
             self.html,
         )
+
+    def test_all_displayed_acquisition_rows_have_detail(self):
+        rows = re.findall(r'<tr(?: class="([^"]+)")?>(.*?)</tr>', self.html, re.S)
+        checked = 0
+        for _cls, row in rows:
+            cells = re.findall(r"<td[^>]*>(.*?)</td>", row, re.S)
+            if not cells:
+                continue
+            detail = re.sub(r"<br\s*/?>", "\n", cells[-1])
+            detail = re.sub(r"<[^>]+>", "", detail).strip()
+            self.assertTrue(detail)
+            self.assertNotEqual(detail, "—")
+            checked += 1
+        self.assertGreater(checked, 0)
+        self.assertNotIn("<td>—</td>", self.html)
 
     def test_burst_part_internal_and_javascript_markers_are_absent(self):
         for marker in (
