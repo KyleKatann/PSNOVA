@@ -69,6 +69,69 @@ class HiddenDropTableTest(unittest.TestCase):
             self.assertTrue(quest)
             self.assertNotEqual(quest, "—")
 
+    def test_field_drops_are_aggregated_into_quest_column(self):
+        rows = re.findall(r'<tr(?: class="([^"]+)")?>(.*?)</tr>', self.html, re.S)
+        field_rows = 0
+        for cls, row in rows:
+            cells = re.findall(r"<td[^>]*>(.*?)</td>", row, re.S)
+            if not cells:
+                continue
+            source = re.sub(r"<[^>]+>", "", cells[-2]).strip()
+            quest = re.sub(r"<br\s*/?>", "\n", cells[-1])
+            quest = re.sub(r"<[^>]+>", "", quest).strip()
+            if cls == "field-source":
+                field_rows += 1
+                self.assertEqual(source, "フィールドドロップ")
+                self.assertTrue(quest)
+                self.assertNotEqual(quest, "—")
+            self.assertFalse(source.endswith(" フィールド"))
+        self.assertGreater(field_rows, 0)
+
+    def test_acquisition_types_are_grouped_in_fixed_order_per_item(self):
+        rows = re.findall(r'<tr(?: class="([^"]+)")?>(.*?)</tr>', self.html, re.S)
+
+        def rank(cls, source):
+            if cls == "enemy-source":
+                return 0
+            if cls == "field-source":
+                return 1
+            if source.endswith(" エリアドロップ"):
+                return 2
+            if source == "共通ドロップ":
+                return 3
+            if source.endswith(" 報酬") and source not in (
+                "エマージェンシー報酬",
+                "プロミスオーダー報酬",
+                "探索隊報酬",
+            ):
+                return 4
+            if source == "エマージェンシー報酬":
+                return 5
+            if source == "プロミスオーダー報酬":
+                return 6
+            if source == "探索隊報酬":
+                return 7
+            if source == "イベント入手":
+                return 8
+            return 9
+
+        current = []
+        groups = 0
+        for cls, row in rows:
+            cells = re.findall(r"<td[^>]*>(.*?)</td>", row, re.S)
+            if not cells:
+                continue
+            if len(cells) == 3:
+                if current:
+                    self.assertEqual(current, sorted(current))
+                current = []
+                groups += 1
+            source = re.sub(r"<[^>]+>", "", cells[-2]).strip()
+            current.append(rank(cls, source))
+        if current:
+            self.assertEqual(current, sorted(current))
+        self.assertEqual(groups, 820)
+
     def test_quest_column_is_three_column_left_aligned_and_compact(self):
         self.assertIn('<table id="drop-table">', self.html)
         self.assertIn(
