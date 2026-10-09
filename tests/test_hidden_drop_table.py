@@ -26,13 +26,14 @@ class HiddenDropTableTest(unittest.TestCase):
             (ROOT / "docs" / "sitemap.xml").read_text(encoding="utf-8"),
         )
 
-    def test_table_is_item_centric(self):
-        for heading in ("アイテム", "入手元", "クエスト", "敵Lv / 基礎率"):
+    def test_table_is_all_item_centric_three_column_structure(self):
+        for heading in ("アイテム", "入手元", "クエスト"):
             self.assertIn(f'<th scope="col">{heading}</th>', self.html)
 
         for retired_heading in (
             "ギガンテス",
             "敵Lv",
+            "敵Lv / 基礎率",
             "レア枠",
             "通常枠1",
             "通常枠2",
@@ -42,25 +43,33 @@ class HiddenDropTableTest(unittest.TestCase):
         ):
             self.assertNotIn(f'<th scope="col">{retired_heading}</th>', self.html)
 
-    def test_enemy_sources_use_enemy_names_without_category_wording(self):
+        item_cells = re.findall(r'<td rowspan="\d+">([^<]+)</td>', self.html)
+        self.assertEqual(len(item_cells), 820)
+        self.assertEqual(len(set(item_cells)), 820)
+        self.assertIn("収録アイテム：820種類", self.html)
+
+    def test_enemy_source_rows_have_quests_and_plain_enemy_names(self):
         self.assertNotIn("モンスタードロップ", self.html)
 
-        tbody = re.search(r"<tbody>(.*?)</tbody>", self.html, re.S)
-        self.assertIsNotNone(tbody)
-        rows = re.findall(r"<tr>(.*?)</tr>", tbody.group(1), re.S)
-        self.assertGreater(len(rows), 300)
+        rows = re.findall(
+            r'<tr class="enemy-source">(.*?)</tr>',
+            self.html,
+            re.S,
+        )
+        self.assertGreater(len(rows), 0)
 
         for row in rows:
             cells = re.findall(r"<td[^>]*>(.*?)</td>", row, re.S)
-            self.assertEqual(len(cells), 4)
-            source = re.sub(r"<[^>]+>", "", cells[1]).strip()
-            quest = re.sub(r"<br\s*/?>", "\n", cells[2])
+            # First source row for an item has the rowspan item cell; subsequent rows do not.
+            self.assertIn(len(cells), (2, 3))
+            source = re.sub(r"<[^>]+>", "", cells[-2]).strip()
+            quest = re.sub(r"<br\s*/?>", "\n", cells[-1])
             quest = re.sub(r"<[^>]+>", "", quest).strip()
             self.assertTrue(source)
             self.assertTrue(quest)
             self.assertNotEqual(quest, "—")
 
-    def test_gran_burst_and_internal_parts_are_absent(self):
+    def test_burst_part_internal_and_javascript_markers_are_absent(self):
         for marker in (
             "gran_burst",
             "BurstProbability",
@@ -70,9 +79,11 @@ class HiddenDropTableTest(unittest.TestCase):
             "phalanx_",
             "mana_device",
             "damage_",
+            "敵Lv / 基礎率",
         ):
             self.assertNotIn(marker, self.html)
         self.assertNotIn("<script", self.html.lower())
+        self.assertNotIn('rel="canonical"', self.html)
 
 
 if __name__ == "__main__":
