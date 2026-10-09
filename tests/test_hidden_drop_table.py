@@ -26,9 +26,12 @@ class HiddenDropTableTest(unittest.TestCase):
             (ROOT / "docs" / "sitemap.xml").read_text(encoding="utf-8"),
         )
 
-    def test_table_is_all_item_centric_three_column_structure(self):
-        for heading in ("アイテム", "入手元", "クエスト"):
-            self.assertIn(f'<th scope="col">{heading}</th>', self.html)
+    def test_table_is_all_item_centric_split_source_structure(self):
+        self.assertIn('<th scope="col" rowspan="2">アイテム</th>', self.html)
+        self.assertIn('<th scope="colgroup" colspan="2">入手元</th>', self.html)
+        self.assertIn('<th scope="col" rowspan="2">クエスト / 入手先</th>', self.html)
+        self.assertIn('<th scope="col">種別</th>', self.html)
+        self.assertIn('<th scope="col">名称</th>', self.html)
 
         for retired_heading in (
             "ギガンテス",
@@ -48,7 +51,7 @@ class HiddenDropTableTest(unittest.TestCase):
         self.assertEqual(len(set(item_cells)), 820)
         self.assertIn("収録アイテム：820種類", self.html)
 
-    def test_enemy_source_rows_have_quests_and_plain_enemy_names(self):
+    def test_enemy_sources_are_split_into_kind_and_enemy_name(self):
         self.assertNotIn("モンスタードロップ", self.html)
 
         rows = re.findall(
@@ -58,18 +61,43 @@ class HiddenDropTableTest(unittest.TestCase):
         )
         self.assertGreater(len(rows), 0)
 
+        kind_cells = re.findall(
+            r'<td rowspan="(\d+)" class="source-kind">([^<]+)</td>',
+            self.html,
+        )
+        self.assertGreater(len(kind_cells), 0)
+        for rowspan, label in kind_cells:
+            self.assertGreater(int(rowspan), 0)
+            self.assertEqual(label, "エネミードロップ")
+
         for row in rows:
             cells = re.findall(r"<td[^>]*>(.*?)</td>", row, re.S)
-            # First source row for an item has the rowspan item cell; subsequent rows do not.
-            self.assertIn(len(cells), (2, 3))
-            source = re.sub(r"<[^>]+>", "", cells[-2]).strip()
-            quest = re.sub(r"<br\s*/?>", "\n", cells[-1])
-            quest = re.sub(r"<[^>]+>", "", quest).strip()
-            self.assertTrue(source)
-            self.assertTrue(quest)
-            self.assertNotEqual(quest, "—")
+            self.assertIn(len(cells), (2, 4))
+            enemy = re.sub(r"<[^>]+>", "", cells[-2]).strip()
+            detail = re.sub(r"<br\s*/?>", "\n", cells[-1])
+            detail = re.sub(r"<[^>]+>", "", detail).strip()
+            self.assertTrue(enemy)
+            self.assertNotEqual(enemy, "エネミードロップ")
+            self.assertTrue(detail)
+            self.assertNotEqual(detail, "—")
 
-    def test_field_drops_are_aggregated_into_quest_column(self):
+    def test_non_enemy_sources_span_both_source_columns(self):
+        rows = re.findall(r'<tr(?: class="([^"]+)")?>(.*?)</tr>', self.html, re.S)
+        checked = 0
+        for cls, row in rows:
+            if cls == "enemy-source":
+                continue
+            cells = re.findall(r"<td([^>]*)>(.*?)</td>", row, re.S)
+            if not cells:
+                continue
+            source_cell = cells[-2]
+            self.assertIn('colspan="2"', source_cell[0])
+            source = re.sub(r"<[^>]+>", "", source_cell[1]).strip()
+            self.assertTrue(source)
+            checked += 1
+        self.assertGreater(checked, 0)
+
+    def test_field_drops_are_aggregated_into_detail_column(self):
         rows = re.findall(r'<tr(?: class="([^"]+)")?>(.*?)</tr>', self.html, re.S)
         field_rows = 0
         for cls, row in rows:
@@ -77,13 +105,13 @@ class HiddenDropTableTest(unittest.TestCase):
             if not cells:
                 continue
             source = re.sub(r"<[^>]+>", "", cells[-2]).strip()
-            quest = re.sub(r"<br\s*/?>", "\n", cells[-1])
-            quest = re.sub(r"<[^>]+>", "", quest).strip()
+            detail = re.sub(r"<br\s*/?>", "\n", cells[-1])
+            detail = re.sub(r"<[^>]+>", "", detail).strip()
             if cls == "field-source":
                 field_rows += 1
                 self.assertEqual(source, "フィールドドロップ")
-                self.assertTrue(quest)
-                self.assertNotEqual(quest, "—")
+                self.assertTrue(detail)
+                self.assertNotEqual(detail, "—")
             self.assertFalse(source.endswith(" フィールド"))
         self.assertGreater(field_rows, 0)
 
@@ -99,11 +127,7 @@ class HiddenDropTableTest(unittest.TestCase):
                 return 2
             if source == "共通ドロップ":
                 return 3
-            if source.endswith(" 報酬") and source not in (
-                "エマージェンシー報酬",
-                "プロミスオーダー報酬",
-                "探索隊報酬",
-            ):
+            if cls == "quest-reward-source" or source == "クエスト報酬":
                 return 4
             if source == "エマージェンシー報酬":
                 return 5
@@ -121,18 +145,22 @@ class HiddenDropTableTest(unittest.TestCase):
             cells = re.findall(r"<td[^>]*>(.*?)</td>", row, re.S)
             if not cells:
                 continue
-            if len(cells) == 3:
+            if re.search(r'<td rowspan="\d+">', row):
                 if current:
                     self.assertEqual(current, sorted(current))
                 current = []
                 groups += 1
-            source = re.sub(r"<[^>]+>", "", cells[-2]).strip()
+            source = (
+                "エネミードロップ"
+                if cls == "enemy-source"
+                else re.sub(r"<[^>]+>", "", cells[-2]).strip()
+            )
             current.append(rank(cls, source))
         if current:
             self.assertEqual(current, sorted(current))
         self.assertEqual(groups, 820)
 
-    def test_quest_rewards_are_aggregated_into_quest_column(self):
+    def test_quest_rewards_are_aggregated_into_detail_column(self):
         rows = re.findall(r'<tr(?: class="([^"]+)")?>(.*?)</tr>', self.html, re.S)
         reward_rows = 0
         for cls, row in rows:
@@ -140,13 +168,13 @@ class HiddenDropTableTest(unittest.TestCase):
             if not cells:
                 continue
             source = re.sub(r"<[^>]+>", "", cells[-2]).strip()
-            quest = re.sub(r"<br\s*/?>", "\n", cells[-1])
-            quest = re.sub(r"<[^>]+>", "", quest).strip()
+            detail = re.sub(r"<br\s*/?>", "\n", cells[-1])
+            detail = re.sub(r"<[^>]+>", "", detail).strip()
             if cls == "quest-reward-source":
                 reward_rows += 1
                 self.assertEqual(source, "クエスト報酬")
-                self.assertTrue(quest)
-                self.assertNotEqual(quest, "—")
+                self.assertTrue(detail)
+                self.assertNotEqual(detail, "—")
             if (
                 source.endswith(" 報酬")
                 and source not in (
@@ -159,7 +187,7 @@ class HiddenDropTableTest(unittest.TestCase):
                 self.fail(f"unaggregated quest reward source: {source}")
         self.assertGreater(reward_rows, 0)
 
-    def test_quest_column_is_three_column_left_aligned_and_compact(self):
+    def test_detail_column_is_three_column_left_aligned_and_compact(self):
         self.assertIn('<table id="drop-table">', self.html)
         self.assertIn(
             '#drop-table tbody td:last-child {',
@@ -174,7 +202,11 @@ class HiddenDropTableTest(unittest.TestCase):
         ):
             self.assertIn(css, self.html)
         self.assertIn(
-            '<colgroup><col style="width:24%"><col style="width:22%"><col style="width:54%"></colgroup>',
+            '<colgroup><col style="width:22%"><col style="width:13%"><col style="width:18%"><col style="width:47%"></colgroup>',
+            self.html,
+        )
+        self.assertIn(
+            '#drop-table tbody td.source-kind {',
             self.html,
         )
 
