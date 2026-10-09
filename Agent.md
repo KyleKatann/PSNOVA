@@ -44,6 +44,7 @@
 - GitHub Pagesの公開URLを外部Web取得toolが「access不可」と返す場合は、tool側の取得制約と公開site障害を区別する。GitHub ActionsやPages workflowのrun statusは確認せず、repository上の公開HTMLその他のread-only情報で検証し、外部Web toolの非対応だけをページ破損の根拠にしない。
 - ローカル解析でPythonの追加moduleや外部CLIを使う前に、`python -c "import ..."` や `command -v` 等のread-only確認で利用可否を確認し、未導入の依存を前提に実行してoperation errorを発生させてはならない。標準toolで足りる場合は追加package前提を置かず、既存標準commandの出力から処理する。
 - この実行環境のcontainer / Pythonから外部networkへ直接接続できると仮定しない。GitHub上の非公開資産は接続済みGitHub connectorで取得し、container側の`curl`・`urllib`・`requests`等を代替取得経路として試さない。
+- `functions.exec`のJavaScript環境にNode/Browser標準APIが存在すると仮定しない。`TextEncoder`等の補助APIをcommit後の表示用計算へ使わず、必要な検証値は文字列長など標準ECMAScriptだけで計算するか、書き込み前に別経路で確認する。書き込み後の補助表示エラーで同一writeを再試行しない。
 - 複数行のad-hoc Pythonを実行する場合は、構文が長い集計処理を直接heredoc実行へ流し込まず、一時`.py`へ書いて`python -m py_compile`で構文確認してから実行する。単純な構文ミスをoperation errorとして発生させない。
 - ローカルPython処理が多数のRMD/font atlas復号などで長時間化する場合、同一の高コスト復号をmessageごとに繰り返さない。fingerprintやatlasなど再利用可能な結果をcacheし、tool実行上限内で完了する粒度へ分割してから実行する。
 - `bash -lc`でglobを使う`for`文へstderr redirectを混在させる場合、word list直後へ`2>/dev/null`を置かない。必要なら`shopt -s nullglob`を使うか、対象一覧を`find`等で先に確定してからloopし、shell構文を実行前に単純化する。
