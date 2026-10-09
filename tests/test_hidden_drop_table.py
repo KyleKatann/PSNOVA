@@ -69,6 +69,25 @@ class HiddenDropTableTest(unittest.TestCase):
             self.assertTrue(quest)
             self.assertNotEqual(quest, "—")
 
+    def test_quest_column_is_three_column_left_aligned_and_compact(self):
+        self.assertIn('<table id="drop-table">', self.html)
+        self.assertIn(
+            '#drop-table tbody tr.enemy-source td:last-child {',
+            self.html,
+        )
+        for css in (
+            'column-count: 3;',
+            'text-align: left;',
+            'line-height: 1.25;',
+            'padding-top: 0.3rem;',
+            'padding-bottom: 0.3rem;',
+        ):
+            self.assertIn(css, self.html)
+        self.assertIn(
+            '<colgroup><col style="width:24%"><col style="width:22%"><col style="width:54%"></colgroup>',
+            self.html,
+        )
+
     def test_burst_part_internal_and_javascript_markers_are_absent(self):
         for marker in (
             "gran_burst",
