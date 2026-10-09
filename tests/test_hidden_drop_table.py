@@ -1,4 +1,5 @@
 from pathlib import Path
+import re
 import unittest
 
 
@@ -25,8 +26,11 @@ class HiddenDropTableTest(unittest.TestCase):
             (ROOT / "docs" / "sitemap.xml").read_text(encoding="utf-8"),
         )
 
-    def test_table_has_gigantes_only_without_part_column(self):
-        for heading in (
+    def test_table_is_item_centric(self):
+        for heading in ("アイテム", "入手元", "クエスト", "敵Lv / 基礎率"):
+            self.assertIn(f'<th scope="col">{heading}</th>', self.html)
+
+        for retired_heading in (
             "ギガンテス",
             "敵Lv",
             "レア枠",
@@ -34,10 +38,33 @@ class HiddenDropTableTest(unittest.TestCase):
             "通常枠2",
             "通常枠3",
             "通常枠4",
+            "部位",
         ):
-            self.assertIn(f'<th scope="col">{heading}</th>', self.html)
-        self.assertNotIn('<th scope="col">部位</th>', self.html)
-        for internal_name in (
+            self.assertNotIn(f'<th scope="col">{retired_heading}</th>', self.html)
+
+    def test_monster_drop_rows_have_quest_names(self):
+        tbody = re.search(r"<tbody>(.*?)</tbody>", self.html, re.S)
+        self.assertIsNotNone(tbody)
+        rows = re.findall(r"<tr>(.*?)</tr>", tbody.group(1), re.S)
+        self.assertGreater(len(rows), 300)
+
+        checked = 0
+        for row in rows:
+            cells = re.findall(r"<td[^>]*>(.*?)</td>", row, re.S)
+            self.assertEqual(len(cells), 4)
+            source = re.sub(r"<[^>]+>", "", cells[1]).strip()
+            quest = re.sub(r"<br\s*/?>", "\n", cells[2])
+            quest = re.sub(r"<[^>]+>", "", quest).strip()
+            if "モンスタードロップ" in source:
+                checked += 1
+                self.assertTrue(quest)
+                self.assertNotEqual(quest, "—")
+        self.assertEqual(checked, len(rows))
+
+    def test_gran_burst_and_internal_parts_are_absent(self):
+        for marker in (
+            "gran_burst",
+            "BurstProbability",
             "armor_",
             "antenna_",
             "weak_",
@@ -45,10 +72,6 @@ class HiddenDropTableTest(unittest.TestCase):
             "mana_device",
             "damage_",
         ):
-            self.assertNotIn(internal_name, self.html)
-
-    def test_gran_burst_rows_and_runtime_javascript_are_absent(self):
-        for marker in ("グランバースト", "gran_burst", "BurstProbability"):
             self.assertNotIn(marker, self.html)
         self.assertNotIn("<script", self.html.lower())
 
