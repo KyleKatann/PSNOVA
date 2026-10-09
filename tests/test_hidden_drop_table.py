@@ -132,10 +132,45 @@ class HiddenDropTableTest(unittest.TestCase):
             self.assertEqual(current, sorted(current))
         self.assertEqual(groups, 820)
 
+    def test_quest_rewards_are_aggregated_into_quest_column(self):
+        rows = re.findall(r'<tr(?: class="([^"]+)")?>(.*?)</tr>', self.html, re.S)
+        reward_rows = 0
+        for cls, row in rows:
+            cells = re.findall(r"<td[^>]*>(.*?)</td>", row, re.S)
+            if not cells:
+                continue
+            source = re.sub(r"<[^>]+>", "", cells[-2]).strip()
+            quest = re.sub(r"<br\s*/?>", "\n", cells[-1])
+            quest = re.sub(r"<[^>]+>", "", quest).strip()
+            if cls == "quest-reward-source":
+                reward_rows += 1
+                self.assertEqual(source, "クエスト報酬")
+                self.assertTrue(quest)
+                self.assertNotEqual(quest, "—")
+            if (
+                source.endswith(" 報酬")
+                and source not in (
+                    "エマージェンシー報酬",
+                    "プロミスオーダー報酬",
+                    "探索隊報酬",
+                    "クエスト報酬",
+                )
+            ):
+                self.fail(f"unaggregated quest reward source: {source}")
+        self.assertGreater(reward_rows, 0)
+
     def test_quest_column_is_three_column_left_aligned_and_compact(self):
         self.assertIn('<table id="drop-table">', self.html)
         self.assertIn(
-            '#drop-table tbody tr.enemy-source td:last-child {',
+            '#drop-table tbody tr.enemy-source td:last-child,',
+            self.html,
+        )
+        self.assertIn(
+            '#drop-table tbody tr.field-source td:last-child,',
+            self.html,
+        )
+        self.assertIn(
+            '#drop-table tbody tr.quest-reward-source td:last-child {',
             self.html,
         )
         for css in (
