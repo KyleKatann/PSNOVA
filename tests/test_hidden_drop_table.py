@@ -42,24 +42,23 @@ class HiddenDropTableTest(unittest.TestCase):
         ):
             self.assertNotIn(f'<th scope="col">{retired_heading}</th>', self.html)
 
-    def test_monster_drop_rows_have_quest_names(self):
+    def test_enemy_sources_use_enemy_names_without_category_wording(self):
+        self.assertNotIn("モンスタードロップ", self.html)
+
         tbody = re.search(r"<tbody>(.*?)</tbody>", self.html, re.S)
         self.assertIsNotNone(tbody)
         rows = re.findall(r"<tr>(.*?)</tr>", tbody.group(1), re.S)
         self.assertGreater(len(rows), 300)
 
-        checked = 0
         for row in rows:
             cells = re.findall(r"<td[^>]*>(.*?)</td>", row, re.S)
             self.assertEqual(len(cells), 4)
             source = re.sub(r"<[^>]+>", "", cells[1]).strip()
             quest = re.sub(r"<br\s*/?>", "\n", cells[2])
             quest = re.sub(r"<[^>]+>", "", quest).strip()
-            if "モンスタードロップ" in source:
-                checked += 1
-                self.assertTrue(quest)
-                self.assertNotEqual(quest, "—")
-        self.assertEqual(checked, len(rows))
+            self.assertTrue(source)
+            self.assertTrue(quest)
+            self.assertNotEqual(quest, "—")
 
     def test_gran_burst_and_internal_parts_are_absent(self):
         for marker in (
