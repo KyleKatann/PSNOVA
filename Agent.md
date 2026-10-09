@@ -32,7 +32,7 @@
 - リポジトリ固有の指示ファイル名も慣例から推測しない。PSNOVAではルートの正本は`Agent.md`であり、`AGENTS.md`等の別名を仮定せず、初回のroot listingで実在pathを確認してから読む。
 - PSNOVAで公開ページ作業を開始する場合、指示ファイルの初回readより先にroot listingを行い、その結果に存在する`Agent.md`だけを読む。会話履歴や他repoの慣例から`AGENTS.md`等を先行fetchしない。
 - repositoryのdefault branch名がcurrent sessionで未確認の場合は、`contents?ref=main`等のbranch名を推測してreadしてはならない。先にrepository metadataまたはbranch listingをread-onlyで取得し、確認済みdefault branchだけを以後の`ref`/write targetに使用する。
-- 大きなtext fileを`fetch_file`で取得するとき、全範囲取得がresponse sizeや接続切断で失敗した場合は、同じ大型requestを繰り返さず、連続した小さいline rangeへ分割して取得する。必要な全範囲を成功済みchunkで揃えた後は、再確認目的で大型requestへ戻さない。
+- 大きなtext fileを`fetch_file`で取得するとき、全範囲取得がresponse sizeや接続切断で失敗した場合は、同じ大型requestを繰り返さず、連続した小さいline rangeへ分割して取得する。20MB級以上と分かっているGitHub text fileをraw URLの`fetch`で一括取得してはならず、必要な行範囲だけを`fetch_file`で読むか、すでに手元にある同一正本データを使う。必要な全範囲を成功済みchunkで揃えた後は、再確認目的で大型requestへ戻さない。
 - 複数の大きなfileを1回のtool orchestrationでまとめて`fetch_file`すると接続切断が起きる場合は、repository stateが未変更であることをread-onlyで確認し、その後は対象fileを1件ずつ取得する。同じbulk fetchを再実行しない。
 - 多数のrepository fileを監査する場合、1回のtool orchestration内でconnector call上限に達するまで連続取得しない。1 orchestrationは原則10 call程度以下の小さい固定batchに分割し、各batchのread結果を確認してから次へ進む。20件前後を1回へ詰め込むなど上限近くまでまとめない。call上限到達で失敗したbulk監査を同じ形で再実行しない。
 - CSVをスクリプトで解析する場合、headerの列数を前提に各rowへ直接index accessしてはならない。空行や末尾省略rowを含み得るため、必要列のindexがrow長未満であることを確認してから参照し、不足rowは安全にskipまたは空値として扱う。
