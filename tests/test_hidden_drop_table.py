@@ -147,7 +147,7 @@ class HiddenDropTableTest(unittest.TestCase):
             checked += 1
         self.assertGreater(checked, 0)
 
-    def test_all_48_removed_routes_are_restored_without_dash_placeholders(self):
+    def test_unresolved_routes_are_counted_after_source_name_recovery(self):
         counts = Counter()
         total = 0
         for row in self.rows:
@@ -156,21 +156,57 @@ class HiddenDropTableTest(unittest.TestCase):
                     counts[row["source"]] += 1
                     total += 1
 
-        self.assertEqual(total, 48)
+        self.assertEqual(total, 30)
         self.assertEqual(
             counts,
             Counter(
                 {
                     "地域フォールバック": 15,
-                    "エマージェンシー報酬": 12,
-                    "プロミスオーダー報酬": 12,
-                    "探索隊報酬": 9,
+                    "エマージェンシー報酬": 10,
+                    "プロミスオーダー報酬": 2,
+                    "探索隊報酬": 3,
                 }
             ),
         )
         self.assertNotIn("<td>—</td>", self.body)
         for row in self.rows:
             self.assertNotIn("—", row["detail_entries"])
+
+    def test_identified_source_rows_display_concrete_game_names(self):
+        # 報酬DB・公開プロミスオーダーに照合済みの18件を具体名で固定する。
+        expected = [
+            ("モノメイト", "プロミスオーダー報酬", "アイテムショップ建設"),
+            ("ディメイト", "プロミスオーダー報酬", "アイテムショップ改築"),
+            ("トリメイト", "プロミスオーダー報酬", "ブーストエネミー撃破訓練"),
+            ("スケープドール", "プロミスオーダー報酬", "瀕死の克服"),
+            ("メモリーフラグメントA", "プロミスオーダー報酬", "クラスカウンター建設"),
+            ("メモリーフラグメントB", "プロミスオーダー報酬", "クラスカウンター改築"),
+            ("メモリーフラグメントD", "プロミスオーダー報酬", "メモリーフラグメント変換4"),
+            ("メモリーフラグメントE", "プロミスオーダー報酬", "メモリーフラグメント変換5"),
+            ("メモリーフラグメントF", "プロミスオーダー報酬", "メモリーフラグメント変換6"),
+            ("メモリーフラグメントG", "プロミスオーダー報酬", "メモリーフラグメント変換7"),
+            ("メモリーフラグメントA", "探索隊報酬", "［採集］フラグメント採集（報酬1）"),
+            ("メモリーフラグメントB", "探索隊報酬", "［採集］フラグメント採集（報酬2・報酬3）"),
+            ("メモリーフラグメントD", "探索隊報酬", "［採集］地上フラグメント採集（報酬2）"),
+            ("メモリーフラグメントE", "探索隊報酬", "［採集］地上フラグメント採集（報酬3）"),
+            ("メモリーフラグメントF", "探索隊報酬", "［採集］惑星本体フラグメント採集（報酬1）"),
+            ("メモリーフラグメントG", "探索隊報酬", "［採集］惑星本体フラグメント採集（報酬2）"),
+            ("メモリーフラグメントB", "エマージェンシー報酬", "迫るアグリオスを止めろ"),
+            ("メモリーフラグメントG", "エマージェンシー報酬", "ゴルドス討伐"),
+        ]
+        for item, source, source_name in expected:
+            with self.subTest(item=item, source=source):
+                matches = [
+                    row for row in self.rows
+                    if row["item"] == item and row["source"] == source
+                ]
+                self.assertEqual(len(matches), 1)
+                self.assertTrue(
+                    any(source_name in e for e in matches[0]["detail_entries"])
+                )
+                self.assertNotIn(
+                    "入手先詳細未特定", matches[0]["cells"][-1]["text"]
+                )
 
     def test_region_and_common_drop_labels_use_runtime_fallback_semantics(self):
         self.assertNotIn("エリアドロップ", self.body)
