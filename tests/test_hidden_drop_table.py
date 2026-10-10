@@ -429,6 +429,25 @@ class HiddenDropTableTest(unittest.TestCase):
         self.assertIn("グランピース(炎属性)", wave_items)
         self.assertIn("グランピース(風属性)", wave_items)
 
+    def test_love_fruit_field_slots_match_dlc_408020(self):
+        # Quest408020の参照あり仕掛け20行には3|3|0|110(凍った葉)がない。
+        # 他の有効な仕掛け候補や同アイテムの他Questは削除しない。
+        candidates = {
+            row["item"] for row in self.rows
+            if row["source"] == "フィールドドロップ"
+            and "愛の果実" in row["detail_entries"]
+        }
+        self.assertNotIn("凍った葉", candidates)
+        self.assertIn("赤く広がる花状結晶", candidates)
+        self.assertIn("グランピース(炎属性)", candidates)
+        leaf = [
+            row for row in self.rows
+            if row["item"] == "凍った葉"
+            and row["source"] == "フィールドドロップ"
+        ]
+        self.assertEqual(len(leaf), 1)
+        self.assertIn("炎の脅威", leaf[0]["detail_entries"])
+
     def test_field_and_quest_rewards_remain_aggregated(self):
         field_rows = [row for row in self.rows if row["class"] == "field-source"]
         quest_reward_rows = [
