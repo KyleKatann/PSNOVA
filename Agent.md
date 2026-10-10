@@ -26,6 +26,7 @@
 - 全文置換前に対象文字列の出現数を確認し、同一文字列が複数箇所に存在する場合は「1件だけ」と仮定して失敗させず、対象sectionや前後文脈を含む一意な範囲へ置換を限定する。
 - test整理で同一の削除対象assertが複数箇所にある場合は、1件限定のguardで停止させない。各出現が同じ廃止仕様を固定していることをread-onlyで確認し、該当箇所をすべて明示的に削除する。
 - 過去会話、過去commit、旧サイト構成だけから推測したfile pathを`fetch_file`へ渡してはならない。current repositoryで対象pathが未確認の場合は、先に現在のdirectory listingまたはtreeをread-onlyで取得し、そこに実在するpathだけを使用する。直前のcurrent read結果ですでにpathを確認済みの場合は再listingを不要とする。
+- 実装補助ツールや生成スクリプトの所在はrepo別に確認する。攻略サイト`PSNOVA`の現行rootには`tools/`があり、慣例的な`/scripts`等の未確認ディレクトリを先にAPI取得しない。ディレクトリの404後はroot一覧で存在するpathへ確定し、未確認pathへの再試行を行わない。
 - 対象公開ページに対応する回帰test fileを探す場合も、page名から`tests/test_*.py`を推測して`fetch_file`しない。current `tests/` directory listingで実在pathを確認してから取得し、対応testが存在しない場合はその事実を確認したうえで必要なら新規作成する。
 - GitHubコネクタでdirectory listingが必要な場合、存在確認していない`list_directory`等のaction名を仮定してはならない。現在のtool metadataに専用listing actionがない場合は、directory取得を明示対応している`fetch`のschemaを確認し、確認済みrepository/directory URLだけをread-onlyで取得する。
 - GitHub Actionsの特定workflow実行一覧を読むとき、GitHubコネクタの`fetch`に任意の`actions/workflows/{workflow}/runs` URLを組み立てて渡してはならない。toolが許可するendpoint形状をread-onlyで確認し、許可済みrun一覧やcommit statusで確認できる範囲だけを報告する。run一覧を確認できた場合も、Pages deployment成功をPython/Playwrightテスト成功と取り違えない。
