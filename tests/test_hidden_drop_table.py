@@ -267,6 +267,29 @@ class HiddenDropTableTest(unittest.TestCase):
                 self.assertEqual(len(routes), 1)
                 self.assertIn(title, routes[0]["detail_entries"])
 
+    def test_field_jewel_identity_matches_active_quest_gimmick(self):
+        # Patch region05/06.questgimmick_field の実ItemID・有効difficulty別。
+        expected = {
+            "光輝のダイヤモンド": [
+                "極：ヘル・デート",
+                "極：漆黒の鉄馬と光線獣",
+                "超：城砦のヴィヴリュード",
+            ],
+            "翠緑のエメラルド": [
+                "極：ヘル・デート",
+                "超：尖塔に潜む光線獣",
+                "難：エウリュード攻略任務",
+            ],
+        }
+        for name, expected_quests in expected.items():
+            with self.subTest(item=name):
+                matches = [
+                    row for row in self.rows
+                    if row["item"] == name and row["source"] == "フィールドドロップ"
+                ]
+                self.assertEqual(len(matches), 1)
+                self.assertEqual(matches[0]["detail_entries"], expected_quests)
+
     def test_quest_reward_jewel_identity_matches_patch_csv(self):
         # 3|3|0|1001=古代都市 region06、3|3|0|997=大尖塔 region05。
         # region06.quest_difficulty.csv:67/83/93/98、
