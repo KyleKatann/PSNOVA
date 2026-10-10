@@ -28,6 +28,7 @@
 - 過去会話、過去commit、旧サイト構成だけから推測したfile pathを`fetch_file`へ渡してはならない。current repositoryで対象pathが未確認の場合は、先に現在のdirectory listingまたはtreeをread-onlyで取得し、そこに実在するpathだけを使用する。直前のcurrent read結果ですでにpathを確認済みの場合は再listingを不要とする。
 - 対象公開ページに対応する回帰test fileを探す場合も、page名から`tests/test_*.py`を推測して`fetch_file`しない。current `tests/` directory listingで実在pathを確認してから取得し、対応testが存在しない場合はその事実を確認したうえで必要なら新規作成する。
 - GitHubコネクタでdirectory listingが必要な場合、存在確認していない`list_directory`等のaction名を仮定してはならない。現在のtool metadataに専用listing actionがない場合は、directory取得を明示対応している`fetch`のschemaを確認し、確認済みrepository/directory URLだけをread-onlyで取得する。
+- GitHub Actionsの特定workflow実行一覧を読むとき、GitHubコネクタの`fetch`に任意の`actions/workflows/{workflow}/runs` URLを組み立てて渡してはならない。toolが許可するendpoint形状をread-onlyで確認し、許可済みrun一覧やcommit statusで確認できる範囲だけを報告する。run一覧を確認できた場合も、Pages deployment成功をPython/Playwrightテスト成功と取り違えない。
 - GitHubコネクタの`search`はrepository fileやpathの探索に使用しない。`search`の0件結果やindex状態をpath不存在の根拠にせず、file/path確認はcurrent repositoryのdirectory listingを`fetch`で取得して行う。
 - リポジトリ固有の指示ファイル名も慣例から推測しない。PSNOVAではルートの正本は`Agent.md`であり、`AGENTS.md`等の別名を仮定せず、初回のroot listingで実在pathを確認してから読む。
 - PSNOVAで公開ページ作業を開始する場合、指示ファイルの初回readより先にroot listingを行い、その結果に存在する`Agent.md`だけを読む。会話履歴や他repoの慣例から`AGENTS.md`等を先行fetchしない。
