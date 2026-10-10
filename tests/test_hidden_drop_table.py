@@ -156,12 +156,12 @@ class HiddenDropTableTest(unittest.TestCase):
                     counts[row["source"]] += 1
                     total += 1
 
-        self.assertEqual(total, 15)
+        self.assertEqual(total, 9)
         self.assertEqual(
             counts,
             Counter(
                 {
-                    "エマージェンシー報酬": 10,
+                    "エマージェンシー報酬": 4,
                     "プロミスオーダー報酬": 2,
                     "探索隊報酬": 3,
                 }
@@ -192,6 +192,12 @@ class HiddenDropTableTest(unittest.TestCase):
             ("メモリーフラグメントG", "探索隊報酬", "［採集］惑星本体フラグメント採集（報酬2）"),
             ("メモリーフラグメントB", "エマージェンシー報酬", "迫るアグリオスを止めろ"),
             ("メモリーフラグメントG", "エマージェンシー報酬", "ゴルドス討伐"),
+            ("モノメイト", "エマージェンシー報酬", "タイムアタック・炎の高地"),
+            ("ディメイト", "エマージェンシー報酬", "タイムアタック・炎の高地"),
+            ("トリメイト", "エマージェンシー報酬", "タイムアタック・炎の高地"),
+            ("メモリーフラグメントA", "エマージェンシー報酬", "狙われた捜査官"),
+            ("メモリーフラグメントD", "エマージェンシー報酬", "スーパーラッピータイム"),
+            ("メモリーフラグメントE", "エマージェンシー報酬", "難：炎の支配者"),
         ]
         for item, source, source_name in expected:
             with self.subTest(item=item, source=source):
