@@ -180,14 +180,12 @@ class HiddenDropTableTest(unittest.TestCase):
                     counts[row["source"]] += 1
                     total += 1
 
-        self.assertEqual(total, 7)
+        self.assertEqual(total, 2)
         self.assertEqual(
             counts,
             Counter(
                 {
                     "エマージェンシー報酬": 2,
-                    "プロミスオーダー報酬": 2,
-                    "探索隊報酬": 3,
                 }
             ),
         )
@@ -236,6 +234,65 @@ class HiddenDropTableTest(unittest.TestCase):
                 self.assertNotIn(
                     "入手先詳細未特定", matches[0]["cells"][-1]["text"]
                 )
+
+    def test_quest_reward_jewel_identity_matches_patch_csv(self):
+        # 3|3|0|1001=古代都市 region06、3|3|0|997=大尖塔 region05。
+        # region06.quest_difficulty.csv:67/83/93/98、
+        # region05.quest_difficulty.csv:42/62/78/88/93。
+        expected = {
+            "光輝のダイヤモンド": [
+                "極：漆黒の鉄馬と光線獣",
+                "超：城砦のヴィヴリュード",
+                "超：猛攻のグレイオス",
+                "難：デェフキュオネ決戦",
+            ],
+            "翠緑のエメラルド": [
+                "極：ヘル・デート",
+                "極：押し寄せるギガンテス",
+                "超：尖塔に潜む光線獣",
+                "難：エウリュード攻略任務",
+                "難：リベルゲンテ決戦",
+            ],
+        }
+        for name, quests in expected.items():
+            with self.subTest(item=name):
+                matches = [
+                    row for row in self.rows
+                    if row["item"] == name and row["source"] == "クエスト報酬"
+                ]
+                self.assertEqual(len(matches), 1)
+                self.assertEqual(matches[0]["detail_entries"], quests)
+
+    def test_resolved_promise_and_search_corps_sources(self):
+        # Common.promise_registry.csv と SearchCorps.csv のID別報酬。
+        expected = {
+            ("瞬くクリソベル石", "プロミスオーダー報酬"): [
+                "ダーカー研究",
+            ],
+            ("黒いアーセニオプレアイト", "プロミスオーダー報酬"): [
+                "新種のギガンテスの調査",
+                "ＳＨに挑戦・ノヴァ内部",
+            ],
+            ("トマト", "探索隊報酬"): [
+                "［食材調達］ノヴァ内部食材調達（報酬2）",
+                "［食材調達］古代都市食材調達（報酬2）",
+            ],
+            ("多積層の鋼板", "探索隊報酬"): [
+                "［採集］古代都市資材回収（報酬1）",
+            ],
+            ("瞬くクリソベル石", "探索隊報酬"): [
+                "［採集］クリソベル石採集（報酬3）",
+                "［調査］ノヴァ内部危険度調査（報酬1）",
+            ],
+        }
+        for (name, source), details in expected.items():
+            with self.subTest(item=name, source=source):
+                matches = [
+                    row for row in self.rows
+                    if row["item"] == name and row["source"] == source
+                ]
+                self.assertEqual(len(matches), 1)
+                self.assertEqual(matches[0]["detail_entries"], details)
 
     def test_emergency_reward_id_audit_corrections(self):
         # v1.05 exact ID: ダイヤモンド3|3|0|1001だけreachable
