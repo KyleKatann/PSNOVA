@@ -198,7 +198,7 @@ class HiddenDropTableTest(unittest.TestCase):
         expected = [
             ("モノメイト", "プロミスオーダー報酬", "アイテムショップ建設"),
             ("ディメイト", "プロミスオーダー報酬", "アイテムショップ改築"),
-            ("トリメイト", "プロミスオーダー報酬", "ブーストエネミー撃破訓練"),
+            ("トリメイト", "プロミスオーダー報酬", "状態異常訓練"),
             ("スケープドール", "プロミスオーダー報酬", "瀕死の克服"),
             ("メモリーフラグメントＡ", "プロミスオーダー報酬", "クラスカウンター建設"),
             ("メモリーフラグメントＢ", "プロミスオーダー報酬", "クラスカウンター改築"),
@@ -234,6 +234,19 @@ class HiddenDropTableTest(unittest.TestCase):
                 self.assertNotIn(
                     "入手先詳細未特定", matches[0]["cells"][-1]["text"]
                 )
+
+    def test_trimite_promise_exact_source_identity(self):
+        # Common.promise_registry.csv:108-110 の3|1|0|3、3報酬定義のみ。
+        matching = [
+            row for row in self.rows
+            if row["item"] == "トリメイト" and row["source"] == "プロミスオーダー報酬"
+        ]
+        self.assertEqual(len(matching), 1)
+        self.assertEqual(
+            matching[0]["detail_entries"],
+            ["状態異常訓練", "墨片の調達", "針片の調達"],
+        )
+        self.assertNotIn("ブーストエネミー撃破訓練", matching[0]["detail_entries"])
 
     def test_promise_reward_uses_original_rmd_fullwidth_digits(self):
         # Common.promise_registry の TitleMessageID -> 正式RMD表記。
