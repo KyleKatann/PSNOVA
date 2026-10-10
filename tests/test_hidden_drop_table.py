@@ -180,12 +180,12 @@ class HiddenDropTableTest(unittest.TestCase):
                     counts[row["source"]] += 1
                     total += 1
 
-        self.assertEqual(total, 9)
+        self.assertEqual(total, 7)
         self.assertEqual(
             counts,
             Counter(
                 {
-                    "エマージェンシー報酬": 4,
+                    "エマージェンシー報酬": 2,
                     "プロミスオーダー報酬": 2,
                     "探索隊報酬": 3,
                 }
@@ -236,6 +236,24 @@ class HiddenDropTableTest(unittest.TestCase):
                 self.assertNotIn(
                     "入手先詳細未特定", matches[0]["cells"][-1]["text"]
                 )
+
+    def test_emergency_reward_id_audit_corrections(self):
+        # v1.05 exact ID: ダイヤモンド3|3|0|1001だけreachable
+        # emergency_registry row132 / Quest300560。Ｈ136/エメラルド997は未確認placeholderを除去。
+        target = {
+            "光輝のダイヤモンド": "極：漆黒の鉄馬と光線獣",
+            "メモリーフラグメントＨ": None,
+            "翠緑のエメラルド": None,
+        }
+        for name, expected in target.items():
+            with self.subTest(item=name):
+                matches = [
+                    row for row in self.rows
+                    if row["item"] == name and row["source"] == "エマージェンシー報酬"
+                ]
+                self.assertEqual(len(matches), 1 if expected else 0)
+                if expected:
+                    self.assertEqual(matches[0]["detail_entries"], [expected])
 
     def test_region_and_common_drop_labels_use_runtime_fallback_semantics(self):
         self.assertNotIn("エリアドロップ", self.body)
