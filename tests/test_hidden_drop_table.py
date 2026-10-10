@@ -156,12 +156,11 @@ class HiddenDropTableTest(unittest.TestCase):
                     counts[row["source"]] += 1
                     total += 1
 
-        self.assertEqual(total, 30)
+        self.assertEqual(total, 15)
         self.assertEqual(
             counts,
             Counter(
                 {
-                    "地域フォールバック": 15,
                     "エマージェンシー報酬": 10,
                     "プロミスオーダー報酬": 2,
                     "探索隊報酬": 3,
@@ -242,6 +241,10 @@ class HiddenDropTableTest(unittest.TestCase):
         self.assertNotIn("大尖塔：地の底へ", region_entries)
         self.assertIn("古代都市：静かなる都市", region_entries)
         self.assertIn("大尖塔：天を衝く大尖塔", region_entries)
+        self.assertIn("古代都市：敵Lv1～124の地域抽選候補", region_entries)
+        self.assertIn("古代都市：敵Lv61～89の地域抽選候補", region_entries)
+        self.assertIn("鋼の荒野：敵Lv1～30の地域抽選候補", region_entries)
+        self.assertFalse(any("入手先詳細未特定" in entry for entry in region_entries))
 
     def test_dummy_quests_are_excluded_and_event_name_is_not_invented(self):
         self.assertNotIn("ダミーデータ", self.body)
