@@ -193,6 +193,36 @@ class HiddenDropTableTest(unittest.TestCase):
         for row in self.rows:
             self.assertNotIn("—", row["detail_entries"])
 
+    def test_emergency_reward_dlc_titles_match_canonical_rmd(self):
+        # 原本DLC QuestID: 412010 / 408020 / 408160 の正式RMD名称。
+        # 既知の6箇所だけを対象とし、他の取得元は変更しない。
+        expected = {
+            "メモリーフラグメントＡ": ("奪われた証拠品",),
+            "メモリーフラグメントＢ": ("愛の果実",),
+            "メモリーフラグメントＤ": ("愛の果実", "恋の逃避行"),
+            "メモリーフラグメントＥ": ("愛の果実", "恋の逃避行"),
+        }
+        emergency_rows = [
+            row for row in self.rows
+            if row["source"] == "エマージェンシー報酬"
+        ]
+        canonical_counts = Counter()
+        for item, titles in expected.items():
+            with self.subTest(item=item):
+                matches = [row for row in emergency_rows if row["item"] == item]
+                self.assertEqual(len(matches), 1)
+                for title in titles:
+                    self.assertIn(title, matches[0]["detail_entries"])
+                    canonical_counts[title] += 1
+
+        self.assertEqual(
+            canonical_counts,
+            Counter({"奪われた証拠品": 1, "愛の果実": 3, "恋の逃避行": 2}),
+        )
+        for row in emergency_rows:
+            for obsolete in ("狙われた捜査官", "愛の料理", "恋の大作戦"):
+                self.assertNotIn(obsolete, row["detail_entries"])
+
     def test_identified_source_rows_display_concrete_game_names(self):
         # 報酬DB・公開プロミスオーダーに照合済みの18件を具体名で固定する。
         expected = [
@@ -217,7 +247,7 @@ class HiddenDropTableTest(unittest.TestCase):
             ("モノメイト", "エマージェンシー報酬", "タイムアタック・炎の高地"),
             ("ディメイト", "エマージェンシー報酬", "タイムアタック・炎の高地"),
             ("トリメイト", "エマージェンシー報酬", "タイムアタック・炎の高地"),
-            ("メモリーフラグメントＡ", "エマージェンシー報酬", "狙われた捜査官"),
+            ("メモリーフラグメントＡ", "エマージェンシー報酬", "奪われた証拠品"),
             ("メモリーフラグメントＤ", "エマージェンシー報酬", "スーパーラッピータイム"),
             ("メモリーフラグメントＥ", "エマージェンシー報酬", "難：炎の支配者"),
         ]
