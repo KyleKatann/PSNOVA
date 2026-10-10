@@ -414,6 +414,21 @@ class HiddenDropTableTest(unittest.TestCase):
             2,
         )
 
+    def test_wave_defense_field_candidates_use_referenced_dlc_file(self):
+        # DLC q560230のstageから参照される仕掛けは難易度N/H/VHに
+        # 3|3|0|30 (氷) と 7|1|0|0 (無属性グランピース) を含まない。
+        # それらは未参照q520110内の流用CSVだけに存在する。
+        wave_items = {
+            row["item"] for row in self.rows
+            if row["source"] == "フィールドドロップ"
+            and "波状防衛戦" in row["detail_entries"]
+        }
+        self.assertEqual(len(wave_items), 8)
+        self.assertNotIn("氷", wave_items)
+        self.assertNotIn("グランピース", wave_items)
+        self.assertIn("グランピース(炎属性)", wave_items)
+        self.assertIn("グランピース(風属性)", wave_items)
+
     def test_field_and_quest_rewards_remain_aggregated(self):
         field_rows = [row for row in self.rows if row["class"] == "field-source"]
         quest_reward_rows = [
