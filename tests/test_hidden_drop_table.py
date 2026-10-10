@@ -448,6 +448,34 @@ class HiddenDropTableTest(unittest.TestCase):
         self.assertEqual(len(leaf), 1)
         self.assertIn("炎の脅威", leaf[0]["detail_entries"])
 
+    def test_love_fruit_enemy_levelband_excludes_four_super_cores(self):
+        # DLC 408020の実効Lvは通常enemy 0/90/160、グレイオス10/100/170。
+        # 4種の超コアの有効LevelBand 101～159とは交差しない。
+        invalid = {
+            "Ｇプレディカーダの超コア": "Ｇプレディカーダ",
+            "Ｇウォルガーダの超コア": "Ｇウォルガーダ",
+            "Ｇガウォンダの超コア": "Ｇガウォンダ",
+            "グレイオスの超コア": "グレイオス",
+        }
+        for item, enemy in invalid.items():
+            with self.subTest(item=item):
+                matches = [
+                    row for row in self.rows
+                    if row["item"] == item
+                    and row["source"] == "エネミードロップ"
+                    and row["enemy"] == enemy
+                ]
+                self.assertEqual(len(matches), 1)
+                self.assertNotIn("愛の果実", matches[0]["detail_entries"])
+                self.assertTrue(matches[0]["detail_entries"])
+
+        love_enemy_count = sum(
+            row["source"] == "エネミードロップ"
+            and "愛の果実" in row["detail_entries"]
+            for row in self.rows
+        )
+        self.assertEqual(love_enemy_count, 55)
+
     def test_field_and_quest_rewards_remain_aggregated(self):
         field_rows = [row for row in self.rows if row["class"] == "field-source"]
         quest_reward_rows = [
