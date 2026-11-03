@@ -32,11 +32,11 @@ class HiddenDropTableTest(unittest.TestCase):
         self.assertEqual(counts, Counter({'enemy': 66078, 'field_gimmick': 6164, 'quest_reward': 1174, 'emergency_reward': 1847, 'promise_reward': 183, 'native_refill': 2, 'coldsleep_series_reward': 19, 'event_grant': 4, 'search_corps_reward': 321, 'region': 304, 'common': 3508}))
     def test_bare_region_locations_are_labeled_as_non_quest_candidates(self):
         regions = {"鋼の荒野", "グラン水源", "炎の高地", "古代都市", "大尖塔", "ノヴァ内部"}
-        enemy_rows = re.findall(r'<tr class="enemy-source"[^>]*>[\\s\\S]*?</tr>', self.html)
+        enemy_rows = re.findall(r'<tr class="enemy-source"[^>]*>[\s\S]*?</tr>', self.html)
         self.assertGreater(len(enemy_rows), 0)
         region_tokens = 0
         for row in enemy_rows:
-            detail = re.search(r'<td class="detail-cell(?: detail-multi)?">([\\s\\S]*?)</td>', row)
+            detail = re.search(r'<td class="detail-cell(?: detail-multi)?">([\s\S]*?)</td>', row)
             self.assertIsNotNone(detail)
             tokens = detail.group(1).split("<br>")
             self.assertFalse(regions.intersection(tokens), "地域名を単独のクエストとして表示している")
