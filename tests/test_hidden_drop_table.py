@@ -17,18 +17,19 @@ class HiddenDropTableTest(unittest.TestCase):
         self.assertEqual(self.html.count('class="item-name"'), 822)
         names = re.findall(r'class="item-name">([^<]+)</td>', self.html)
         self.assertEqual(names[:2], ['モノメイト', 'ディメイト'])
-        self.assertIn('822種類。取得定義：80,492件', self.html)
+        self.assertIn('822種類。元DB取得定義：80,492件', self.html)
         self.assertNotIn('<iframe', self.html)
     def test_complete_rows(self):
         ids = [int(s) for _, group in self.groups for s in group.split(',')]
-        self.assertEqual(len(ids), 80492)
-        self.assertEqual(len(set(ids)), 80492)
-        self.assertEqual((min(ids), max(ids)), (0, 80491))
+        self.assertEqual(len(ids), 79604)
+        self.assertEqual(len(set(ids)), 79604)
+        self.assertTrue(all(0 <= n < 80492 for n in ids))
+        self.assertEqual(80492 - len(ids), 888)
     def test_source_counts(self):
         counts = Counter()
         for source, group in self.groups:
             counts[source] += group.count(',') + 1
-        self.assertEqual(counts, Counter({'emergency_reward': 1847, 'enemy': 66873, 'field_gimmick': 6164, 'native_refill': 2, 'promise_reward': 183, 'quest_reward': 1174, 'coldsleep_series_reward': 19, 'event_grant': 4, 'search_corps_reward': 321, 'region': 304, 'common': 3601}))
+        self.assertEqual(counts, Counter({'enemy': 66078, 'field_gimmick': 6164, 'quest_reward': 1174, 'emergency_reward': 1847, 'promise_reward': 183, 'native_refill': 2, 'coldsleep_series_reward': 19, 'event_grant': 4, 'search_corps_reward': 321, 'region': 304, 'common': 3508}))
     def test_no_old_data_fallback(self):
         self.assertFalse(DATA.exists())
         self.assertNotIn('drop-table-data/', self.html)
