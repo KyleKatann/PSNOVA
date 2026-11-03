@@ -10,25 +10,70 @@
     <link rel="stylesheet" href="/PSNOVA/css/style.css">
     <link rel="stylesheet" href="/PSNOVA/css/page.css" data-psnova-page-style="true">
     <style>
-        #drop-table tbody td.detail-cell {
-            text-align: left;
-            vertical-align: top;
-            line-height: 1.25;
-            padding-top: 0.3rem;
-            padding-bottom: 0.3rem;
+        /* この4列表だけに適用する表示規則。共通CSSの:first-childより詳細度を高くする。 */
+        #main #drop-table {
+            table-layout: fixed;
+            font-size: 13.5px;
+            line-height: 1.5;
         }
-        #drop-table tbody td.detail-cell.detail-multi {
-            column-count: 3;
-            column-gap: 1.25rem;
+        #main #drop-table thead th {
+            padding: 10px 12px;
         }
-        #drop-table tbody td.source-kind,
-        #drop-table tbody td.enemy-name,
-        #drop-table tbody td.source-wide {
+        #main #drop-table tbody td.item-name {
             vertical-align: top;
             text-align: left;
+            padding: 11px 12px;
+            color: #183c61;
+            background: var(--accent-soft);
+            font-size: 14px;
+            font-weight: 750;
+            overflow-wrap: anywhere;
         }
-        #drop-table tbody td.source-kind {
+        #main #drop-table tbody td.source-kind,
+        #main #drop-table tbody td.source-wide {
+            vertical-align: top;
+            text-align: left;
+            padding: 9px 11px;
+            color: #294d70;
+            background: var(--surface-subtle);
+            font-weight: 650;
+            overflow-wrap: anywhere;
+        }
+        #main #drop-table tbody td.enemy-name {
+            vertical-align: top;
+            text-align: left;
+            padding: 8px 11px;
+            color: #1e4266;
             font-weight: 600;
+            overflow-wrap: anywhere;
+        }
+        #main #drop-table tbody td.detail-cell {
+            vertical-align: top;
+            text-align: left;
+            padding: 8px 12px;
+            color: #26384d;
+            background: var(--surface);
+            font-weight: 400;
+            line-height: 1.55;
+            white-space: normal;
+            overflow-wrap: anywhere;
+        }
+        #main #drop-table tbody td.detail-cell.detail-multi {
+            column-width: 16rem;
+            column-count: auto;
+            column-gap: 1.5rem;
+            column-rule: 1px solid var(--border);
+        }
+        #main #drop-table tbody tr:has(> td.item-name) > td {
+            border-top-width: 2px;
+            border-top-color: #afc0d2;
+        }
+        @media screen and (max-width: 800px) {
+            /* 4列を潰さず横スクロール可能にし、一覧の文章は折り返す。 */
+            #main .table-scroll > #drop-table {
+                width: 100%;
+                min-width: 900px;
+            }
         }
     </style>
 </head>
@@ -42,7 +87,7 @@
             <h2>アイテム一覧</h2>
             <div class="table-scroll" tabindex="0">
             <table id="drop-table">
-                <colgroup><col style="width:22%"><col style="width:13%"><col style="width:18%"><col style="width:47%"></colgroup>
+                <colgroup><col style="width:16%"><col style="width:15%"><col style="width:18%"><col style="width:51%"></colgroup>
                 <thead><tr><th scope="col">アイテム</th><th scope="col">入手元</th><th scope="col">エネミー</th><th scope="col">出現候補クエスト / 入手先</th></tr></thead>
                 <tbody>
 <tr class="enemy-source" data-source="enemy" data-row-ids="18850,18851,18852,18853,18854,18855,18856,18857,18858,18859,18864,18865,18866,18867,18868,18869,18870,18871,18872,18873,18874,18875,18876,18877,18878,18879,18880,18881,18882,18883,18884,18885,18886,18887,18888,18889,18890,18891,18892,18893">
